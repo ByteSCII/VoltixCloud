@@ -197,7 +197,7 @@
         }
 
         .dropdown-content {
-            display: none;
+            display: none; /* Controlado por JS ahora */
             position: absolute;
             background-color: var(--color-medium-dark-bg);
             min-width: 180px;
@@ -210,11 +210,16 @@
             margin-top: 0.5rem; /* Space between link and dropdown */
         }
 
+        .dropdown-content.show-dropdown { /* Nueva clase para mostrar el dropdown con JS */
+            display: block;
+        }
+
         .dropdown-content a {
             color: var(--color-text-light);
             padding: 12px 16px;
             text-decoration: none;
-            display: block;
+            display: flex; /* Para alinear el icono y el texto */
+            align-items: center; /* Para centrar verticalmente el icono */
             text-align: left;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
@@ -224,82 +229,91 @@
             color: var(--color-primary);
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         /* Mobile Menu - Sidebar Style */
         .mobile-menu {
-            display: flex; /* Always flex, but hidden by transform */
+            display: flex; /* Siempre flex para la estructura interna */
             flex-direction: column;
-            position: fixed; /* Fixed position relative to viewport */
+            position: fixed;
             top: 0;
             right: 0;
-            width: min(300px, 85vw); /* Responsive width: 85vw or max 300px */
-            height: 100%; /* Ocupa toda la altura de la pantalla */
-            background-color: rgba(10, 10, 10, 0.98); /* Fondo negro oscuro semi-transparente para ver la animación */
-            border-left: 1px solid var(--color-border); /* Borde en el lado izquierdo */
+            width: min(300px, 85vw);
+            max-height: 100vh; /* Asegura que no exceda la altura de la pantalla */
+            background-color: rgba(10, 10, 10, 0.98);
+            border-left: 1px solid var(--color-border);
             padding: 1rem 0;
-            transform: translateX(100%); /* Empieza fuera de pantalla a la derecha */
-            transition: transform 0.3s ease-in-out; /* Transición suave de deslizamiento */
-            z-index: 1000; /* Por encima de otro contenido */
-            overflow-y: auto; /* Habilita el desplazamiento para menús largos si el contenido lo excede */
-            overflow-x: hidden; /* Elimina la barra de desplazamiento horizontal */
-            position: relative; /* Importante para el z-index del pseudo-elemento */
+            transform: translateX(100%); /* Oculto por defecto */
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto; /* Permite el scroll si el contenido es largo */
+            overflow-x: hidden;
         }
 
         .mobile-menu.active {
             transform: translateX(0); /* Se desliza a la vista */
         }
 
+        header {
+            position: relative;
+            overflow: visible;
+        }
+        header::before {
+            content: none;
+        }
+
+        .mobile-menu::before {
+            content: none;
+        }
+
         .mobile-menu a,
         .mobile-menu label {
             padding: 0.75rem 1.5rem;
-            color: var(--color-text-light); /* Color blanco para el texto */
+            color: var(--color-text-light);
             font-weight: 500;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Alinea el contenido a la izquierda */
+            justify-content: space-between; /* Alinea texto a izquierda y flecha a derecha */
             width: 100%;
             box-sizing: border-box;
-            font-family: 'Bebas Neue', sans-serif; /* Nueva fuente */
-            background-color: transparent; /* Fondo transparente para ver la animación */
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transición para salto */
-            z-index: 1; /* Asegura que el contenido del menú esté por encima de la animación */
+            font-family: 'Bebas Neue', sans-serif;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            z-index: 1;
         }
 
         .mobile-menu a span,
         .mobile-menu label span {
-            text-align: left; /* Alinea el texto a la izquierda dentro del span */
-            flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
+            text-align: left;
+            flex-grow: 1;
         }
 
         .mobile-menu a:hover,
         .mobile-menu label:hover {
-            background-color: rgba(58, 58, 58, 0.3); /* Fondo semi-transparente al hacer hover */
+            background-color: rgba(58, 58, 58, 0.3);
             color: var(--color-primary);
-            transform: translateY(-5px); /* Efecto de salto */
+            transform: translateY(-5px);
         }
 
         /* Mobile Dropdown Specific Styles */
         .mobile-menu .dropdown-content {
-            position: static; /* Los dropdowns se expanden en línea en móvil */
-            display: none; /* Oculto por defecto, se muestra con JS/checkbox */
+            position: static;
+            display: none;
             flex-direction: column;
             width: 100%;
             box-shadow: none;
             margin-top: 0;
             border-radius: 0;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparente para sub-elementos */
+            background-color: rgba(0, 0, 0, 0.8);
         }
         .mobile-menu .dropdown-content a {
-            justify-content: flex-start; /* Alinea el contenido de las subcategorías a la izquierda */
+            justify-content: flex-start;
             text-align: left;
-            padding-left: 2.5rem; /* Indent sub-items */
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transición para salto */
+            padding-left: 2.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            display: flex; /* Para alinear el icono y el texto */
+            align-items: center; /* Para centrar verticalmente el icono */
         }
         .mobile-menu .dropdown-content a:hover {
-            transform: translateY(-3px); /* Efecto de salto más sutil para sub-elementos */
+            transform: translateY(-3px);
         }
         /* Show mobile dropdown content when checkbox is checked */
         .mobile-menu .dropdown-toggle-checkbox:checked ~ .dropdown-content {
@@ -315,10 +329,10 @@
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .nav-desktop {
-                display: none; /* Oculta el menú de escritorio en móvil */
+                display: none;
             }
             .mobile-menu-button {
-                display: block; /* Muestra el botón de hamburguesa en móvil */
+                display: block;
             }
         }
     </style>
@@ -347,24 +361,31 @@
                             <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                         <div class="dropdown-content">
-                            <a href="#">Minecraft Hosting</a>
-                            <a href="#">Minecraft Hosting Dedicado</a>
+                            <a href="#"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
+                            <a href="#"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
-                            <span>Cloud Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
+                        <a href="#" class="hover:text-primary font-medium">
+                            <span>Web Hosting</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
-                            <span>Game Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
+                        <a href="#" class="hover:text-primary font-medium">
+                            <span>Web Design</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- Nosotros Dropdown -->
+                    <li class="dropdown">
                         <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
                             <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
+                            <a href="#"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Nosotros</a>
+                            <a href="#"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                            <a href="#"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
+                        </div>
                     </li>
                     <li>
                         <!-- "ÁREA DE CLIENTES" button -->
@@ -387,21 +408,37 @@
                     <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                 </label>
                 <div class="dropdown-content">
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700">Minecraft Hosting</a>
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700">Minecraft Hosting Dedicado</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
                 </div>
             </div>
             
+            <!-- Web Hosting for Mobile -->
             <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-                <span>Cloud Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
+                <span>Web Hosting</span>
             </a>
+
+            <!-- Web Design for Mobile -->
             <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-                <span>Game Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
+                <span>Web Design</span>
             </a>
-            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-                <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
-            </a>
-            <a href="#" class="block py-2 px-4 bg-primary text-text-dark mx-4 rounded-md mt-2 text-center font-semibold flex justify-center items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+
+            <!-- Nosotros Dropdown for Mobile -->
+            <div class="w-full">
+                <input type="checkbox" id="mobile-nosotros-toggle" class="dropdown-toggle-checkbox hidden">
+                <label for="mobile-nosotros-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
+                    <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
+                </label>
+                <div class="dropdown-content">
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Nosotros</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
+                </div>
+            </div>
+
+            <!-- "ÁREA DE CLIENTES" button for Mobile -->
+            <a href="#" class="bg-primary text-text-dark px-5 py-2 rounded-md font-semibold flex items-center justify-center gap-2 mt-4 mx-4" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                 <i class="fas fa-user text-lg"></i>
                 <span>ÁREA DE CLIENTES</span>
                 <i class="fas fa-chevron-down text-xs"></i>
@@ -757,55 +794,110 @@
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
+            // Function to toggle mobile menu visibility
             function toggleMobileMenu() {
                 mobileMenu.classList.toggle('active');
-                // Evita el desplazamiento del cuerpo cuando el menú está abierto
                 document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
             }
 
-            // Abre/Cierra el menú con el botón
+            // Event listener for mobile menu button
             mobileMenuButton.addEventListener('click', toggleMobileMenu);
 
-            // Cierra el menú al hacer clic en cualquier enlace dentro del menú
+            // Close mobile menu when clicking on a link inside it
             const mobileMenuLinks = mobileMenu.querySelectorAll('a');
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', function(event) {
-                    // Si el enlace es solo un ancla local (ej. href="#"), previene el comportamiento por defecto
-                    // para que el desplazamiento suave funcione antes de cerrar el menú.
+                    // If the link is a local anchor (e.g., href="#"), prevent default
+                    // so smooth scrolling works before closing the menu.
                     if (link.getAttribute('href').startsWith('#')) {
-                        event.preventDefault(); // Previene el salto instantáneo
-                        // Opcional: añade un pequeño retardo antes de cerrar para que el desplazamiento suave sea visible
-                        setTimeout(toggleMobileMenu, 300); // Cierra el menú después de un breve retardo
+                        event.preventDefault(); // Prevent instant jump
+                        // Close the menu after a short delay to allow smooth scroll
+                        setTimeout(toggleMobileMenu, 300);
                     } else {
-                        toggleMobileMenu(); // Cierra el menú inmediatamente para enlaces externos o de página
+                        // For external or full-page links, close the menu immediately
+                        toggleMobileMenu();
                     }
                 });
             });
 
-            // Cierra el menú al hacer clic fuera de él o del botón de alternar
-            document.addEventListener('click', function(event) {
-                const isClickInsideMenu = mobileMenu.contains(event.target);
-                const isClickOnToggleButton = mobileMenuButton.contains(event.target);
-
-                if (mobileMenu.classList.contains('active') && !isClickInsideMenu && !isClickOnToggleButton) {
-                    toggleMobileMenu(); // Cierra el menú
-                }
-            });
-
-            // Detiene la propagación de clics dentro del propio menú móvil
-            // Esto es importante para que los clics dentro del menú no cierren el menú
-            // debido al listener del documento.
+            // Prevent clicks inside mobile menu from propagating to document (to avoid closing)
             mobileMenu.addEventListener('click', function(event) {
                 event.stopPropagation();
             });
 
-            // Maneja el toggle de los desplegables móviles (via checkbox CSS)
-            const mobileDropdownToggle = document.getElementById('mobile-minecraft-hosting-toggle');
-            if (mobileDropdownToggle) {
-                mobileDropdownToggle.addEventListener('change', function() {
-                    // Esto será manejado por la pseudo-clase CSS :checked
+            // Handle mobile dropdown toggles (checkbox based)
+            const mobileDropdownToggles = document.querySelectorAll('.mobile-menu .dropdown-toggle-checkbox');
+            mobileDropdownToggles.forEach(toggle => {
+                const label = toggle.nextElementSibling; // The label associated with the checkbox
+                const content = label.nextElementSibling; // The dropdown content
+
+                // Prevent label click from propagating to the mobile menu, which might close it
+                if (label) {
+                    label.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Stop propagation to prevent document listener from closing mobile menu
+                    });
+                }
+                // Prevent content clicks from propagating to the mobile menu
+                if (content) {
+                    content.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Stop propagation to prevent document listener from closing mobile menu
+                    });
+                }
+            });
+
+            // --- Desktop Dropdown Logic ---
+            const desktopDropdowns = document.querySelectorAll('.nav-desktop .dropdown');
+
+            desktopDropdowns.forEach(dropdown => {
+                const dropdownToggle = dropdown.querySelector('.nav-link-dropdown');
+                const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+                if (dropdownToggle && dropdownContent) {
+                    // Click listener for the desktop dropdown toggle
+                    dropdownToggle.addEventListener('click', function(event) {
+                        event.preventDefault(); // Prevent default link behavior
+
+                        // Close other open desktop dropdowns
+                        desktopDropdowns.forEach(otherDropdown => {
+                            const otherContent = otherDropdown.querySelector('.dropdown-content');
+                            if (otherContent && otherContent !== dropdownContent) {
+                                otherContent.classList.remove('show-dropdown');
+                            }
+                        });
+
+                        // Toggle the current dropdown
+                        dropdownContent.classList.toggle('show-dropdown');
+                    });
+
+                    // Prevent clicks inside dropdown content from closing it immediately
+                    dropdownContent.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                }
+            });
+
+            // Global click listener to close desktop dropdowns and mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close desktop dropdowns
+                desktopDropdowns.forEach(dropdown => {
+                    const dropdownContent = dropdown.querySelector('.dropdown-content');
+                    const dropdownToggle = dropdown.querySelector('.nav-link-dropdown');
+
+                    // Check if the click was outside the current dropdown's toggle and content
+                    if (dropdownContent && dropdownToggle &&
+                        !dropdownContent.contains(event.target) &&
+                        !dropdownToggle.contains(event.target)) {
+                        dropdownContent.classList.remove('show-dropdown');
+                    }
                 });
-            }
+
+                // Close mobile menu if open and click is outside
+                const isClickInsideMobileMenu = mobileMenu.contains(event.target);
+                const isClickOnMobileMenuButton = mobileMenuButton.contains(event.target);
+                if (mobileMenu.classList.contains('active') && !isClickInsideMobileMenu && !isClickOnMobileMenuButton) {
+                    toggleMobileMenu();
+                }
+            });
         });
     </script>
 </body>
