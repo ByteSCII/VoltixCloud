@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Hosting de Minecraft - Servidores de Juego de Alto Rendimiento</title>
+    <title>Voltix Cloud Hosting</title>
+    <!-- Favicon -->
+    <link rel="icon" href="./images/logo.ico" type="image/x-icon">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter para texto general, Poppins para títulos, Bebas Neue para menú -->
@@ -15,15 +17,22 @@
     <style>
         /* Configuración de Tailwind para colores y fuentes personalizadas */
         :root {
-            --color-primary: #00CED1; /* Cian - Color primario para acentos (antes amarillo) */
-            --color-secondary: #FFD700; /* Amarillo - Azul vibrante para acentos secundarios (antes cian) */
+            --color-primary: #00CED1; /* Cian - Color primario para acentos */
+            --color-secondary: #FFD700; /* Amarillo - Azul vibrante para acentos secundarios */
             --color-dark-bg: rgba(0, 0, 0, 0.95); /* Negro puro con ligera transparencia */
-            --color-medium-dark-bg: rgba(10, 10, 10, 0.95); /* Negro oscuro fuerte con ligera transparencia */
+            --color-medium-dark-bg: rgba(10, 10, 10, 0.8); /* Negro oscuro fuerte con mayor transparencia */
             --color-card-bg: #2B2B2B; /* Fondo para tarjetas y elementos */
             --color-text-light: #F4F4F4; /* Texto blanco/gris claro */
             --color-text-dark: #212121; /* Texto oscuro para el botón cian */
             --color-text-muted: #A0A0A0; /* Texto gris atenuado */
             --color-border: #444444; /* Borde oscuro */
+
+            /* Nuevos colores para las tarjetas de ubicación (ya no se usarán como fondo principal) */
+            --color-card-blue: #1E90FF; /* Azul DodgerBlue */
+            --color-card-green: #32CD32; /* Verde Lima */
+            --color-card-purple: #9370DB; /* Púrpura Medio */
+            --color-card-orange: #FF8C00; /* Naranja Oscuro */
+            --color-pink: #FF69B4; /* Rosa para el texto del deslizador (aunque no se puede aplicar directamente) */
         }
 
         /* Custom styles to override or extend Tailwind */
@@ -38,6 +47,31 @@
             position: relative; /* Necesario para el pseudo-elemento de animación */
             overflow-x: hidden; /* Evitar desbordamiento horizontal */
             font-size: 0.95rem; /* Reduced base font size */
+        }
+
+        /* Custom Scrollbar Styles for Webkit browsers (Chrome, Safari, Edge) */
+        /* Scrollbar track */
+        ::-webkit-scrollbar {
+            width: 12px; /* Ancho de la barra de desplazamiento vertical */
+            height: 12px; /* Alto de la barra de desplazamiento horizontal */
+        }
+
+        /* Scrollbar track background */
+        ::-webkit-scrollbar-track {
+            background: #333; /* Gris oscuro para el fondo de la barra */
+            border-radius: 10px; /* Bordes redondeados para el track */
+        }
+
+        /* Scrollbar thumb (the draggable part) */
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary); /* Cian para el deslizador */
+            border-radius: 10px; /* Bordes redondeados para el deslizador */
+            border: 3px solid #333; /* Borde para que se vea flotante sobre el track */
+        }
+
+        /* Scrollbar thumb on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00A3A6; /* Un poco más oscuro al pasar el ratón */
         }
 
         /* Pseudo-elemento para la animación de rayo en el fondo del body */
@@ -118,13 +152,16 @@
             }
         }
 
-        h1, h2, h3, h4 {
+        h1 {
+            font-family: 'Bebas Neue', sans-serif; /* Usando Bebas Neue para el h1 como fuente de visualización */
+        }
+        h2, h3, h4 {
             font-family: 'Poppins', sans-serif;
         }
 
         /* Hero section background with overlay */
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://placehold.co/1920x800/212121/f4f4f4?text=Tu+Mundo+Minecraft'); /* Placeholder image */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./images/imagenseccioninicio.png'); /* Updated image path */
             background-size: cover;
             background-position: center;
         }
@@ -144,6 +181,7 @@
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
             transition: background-color 0.3s ease;
+            color: var(--color-text-light); /* Changed to light text for FAQ questions */
         }
 
         .faq-item label:hover {
@@ -182,6 +220,8 @@
         .nav-desktop label {
             font-family: 'Bebas Neue', sans-serif;
             transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 0.75rem 1.5rem; /* Increased padding for larger buttons */
+            font-size: 1.1rem; /* Slightly larger font size */
         }
 
         /* Animación de salto para enlaces de navegación */
@@ -280,7 +320,7 @@
 
         .mobile-menu a,
         .mobile-menu label {
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 1.75rem; /* Increased padding for larger buttons */
             color: var(--color-text-light);
             font-weight: 500;
             display: flex;
@@ -340,6 +380,173 @@
             transform-origin: center top;
         }
 
+        /* Animation for content change */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out; /* Fade out over 0.5 seconds */
+        }
+
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in; /* Fade in over 0.5 seconds */
+        }
+
+        /* Styles for the new location cards */
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 1.5rem; /* Space between cards */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .location-card {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./images/fondoubicaciones.png'); /* Increased overlay opacity for better readability */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Initial subtle shadow */
+            cursor: pointer;
+        }
+
+        .location-card:hover {
+            transform: translateY(-8px) scale(1.02); /* Lift and slightly enlarge */
+            border-color: var(--color-primary); /* Primary color border on hover */
+            box-shadow: 0 0 25px rgba(0, 206, 209, 0.7), 0 0 50px rgba(0, 206, 209, 0.3); /* Stronger glow */
+        }
+
+        .location-card .flag {
+            font-size: 3.5rem; /* Larger flag emoji */
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)); /* Stronger white glow */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .location-card:hover .flag {
+            transform: scale(1.1); /* Flag bounce on hover */
+        }
+
+        .location-card .location-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .location-card .ping-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--color-secondary); /* Yellow for ping text */
+            margin-top: 0.5rem;
+        }
+
+        /* Animation for ping dots (now integrated into card design) */
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+        }
+
+        .ping-dot {
+            width: 18px; /* Larger dot */
+            height: 18px; /* Larger dot */
+            background-color: var(--color-primary);
+            border-radius: 50%;
+            position: absolute;
+            top: 15px; /* Position inside the card */
+            right: 15px; /* Position inside the card */
+            animation: pulse 1.5s infinite ease-in-out;
+            border: 3px solid var(--color-text-light); /* Thicker border */
+            box-shadow: 0 0 10px var(--color-primary); /* Glow for the dot */
+        }
+
+        /* Styles for animated image containers */
+        .animated-image-container {
+            background-size: cover;
+            background-position: center;
+            animation: float-animation 6s ease-in-out infinite alternate; /* Apply animation */
+            display: flex; /* Use flexbox to center SVG */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            padding: 1rem; /* Add some padding around the SVG */
+        }
+
+        /* Remove background image from animated-image-1 as it will now contain an SVG */
+        .animated-image-1 {
+            background-image: none; /* Remove placeholder image */
+        }
+
+        /* Style for the SVG paths to apply primary color */
+        .animated-image-container svg path {
+            fill: var(--color-primary); /* Apply primary color to all paths in the SVG */
+        }
+        /* Override specific paths that should remain white if any */
+        .animated-image-container svg path[style*="fill:#FFFFFF"] {
+            fill: #FFFFFF !important; /* Keep white paths white */
+        }
+
+
+        .animated-image-2 {
+            background-image: url('https://placehold.co/800x600/2b2b2b/f4f4f4?text=Panel+de+Control'); /* Placeholder for control panel */
+        }
+
+        @keyframes float-animation {
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+        }
+
+        /* Background image for sections with increased opacity */
+        #locations, #why-choose-us, #faq, footer {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/fondopagina.jpg'); /* Increased opacity to 0.8 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Optional: for parallax effect */
+        }
+
+        /* Thicker font for text within these sections */
+        #locations p, #locations ul li,
+        #why-choose-us p, #why-choose-us ul li,
+        #faq p, #faq ul li,
+        footer p, footer ul li {
+            font-weight: 500; /* Medium font weight */
+        }
+        /* Make headings bold if they aren't already */
+        #locations h2, #why-choose-us h2, #why-choose-us h3, #faq h2, footer h4 {
+            font-weight: 700; /* Bold font weight */
+        }
+
+        /* Adjust container max-width for PC view */
+        .container {
+            max-width: 1100px; /* Slightly smaller max-width for PC */
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .nav-desktop {
@@ -348,17 +555,38 @@
             .mobile-menu-button {
                 display: block;
             }
+            .location-grid {
+                grid-template-columns: 1fr; /* Single column on small screens */
+            }
+            .location-card .flag {
+                font-size: 3rem; /* Slightly smaller flag on mobile */
+            }
+            .location-card .location-name {
+                font-size: 1.3rem;
+            }
+            .location-card .ping-display {
+                font-size: 1.1rem;
+            }
+            /* Adjust padding for mobile sections if needed */
+            #locations, #why-choose-us, #faq, #cta-bottom, footer {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header Section -->
-    <header class="bg-medium-dark-bg text-text-light py-4 border-b border-border sticky top-0 z-50" style="background-color: var(--color-medium-dark-bg); border-color: var(--color-border);">
+    <header class="bg-medium-dark-bg text-text-light py-4 sticky top-0 z-50" style="background-color: var(--color-medium-dark-bg);">
         <div class="w-full px-4 flex justify-between items-center relative">
             <!-- Logo -->
             <a href="#" class="flex items-center">
-                <img src="https://placehold.co/40x40/F4F4F4/222222?text=H" alt="Logo" class="h-10 mr-2">
+                <img src="./images/logo.ico" alt="Logo" class="h-24 mr-2"> <!-- Updated logo size to h-24 (200% of h-12) -->
             </a>
             
             <!-- Mobile Menu Button -->
@@ -396,67 +624,28 @@
                         </a>
                         <div class="dropdown-content">
                             <a href="#"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
-                            <a href="#"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Nosotros</a>
+                            <a href="#"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
                             <a href="#"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
                             <a href="#"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
                         </div>
                     </li>
                     <li>
                         <!-- "ÁREA DE CLIENTES" button -->
-                        <a href="#" class="bg-primary text-text-dark px-5 py-2 rounded-md font-semibold flex items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark px-6 py-3 rounded-md font-semibold flex items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             <i class="fas fa-user text-lg"></i>
                             <span>ÁREA DE CLIENTES</span>
                             <i class="fas fa-chevron-down text-xs"></i>
                         </a>
+                        <!-- Dropdown content for "ÁREA DE CLIENTES" -->
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
+                            <a href="#"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
+                            <a href="#"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
+                            <a href="#"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
+                        </div>
                     </li>
                 </ul>
             </nav>
-        </div>
-
-        <!-- Mobile Menu (initially hidden) -->
-        <div class="mobile-menu md:hidden" id="mobile-menu">
-            <!-- Minecraft Hosting Dropdown for Mobile -->
-            <div class="w-full">
-                <input type="checkbox" id="mobile-minecraft-hosting-toggle" class="dropdown-toggle-checkbox hidden">
-                <label for="mobile-minecraft-hosting-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
-                    <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
-                </label>
-                <div class="dropdown-content">
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
-                </div>
-            </div>
-            
-            <!-- Web Hosting for Mobile -->
-            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-                <span>Web Hosting</span>
-            </a>
-
-            <!-- Web Design for Mobile -->
-            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-                <span>Web Design</span>
-            </a>
-
-            <!-- Nosotros Dropdown for Mobile -->
-            <div class="w-full">
-                <input type="checkbox" id="mobile-nosotros-toggle" class="dropdown-toggle-checkbox hidden">
-                <label for="mobile-nosotros-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
-                    <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
-                </label>
-                <div class="dropdown-content">
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Nosotros</a>
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
-                    <a href="#" class="block py-2 px-4 hover:bg-gray-700"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
-                </div>
-            </div>
-
-            <!-- "ÁREA DE CLIENTES" button for Mobile -->
-            <a href="#" class="bg-primary text-text-dark px-5 py-2 rounded-md font-semibold flex items-center justify-center gap-2 mt-4 mx-4" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                <i class="fas fa-user text-lg"></i>
-                <span>ÁREA DE CLIENTES</span>
-                <i class="fas fa-chevron-down text-xs"></i>
-            </a>
         </div>
     </header>
 
@@ -464,176 +653,61 @@
         <!-- Hero Section -->
         <section id="hero" class="hero-bg text-center py-24 md:py-32 text-text-light relative overflow-hidden">
             <div class="container mx-auto px-4 z-10 relative">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
-                    Aloja tu Mundo Minecraft <br class="hidden md:block"> Sin Lag, Full Control.
+                <h1 id="main-heading" class="text-4xl md:text-6xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
+                    <!-- Texto inicial, será cambiado por JavaScript -->
                 </h1>
                 <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto text-text-muted">
                     Servidores de Minecraft de alto rendimiento, configuración instantánea y soporte 24/7. ¡Tu aventura empieza aquí!
                 </p>
-                <a href="#plans" class="bg-primary text-dark-bg font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                    Ver Planes
+                <a href="#locations" class="bg-primary text-dark-bg font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                    Ver Ubicaciones
                 </a>
 
                 <!-- New section based on user's image -->
-                <div class="mt-12 bg-medium-dark-bg bg-opacity-80 p-6 rounded-lg shadow-xl max-w-4xl mx-auto text-left border border-border">
-                    <p class="text-primary text-xs font-semibold uppercase mb-1" style="color: var(--color-primary);">ADQUIERE AHORA</p>
-                    <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-text-light">MINECRAFT HOSTING</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-base">
-                        <div class="flex items-center">
-                            <i class="fas fa-gamepad text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                            <span>Soporte para Java & Bedrock.</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-shield-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                            <span>Protección <span class="font-bold">Anti-DDoS</span> avanzada.</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-infinity text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                            <span>Slots ilimitados.</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-cube text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                            <span>Todas las versiones y modpacks.</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-dollar-sign text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                            <span>Precios desde $0.95/gb/mes</span>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
-                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                            <i class="fas fa-play mr-2"></i>
-                            <span>Adquirir un <br> SERVIDOR DE MINECRAFT</span>
-                            <i class="fas fa-angle-right text-sm ml-1"></i>
-                        </a>
-                        <a href="#" class="text-primary font-semibold hover:underline flex items-center gap-2 text-sm" style="color: var(--color-primary);">
-                            <span>Acerca de Voltix Cloud</span>
-                            <i class="fas fa-angle-right text-xs ml-1"></i>
-                        </a>
-                    </div>
+                <div id="dynamic-content-box" class="mt-12 bg-medium-dark-bg bg-opacity-80 p-6 rounded-lg shadow-xl max-w-4xl text-left border border-border">
+                    <!-- Contenido dinámico, será cambiado por JavaScript -->
                 </div>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" class="py-12 md:py-20 bg-dark-bg" style="background-color: var(--color-dark-bg);">
+        <!-- Locations Section - Redesigned -->
+        <section id="locations" class="py-12 md:py-20 text-text-light">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
-                    Características Clave
+                <h2 class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
+                    JUEGA SIN <span style="color: var(--color-secondary);">LAG</span>
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Feature Item 1 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-rocket text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-xl font-semibold mb-2 text-text-light">Rendimiento Extremo</h3>
-                        <p class="text-text-muted text-sm">Procesadores de última generación y almacenamiento NVMe para una experiencia sin lag.</p>
-                    </div>
-                    <!-- Feature Item 2 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-cogs text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-xl font-semibold mb-2 text-text-light">Panel de Control Intuitivo</h3>
-                        <p class="text-text-muted text-sm">Gestiona tu servidor, mods y plugins con facilidad desde un panel amigable.</p>
-                    </div>
-                    <!-- Feature Item 3 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-shield-alt text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-xl font-semibold mb-2 text-text-light">Protección Anti-DDoS</h3>
-                        <p class="text-text-muted text-sm">Defensa avanzada para mantener tu servidor seguro y online 24/7.</p>
-                    </div>
-                    <!-- Feature Item 4 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-headset text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-xl font-semibold mb-2 text-text-light">Soporte 24/7</h3>
-                        <p class="text-text-muted text-sm">Nuestro equipo de expertos está listo para ayudarte en cualquier momento.</p>
-                    </div>
-                    <!-- Feature Item 5 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-cloud-upload-alt text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-xl font-semibold mb-2 text-text-light">Copias de Seguridad Automáticas</h3>
-                        <p class="text-text-muted text-sm">Tus mundos están siempre a salvo con nuestras copias de seguridad diarias.</p>
-                    </div>
-                    <!-- Feature Item 6 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-bolt text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-xl font-semibold mb-2 text-text-light">Configuración Instantánea</h3>
-                        <p class="text-text-muted text-sm">Tu servidor listo para jugar en minutos, sin esperas.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Plans Section -->
-        <section id="plans" class="py-12 md:py-20 bg-medium-dark-bg" style="background-color: var(--color-medium-dark-bg);">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
-                    Nuestros Planes de Hosting
-                </h2>
-                <p class="text-lg text-text-muted mb-10 max-w-2xl mx-auto">
-                    Encuentra el plan perfecto para tu aventura Minecraft. Todos los planes incluyen protección DDoS y soporte 24/7.
+                <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-text-muted">
+                    Nuestros servidores alrededor del mundo brindan el mejor ping a tus jugadores.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Plan Card 1: IRON -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl flex flex-col items-center border-2 border-transparent hover:border-primary transition-all duration-300" style="background-color: var(--color-card-bg);">
-                        <h3 class="text-2xl font-bold mb-3 text-primary" style="color: var(--color-primary);">IRON</h3>
-                        <p class="text-4xl font-extrabold mb-5 text-text-light">$7.99<span class="text-lg font-normal text-text-muted">/mes</span></p>
-                        <ul class="text-left text-base text-text-muted space-y-2 mb-6 w-full">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 4 GB de RAM</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Slots Ilimitados</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Almacenamiento NVMe</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Panel de Control</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Protección Anti-DDoS</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Copias de Seguridad</li>
-                        </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                            Comprar Ahora
-                        </a>
+                <div class="location-grid">
+                    <!-- Location Card: Miami, USA -->
+                    <div class="location-card" data-location-name="Miami, USA" data-initial-ping="45ms">
+                        <span class="ping-dot"></span>
+                        <span class="flag">🇺🇸</span>
+                        <span class="location-name">Miami, USA</span>
+                        <span class="ping-display">45ms</span>
                     </div>
 
-                    <!-- Plan Card 2: DIAMOND (Popular) -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl flex flex-col items-center border-2 border-primary transform scale-105 transition-all duration-300 relative" style="background-color: var(--color-card-bg); border-color: var(--color-primary);">
-                        <span class="absolute top-0 right-0 bg-primary text-text-dark text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg" style="background-color: var(--color-primary); color: var(--color-text-dark);">POPULAR</span>
-                        <h3 class="text-2xl font-bold mb-3 text-primary" style="color: var(--color-primary);">DIAMOND</h3>
-                        <p class="text-4xl font-extrabold mb-5 text-text-light">$14.99<span class="text-lg font-normal text-text-muted">/mes</span></p>
-                        <ul class="text-left text-base text-text-muted space-y-2 mb-6 w-full">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 8 GB de RAM</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Slots Ilimitados</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Almacenamiento NVMe</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Panel de Control Avanzado</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Protección Anti-DDoS Premium</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Copias de Seguridad Diarias</li>
-                        </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                            Comprar Ahora
-                        </a>
-                    </div>
-
-                    <!-- Plan Card 3: OBSIDIAN -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl flex flex-col items-center border-2 border-transparent hover:border-primary transition-all duration-300" style="background-color: var(--color-card-bg);">
-                        <h3 class="text-2xl font-bold mb-3 text-primary" style="color: var(--color-primary);">OBSIDIAN</h3>
-                        <p class="text-4xl font-extrabold mb-5 text-text-light">$24.99<span class="text-lg font-normal text-text-muted">/mes</span></p>
-                        <ul class="text-left text-base text-text-muted space-y-2 mb-6 w-full">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 16 GB de RAM</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Slots Ilimitados</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Almacenamiento NVMe Ilimitado*</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Panel de Control Profesional</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Protección Anti-DDoS Elite</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Soporte Prioritario 24/7</li>
-                        </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                            Comprar Ahora
-                        </a>
+                    <!-- Location Card: Caracas, Venezuela -->
+                    <div class="location-card" data-location-name="Caracas, Venezuela" data-initial-ping="15ms">
+                        <span class="ping-dot"></span>
+                        <span class="flag">🇻🇪</span>
+                        <span class="location-name">Caracas, Venezuela</span>
+                        <span class="ping-display">15ms</span>
                     </div>
                 </div>
-                <p class="text-xs text-text-muted mt-6">*Almacenamiento NVMe ilimitado sujeto a políticas de uso justo.</p>
             </div>
         </section>
 
         <!-- Why Choose Us Section -->
-        <section id="why-choose-us" class="py-12 md:py-20 bg-dark-bg" style="background-color: var(--color-dark-bg);">
+        <section id="why-choose-us" class="py-12 md:py-20 text-text-light">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
-                    ¿Por Qué Elegir TuHostMC?
+                    ¿Por Qué Elegir Voltix Cloud?
                 </h2>
+                <p class="text-lg text-text-muted mb-10 max-w-3xl mx-auto">
+                    Aunque Voltix Cloud es un hosting nuevo en el mercado, estamos comprometidos a ofrecer un servicio de calidad superior, innovando constantemente para brindarte la mejor experiencia de juego.
+                </p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                     <div class="text-left">
                         <h3 class="text-2xl font-semibold mb-4 text-text-light">Hardware de Vanguardia</h3>
@@ -646,15 +720,96 @@
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Discos NVMe para carga rápida</li>
                         </ul>
                     </div>
-                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl">
-                        <img src="https://placehold.co/800x600/2b2b2b/f4f4f4?text=Hardware+Premium" alt="Hardware de Servidor" class="w-full h-full object-cover">
+                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl animated-image-container animated-image-1">
+                        <!-- SVG del procesador -->
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" class="w-3/4 h-3/4 max-w-full max-h-full">
+                            <g id="_x30_3_Processor_x2C__Cpu_x2C__Chip_x2C__Technology_x2C__Electronic">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <path style="fill:#FFFFFF;" d="M411.15,70.967c-103.64,0-207.047,0-310.301,0c-16.495,0-29.883,13.387-29.883,29.883c0,17.318,0,293.859,0,310.301c0,16.495,13.387,29.883,29.883,29.883c35.584,0,271.993,0,310.301,0c16.495,0,29.883-13.387,29.883-29.883c0-35.584,0-271.993,0-310.301C441.033,84.354,427.646,70.967,411.15,70.967z"/>
+                                            <path style="fill:#CDDCF9;" d="M120.98,120.981v270.039H391.02V120.981C376.017,120.981,135.983,120.981,120.98,120.981z"/>
+                                            <path style="fill:#FFFFFF;" d="M316.004,220.998c13.816,0,25.012,11.196,25.012,25.002s-11.196,25.002-25.012,25.002c-13.806,0-25.002-11.196-25.002-25.002S302.198,220.998,316.004,220.998z"/>
+                                            <path style="fill:#FFFFFF;" d="M195.996,240.999c13.806,0,25.002,11.196,25.002,25.002s-11.196,25.002-25.002,25.002c-13.816,0-25.012-11.196-25.012-25.002S182.18,240.999,195.996,240.999z"/>
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g id="XMLID_54_">
+                                            <path d="M411.145,450.989H100.855c-21.969,0-39.843-17.874-39.843-39.843V100.855c0-21.97,17.874-39.843,39.843-39.843h310.291c21.969,0,39.843,17.874,39.843,39.843v310.291C450.989,433.115,433.115,450.989,411.145,450.989z M100.855,80.933c-10.985,0-19.922,8.937-19.922,19.922v310.291c0,10.985,8.937,19.922,19.922,19.922h310.291c10.985,0,19.922-8.937,19.922-19.922V100.855c0-10.985-8.937-19.922-19.922-19.922H100.855z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_53_">
+                                            <path d="M391.02,400.981H120.98c-5.501,0-9.961-4.46-9.961-9.961V120.98c0-5.501,4.46-9.961,9.961-9.961H391.02c5.501,0,9.961,4.46,9.961,9.961V391.02C400.981,396.521,396.521,400.981,391.02,400.981z M130.941,381.059h250.119V130.941H130.941V381.059z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_52_">
+                                            <path d="M501.037,190.949h-60.009c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C510.998,186.49,506.538,190.949,501.037,190.949z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_51_">
+                                            <path d="M501.037,240.957h-60.009c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C510.998,236.498,506.538,240.957,501.037,240.957z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_50_">
+                                            <path d="M501.037,290.964h-60.009c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S506.538,290.964,501.037,290.964z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_49_">
+                                            <path d="M501.037,340.972h-60.009c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S506.538,340.972,501.037,340.972z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_48_">
+                                            <path d="M70.972,190.949H10.963c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C80.933,186.49,76.473,190.949,70.972,190.949z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_47_">
+                                            <path d="M70.972,240.957H10.963c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C80.933,236.498,76.473,240.957,70.972,240.957z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_46_">
+                                            <path d="M70.972,290.964H10.963c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S76.473,290.964,70.972,290.964z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_45_">
+                                            <path d="M70.972,340.972H10.963c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S76.473,340.972,70.972,340.972z" style="fill:var(--color-primary);"/>
+                                                                                    </g>
+                                        <g id="XMLID_44_">
+                                            <path d="M331.011,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C340.972,506.538,336.512,510.998,331.011,510.998z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_43_">
+                                            <path d="M281.003,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C290.964,506.538,286.504,510.998,281.003,510.998z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_42_">
+                                            <path d="M230.997,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C240.958,506.538,236.498,510.998,230.997,510.998z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_41_">
+                                            <path d="M180.989,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C190.95,506.538,186.49,510.998,180.989,510.998z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_40_">
+                                            <path d="M331.011,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C340.972,76.473,336.512,80.933,331.011,80.933z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_39_">
+                                            <path d="M281.003,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C290.964,76.473,286.504,80.933,281.003,80.933z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_38_">
+                                            <path d="M230.997,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C240.958,76.473,236.498,80.933,230.997,80.933z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_37_">
+                                            <path d="M180.989,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C190.95,76.473,186.49,80.933,180.989,80.933z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_36_">
+                                            <path d="M195.991,250.958c-5.501,0-9.961-4.459-9.961-9.96v-60.009c0-5.501,4.46-9.961,9.961-9.961h50.048V120.98c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009c0,5.501-4.46,9.961-9.961,9.961h-50.048v50.048C205.952,246.499,201.492,250.958,195.991,250.958z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_35_">
+                                            <path d="M195.991,300.966c-19.28,0-34.964-15.684-34.964-34.964s15.684-34.965,34.964-34.965s34.965,15.685,34.965,34.965S215.27,300.966,195.991,300.966z M195.991,250.958c-8.295,0-15.042,6.749-15.042,15.043s6.748,15.042,15.042,15.042s15.043-6.748,15.043-15.042S204.285,250.958,195.991,250.958z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_34_">
+                                            <path d="M256,395.98c-5.501,0-9.961-4.46-9.961-9.961v-55.008c0-5.501,4.46-9.961,9.961-9.961h50.048v-50.048c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.008c0,5.501-4.46,9.961-9.961,9.961h-50.048v45.048C265.961,391.52,261.501,395.98,256,395.98z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                        <g id="XMLID_33_">
+                                            <path d="M316.009,280.963c-19.28,0-34.965-15.685-34.965-34.965s15.685-34.965,34.965-34.965c19.28,0,34.964,15.685,34.964,34.965S335.289,280.963,316.009,280.963z M316.009,230.955c-8.295,0-15.043,6.748-15.043,15.043c0,8.295,6.749,15.043,15.043,15.043s15.042-6.749,15.042-15.043C331.052,237.704,324.304,230.955,316.009,230.955z" style="fill:var(--color-primary);"/>
+                                        </g>
+                                    </g>
+                                </g>
+                                <g id="Layer_1"/>
+                            </svg>
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent"></div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mt-12 md:mt-20">
-                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl order-last lg:order-first">
-                        <img src="https://placehold.co/800x600/2b2b2b/f4f4f4?text=Panel+de+Control" alt="Panel de Control" class="w-full h-full object-cover">
+                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl animated-image-container animated-image-2 order-last lg:order-first">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent"></div>
                     </div>
                     <div class="text-left">
@@ -672,58 +827,8 @@
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section id="testimonials" class="py-12 md:py-20 bg-medium-dark-bg" style="background-color: var(--color-medium-dark-bg);">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
-                    Lo Que Dicen Nuestros Clientes
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Testimonial 1 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
-                        <p class="text-base italic text-text-muted mb-4">
-                            "¡Increíble rendimiento! Mi servidor nunca había funcionado tan bien. El soporte es rápido y muy útil."
-                        </p>
-                        <div class="flex items-center">
-                            <img src="https://placehold.co/50x50/00CED1/212121?text=J.D." alt="Avatar de Cliente" class="w-12 h-12 rounded-full mr-3 border-2 border-primary">
-                            <div>
-                                <p class="font-semibold text-text-light text-base">Juan David</p>
-                                <p class="text-xs text-text-muted">Propietario de Servidor</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Testimonial 2 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
-                        <p class="text-base italic text-text-muted mb-4">
-                            "El panel de control es súper fácil de usar, incluso para principiantes. Pude instalar mi modpack favorito en minutos."
-                        </p>
-                        <div class="flex items-center">
-                            <img src="https://placehold.co/50x50/FFD700/FFFFFF?text=M.G." alt="Avatar de Cliente" class="w-12 h-12 rounded-full mr-3 border-2 border-secondary">
-                            <div>
-                                <p class="font-semibold text-text-light text-base">María García</p>
-                                <p class="text-xs text-text-muted">Jugadora y Administradora</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Testimonial 3 -->
-                    <div class="bg-card-bg p-6 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
-                        <p class="text-base italic text-text-muted mb-4">
-                            "La protección DDoS es de primera. Mi servidor ha resistido varios ataques sin ningún problema. ¡Muy recomendado!"
-                        </p>
-                        <div class="flex items-center">
-                            <img src="https://placehold.co/50x50/00CED1/212121?text=A.R." alt="Avatar de Cliente" class="w-12 h-12 rounded-full mr-3 border-2 border-primary">
-                            <div>
-                                <p class="font-semibold text-text-light text-base">Andrés Rojas</p>
-                                <p class="text-xs text-text-muted">Streamer de Minecraft</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- FAQ Section -->
-        <section id="faq" class="py-12 md:py-20 bg-dark-bg" style="background-color: var(--color-dark-bg);">
+        <section id="faq" class="py-12 md:py-20 text-text-light">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     Preguntas Frecuentes
@@ -732,7 +837,7 @@
                     <!-- FAQ Item 1 -->
                     <div class="faq-item mb-3">
                         <input type="checkbox" id="faq1">
-                        <label for="faq1" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq1" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Cómo instalo mods o plugins en mi servidor?
                         </label>
                         <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
@@ -744,7 +849,7 @@
                     <!-- FAQ Item 2 -->
                     <div class="faq-item mb-3">
                         <input type="checkbox" id="faq2">
-                        <label for="faq2" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq2" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Puedo cambiar de plan más adelante si necesito más recursos?
                         </label>
                         <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
@@ -756,7 +861,7 @@
                     <!-- FAQ Item 3 -->
                     <div class="faq-item mb-3">
                         <input type="checkbox" id="faq3">
-                        <label for="faq3" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq3" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Qué versiones de Minecraft soportan?
                         </label>
                         <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
@@ -768,7 +873,7 @@
                     <!-- FAQ Item 4 -->
                     <div class="faq-item mb-3">
                         <input type="checkbox" id="faq4">
-                        <label for="faq4" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq4" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Ofrecen reembolso?
                         </label>
                         <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
@@ -788,9 +893,9 @@
                     ¡Crea tu Mundo Minecraft Hoy!
                 </h2>
                 <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
-                    Únete a miles de jugadores satisfechos y lleva tu experiencia Minecraft al siguiente nivel con TuHostMC.
+                    Únete a miles de jugadores satisfechos y lleva tu experiencia Minecraft al siguiente nivel con Voltix Cloud.
                 </p>
-                <a href="#plans" class="bg-dark-bg text-primary font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-medium-dark-bg hover:shadow-xl" style="background-color: var(--color-dark-bg); color: var(--color-primary);">
+                <a href="#locations" class="bg-dark-bg text-primary font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-medium-dark-bg hover:shadow-xl" style="background-color: var(--color-dark-bg); color: var(--color-primary);">
                     ¡Empieza Ahora!
                 </a>
             </div>
@@ -798,13 +903,13 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-medium-dark-bg text-text-muted py-10" style="background-color: var(--color-medium-dark-bg);">
+    <footer class="text-text-muted py-10">
         <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
             <!-- Footer Column 1: Logo & Description -->
             <div>
-                <a href="#" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">TuHostMC</a>
+                <a href="#" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">Voltix Cloud</a>
                 <p class="text-sm">
-                    TuHostMC ofrece hosting de Minecraft de alto rendimiento con soporte excepcional y control total para tu servidor.
+                    Voltix Cloud ofrece hosting de Minecraft de alto rendimiento con soporte excepcional y control total para tu servidor.
                 </p>
                 <div class="flex justify-center md:justify-start space-x-3 mt-5">
                     <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-discord text-xl"></i></a>
@@ -817,8 +922,7 @@
             <div>
                 <h4 class="text-lg font-semibold text-text-light mb-3">Enlaces Rápidos</h4>
                 <ul class="space-y-1">
-                    <li><a href="#plans" class="hover:text-primary transition-colors duration-300 text-sm">Planes de Hosting</a></li>
-                    <li><a href="#features" class="hover:text-primary transition-colors duration-300 text-sm">Características</a></li>
+                    <li><a href="#locations" class="hover:text-primary transition-colors duration-300 text-sm">Ubicaciones</a></li>
                     <li><a href="#faq" class="hover:text-primary transition-colors duration-300 text-sm">Preguntas Frecuentes</a></li>
                     <li><a href="#contact" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
                 </ul>
@@ -833,19 +937,144 @@
                     <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
                 </ul>
                 <h4 class="text-lg font-semibold text-text-light mb-3 mt-5">Contacto</h4>
-                <p class="text-sm">Email: <a href="mailto:info@tuhostmc.com" class="hover:text-primary">info@tuhostmc.com</a></p>
+                <p class="text-sm">Email: <a href="mailto:info@voltixcloud.com" class="hover:text-primary">info@voltixcloud.com</a></p>
             </div>
         </div>
         <div class="text-center text-xs text-text-muted mt-10 pt-6 border-t border-border" style="border-color: var(--color-border);">
-            &copy; 2025 TuHostMC. Todos los derechos reservados.
+            &copy; 2025 Voltix Cloud. Todos los derechos reservados.
         </div>
     </footer>
 
     <script>
-        // JavaScript para el menú móvil
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
+            const mainHeading = document.getElementById('main-heading');
+            const dynamicContentBox = document.getElementById('dynamic-content-box');
+            
+            // Get all location markers
+            const locationCards = document.querySelectorAll('.location-card');
+
+            // Define the content for each state
+            const states = [
+                {
+                    heading: 'Que esperas para obtener tu servidor de minecraft',
+                    content: `
+                        <p class="text-primary text-xs font-semibold uppercase mb-1" style="color: var(--color-primary);">ADQUIERE AHORA</p>
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-text-light">MINECRAFT HOSTING</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-base">
+                            <div class="flex items-center">
+                                <i class="fas fa-gamepad text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Soporte para Java & Bedrock.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-shield-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Protección <span class="font-bold">Anti-DDoS</span> avanzada.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-infinity text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Slots ilimitados.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-cube text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Todas las versiones y modpacks.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-dollar-sign text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Precios desde $0.95/gb/mes</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
+                            <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                                <i class="fas fa-play mr-2"></i>
+                                <span>Adquirir un <br> SERVIDOR DE MINECRAFT</span>
+                                <i class="fas fa-angle-right text-sm ml-1"></i>
+                            </a>
+                            <a href="#" class="text-primary font-semibold hover:underline flex items-center gap-2 text-sm" style="color: var(--color-primary);">
+                                <span>Acerca de Voltix Cloud</span>
+                                <i class="fas fa-angle-right text-xs ml-1"></i>
+                            </a>
+                        </div>
+                    `
+                },
+                {
+                    heading: 'Quieres una web profesional totalmente personalizada contactanos',
+                    content: `
+                        <p class="text-primary text-xs font-semibold uppercase mb-1" style="color: var(--color-primary);">CREA TU PRESENCIA</p>
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-text-light">DISEÑO WEB PROFESIONAL</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-base">
+                            <div class="flex items-center">
+                                <i class="fas fa-paint-brush text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Diseños 100% personalizados.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-mobile-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Diseño responsivo para todos los dispositivos.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-search-dollar text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Optimización SEO básica.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-share-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Integración de redes sociales.</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-handshake text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                                <span>Soporte post-lanzamiento.</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
+                            <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                                <i class="fas fa-laptop-code mr-2"></i>
+                                <span>Obtener una <br> WEB PROFESIONAL</span>
+                                <i class="fas fa-angle-right text-sm ml-1"></i>
+                            </a>
+                            <a href="#" class="text-primary font-semibold hover:underline flex items-center gap-2 text-sm" style="color: var(--color-primary);">
+                                <span>Acerca de Voltix Cloud</span>
+                                <i class="fas fa-angle-right text-xs ml-1"></i>
+                            </a>
+                        </div>
+                    `
+                }
+            ];
+
+            let currentStateIndex = 0;
+
+            // Function to update content with fade animation
+            function updateContentWithAnimation() {
+                // Add fade-out class
+                mainHeading.classList.add('fade-out');
+                dynamicContentBox.classList.add('fade-out');
+
+                // After fade-out, change content and fade in
+                setTimeout(() => {
+                    currentStateIndex = (currentStateIndex + 1) % states.length;
+                    mainHeading.innerHTML = states[currentStateIndex].heading;
+                    dynamicContentBox.innerHTML = states[currentStateIndex].content;
+
+                    // Remove fade-out and add fade-in
+                    mainHeading.classList.remove('fade-out');
+                    dynamicContentBox.classList.remove('fade-out');
+                    mainHeading.classList.add('fade-in');
+                    dynamicContentBox.classList.add('fade-in');
+
+                    // Remove fade-in class after animation completes to reset for next cycle
+                    setTimeout(() => {
+                        mainHeading.classList.remove('fade-in');
+                        dynamicContentBox.classList.remove('fade-in');
+                    }, 500); // Match this with CSS transition duration
+                }, 500); // This delay should match the fade-out transition duration
+            }
+
+            // Initial content load
+            mainHeading.innerHTML = states[currentStateIndex].heading;
+            dynamicContentBox.innerHTML = states[currentStateIndex].content;
+            currentStateIndex = (currentStateIndex + 1) % states.length; // Prepare for the next state
+
+            // Set interval for content rotation (15 seconds)
+            setInterval(updateContentWithAnimation, 15000);
+
 
             // Function to toggle mobile menu visibility
             function toggleMobileMenu() {
@@ -950,6 +1179,44 @@
                 if (mobileMenu.classList.contains('active') && !isClickInsideMobileMenu && !isClickOnMobileMenuButton) {
                     toggleMobileMenu();
                 }
+            });
+
+            // Ping functionality for all location cards
+            locationCards.forEach(card => {
+                const pingDisplay = card.querySelector('.ping-display');
+                const initialPing = card.dataset.initialPing; // Get initial ping from data attribute
+
+                card.addEventListener('mouseenter', async () => {
+                    pingDisplay.textContent = 'Calculando ping...';
+                    
+                    // Simulate ping to a server based on location
+                    const locationName = card.dataset.locationName;
+                    let simulatedPing;
+
+                    // Simulate different ping times for different locations
+                    switch(locationName) {
+                        case 'Miami, USA':
+                            simulatedPing = Math.floor(Math.random() * (50 - 40 + 1)) + 40; // 40-50ms
+                            break;
+                        case 'Caracas, Venezuela':
+                            simulatedPing = Math.floor(Math.random() * (20 - 10 + 1)) + 10; // 10-20ms
+                            break;
+                        default:
+                            simulatedPing = Math.floor(Math.random() * (200 - 50 + 1)) + 50; // Default range
+                    }
+
+                    // Simulate network delay
+                    await new Promise(resolve => setTimeout(resolve, Math.random() * 500 + 200)); // 200-700ms delay
+
+                    pingDisplay.textContent = `${simulatedPing} ms`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    // Revert to original text after a short delay
+                    setTimeout(() => {
+                        pingDisplay.textContent = initialPing;
+                    }, 500); // Revert after 0.5 seconds
+                });
             });
         });
     </script>
