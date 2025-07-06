@@ -2,6 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Voltix Cloud - Hosting de Minecraft con alto rendimiento, protección DDoS y soporte 24/7.">
+    <meta name="keywords" content="Hosting Minecraft, Voltix Cloud, VPS, servidores Minecraft, diseño web">
+    <meta name="author" content="Voltix Cloud">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voltix Cloud Hosting</title>
     <!-- Favicon -->
@@ -554,10 +557,6 @@
             .mobile-menu-button {
                 display: block;
             }
-            /* Adjust logo size for mobile */
-            header .flex.items-center img {
-                height: 4rem; /* h-16 */
-            }
             .location-grid {
                 grid-template-columns: 1fr; /* Single column on small screens */
             }
@@ -702,7 +701,7 @@
         <div class="w-full px-4 flex justify-between items-center relative">
             <!-- Logo -->
             <a href="index.html" class="flex items-center">
-                <img src="./images/logo.ico" alt="Logo" class="h-24 md:h-24 sm:h-16 mr-2"> <!-- Adjusted logo size for mobile -->
+                <img src="./images/logo.ico" alt="Logo" class="h-24 mr-2"> <!-- Updated logo size to h-24 (200% of h-12) -->
             </a>
             
             <!-- Mobile Menu Button -->
@@ -739,9 +738,9 @@
                             <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                         <div class="dropdown-content">
-                            <a href="service-unavailable.html"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
+                            <a href="login.html"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
                             <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
-                            <a href="terminos-y-condiciones.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                            <a href="service-unavailable.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
                             <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
                         </div>
                     </li>
@@ -796,9 +795,9 @@
                 <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
             </label>
             <div class="dropdown-content">
-                <a href="service-unavailable.html"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
+                <a href="login.html"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
                 <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
-                <a href="terminos-y-condiciones.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                <a href="service-unavailable.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
                 <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
             </div>
         </div>
@@ -829,9 +828,9 @@
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="hero-bg text-center py-24 md:py-32 text-text-light relative overflow-hidden">
+        <section id="hero" class="hero-bg text-center py-16 md:py-24 text-text-light relative overflow-hidden">
             <div class="container mx-auto px-4 z-10 relative">
-                <h1 id="main-heading" class="text-4xl md:text-6xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
+                <h1 id="main-heading" class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow" class="text-4xl md:text-6xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
                     <!-- Texto inicial, será cambiado por JavaScript -->
                 </h1>
                 <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto text-text-muted">
@@ -850,7 +849,7 @@
 
         <!-- Locations Section - Redesigned -->
         <section id="locations" class="py-12 md:py-20 text-text-light">
-            <div class="container mx-auto px-4 text-center">
+            <div class="container mx-auto px-4 text-center max-w-screen-lg">
                 <h2 class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
                     JUEGA SIN <span style="color: var(--color-secondary);">LAG</span>
                 </h2>
@@ -859,7 +858,7 @@
                 </p>
                 <div class="location-grid">
                     <!-- Location Card: Miami, USA -->
-                    <div class="location-card" data-location-name="Miami, USA" data-initial-ping="45ms">
+                    <div class="location-card rounded-lg p-4 md:p-6" data-location-name="Miami, USA" data-initial-ping="45ms">
                         <span class="ping-dot"></span>
                         <span class="flag">🇺🇸</span>
                         <span class="location-name">Miami, USA</span>
@@ -867,7 +866,7 @@
                     </div>
 
                     <!-- Location Card: Caracas, Venezuela -->
-                    <div class="location-card" data-location-name="Caracas, Venezuela" data-initial-ping="15ms">
+                    <div class="location-card rounded-lg p-4 md:p-6" data-location-name="Caracas, Venezuela" data-initial-ping="15ms">
                         <span class="ping-dot"></span>
                         <span class="flag">🇻🇪</span>
                         <span class="location-name">Caracas, Venezuela</span>
@@ -879,7 +878,7 @@
 
         <!-- Why Choose Us Section -->
         <section id="why-choose-us" class="py-12 md:py-20 text-text-light">
-            <div class="container mx-auto px-4 text-center">
+            <div class="container mx-auto px-4 text-center max-w-screen-lg">
                 <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     ¿Por Qué Elegir Voltix Cloud?
                 </h2>
@@ -1007,7 +1006,7 @@
 
         <!-- FAQ Section -->
         <section id="faq" class="py-12 md:py-20 text-text-light">
-            <div class="container mx-auto px-4 text-center">
+            <div class="container mx-auto px-4 text-center max-w-screen-lg">
                 <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     Preguntas Frecuentes
                 </h2>
@@ -1104,7 +1103,7 @@
                 <ul class="space-y-1">
                     <li><a href="#locations" class="hover:text-primary transition-colors duration-300 text-sm">Ubicaciones</a></li>
                     <li><a href="#faq" class="hover:text-primary transition-colors duration-300 text-sm">Preguntas Frecuentes</a></li>
-                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
+                    <li><a href="login.html" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
                 </ul>
             </div>
 
@@ -1112,7 +1111,7 @@
             <div>
                 <h4 class="text-lg font-semibold text-text-light mb-3">Legal</h4>
                 <ul class="space-y-1">
-                    <li><a href="terminos-y-condiciones.html" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
                     <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Privacidad</a></li>
                     <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
                 </ul>
