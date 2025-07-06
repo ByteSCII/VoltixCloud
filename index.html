@@ -6,19 +6,19 @@
     <title>Tu Hosting de Minecraft - Servidores de Juego de Alto Rendimiento</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter para texto general, Poppins para títulos -->
+    <!-- Google Fonts: Inter para texto general, Poppins para títulos, Bebas Neue para menú -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Configuración de Tailwind para colores y fuentes personalizadas */
         :root {
-            --color-primary: #FFD700; /* Amarillo brillante para el botón y acentos */
-            --color-secondary: #00CED1; /* Azul vibrante del logo (para otros acentos si es necesario) */
-            --color-dark-bg: #1A1A1A; /* Fondo muy oscuro, casi negro */
-            --color-medium-dark-bg: #222222; /* Fondo del header */
+            --color-primary: #FFD700; /* Amarillo - Color primario para acentos */
+            --color-secondary: #00CED1; /* Dark Cyan - Azul vibrante para acentos secundarios */
+            --color-dark-bg: rgba(0, 0, 0, 0.95); /* Negro puro con ligera transparencia */
+            --color-medium-dark-bg: rgba(10, 10, 10, 0.95); /* Negro oscuro fuerte con ligera transparencia */
             --color-card-bg: #2B2B2B; /* Fondo para tarjetas y elementos */
             --color-text-light: #F4F4F4; /* Texto blanco/gris claro */
             --color-text-dark: #212121; /* Texto oscuro para el botón amarillo */
@@ -33,9 +33,77 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--color-dark-bg);
+            background-color: rgb(10, 10, 10); /* Fondo base negro oscuro fuerte */
             color: var(--color-text-light);
+            position: relative; /* Necesario para el pseudo-elemento de animación */
+            overflow-x: hidden; /* Evitar desbordamiento horizontal */
         }
+
+        /* Pseudo-elemento para la animación de rayo en el fondo del body */
+        body::before {
+            content: '';
+            position: fixed; /* Fijo para cubrir toda la pantalla */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1; /* Asegura que esté detrás de todo el contenido */
+            animation: lightning-flash 5s infinite steps(1); /* Animación de destellos rápidos */
+            pointer-events: none; /* Permite que los clics pasen a los elementos de abajo */
+        }
+
+        /* Keyframes para la animación de destellos de rayo (MEJORADA Y VISIBLE) */
+        @keyframes lightning-flash {
+            0%, 100% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            5% {
+                /* Primer destello más fuerte y brillante */
+                box-shadow:
+                    0 0 120px 60px rgba(255, 255, 255, 1), /* Blanco muy brillante y amplio */
+                    0 0 240px 120px rgba(255, 215, 0, 0.9);   /* Amarillo dorado muy amplio */
+                opacity: 1;
+            }
+            6% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            10% {
+                /* Segundo destello, ligeramente diferente y fuerte */
+                box-shadow:
+                    0 0 150px 75px rgba(255, 255, 255, 1),
+                    0 0 300px 150px rgba(255, 215, 0, 1);
+                opacity: 1; /* Opacidad total para un flash más impactante */
+            }
+            11% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            15% {
+                /* Tercer destello, más intenso y grande */
+                box-shadow:
+                    0 0 180px 90px rgba(255, 255, 255, 1),
+                    0 0 360px 180px rgba(255, 215, 0, 1);
+                opacity: 1;
+            }
+            16% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            20% {
+                /* Un brillo final y persistente, pero sutil */
+                box-shadow:
+                    0 0 80px 40px rgba(255, 215, 0, 0.7);
+                opacity: 0.6;
+            }
+            21% {
+                box-shadow: none;
+                opacity: 0;
+            }
+        }
+
 
         h1, h2, h3, h4 {
             font-family: 'Poppins', sans-serif;
@@ -96,43 +164,34 @@
             padding: 1rem 1.5rem;
         }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: var(--color-medium-dark-bg);
-            border-top: 1px solid var(--color-border);
-            padding: 1rem 0;
+        /* Styles for the main navigation (desktop) */
+        .nav-desktop a,
+        .nav-desktop label {
+            font-family: 'Bebas Neue', sans-serif;
+            transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        .mobile-menu a {
-            padding: 0.75rem 1.5rem;
-            color: var(--color-text-light);
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .mobile-menu a:hover {
-            background-color: #3a3a3a;
+        /* Animación de salto para enlaces de navegación */
+        .nav-desktop a:hover,
+        .nav-desktop label:hover {
+            transform: translateY(-5px); /* Efecto de salto */
             color: var(--color-primary);
         }
 
-        /* Dropdown styling (for visual indicator only, no JS functionality) */
+        /* Animación de salto para el botón "ÁREA DE CLIENTES" */
+        .nav-desktop a.bg-primary:hover {
+            transform: translateY(-5px); /* Efecto de salto */
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); /* Sombra para el efecto de salto */
+            background-color: var(--color-secondary); /* Cambio de color al hacer hover */
+        }
+
+        /* Dropdown styling */
         .nav-link-dropdown {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        /* Desktop Dropdown Menu Specific Styles */
         .dropdown {
             position: relative;
         }
@@ -169,39 +228,97 @@
             display: block;
         }
 
+        /* Mobile Menu - Sidebar Style */
+        .mobile-menu {
+            display: flex; /* Always flex, but hidden by transform */
+            flex-direction: column;
+            position: fixed; /* Fixed position relative to viewport */
+            top: 0;
+            right: 0;
+            width: min(300px, 85vw); /* Responsive width: 85vw or max 300px */
+            height: 100%; /* Ocupa toda la altura de la pantalla */
+            background-color: rgba(10, 10, 10, 0.98); /* Fondo negro oscuro semi-transparente para ver la animación */
+            border-left: 1px solid var(--color-border); /* Borde en el lado izquierdo */
+            padding: 1rem 0;
+            transform: translateX(100%); /* Empieza fuera de pantalla a la derecha */
+            transition: transform 0.3s ease-in-out; /* Transición suave de deslizamiento */
+            z-index: 1000; /* Por encima de otro contenido */
+            overflow-y: auto; /* Habilita el desplazamiento para menús largos si el contenido lo excede */
+            overflow-x: hidden; /* Elimina la barra de desplazamiento horizontal */
+            position: relative; /* Importante para el z-index del pseudo-elemento */
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0); /* Se desliza a la vista */
+        }
+
+        .mobile-menu a,
+        .mobile-menu label {
+            padding: 0.75rem 1.5rem;
+            color: var(--color-text-light); /* Color blanco para el texto */
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Alinea el contenido a la izquierda */
+            width: 100%;
+            box-sizing: border-box;
+            font-family: 'Bebas Neue', sans-serif; /* Nueva fuente */
+            background-color: transparent; /* Fondo transparente para ver la animación */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transición para salto */
+            z-index: 1; /* Asegura que el contenido del menú esté por encima de la animación */
+        }
+
+        .mobile-menu a span,
+        .mobile-menu label span {
+            text-align: left; /* Alinea el texto a la izquierda dentro del span */
+            flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu label:hover {
+            background-color: rgba(58, 58, 58, 0.3); /* Fondo semi-transparente al hacer hover */
+            color: var(--color-primary);
+            transform: translateY(-5px); /* Efecto de salto */
+        }
+
+        /* Mobile Dropdown Specific Styles */
+        .mobile-menu .dropdown-content {
+            position: static; /* Los dropdowns se expanden en línea en móvil */
+            display: none; /* Oculto por defecto, se muestra con JS/checkbox */
+            flex-direction: column;
+            width: 100%;
+            box-shadow: none;
+            margin-top: 0;
+            border-radius: 0;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparente para sub-elementos */
+        }
+        .mobile-menu .dropdown-content a {
+            justify-content: flex-start; /* Alinea el contenido de las subcategorías a la izquierda */
+            text-align: left;
+            padding-left: 2.5rem; /* Indent sub-items */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transición para salto */
+        }
+        .mobile-menu .dropdown-content a:hover {
+            transform: translateY(-3px); /* Efecto de salto más sutil para sub-elementos */
+        }
+        /* Show mobile dropdown content when checkbox is checked */
+        .mobile-menu .dropdown-toggle-checkbox:checked ~ .dropdown-content {
+            display: flex;
+        }
+        .mobile-menu .dropdown-toggle-checkbox + label .fas.fa-chevron-down {
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu .dropdown-toggle-checkbox:checked + label .fas.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             .nav-desktop {
-                display: none;
+                display: none; /* Oculta el menú de escritorio en móvil */
             }
             .mobile-menu-button {
-                display: block;
-            }
-            .nav-link-dropdown span {
-                font-size: 0.9rem;
-            }
-            /* Mobile dropdowns should not be absolute, but expand inline */
-            .mobile-menu .dropdown-content {
-                position: static;
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                box-shadow: none;
-                margin-top: 0;
-                border-radius: 0;
-                background-color: var(--color-dark-bg); /* Slightly darker for sub-items */
-            }
-            .mobile-menu .dropdown-content a {
-                padding-left: 2.5rem; /* Indent sub-items */
-            }
-            /* Hide mobile dropdown content by default, show with JS */
-            .mobile-menu .dropdown-toggle-checkbox:checked ~ .dropdown-content {
-                display: flex;
-            }
-            .mobile-menu .dropdown-toggle-checkbox + label .fas.fa-chevron-down {
-                transition: transform 0.3s ease;
-            }
-            .mobile-menu .dropdown-toggle-checkbox:checked + label .fas.fa-chevron-down {
-                transform: rotate(180deg);
+                display: block; /* Muestra el botón de hamburguesa en móvil */
             }
         }
     </style>
@@ -210,11 +327,10 @@
 
     <!-- Header Section -->
     <header class="bg-medium-dark-bg text-text-light py-4 border-b border-border sticky top-0 z-50" style="background-color: var(--color-medium-dark-bg); border-color: var(--color-border);">
-        <div class="container mx-auto px-4 flex justify-between items-center relative">
-            <!-- Logo (placeholder for 'H' logo from image) -->
+        <div class="w-full px-4 flex justify-between items-center relative">
+            <!-- Logo -->
             <a href="#" class="flex items-center">
                 <img src="https://placehold.co/40x40/F4F4F4/222222?text=H" alt="Logo" class="h-10 mr-2">
-                <!-- You can add text here if your logo includes text, e.g., <span class="text-2xl font-bold">TuHostMC</span> -->
             </a>
             
             <!-- Mobile Menu Button -->
@@ -224,10 +340,10 @@
 
             <!-- Desktop Navigation -->
             <nav class="nav-desktop hidden md:block">
-                <ul class="flex space-x-6 items-center">
+                <ul class="flex space-x-6 items-center justify-end">
                     <!-- Minecraft Hosting Dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="hover:text-primary transition-colors duration-300 font-medium nav-link-dropdown">
+                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
                             <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                         <div class="dropdown-content">
@@ -236,23 +352,23 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary transition-colors duration-300 font-medium nav-link-dropdown">
+                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
                             <span>Cloud Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary transition-colors duration-300 font-medium nav-link-dropdown">
+                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
                             <span>Game Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary transition-colors duration-300 font-medium nav-link-dropdown">
+                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
                             <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                     </li>
                     <li>
                         <!-- "ÁREA DE CLIENTES" button -->
-                        <a href="#" class="bg-primary text-text-dark px-5 py-2 rounded-md hover:bg-yellow-400 transition-colors duration-300 font-semibold flex items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark px-5 py-2 rounded-md font-semibold flex items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             <i class="fas fa-user text-lg"></i>
                             <span>ÁREA DE CLIENTES</span>
                             <i class="fas fa-chevron-down text-xs"></i>
@@ -263,11 +379,11 @@
         </div>
 
         <!-- Mobile Menu (initially hidden) -->
-        <div class="mobile-menu md:hidden" id="mobile-menu" style="background-color: var(--color-medium-dark-bg); border-color: var(--color-border);">
+        <div class="mobile-menu md:hidden" id="mobile-menu">
             <!-- Minecraft Hosting Dropdown for Mobile -->
             <div class="w-full">
                 <input type="checkbox" id="mobile-minecraft-hosting-toggle" class="dropdown-toggle-checkbox hidden">
-                <label for="mobile-minecraft-hosting-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-center items-center gap-2 cursor-pointer">
+                <label for="mobile-minecraft-hosting-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
                     <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                 </label>
                 <div class="dropdown-content">
@@ -276,13 +392,13 @@
                 </div>
             </div>
             
-            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-center items-center gap-2">
+            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
                 <span>Cloud Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
             </a>
-            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-center items-center gap-2">
+            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
                 <span>Game Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
             </a>
-            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-center items-center gap-2">
+            <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
                 <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
             </a>
             <a href="#" class="block py-2 px-4 bg-primary text-text-dark mx-4 rounded-md mt-2 text-center font-semibold flex justify-center items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
@@ -303,7 +419,7 @@
                 <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-text-muted">
                     Servidores de Minecraft de alto rendimiento, configuración instantánea y soporte 24/7. ¡Tu aventura empieza aquí!
                 </p>
-                <a href="#plans" class="bg-primary text-dark-bg font-bold py-4 px-10 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-yellow-400 hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                <a href="#plans" class="bg-primary text-dark-bg font-bold py-4 px-10 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                     Ver Planes
                 </a>
             </div>
@@ -378,7 +494,7 @@
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Protección Anti-DDoS</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Copias de Seguridad</li>
                         </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             Comprar Ahora
                         </a>
                     </div>
@@ -396,7 +512,7 @@
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Protección Anti-DDoS Premium</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Copias de Seguridad Diarias</li>
                         </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             Comprar Ahora
                         </a>
                     </div>
@@ -413,7 +529,7 @@
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Protección Anti-DDoS Elite</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Soporte Prioritario 24/7</li>
                         </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-yellow-400 hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             Comprar Ahora
                         </a>
                     </div>
@@ -479,7 +595,7 @@
                             "¡Increíble rendimiento! Mi servidor nunca había funcionado tan bien. El soporte es rápido y muy útil."
                         </p>
                         <div class="flex items-center">
-                            <img src="https://placehold.co/60x60/4CAF50/FFFFFF?text=J.D." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
+                            <img src="https://placehold.co/60x60/FFD700/212121?text=J.D." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
                             <div>
                                 <p class="font-semibold text-text-light">Juan David</p>
                                 <p class="text-sm text-text-muted">Propietario de Servidor</p>
@@ -492,7 +608,7 @@
                             "El panel de control es súper fácil de usar, incluso para principiantes. Pude instalar mi modpack favorito en minutos."
                         </p>
                         <div class="flex items-center">
-                            <img src="https://placehold.co/60x60/FF9800/FFFFFF?text=M.G." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
+                            <img src="https://placehold.co/60x60/00CED1/FFFFFF?text=M.G." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-secondary">
                             <div>
                                 <p class="font-semibold text-text-light">María García</p>
                                 <p class="text-sm text-text-muted">Jugadora y Administradora</p>
@@ -505,7 +621,7 @@
                             "La protección DDoS es de primera. Mi servidor ha resistido varios ataques sin ningún problema. ¡Muy recomendado!"
                         </p>
                         <div class="flex items-center">
-                            <img src="https://placehold.co/60x60/4CAF50/FFFFFF?text=A.R." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
+                            <img src="https://placehold.co/60x60/FFD700/212121?text=A.R." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
                             <div>
                                 <p class="font-semibold text-text-light">Andrés Rojas</p>
                                 <p class="text-sm text-text-muted">Streamer de Minecraft</p>
@@ -641,28 +757,55 @@
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
-            mobileMenuButton.addEventListener('click', function() {
+            function toggleMobileMenu() {
                 mobileMenu.classList.toggle('active');
-            });
-
-            // Handle mobile dropdown toggle
-            const mobileDropdownToggle = document.getElementById('mobile-minecraft-hosting-toggle');
-            if (mobileDropdownToggle) {
-                mobileDropdownToggle.addEventListener('change', function() {
-                    // This will be handled by CSS :checked pseudo-class
-                });
+                // Evita el desplazamiento del cuerpo cuando el menú está abierto
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
             }
 
-            // Cerrar el menú móvil al hacer clic en un enlace (excepto los toggles de dropdown)
+            // Abre/Cierra el menú con el botón
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+            // Cierra el menú al hacer clic en cualquier enlace dentro del menú
             const mobileMenuLinks = mobileMenu.querySelectorAll('a');
             mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    // Only close if it's not a dropdown toggle (which doesn't have an href)
-                    if (link.getAttribute('href') !== '#') {
-                        mobileMenu.classList.remove('active');
+                link.addEventListener('click', function(event) {
+                    // Si el enlace es solo un ancla local (ej. href="#"), previene el comportamiento por defecto
+                    // para que el desplazamiento suave funcione antes de cerrar el menú.
+                    if (link.getAttribute('href').startsWith('#')) {
+                        event.preventDefault(); // Previene el salto instantáneo
+                        // Opcional: añade un pequeño retardo antes de cerrar para que el desplazamiento suave sea visible
+                        setTimeout(toggleMobileMenu, 300); // Cierra el menú después de un breve retardo
+                    } else {
+                        toggleMobileMenu(); // Cierra el menú inmediatamente para enlaces externos o de página
                     }
                 });
             });
+
+            // Cierra el menú al hacer clic fuera de él o del botón de alternar
+            document.addEventListener('click', function(event) {
+                const isClickInsideMenu = mobileMenu.contains(event.target);
+                const isClickOnToggleButton = mobileMenuButton.contains(event.target);
+
+                if (mobileMenu.classList.contains('active') && !isClickInsideMenu && !isClickOnToggleButton) {
+                    toggleMobileMenu(); // Cierra el menú
+                }
+            });
+
+            // Detiene la propagación de clics dentro del propio menú móvil
+            // Esto es importante para que los clics dentro del menú no cierren el menú
+            // debido al listener del documento.
+            mobileMenu.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            // Maneja el toggle de los desplegables móviles (via checkbox CSS)
+            const mobileDropdownToggle = document.getElementById('mobile-minecraft-hosting-toggle');
+            if (mobileDropdownToggle) {
+                mobileDropdownToggle.addEventListener('change', function() {
+                    // Esto será manejado por la pseudo-clase CSS :checked
+                });
+            }
         });
     </script>
 </body>
