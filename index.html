@@ -128,7 +128,6 @@
                 opacity: 0;
             }
             20% {
-                /* Un brillo final y persistente, pero sutil */
                 box-shadow:
                     0 0 80px 40px rgba(0, 206, 209, 0.7);
                 opacity: 0.6;
@@ -555,6 +554,10 @@
             .mobile-menu-button {
                 display: block;
             }
+            /* Adjust logo size for mobile */
+            header .flex.items-center img {
+                height: 4rem; /* h-16 */
+            }
             .location-grid {
                 grid-template-columns: 1fr; /* Single column on small screens */
             }
@@ -698,8 +701,8 @@
     <header class="bg-medium-dark-bg text-text-light py-4 sticky top-0 z-50" style="background-color: var(--color-medium-dark-bg);">
         <div class="w-full px-4 flex justify-between items-center relative">
             <!-- Logo -->
-            <a href="#" class="flex items-center">
-                <img src="./images/logo.ico" alt="Logo" class="h-24 mr-2"> <!-- Updated logo size to h-24 (200% of h-12) -->
+            <a href="index.html" class="flex items-center">
+                <img src="./images/logo.ico" alt="Logo" class="h-24 md:h-24 sm:h-16 mr-2"> <!-- Adjusted logo size for mobile -->
             </a>
             
             <!-- Mobile Menu Button -->
@@ -712,21 +715,21 @@
                 <ul class="flex space-x-6 items-center justify-end">
                     <!-- Minecraft Hosting Dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
+                        <a href="minecraft.html" class="hover:text-primary font-medium nav-link-dropdown">
                             <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                         <div class="dropdown-content">
-                            <a href="#"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
-                            <a href="#"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
+                            <a href="minecraft.html"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
+                            <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary font-medium">
+                        <a href="service-unavailable.html" class="hover:text-primary font-medium">
                             <span>Web Hosting</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="hover:text-primary font-medium">
+                        <a href="service-unavailable.html" class="hover:text-primary font-medium">
                             <span>Web Design</span>
                         </a>
                     </li>
@@ -736,10 +739,10 @@
                             <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
                         </a>
                         <div class="dropdown-content">
-                            <a href="#"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
-                            <a href="#"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
-                            <a href="#"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
-                            <a href="#"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
+                            <a href="service-unavailable.html"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
+                            <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
+                            <a href="terminos-y-condiciones.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                            <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
                         </div>
                     </li>
                     <li>
@@ -751,9 +754,9 @@
                         </a>
                         <!-- Dropdown content for "ÁREA DE CLIENTES" -->
                         <div class="dropdown-content">
-                            <a href="#"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
-                            <a href="#"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
-                            <a href="#"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
+                            <a href="service-unavailable.html"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
+                            <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
+                            <a href="service-unavailable.html"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
                             <a href="https://discord.gg/83CWNNKaah" target="_blank" class="block py-2 px-4 hover:bg-gray-700"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
                         </div>
                     </li>
@@ -771,18 +774,18 @@
                 <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
             </label>
             <div class="dropdown-content">
-                <a href="#"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
-                <a href="#"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
+                <a href="minecraft.html"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
+                <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
             </div>
         </div>
         
         <!-- Web Hosting for Mobile -->
-        <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
+        <a href="service-unavailable.html" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
             <span>Web Hosting</span>
         </a>
 
         <!-- Web Design for Mobile -->
-        <a href="#" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
+        <a href="service-unavailable.html" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
             <span>Web Design</span>
         </a>
 
@@ -793,10 +796,10 @@
                 <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
             </label>
             <div class="dropdown-content">
-                <a href="#"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
-                <a href="#"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
-                <a href="#"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
-                <a href="#"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
+                <a href="service-unavailable.html"><i class="fas fa-headset mr-2 text-primary" style="color: var(--color-primary);"></i>Soporte al Cliente</a>
+                <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
+                <a href="terminos-y-condiciones.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
             </div>
         </div>
 
@@ -807,9 +810,9 @@
                 <span>ÁREA DE CLIENTES</span> <i class="fas fa-chevron-down text-xs"></i>
             </label>
             <div class="dropdown-content">
-                <a href="#"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
-                <a href="#"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
-                <a href="#"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
+                <a href="service-unavailable.html"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
+                <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
+                <a href="service-unavailable.html"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
                 <a href="https://discord.gg/83CWNNKaah" target="_blank" class="block py-2 px-4 hover:bg-gray-700"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
             </div>
         </div>
@@ -902,7 +905,7 @@
                                 <g>
                                     <g>
                                         <g>
-                                            <path style="fill:#FFFFFF;" d="M411.15,70.967c-103.64,0-207.047,0-310.301,0c-16.495,0-29.883,13.387-29.883,29.883c0,17.318,0,293.859,0,310.301c0,16.495,13.387,29.883,29.883,29.883c35.584,0,271.993,0,310.301,0c16.495,0,29.883-13.387,29.883-29.883c0-35.584,0-271.993,0-310.301C441.033,84.354,427.646,70.967,411.15,70.967z"/>
+                                            <path style="fill:#FFFFFF;" d="M411.15,70.967c-103.64,0-207.047,0-310.301,0c-16.495,0-29.883,13.387-29.883,29.883c0,17.318,0,293.859,0,310.301c0,16.495,13.387,29.883,29.883,29.883c35.584,0,271.993,0,310.301,0c16.495,0,29.883-13.387-29.883-29.883c0-35.584,0-271.993,0-310.301C441.033,84.354,427.646,70.967,411.15,70.967z"/>
                                             <path style="fill:#CDDCF9;" d="M120.98,120.981v270.039H391.02V120.981C376.017,120.981,135.983,120.981,120.98,120.981z"/>
                                             <path style="fill:#FFFFFF;" d="M316.004,220.998c13.816,0,25.012,11.196,25.012,25.002s-11.196,25.002-25.012,25.002c-13.806,0-25.002-11.196-25.002-25.002S302.198,220.998,316.004,220.998z"/>
                                             <path style="fill:#FFFFFF;" d="M195.996,240.999c13.806,0,25.002,11.196,25.002,25.002s-11.196,25.002-25.002,25.002c-13.816,0-25.012-11.196-25.012-25.002S182.18,240.999,195.996,240.999z"/>
@@ -1082,13 +1085,13 @@
         <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
             <!-- Footer Column 1: Logo & Description -->
             <div>
-                <a href="#" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">Voltix Cloud</a>
+                <a href="index.html" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">Voltix Cloud</a>
                 <p class="text-sm">
                     Voltix Cloud ofrece hosting de Minecraft de alto rendimiento con soporte excepcional y control total para tu servidor.
                 </p>
                 <div class="flex justify-center md:justify-start space-x-3 mt-5">
-                    <a href="https://discord.gg/83CWNNKaah" target="_blank" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-discord text-xl"></i></a>
                     <a href="https://www.youtube.com/@VoltixCloud" target="_blank" aria-label="YouTube" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-youtube text-xl"></i></a>
+                    <a href="https://discord.gg/83CWNNKaah" target="_blank" aria-label="Discord" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-discord text-xl"></i></a>
                     <a href="https://www.facebook.com/VoltixCloud" target="_blank" aria-label="Facebook" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
                     <a href="https://twitter.com/VoltixCloud" target="_blank" aria-label="Twitter" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-twitter text-xl"></i></a>
                     <a href="https://www.instagram.com/VoltixCloud" target="_blank" aria-label="Instagram" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-instagram text-xl"></i></a>
@@ -1101,7 +1104,7 @@
                 <ul class="space-y-1">
                     <li><a href="#locations" class="hover:text-primary transition-colors duration-300 text-sm">Ubicaciones</a></li>
                     <li><a href="#faq" class="hover:text-primary transition-colors duration-300 text-sm">Preguntas Frecuentes</a></li>
-                    <li><a href="#contact" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
                 </ul>
             </div>
 
@@ -1109,9 +1112,9 @@
             <div>
                 <h4 class="text-lg font-semibold text-text-light mb-3">Legal</h4>
                 <ul class="space-y-1">
-                    <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Política de Privacidad</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
+                    <li><a href="terminos-y-condiciones.html" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Privacidad</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
                 </ul>
                 <h4 class="text-lg font-semibold text-text-light mb-3 mt-5">Contacto</h4>
                 <p class="text-sm">Email: <a href="mailto:info@voltixcloud.com" class="hover:text-primary">info@voltixcloud.com</a></p>
@@ -1205,7 +1208,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
-                            <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                            <a href="minecraft.html" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                                 <i class="fas fa-play mr-2"></i>
                                 <span>Adquirir un <br> SERVIDOR DE MINECRAFT</span>
                                 <i class="fas fa-angle-right text-sm ml-1"></i>
@@ -1245,7 +1248,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
-                            <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                            <a href="service-unavailable.html" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                                 <i class="fas fa-laptop-code mr-2"></i>
                                 <span>Obtener una <br> WEB PROFESIONAL</span>
                                 <i class="fas fa-angle-right text-sm ml-1"></i>
