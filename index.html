@@ -15,13 +15,13 @@
     <style>
         /* Configuración de Tailwind para colores y fuentes personalizadas */
         :root {
-            --color-primary: #FFD700; /* Amarillo - Color primario para acentos */
-            --color-secondary: #00CED1; /* Dark Cyan - Azul vibrante para acentos secundarios */
+            --color-primary: #00CED1; /* Cian - Color primario para acentos (antes amarillo) */
+            --color-secondary: #FFD700; /* Amarillo - Azul vibrante para acentos secundarios (antes cian) */
             --color-dark-bg: rgba(0, 0, 0, 0.95); /* Negro puro con ligera transparencia */
             --color-medium-dark-bg: rgba(10, 10, 10, 0.95); /* Negro oscuro fuerte con ligera transparencia */
             --color-card-bg: #2B2B2B; /* Fondo para tarjetas y elementos */
             --color-text-light: #F4F4F4; /* Texto blanco/gris claro */
-            --color-text-dark: #212121; /* Texto oscuro para el botón amarillo */
+            --color-text-dark: #212121; /* Texto oscuro para el botón cian */
             --color-text-muted: #A0A0A0; /* Texto gris atenuado */
             --color-border: #444444; /* Borde oscuro */
         }
@@ -37,6 +37,7 @@
             color: var(--color-text-light);
             position: relative; /* Necesario para el pseudo-elemento de animación */
             overflow-x: hidden; /* Evitar desbordamiento horizontal */
+            font-size: 0.95rem; /* Reduced base font size */
         }
 
         /* Pseudo-elemento para la animación de rayo en el fondo del body */
@@ -63,7 +64,7 @@
                 /* Primer destello más fuerte y brillante */
                 box-shadow:
                     0 0 120px 60px rgba(255, 255, 255, 1), /* Blanco muy brillante y amplio */
-                    0 0 240px 120px rgba(255, 215, 0, 0.9);   /* Amarillo dorado muy amplio */
+                    0 0 240px 120px rgba(0, 206, 209, 0.9);   /* Cian muy amplio */
                 opacity: 1;
             }
             6% {
@@ -74,7 +75,7 @@
                 /* Segundo destello, ligeramente diferente y fuerte */
                 box-shadow:
                     0 0 150px 75px rgba(255, 255, 255, 1),
-                    0 0 300px 150px rgba(255, 215, 0, 1);
+                    0 0 300px 150px rgba(0, 206, 209, 1);
                 opacity: 1; /* Opacidad total para un flash más impactante */
             }
             11% {
@@ -85,7 +86,7 @@
                 /* Tercer destello, más intenso y grande */
                 box-shadow:
                     0 0 180px 90px rgba(255, 255, 255, 1),
-                    0 0 360px 180px rgba(255, 215, 0, 1);
+                    0 0 360px 180px rgba(0, 206, 209, 1);
                 opacity: 1;
             }
             16% {
@@ -95,7 +96,7 @@
             20% {
                 /* Un brillo final y persistente, pero sutil */
                 box-shadow:
-                    0 0 80px 40px rgba(255, 215, 0, 0.7);
+                    0 0 80px 40px rgba(0, 206, 209, 0.7);
                 opacity: 0.6;
             }
             21% {
@@ -104,6 +105,18 @@
             }
         }
 
+        /* Keyframes para la animación de balanceo del cartel (adelante/atrás) */
+        @keyframes swing-sign {
+            0%, 100% {
+                transform: rotateX(0deg);
+            }
+            25% {
+                transform: rotateX(-15deg); /* Swing slightly forward (increased intensity) */
+            }
+            75% {
+                transform: rotateX(15deg);  /* Swing slightly backward (increased intensity) */
+            }
+        }
 
         h1, h2, h3, h4 {
             font-family: 'Poppins', sans-serif;
@@ -181,8 +194,8 @@
         /* Animación de salto para el botón "ÁREA DE CLIENTES" */
         .nav-desktop a.bg-primary:hover {
             transform: translateY(-5px); /* Efecto de salto */
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); /* Sombra para el efecto de salto */
-            background-color: var(--color-secondary); /* Cambio de color al hacer hover */
+            box-shadow: 0 5px 15px rgba(0, 206, 209, 0.4); /* Sombra para el efecto de salto, ajustado a cian */
+            background-color: var(--color-secondary); /* Cambio de color al hacer hover (ahora amarillo) */
         }
 
         /* Dropdown styling */
@@ -234,10 +247,11 @@
             display: flex; /* Siempre flex para la estructura interna */
             flex-direction: column;
             position: fixed;
-            top: 0;
+            /* Adjusted top position to be below the header */
+            top: 4.5rem; /* Roughly 72px, adjust if header height changes */
             right: 0;
             width: min(300px, 85vw);
-            max-height: 100vh; /* Asegura que no exceda la altura de la pantalla */
+            max-height: calc(100vh - 4.5rem); /* Adjust max-height to fit below header */
             background-color: rgba(10, 10, 10, 0.98);
             border-left: 1px solid var(--color-border);
             padding: 1rem 0;
@@ -280,12 +294,6 @@
             z-index: 1;
         }
 
-        .mobile-menu a span,
-        .mobile-menu label span {
-            text-align: left;
-            flex-grow: 1;
-        }
-
         .mobile-menu a:hover,
         .mobile-menu label:hover {
             background-color: rgba(58, 58, 58, 0.3);
@@ -324,6 +332,12 @@
         }
         .mobile-menu .dropdown-toggle-checkbox:checked + label .fas.fa-chevron-down {
             transform: rotate(180deg);
+        }
+
+        /* Apply swing animation to the button */
+        .animate-swing {
+            animation: swing-sign 2s ease-in-out infinite;
+            transform-origin: center top;
         }
 
         /* Responsive adjustments */
@@ -448,171 +462,210 @@
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="hero-bg text-center py-32 md:py-48 text-text-light relative overflow-hidden">
+        <section id="hero" class="hero-bg text-center py-24 md:py-32 text-text-light relative overflow-hidden">
             <div class="container mx-auto px-4 z-10 relative">
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-4 text-shadow-lg" style="text-shadow: 0 0 15px rgba(255,215,0,0.5);">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
                     Aloja tu Mundo Minecraft <br class="hidden md:block"> Sin Lag, Full Control.
                 </h1>
-                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-text-muted">
+                <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto text-text-muted">
                     Servidores de Minecraft de alto rendimiento, configuración instantánea y soporte 24/7. ¡Tu aventura empieza aquí!
                 </p>
-                <a href="#plans" class="bg-primary text-dark-bg font-bold py-4 px-10 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                <a href="#plans" class="bg-primary text-dark-bg font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                     Ver Planes
                 </a>
+
+                <!-- New section based on user's image -->
+                <div class="mt-12 bg-medium-dark-bg bg-opacity-80 p-6 rounded-lg shadow-xl max-w-4xl mx-auto text-left border border-border">
+                    <p class="text-primary text-xs font-semibold uppercase mb-1" style="color: var(--color-primary);">ADQUIERE AHORA</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-text-light">MINECRAFT HOSTING</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-base">
+                        <div class="flex items-center">
+                            <i class="fas fa-gamepad text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                            <span>Soporte para Java & Bedrock.</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-shield-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                            <span>Protección <span class="font-bold">Anti-DDoS</span> avanzada.</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-infinity text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                            <span>Slots ilimitados.</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-cube text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                            <span>Todas las versiones y modpacks.</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-dollar-sign text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
+                            <span>Precios desde $0.95/gb/mes</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                            <i class="fas fa-play mr-2"></i>
+                            <span>Adquirir un <br> SERVIDOR DE MINECRAFT</span>
+                            <i class="fas fa-angle-right text-sm ml-1"></i>
+                        </a>
+                        <a href="#" class="text-primary font-semibold hover:underline flex items-center gap-2 text-sm" style="color: var(--color-primary);">
+                            <span>Acerca de Voltix Cloud</span>
+                            <i class="fas fa-angle-right text-xs ml-1"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Features Section -->
-        <section id="features" class="py-16 md:py-24 bg-dark-bg" style="background-color: var(--color-dark-bg);">
+        <section id="features" class="py-12 md:py-20 bg-dark-bg" style="background-color: var(--color-dark-bg);">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-primary" style="color: var(--color-primary);">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     Características Clave
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Feature Item 1 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-rocket text-5xl mb-6 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-2xl font-semibold mb-3 text-text-light">Rendimiento Extremo</h3>
-                        <p class="text-text-muted">Procesadores de última generación y almacenamiento NVMe para una experiencia sin lag.</p>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
+                        <i class="fas fa-rocket text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-text-light">Rendimiento Extremo</h3>
+                        <p class="text-text-muted text-sm">Procesadores de última generación y almacenamiento NVMe para una experiencia sin lag.</p>
                     </div>
                     <!-- Feature Item 2 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-cogs text-5xl mb-6 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-2xl font-semibold mb-3 text-text-light">Panel de Control Intuitivo</h3>
-                        <p class="text-text-muted">Gestiona tu servidor, mods y plugins con facilidad desde un panel amigable.</p>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
+                        <i class="fas fa-cogs text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-text-light">Panel de Control Intuitivo</h3>
+                        <p class="text-text-muted text-sm">Gestiona tu servidor, mods y plugins con facilidad desde un panel amigable.</p>
                     </div>
                     <!-- Feature Item 3 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-shield-alt text-5xl mb-6 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-2xl font-semibold mb-3 text-text-light">Protección Anti-DDoS</h3>
-                        <p class="text-text-muted">Defensa avanzada para mantener tu servidor seguro y online 24/7.</p>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
+                        <i class="fas fa-shield-alt text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-text-light">Protección Anti-DDoS</h3>
+                        <p class="text-text-muted text-sm">Defensa avanzada para mantener tu servidor seguro y online 24/7.</p>
                     </div>
                     <!-- Feature Item 4 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-headset text-5xl mb-6 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-2xl font-semibold mb-3 text-text-light">Soporte 24/7</h3>
-                        <p class="text-text-muted">Nuestro equipo de expertos está listo para ayudarte en cualquier momento.</p>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
+                        <i class="fas fa-headset text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-text-light">Soporte 24/7</h3>
+                        <p class="text-text-muted text-sm">Nuestro equipo de expertos está listo para ayudarte en cualquier momento.</p>
                     </div>
                     <!-- Feature Item 5 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-cloud-upload-alt text-5xl mb-6 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-2xl font-semibold mb-3 text-text-light">Copias de Seguridad Automáticas</h3>
-                        <p class="text-text-muted">Tus mundos están siempre a salvo con nuestras copias de seguridad diarias.</p>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
+                        <i class="fas fa-cloud-upload-alt text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-text-light">Copias de Seguridad Automáticas</h3>
+                        <p class="text-text-muted text-sm">Tus mundos están siempre a salvo con nuestras copias de seguridad diarias.</p>
                     </div>
                     <!-- Feature Item 6 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
-                        <i class="fas fa-bolt text-5xl mb-6 text-secondary" style="color: var(--color-secondary);"></i>
-                        <h3 class="text-2xl font-semibold mb-3 text-text-light">Configuración Instantánea</h3>
-                        <p class="text-text-muted">Tu servidor listo para jugar en minutos, sin esperas.</p>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-300 border border-transparent hover:border-primary" style="background-color: var(--color-card-bg); border-color: var(--color-border);">
+                        <i class="fas fa-bolt text-4xl mb-4 text-secondary" style="color: var(--color-secondary);"></i>
+                        <h3 class="text-xl font-semibold mb-2 text-text-light">Configuración Instantánea</h3>
+                        <p class="text-text-muted text-sm">Tu servidor listo para jugar en minutos, sin esperas.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Plans Section -->
-        <section id="plans" class="py-16 md:py-24 bg-medium-dark-bg" style="background-color: var(--color-medium-dark-bg);">
+        <section id="plans" class="py-12 md:py-20 bg-medium-dark-bg" style="background-color: var(--color-medium-dark-bg);">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-primary" style="color: var(--color-primary);">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     Nuestros Planes de Hosting
                 </h2>
-                <p class="text-xl text-text-muted mb-12 max-w-2xl mx-auto">
+                <p class="text-lg text-text-muted mb-10 max-w-2xl mx-auto">
                     Encuentra el plan perfecto para tu aventura Minecraft. Todos los planes incluyen protección DDoS y soporte 24/7.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Plan Card 1: IRON -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl flex flex-col items-center border-2 border-transparent hover:border-primary transition-all duration-300" style="background-color: var(--color-card-bg);">
-                        <h3 class="text-3xl font-bold mb-4 text-primary" style="color: var(--color-primary);">IRON</h3>
-                        <p class="text-5xl font-extrabold mb-6 text-text-light">$7.99<span class="text-xl font-normal text-text-muted">/mes</span></p>
-                        <ul class="text-left text-lg text-text-muted space-y-3 mb-8 w-full">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> 4 GB de RAM</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Slots Ilimitados</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Almacenamiento NVMe</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Panel de Control</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Protección Anti-DDoS</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Copias de Seguridad</li>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl flex flex-col items-center border-2 border-transparent hover:border-primary transition-all duration-300" style="background-color: var(--color-card-bg);">
+                        <h3 class="text-2xl font-bold mb-3 text-primary" style="color: var(--color-primary);">IRON</h3>
+                        <p class="text-4xl font-extrabold mb-5 text-text-light">$7.99<span class="text-lg font-normal text-text-muted">/mes</span></p>
+                        <ul class="text-left text-base text-text-muted space-y-2 mb-6 w-full">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 4 GB de RAM</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Slots Ilimitados</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Almacenamiento NVMe</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Panel de Control</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Protección Anti-DDoS</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Copias de Seguridad</li>
                         </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             Comprar Ahora
                         </a>
                     </div>
 
                     <!-- Plan Card 2: DIAMOND (Popular) -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl flex flex-col items-center border-2 border-primary transform scale-105 transition-all duration-300 relative" style="background-color: var(--color-card-bg); border-color: var(--color-primary);">
-                        <span class="absolute top-0 right-0 bg-primary text-text-dark text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg" style="background-color: var(--color-primary); color: var(--color-text-dark);">POPULAR</span>
-                        <h3 class="text-3xl font-bold mb-4 text-primary" style="color: var(--color-primary);">DIAMOND</h3>
-                        <p class="text-5xl font-extrabold mb-6 text-text-light">$14.99<span class="text-xl font-normal text-text-muted">/mes</span></p>
-                        <ul class="text-left text-lg text-text-muted space-y-3 mb-8 w-full">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> 8 GB de RAM</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Slots Ilimitados</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Almacenamiento NVMe</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Panel de Control Avanzado</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Protección Anti-DDoS Premium</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Copias de Seguridad Diarias</li>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl flex flex-col items-center border-2 border-primary transform scale-105 transition-all duration-300 relative" style="background-color: var(--color-card-bg); border-color: var(--color-primary);">
+                        <span class="absolute top-0 right-0 bg-primary text-text-dark text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg" style="background-color: var(--color-primary); color: var(--color-text-dark);">POPULAR</span>
+                        <h3 class="text-2xl font-bold mb-3 text-primary" style="color: var(--color-primary);">DIAMOND</h3>
+                        <p class="text-4xl font-extrabold mb-5 text-text-light">$14.99<span class="text-lg font-normal text-text-muted">/mes</span></p>
+                        <ul class="text-left text-base text-text-muted space-y-2 mb-6 w-full">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 8 GB de RAM</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Slots Ilimitados</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Almacenamiento NVMe</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Panel de Control Avanzado</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Protección Anti-DDoS Premium</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Copias de Seguridad Diarias</li>
                         </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             Comprar Ahora
                         </a>
                     </div>
 
                     <!-- Plan Card 3: OBSIDIAN -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl flex flex-col items-center border-2 border-transparent hover:border-primary transition-all duration-300" style="background-color: var(--color-card-bg);">
-                        <h3 class="text-3xl font-bold mb-4 text-primary" style="color: var(--color-primary);">OBSIDIAN</h3>
-                        <p class="text-5xl font-extrabold mb-6 text-text-light">$24.99<span class="text-xl font-normal text-text-muted">/mes</span></p>
-                        <ul class="text-left text-lg text-text-muted space-y-3 mb-8 w-full">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> 16 GB de RAM</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Slots Ilimitados</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Almacenamiento NVMe Ilimitado*</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Panel de Control Profesional</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Protección Anti-DDoS Elite</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Soporte Prioritario 24/7</li>
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl flex flex-col items-center border-2 border-transparent hover:border-primary transition-all duration-300" style="background-color: var(--color-card-bg);">
+                        <h3 class="text-2xl font-bold mb-3 text-primary" style="color: var(--color-primary);">OBSIDIAN</h3>
+                        <p class="text-4xl font-extrabold mb-5 text-text-light">$24.99<span class="text-lg font-normal text-text-muted">/mes</span></p>
+                        <ul class="text-left text-base text-text-muted space-y-2 mb-6 w-full">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> 16 GB de RAM</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Slots Ilimitados</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Almacenamiento NVMe Ilimitado*</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Panel de Control Profesional</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Protección Anti-DDoS Elite</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Soporte Prioritario 24/7</li>
                         </ul>
-                        <a href="#" class="bg-primary text-text-dark font-bold py-3 px-8 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                        <a href="#" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg w-full text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
                             Comprar Ahora
                         </a>
                     </div>
                 </div>
-                <p class="text-sm text-text-muted mt-8">*Almacenamiento NVMe ilimitado sujeto a políticas de uso justo.</p>
+                <p class="text-xs text-text-muted mt-6">*Almacenamiento NVMe ilimitado sujeto a políticas de uso justo.</p>
             </div>
         </section>
 
         <!-- Why Choose Us Section -->
-        <section id="why-choose-us" class="py-16 md:py-24 bg-dark-bg" style="background-color: var(--color-dark-bg);">
+        <section id="why-choose-us" class="py-12 md:py-20 bg-dark-bg" style="background-color: var(--color-dark-bg);">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-primary" style="color: var(--color-primary);">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     ¿Por Qué Elegir TuHostMC?
                 </h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                     <div class="text-left">
-                        <h3 class="text-3xl font-semibold mb-6 text-text-light">Hardware de Vanguardia</h3>
-                        <p class="text-text-muted text-lg mb-6">
+                        <h3 class="text-2xl font-semibold mb-4 text-text-light">Hardware de Vanguardia</h3>
+                        <p class="text-text-muted text-base mb-4">
                             Utilizamos los últimos procesadores AMD Ryzen y almacenamiento NVMe ultrarrápido para garantizar que tu servidor de Minecraft funcione sin problemas, incluso con muchos jugadores y mods. Olvídate del lag y disfruta de una experiencia de juego fluida.
                         </p>
-                        <ul class="text-text-muted text-lg space-y-3">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> CPUs de alto rendimiento</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> RAM DDR5 de baja latencia</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Discos NVMe para carga rápida</li>
+                        <ul class="text-text-muted text-base space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> CPUs de alto rendimiento</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> RAM DDR5 de baja latencia</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Discos NVMe para carga rápida</li>
                         </ul>
                     </div>
-                    <div class="relative w-full h-64 md:h-96 rounded-lg overflow-hidden shadow-2xl">
+                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl">
                         <img src="https://placehold.co/800x600/2b2b2b/f4f4f4?text=Hardware+Premium" alt="Hardware de Servidor" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent"></div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-16 md:mt-24">
-                    <div class="relative w-full h-64 md:h-96 rounded-lg overflow-hidden shadow-2xl order-last lg:order-first">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mt-12 md:mt-20">
+                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl order-last lg:order-first">
                         <img src="https://placehold.co/800x600/2b2b2b/f4f4f4?text=Panel+de+Control" alt="Panel de Control" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent"></div>
                     </div>
                     <div class="text-left">
-                        <h3 class="text-3xl font-semibold mb-6 text-text-light">Control Total y Facilidad de Uso</h3>
-                        <p class="text-text-muted text-lg mb-6">
+                        <h3 class="text-2xl font-semibold mb-4 text-text-light">Control Total y Facilidad de Uso</h3>
+                        <p class="text-text-muted text-base mb-4">
                             Nuestro panel de control personalizado te da el poder de gestionar cada aspecto de tu servidor. Instala modpacks con un clic, configura plugins, accede a la consola y gestiona tus archivos sin complicaciones.
                         </p>
-                        <ul class="text-text-muted text-lg space-y-3">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Instalador de Modpacks con 1 Clic</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Acceso FTP completo</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> Consola en tiempo real</li>
+                        <ul class="text-text-muted text-base space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Instalador de Modpacks con 1 Clic</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Acceso FTP completo</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Consola en tiempo real</li>
                         </ul>
                     </div>
                 </div>
@@ -620,48 +673,48 @@
         </section>
 
         <!-- Testimonials Section -->
-        <section id="testimonials" class="py-16 md:py-24 bg-medium-dark-bg" style="background-color: var(--color-medium-dark-bg);">
+        <section id="testimonials" class="py-12 md:py-20 bg-medium-dark-bg" style="background-color: var(--color-medium-dark-bg);">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-primary" style="color: var(--color-primary);">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     Lo Que Dicen Nuestros Clientes
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Testimonial 1 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
-                        <p class="text-lg italic text-text-muted mb-6">
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
+                        <p class="text-base italic text-text-muted mb-4">
                             "¡Increíble rendimiento! Mi servidor nunca había funcionado tan bien. El soporte es rápido y muy útil."
                         </p>
                         <div class="flex items-center">
-                            <img src="https://placehold.co/60x60/FFD700/212121?text=J.D." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
+                            <img src="https://placehold.co/50x50/00CED1/212121?text=J.D." alt="Avatar de Cliente" class="w-12 h-12 rounded-full mr-3 border-2 border-primary">
                             <div>
-                                <p class="font-semibold text-text-light">Juan David</p>
-                                <p class="text-sm text-text-muted">Propietario de Servidor</p>
+                                <p class="font-semibold text-text-light text-base">Juan David</p>
+                                <p class="text-xs text-text-muted">Propietario de Servidor</p>
                             </div>
                         </div>
                     </div>
                     <!-- Testimonial 2 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
-                        <p class="text-lg italic text-text-muted mb-6">
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
+                        <p class="text-base italic text-text-muted mb-4">
                             "El panel de control es súper fácil de usar, incluso para principiantes. Pude instalar mi modpack favorito en minutos."
                         </p>
                         <div class="flex items-center">
-                            <img src="https://placehold.co/60x60/00CED1/FFFFFF?text=M.G." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-secondary">
+                            <img src="https://placehold.co/50x50/FFD700/FFFFFF?text=M.G." alt="Avatar de Cliente" class="w-12 h-12 rounded-full mr-3 border-2 border-secondary">
                             <div>
-                                <p class="font-semibold text-text-light">María García</p>
-                                <p class="text-sm text-text-muted">Jugadora y Administradora</p>
+                                <p class="font-semibold text-text-light text-base">María García</p>
+                                <p class="text-xs text-text-muted">Jugadora y Administradora</p>
                             </div>
                         </div>
                     </div>
                     <!-- Testimonial 3 -->
-                    <div class="bg-card-bg p-8 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
-                        <p class="text-lg italic text-text-muted mb-6">
+                    <div class="bg-card-bg p-6 rounded-lg shadow-xl text-left" style="background-color: var(--color-card-bg);">
+                        <p class="text-base italic text-text-muted mb-4">
                             "La protección DDoS es de primera. Mi servidor ha resistido varios ataques sin ningún problema. ¡Muy recomendado!"
                         </p>
                         <div class="flex items-center">
-                            <img src="https://placehold.co/60x60/FFD700/212121?text=A.R." alt="Avatar de Cliente" class="w-14 h-14 rounded-full mr-4 border-2 border-primary">
+                            <img src="https://placehold.co/50x50/00CED1/212121?text=A.R." alt="Avatar de Cliente" class="w-12 h-12 rounded-full mr-3 border-2 border-primary">
                             <div>
-                                <p class="font-semibold text-text-light">Andrés Rojas</p>
-                                <p class="text-sm text-text-muted">Streamer de Minecraft</p>
+                                <p class="font-semibold text-text-light text-base">Andrés Rojas</p>
+                                <p class="text-xs text-text-muted">Streamer de Minecraft</p>
                             </div>
                         </div>
                     </div>
@@ -670,56 +723,56 @@
         </section>
 
         <!-- FAQ Section -->
-        <section id="faq" class="py-16 md:py-24 bg-dark-bg" style="background-color: var(--color-dark-bg);">
+        <section id="faq" class="py-12 md:py-20 bg-dark-bg" style="background-color: var(--color-dark-bg);">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-primary" style="color: var(--color-primary);">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
                     Preguntas Frecuentes
                 </h2>
                 <div class="max-w-3xl mx-auto text-left">
                     <!-- FAQ Item 1 -->
-                    <div class="faq-item mb-4">
+                    <div class="faq-item mb-3">
                         <input type="checkbox" id="faq1">
-                        <label for="faq1" class="text-xl font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-6 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq1" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Cómo instalo mods o plugins en mi servidor?
                         </label>
-                        <div class="faq-content text-text-muted px-6 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-4 pb-4">
+                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
+                            <p class="pt-3 pb-3 text-sm">
                                 Nuestro panel de control incluye un instalador de modpacks y plugins con un solo clic. También puedes subir tus propios archivos vía FTP para una personalización completa.
                             </p>
                         </div>
                     </div>
                     <!-- FAQ Item 2 -->
-                    <div class="faq-item mb-4">
+                    <div class="faq-item mb-3">
                         <input type="checkbox" id="faq2">
-                        <label for="faq2" class="text-xl font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-6 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq2" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Puedo cambiar de plan más adelante si necesito más recursos?
                         </label>
-                        <div class="faq-content text-text-muted px-6 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-4 pb-4">
+                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
+                            <p class="pt-3 pb-3 text-sm">
                                 Sí, puedes actualizar o degradar tu plan en cualquier momento directamente desde tu panel de cliente. Los cambios se aplican de forma instantánea sin interrupción del servicio.
                             </p>
                         </div>
                     </div>
                     <!-- FAQ Item 3 -->
-                    <div class="faq-item mb-4">
+                    <div class="faq-item mb-3">
                         <input type="checkbox" id="faq3">
-                        <label for="faq3" class="text-xl font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-6 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq3" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Qué versiones de Minecraft soportan?
                         </label>
-                        <div class="faq-content text-text-muted px-6 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-4 pb-4">
+                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
+                            <p class="pt-3 pb-3 text-sm">
                                 Soportamos todas las versiones de Minecraft Java Edition (desde 1.8 hasta la más reciente), así como Spigot, Paper, Forge, Fabric y Bedrock Edition (via plugins).
                             </p>
                         </div>
                     </div>
                     <!-- FAQ Item 4 -->
-                    <div class="faq-item mb-4">
+                    <div class="faq-item mb-3">
                         <input type="checkbox" id="faq4">
-                        <label for="faq4" class="text-xl font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-6 py-4 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
+                        <label for="faq4" class="text-lg font-semibold text-text-light bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
                             ¿Ofrecen reembolso?
                         </label>
-                        <div class="faq-content text-text-muted px-6 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-4 pb-4">
+                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
+                            <p class="pt-3 pb-3 text-sm">
                                 Sí, ofrecemos una garantía de devolución de dinero de 7 días. Si no estás satisfecho con nuestro servicio, te reembolsaremos tu compra.
                             </p>
                         </div>
@@ -729,15 +782,15 @@
         </section>
 
         <!-- Call to Action Section (Bottom) -->
-        <section id="cta-bottom" class="bg-primary text-dark-bg py-16 md:py-24 text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+        <section id="cta-bottom" class="bg-primary text-dark-bg py-12 md:py-20 text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
             <div class="container mx-auto px-4">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-5">
                     ¡Crea tu Mundo Minecraft Hoy!
                 </h2>
-                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
                     Únete a miles de jugadores satisfechos y lleva tu experiencia Minecraft al siguiente nivel con TuHostMC.
                 </p>
-                <a href="#plans" class="bg-dark-bg text-primary font-bold py-4 px-10 rounded-lg text-lg uppercase transition-all duration-300 hover:bg-medium-dark-bg hover:shadow-xl" style="background-color: var(--color-dark-bg); color: var(--color-primary);">
+                <a href="#plans" class="bg-dark-bg text-primary font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-medium-dark-bg hover:shadow-xl" style="background-color: var(--color-dark-bg); color: var(--color-primary);">
                     ¡Empieza Ahora!
                 </a>
             </div>
@@ -745,45 +798,45 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-medium-dark-bg text-text-muted py-12" style="background-color: var(--color-medium-dark-bg);">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+    <footer class="bg-medium-dark-bg text-text-muted py-10" style="background-color: var(--color-medium-dark-bg);">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
             <!-- Footer Column 1: Logo & Description -->
             <div>
-                <a href="#" class="text-3xl font-extrabold text-primary mb-4 block" style="color: var(--color-primary);">TuHostMC</a>
+                <a href="#" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">TuHostMC</a>
                 <p class="text-sm">
                     TuHostMC ofrece hosting de Minecraft de alto rendimiento con soporte excepcional y control total para tu servidor.
                 </p>
-                <div class="flex justify-center md:justify-start space-x-4 mt-6">
-                    <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-discord text-2xl"></i></a>
-                    <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-twitter text-2xl"></i></a>
-                    <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-youtube text-2xl"></i></a>
+                <div class="flex justify-center md:justify-start space-x-3 mt-5">
+                    <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-discord text-xl"></i></a>
+                    <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="#" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-youtube text-xl"></i></a>
                 </div>
             </div>
 
             <!-- Footer Column 2: Quick Links -->
             <div>
-                <h4 class="text-xl font-semibold text-text-light mb-4">Enlaces Rápidos</h4>
-                <ul class="space-y-2">
-                    <li><a href="#plans" class="hover:text-primary transition-colors duration-300">Planes de Hosting</a></li>
-                    <li><a href="#features" class="hover:text-primary transition-colors duration-300">Características</a></li>
-                    <li><a href="#faq" class="hover:text-primary transition-colors duration-300">Preguntas Frecuentes</a></li>
-                    <li><a href="#contact" class="hover:text-primary transition-colors duration-300">Soporte</a></li>
+                <h4 class="text-lg font-semibold text-text-light mb-3">Enlaces Rápidos</h4>
+                <ul class="space-y-1">
+                    <li><a href="#plans" class="hover:text-primary transition-colors duration-300 text-sm">Planes de Hosting</a></li>
+                    <li><a href="#features" class="hover:text-primary transition-colors duration-300 text-sm">Características</a></li>
+                    <li><a href="#faq" class="hover:text-primary transition-colors duration-300 text-sm">Preguntas Frecuentes</a></li>
+                    <li><a href="#contact" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
                 </ul>
             </div>
 
             <!-- Footer Column 3: Legal & Contact -->
             <div>
-                <h4 class="text-xl font-semibold text-text-light mb-4">Legal</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-primary transition-colors duration-300">Términos de Servicio</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors duration-300">Política de Privacidad</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors duration-300">Política de Reembolso</a></li>
+                <h4 class="text-lg font-semibold text-text-light mb-3">Legal</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Política de Privacidad</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
                 </ul>
-                <h4 class="text-xl font-semibold text-text-light mb-4 mt-6">Contacto</h4>
+                <h4 class="text-lg font-semibold text-text-light mb-3 mt-5">Contacto</h4>
                 <p class="text-sm">Email: <a href="mailto:info@tuhostmc.com" class="hover:text-primary">info@tuhostmc.com</a></p>
             </div>
         </div>
-        <div class="text-center text-sm text-text-muted mt-12 pt-8 border-t border-border" style="border-color: var(--color-border);">
+        <div class="text-center text-xs text-text-muted mt-10 pt-6 border-t border-border" style="border-color: var(--color-border);">
             &copy; 2025 TuHostMC. Todos los derechos reservados.
         </div>
     </footer>
