@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltix Cloud - Servicio No Disponible</title>
+    <!-- Favicon -->
+    <link rel="icon" href="./images/logo.ico" type="image/x-icon">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter para texto general, Poppins para títulos, Bebas Neue para menú -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Configuración de Tailwind para colores y fuentes personalizadas */
+        :root {
+            --color-primary: #00CED1; /* Cian - Color primario para acentos */
+            --color-secondary: #FFD700; /* Amarillo - Azul vibrante para acentos secundarios */
+            --color-dark-bg: rgba(0, 0, 0, 0.95); /* Negro puro con ligera transparencia */
+            --color-medium-dark-bg: rgba(10, 10, 10, 0.8); /* Negro oscuro fuerte con mayor transparencia */
+            --color-card-bg: #2B2B2B; /* Fondo para tarjetas y elementos */
+            --color-text-light: #F4F4F4; /* Texto blanco/gris claro */
+            --color-text-dark: #212121; /* Texto oscuro para el botón cian */
+            --color-text-muted: #A0A0A0; /* Texto gris atenuado */
+            --color-border: #444444; /* Borde oscuro */
+        }
+
+        /* Custom styles to override or extend Tailwind */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Aplicar el mismo fondo que las secciones de la página principal */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/fondopagina.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Para efecto parallax */
+            color: var(--color-text-light);
+            position: relative;
+            overflow-x: hidden;
+            font-size: 0.95rem;
+            min-height: 100vh; /* Asegura que el cuerpo ocupe al menos toda la altura de la ventana */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra el contenido verticalmente */
+            align-items: center; /* Centra el contenido horizontalmente */
+            text-align: center;
+        }
+
+        /* Pseudo-elemento para la animación de rayo en el fondo del body */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+            animation: lightning-flash 5s infinite steps(1);
+            pointer-events: none;
+        }
+
+        /* Keyframes para la animación de destellos de rayo (MEJORADA Y VISIBLE) */
+        @keyframes lightning-flash {
+            0%, 100% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            5% {
+                box-shadow:
+                    0 0 120px 60px rgba(255, 255, 255, 1),
+                    0 0 240px 120px rgba(0, 206, 209, 0.9);
+                opacity: 1;
+            }
+            6% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            10% {
+                box-shadow:
+                    0 0 150px 75px rgba(255, 255, 255, 1),
+                    0 0 300px 150px rgba(0, 206, 209, 1);
+                opacity: 1;
+            }
+            11% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            15% {
+                box-shadow:
+                    0 0 180px 90px rgba(255, 255, 255, 1),
+                    0 0 360px 180px rgba(0, 206, 209, 1);
+                opacity: 1;
+            }
+            16% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            20% {
+                box-shadow:
+                    0 0 80px 40px rgba(0, 206, 209, 0.7);
+                opacity: 0.6;
+            }
+            21% {
+                box-shadow: none;
+                opacity: 0;
+            }
+        }
+
+        h1, h2 {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        p {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Floating Discord Button Styles */
+        .floating-discord-button {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: #5865F2; /* Discord brand color */
+            color: white; /* Texto blanco */
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.5); /* Sombra con color de Discord */
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            z-index: 950;
+            animation: float-discord 3s ease-in-out infinite alternate; /* Floating animation */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+        }
+
+        .floating-discord-button:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.7); /* Sombra con color de Discord más intenso */
+        }
+
+        .floating-discord-button .fab {
+            font-size: 1.8rem;
+            color: white; /* Icono de Discord blanco */
+        }
+
+        .floating-discord-button button {
+            background-color: var(--color-secondary); /* Cambiado a color secundario (amarillo) */
+            color: var(--color-text-dark); /* Texto oscuro para el botón de ingresar */
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .floating-discord-button button:hover {
+            background-color: #FFC700; /* Un poco más oscuro al pasar el ratón */
+        }
+
+        @keyframes float-discord {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Responsive adjustments for error page content */
+        .error-container {
+            background-color: var(--color-medium-dark-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px; /* Max width for the error box */
+            margin: 0 auto; /* Center the box */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--color-border);
+        }
+
+        .error-code {
+            font-size: 6rem; /* Large 404 text */
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+            text-shadow: 0 0 15px rgba(0,206,209,0.5);
+        }
+
+        .error-message {
+            font-size: 2rem;
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+        }
+
+        .error-description {
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .home-button {
+            background-color: var(--color-secondary);
+            color: var(--color-text-dark);
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .home-button:hover {
+            background-color: #FFC700;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 4rem;
+            }
+            .error-message {
+                font-size: 1.5rem;
+            }
+            .error-container {
+                padding: 1.5rem;
+                max-width: 90%;
+            }
+            .floating-discord-button {
+                width: 180px;
+                padding: 0.4rem 0.8rem;
+                bottom: 0.75rem;
+                right: 0.75rem;
+            }
+            .floating-discord-button .fab {
+                font-size: 1.3rem;
+            }
+            .floating-discord-button .text-sm {
+                font-size: 0.7rem;
+            }
+            .floating-discord-button button {
+                padding: 0.2rem 0.5rem;
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="error-container">
+        <h1 class="error-code">VOLTIX ERROR 404</h1>
+        <h2 class="error-message">¡Servicio No Disponible!</h2>
+        <p class="error-description">
+            Parece que el servicio al que intentas acceder aún no está disponible o ha sido movido.
+            Estamos trabajando para traer más funcionalidades pronto.
+        </p>
+        <a href="index.html" class="home-button">Volver a la Página Principal</a>
+    </div>
+
+    <!-- Floating Discord Button -->
+    <div class="floating-discord-button flex items-center justify-between">
+        <a href="https://discord.gg/83CWNNKaah" target="_blank" class="flex items-center gap-2 text-white no-underline">
+            <i class="fab fa-discord"></i>
+            <div class="flex flex-col text-left">
+                <span class="text-xs font-bold">DISCORD</span>
+                <span id="discord-member-count" class="text-sm">Cargando...</span>
+            </div>
+        </a>
+        <button onclick="window.open('https://discord.gg/83CWNNKaah', '_blank')" class="text-xs font-semibold py-1 px-3 rounded-md transition-colors duration-200">
+            Ingresar
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Discord Widget Configuration
+            const DISCORD_GUILD_ID = '1375999220569473115'; // Your Discord Guild ID
+            const DISCORD_INVITE_LINK = 'https://discord.gg/83CWNNKaah'; // Your Discord invite link
+            const discordMemberCountElement = document.getElementById('discord-member-count');
+
+            // Function to fetch Discord member count
+            async function fetchDiscordMemberCount() {
+                try {
+                    const response = await fetch(`https://discord.com/api/guilds/${DISCORD_GUILD_ID}/widget.json`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    if (data && data.presence_count !== undefined) {
+                        discordMemberCountElement.textContent = `${data.presence_count} Miembros en línea`;
+                    } else {
+                        discordMemberCountElement.textContent = 'N/A Miembros';
+                    }
+                } catch (error) {
+                    console.error('Error fetching Discord member count:', error);
+                    discordMemberCountElement.textContent = 'Error al cargar';
+                }
+            }
+
+            // Call function to fetch member count on load
+            fetchDiscordMemberCount();
+            // Optionally, refresh member count every few minutes
+            setInterval(fetchDiscordMemberCount, 5 * 60 * 1000); // Every 5 minutes
+        });
+    </script>
+</body>
+</html>

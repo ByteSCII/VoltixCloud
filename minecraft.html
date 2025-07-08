@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Voltix Cloud - Hosting de Minecraft de alto rendimiento, protección DDoS y soporte 24/7.">
+    <meta name="keywords" content="Hosting Minecraft, Voltix Cloud, servidores Minecraft, planes Minecraft, protección DDoS">
+    <meta name="author" content="Voltix Cloud">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hosting - Voltix Cloud</title>
+    <!-- Favicon -->
+    <link rel="icon" href="./images/logo.ico" type="image/x-icon">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter para texto general, Poppins para títulos, Bebas Neue para menú -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Configuración de Tailwind para colores y fuentes personalizadas */
+        :root {
+            --color-primary: #00CED1; /* Cian - Color primario para acentos */
+            --color-secondary: #FFD700; /* Amarillo - Azul vibrante para acentos secundarios */
+            --color-dark-bg: rgba(0, 0, 0, 0.95); /* Negro puro con ligera transparencia */
+            --color-medium-dark-bg: rgba(10, 10, 10, 0.8); /* Negro oscuro fuerte con mayor transparencia */
+            --color-card-bg: #2B2B2B; /* Fondo para tarjetas y elementos */
+            --color-text-light: #F4F4F4; /* Texto blanco/gris claro */
+            --color-text-dark: #212121; /* Texto oscuro para el botón cian */
+            --color-text-muted: #A0A0A0; /* Texto gris atenuado */
+            --color-border: #444444; /* Borde oscuro */
+        }
+
+        /* Custom styles to override or extend Tailwind */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: rgb(10, 10, 10); /* Fondo base negro oscuro fuerte */
+            color: var(--color-text-light);
+            position: relative; /* Necesario para el pseudo-elemento de animación */
+            overflow-x: hidden; /* Evitar desbordamiento horizontal */
+            font-size: 0.95rem; /* Reduced base font size */
+        }
+
+        /* Custom Scrollbar Styles for Webkit browsers (Chrome, Safari, Edge) */
+        /* Scrollbar track */
+        ::-webkit-scrollbar {
+            width: 12px; /* Ancho de la barra de desplazamiento vertical */
+            height: 12px; /* Alto de la barra de desplazamiento horizontal */
+        }
+
+        /* Scrollbar track background */
+        ::-webkit-scrollbar-track {
+            background: #333; /* Gris oscuro para el fondo de la barra */
+            border-radius: 10px; /* Bordes redondeados para el track */
+        }
+
+        /* Scrollbar thumb (the draggable part) */
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary); /* Cian para el deslizador */
+            border-radius: 10px; /* Bordes redondeados para el deslizador */
+            border: 3px solid #333; /* Borde para que se vea flotante sobre el track */
+        }
+
+        /* Scrollbar thumb on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00A3A6; /* Un poco más oscuro al pasar el ratón */
+        }
+
+        /* Pseudo-elemento para la animación de rayo en el fondo del body */
+        body::before {
+            content: '';
+            position: fixed; /* Fijo para cubrir toda la pantalla */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1; /* Asegura que esté detrás de todo el contenido */
+            animation: lightning-flash 5s infinite steps(1); /* Animación de destellos rápidos */
+            pointer-events: none; /* Permite que los clics pasen a los elementos de abajo */
+        }
+
+        /* Keyframes para la animación de destellos de rayo (MEJORADA Y VISIBLE) */
+        @keyframes lightning-flash {
+            0%, 100% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            5% {
+                /* Primer destello más fuerte y brillante */
+                box-shadow:
+                    0 0 120px 60px rgba(255, 255, 255, 1), /* Blanco muy brillante y amplio */
+                    0 0 240px 120px rgba(0, 206, 209, 0.9);   /* Cian muy amplio */
+                opacity: 1;
+            }
+            6% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            10% {
+                /* Segundo destello, ligeramente diferente y fuerte */
+                box-shadow:
+                    0 0 150px 75px rgba(255, 255, 255, 1),
+                    0 0 300px 150px rgba(0, 206, 209, 1);
+                opacity: 1; /* Opacidad total para un flash más impactante */
+            }
+            11% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            15% {
+                /* Tercer destello, más intenso y grande */
+                box-shadow:
+                    0 0 180px 90px rgba(255, 255, 255, 1),
+                    0 0 360px 180px rgba(0, 206, 209, 1);
+                opacity: 1;
+            }
+            16% {
+                box-shadow: none;
+                opacity: 0;
+            }
+            20% {
+                box-shadow:
+                    0 0 80px 40px rgba(0, 206, 209, 0.7);
+                opacity: 0.6;
+            }
+            21% {
+                box-shadow: none;
+                opacity: 0;
+            }
+        }
+
+        /* Keyframes para la animación de balanceo del cartel (adelante/atrás) */
+        @keyframes swing-sign {
+            0%, 100% {
+                transform: rotateX(0deg);
+            }
+            25% {
+                transform: rotateX(-15deg); /* Swing slightly forward (increased intensity) */
+            }
+            75% {
+                transform: rotateX(15deg);  /* Swing slightly backward (increased intensity) */
+            }
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif; /* Usando Bebas Neue para el h1 como fuente de visualización */
+        }
+        h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Hero section background with overlay */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./images/imagenseccioninicio.png'); /* Updated image path */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Specific styles for FAQ accordion */
+        .faq-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .faq-item label {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: var(--color-card-bg);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
+            color: var(--color-text-light); /* Changed to light text for FAQ questions */
+        }
+
+        .faq-item label:hover {
+            background-color: #3a3a3a;
+        }
+
+        .faq-item label::after {
+            content: '\2b'; /* Plus sign */
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item input[type="checkbox"]:checked + label::after {
+            content: '\2212'; /* Minus sign */
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            background-color: var(--color-medium-dark-bg);
+            border-radius: 0.5rem;
+            margin-top: -0.5rem; /* Overlap with label border-radius */
+            margin-bottom: 0.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item input[type="checkbox"]:checked ~ .faq-content {
+            max-height: 200px; /* Adjust as needed for content */
+            padding: 1rem 1.5rem;
+        }
+
+        /* Styles for the main navigation (desktop) */
+        .nav-desktop a,
+        .nav-desktop label {
+            font-family: 'Bebas Neue', sans-serif; /* Aplicado consistentemente */
+            transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 0.75rem 1.5rem; /* Increased padding for larger buttons */
+            font-size: 1.1rem; /* Slightly larger font size */
+        }
+
+        /* Animación de salto para enlaces de navegación */
+        .nav-desktop a:hover,
+        .nav-desktop label:hover {
+            transform: translateY(-5px); /* Efecto de salto */
+            color: var(--color-primary);
+        }
+
+        /* Animación de salto para el botón "ÁREA DE CLIENTES" */
+        .nav-desktop a.bg-primary:hover {
+            transform: translateY(-5px); /* Efecto de salto */
+            box-shadow: 0 5px 15px rgba(0, 206, 209, 0.4); /* Sombra para el efecto de salto, ajustado a cian */
+            background-color: var(--color-secondary); /* Cambio de color al hacer hover (ahora amarillo) */
+        }
+
+        /* Dropdown styling */
+        .nav-link-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none; /* Controlado por JS ahora */
+            position: absolute;
+            background-color: var(--color-medium-dark-bg);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            top: 100%; /* Position below the parent link */
+            left: 0;
+            margin-top: 0.5rem; /* Space between link and dropdown */
+        }
+
+        .dropdown-content.show-dropdown { /* Nueva clase para mostrar el dropdown con JS */
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--color-text-light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex; /* Para alinear el icono y el texto */
+            align-items: center; /* Para centrar verticalmente el icono */
+            text-align: left;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--color-card-bg);
+            color: var(--color-primary);
+        }
+
+        /* Mobile Menu - Sidebar Style */
+        .mobile-menu {
+            display: flex; /* Siempre flex para la estructura interna */
+            flex-direction: column;
+            position: fixed;
+            /* Adjusted top position to be below the header */
+            top: 4.5rem; /* Roughly 72px, adjust if header height changes */
+            right: 0;
+            width: min(300px, 85vw);
+            max-height: calc(100vh - 4.5rem); /* Adjust max-height to fit below header */
+            background-color: rgba(10, 10, 10, 0.98);
+            border-left: 1px solid var(--color-border);
+            padding: 1rem 0;
+            transform: translateX(100%); /* Oculto por defecto */
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto; /* Permite el scroll si el contenido es largo */
+            overflow-x: hidden;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0); /* Se desliza a la vista */
+        }
+
+        header {
+            position: relative;
+            overflow: visible;
+            transition: transform 0.3s ease-in-out; /* Smooth transition for header hide/show */
+            background-color: rgba(10, 10, 10, 0); /* 100% transparent background */
+        }
+        header.header-hidden {
+            transform: translateY(-100%); /* Move header out of view */
+        }
+        header::before {
+            content: none;
+        }
+
+        .mobile-menu::before {
+            content: none;
+        }
+
+        .mobile-menu a,
+        .mobile-menu label {
+            font-family: 'Bebas Neue', sans-serif; /* Aplicado consistentemente */
+            padding: 1rem 1.75rem; /* Increased padding for larger buttons */
+            color: var(--color-text-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Alinea texto a izquierda y flecha a derecha */
+            width: 100%;
+            box-sizing: border-box;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            z-index: 1;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu label:hover {
+            background-color: rgba(58, 58, 58, 0.3);
+            color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Dropdown Specific Styles */
+        .mobile-menu .dropdown-content {
+            position: static;
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            box-shadow: none;
+            margin-top: 0;
+            border-radius: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .mobile-menu .dropdown-content a {
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: 2.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            display: flex; /* Para alinear el icono y el texto */
+            align-items: center; /* Para centrar verticalmente el icono */
+        }
+        .mobile-menu .dropdown-content a:hover {
+            transform: translateY(-3px);
+        }
+        /* Show mobile dropdown content when checkbox is checked */
+        .mobile-menu .dropdown-toggle-checkbox:checked ~ .dropdown-content {
+            display: flex;
+        }
+        .mobile-menu .dropdown-toggle-checkbox + label .fas.fa-chevron-down {
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu .dropdown-toggle-checkbox:checked + label .fas.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        /* Static Social Sidebar Styles */
+        .social-sidebar {
+            position: fixed;
+            top: 100px; /* Adjust as needed to be below the header */
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 900; /* Below header, above most content */
+            border: 1px solid var(--color-border);
+        }
+
+        .social-sidebar a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.75rem;
+            color: var(--color-text-light);
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .social-sidebar a:hover {
+            background-color: var(--color-primary);
+            color: var(--color-text-dark);
+            transform: translateX(-5px); /* Slide effect on hover */
+        }
+
+        /* Floating Discord Button Styles */
+        .floating-discord-button {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: #5865F2; /* Discord brand color */
+            color: white; /* Texto blanco */
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.5); /* Sombra con color de Discord */
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            z-index: 950; /* Above social sidebar, below header */
+            animation: float-discord 3s ease-in-out infinite alternate; /* Floating animation */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+        }
+
+        .floating-discord-button:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.7); /* Sombra con color de Discord más intenso */
+        }
+
+        .floating-discord-button .fab {
+            font-size: 1.8rem;
+            color: white; /* Icono de Discord blanco */
+        }
+
+        .floating-discord-button button {
+            background-color: var(--color-secondary); /* Cambiado a color secundario (amarillo) */
+            color: var(--color-text-dark); /* Texto oscuro para el botón de ingresar */
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .floating-discord-button button:hover {
+            background-color: #FFC700; /* Un poco más oscuro al pasar el ratón */
+        }
+
+        @keyframes float-discord {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+            .mobile-menu-button {
+                display: block;
+            }
+            /* Adjust padding for mobile sections if needed */
+            main {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            /* Adjust static social bar for mobile */
+            .social-sidebar {
+                top: 5rem; /* Adjust position to be below header on mobile */
+                right: 0.5rem; /* Keep it slightly off the edge */
+                width: 40px; /* Make it slightly narrower */
+            }
+            .social-sidebar a {
+                padding: 0.4rem; /* Smaller padding for icons */
+                font-size: 1.2rem; /* Smaller icons */
+            }
+            /* Adjust floating Discord button for mobile */
+            .floating-discord-button {
+                width: 200px; /* Make it smaller */
+                padding: 0.5rem;
+                bottom: 1rem;
+                right: 1rem;
+            }
+            .floating-discord-button .fab {
+                font-size: 1.5rem;
+            }
+            .floating-discord-button .text-sm {
+                font-size: 0.75rem;
+            }
+            .floating-discord-button button {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* --- Custom Styles for Minecraft Hosting Page --- */
+        .minecraft-hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./images/fondocliente.png'); /* Updated image path */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .plan-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative; /* Needed for mouse-follow effect */
+            transform-style: preserve-3d; /* Needed for 3D transform on children */
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 25px rgba(0, 206, 209, 0.7), 0 0 50px rgba(0, 206, 209, 0.3);
+        }
+
+        .plan-card .plan-image {
+            width: 100px; /* Adjust size as needed */
+            height: 100px;
+            object-fit: contain;
+            margin: 0 auto 1.5rem auto; /* Center image and add bottom margin */
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); /* Subtle glow for images */
+            transition: transform 0.1s ease-out; /* Smooth transition for image movement */
+            backface-visibility: hidden; /* Prevents flickering on 3D transform */
+        }
+
+        .plan-card .price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-card .price span {
+            font-size: 1.5rem;
+            vertical-align: super;
+        }
+
+        .plan-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            flex-grow: 1; /* Allows the list to take available space */
+        }
+
+        .plan-card ul li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .plan-card ul li i {
+            color: var(--color-primary);
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .plan-card .btn-buy {
+            background-color: var(--color-primary);
+            color: var(--color-text-dark);
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .plan-card .btn-buy:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 206, 209, 0.4);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-box {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-secondary);
+        }
+
+        .feature-box i {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-box p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header id="main-header" class="bg-medium-dark-bg text-text-light py-4 sticky top-0 z-50" style="background-color: rgba(10, 10, 10, 0);">
+        <div class="w-full px-4 flex justify-between items-center relative">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center">
+                <img src="./images/logo.ico" alt="Logo" class="h-24 mr-2">
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button md:hidden text-text-light focus:outline-none" aria-label="Toggle navigation">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-desktop hidden md:block">
+                <ul class="flex space-x-6 items-center justify-end">
+                    <!-- Minecraft Hosting Dropdown -->
+                    <li class="dropdown">
+                        <a href="minecraft.html" class="hover:text-primary font-medium nav-link-dropdown">
+                            <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="minecraft.html"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
+                            <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="service-unavailable.html" class="hover:text-primary font-medium">
+                            <span>Web Hosting</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="service-unavailable.html" class="hover:text-primary font-medium">
+                            <span>Web Design</span>
+                        </a>
+                    </li>
+                    <!-- Nosotros Dropdown -->
+                    <li class="dropdown">
+                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
+                            <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
+                            <a href="terms-and-conditions.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                            <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
+                        </div>
+                    </li>
+                    <li>
+                        <!-- "ÁREA DE CLIENTES" button -->
+                        <a href="#" class="bg-primary text-text-dark px-6 py-3 rounded-md font-semibold flex items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                            <i class="fas fa-user text-lg"></i>
+                            <span>ÁREA DE CLIENTES</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </a>
+                        <!-- Dropdown content for "ÁREA DE CLIENTES" -->
+                        <div class="dropdown-content">
+                            <a href="service-unavailable.html"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
+                            <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
+                            <a href="service-unavailable.html"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
+                            <a href="https://discord.gg/jhA9DHTHAW" target="_blank" class="block py-2 px-4 hover:bg-gray-700"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu (initially hidden) -->
+    <div class="mobile-menu md:hidden" id="mobile-menu">
+        <!-- Minecraft Hosting Dropdown for Mobile -->
+        <div class="w-full">
+            <input type="checkbox" id="mobile-minecraft-hosting-toggle" class="dropdown-toggle-checkbox hidden">
+            <label for="mobile-minecraft-hosting-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
+                <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
+            </label>
+            <div class="dropdown-content">
+                <a href="minecraft.html"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
+                <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
+            </div>
+        </div>
+        
+        <!-- Web Hosting for Mobile -->
+        <a href="service-unavailable.html" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
+            <span>Web Hosting</span>
+        </a>
+
+        <!-- Web Design for Mobile -->
+        <a href="service-unavailable.html" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
+            <span>Web Design</span>
+        </a>
+
+        <!-- Nosotros Dropdown for Mobile -->
+        <div class="w-full">
+            <input type="checkbox" id="mobile-nosotros-toggle" class="dropdown-toggle-checkbox hidden">
+            <label for="mobile-nosotros-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
+                <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
+            </label>
+            <div class="dropdown-content">
+                <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
+                <a href="terms-and-conditions.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
+                <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
+            </div>
+        </div>
+
+        <!-- "ÁREA DE CLIENTES" button for Mobile -->
+        <div class="w-full">
+            <input type="checkbox" id="mobile-area-clientes-toggle" class="dropdown-toggle-checkbox hidden">
+            <label for="mobile-area-clientes-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
+                <span>ÁREA DE CLIENTES</span> <i class="fas fa-chevron-down text-xs"></i>
+            </label>
+            <div class="dropdown-content">
+                <a href="service-unavailable.html"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
+                <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
+                <a href="service-unavailable.html"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
+                <a href="https://discord.gg/jhA9DHTHAW" target="_blank" class="block py-2 px-4 hover:bg-gray-700"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Static Social Sidebar -->
+    <div class="social-sidebar">
+        <a href="https://www.youtube.com/@VoltixCloud" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://discord.gg/jhA9DHTHAW" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+        <a href="https://www.facebook.com/VoltixCloud" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com/VoltixCloud" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/VoltixCloud" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <main>
+        <!-- Hero Section - Minecraft Specific -->
+        <section id="minecraft-hero" class="minecraft-hero-bg text-center py-16 md:py-24 text-text-light relative overflow-hidden">
+            <div class="container mx-auto px-4 z-10 relative">
+                <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
+                    TU AVENTURA MINECRAFT COMIENZA AQUÍ
+                </h1>
+                <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto text-text-muted">
+                    Servidores de Minecraft de alto rendimiento, protección DDoS y soporte 24/7. ¡Elige tu plan ideal!
+                </p>
+                <a href="#planes" class="bg-primary text-dark-bg font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+                    Ver Planes de Hosting
+                </a>
+            </div>
+        </section>
+
+        <!-- Planes de Hosting Section -->
+        <section id="planes" class="py-12 md:py-20 text-text-light" style="background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/fondopagina.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+            <div class="container mx-auto px-4 text-center max-w-screen-lg">
+                <h2 class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
+                    NUESTROS <span style="color: var(--color-secondary);">PLANES</span> DE HOSTING
+                </h2>
+                <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-text-muted">
+                    Encuentra el plan perfecto para tu servidor de Minecraft, desde pequeños proyectos hasta grandes comunidades.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Plan Card: Esmeralda -->
+                    <div class="plan-card">
+                        <img src="./images/esmeralda.png" alt="Esmeralda Minecraft" class="plan-image">
+                        <h3 class="text-2xl font-bold mb-4 text-text-light">PLAN ESMERALDA</h3>
+                        <p class="price">$1.85<span>/mes</span></p>
+                        <p class="text-text-muted mb-4">Ideal para amigos o pequeños servidores.</p>
+                        <ul>
+                            <li><i class="fas fa-memory"></i> 2 GB RAM Dedicada</li>
+                            <li><i class="fas fa-microchip"></i> 2 vCPU Cores</li>
+                            <li><i class="fas fa-hdd"></i> 50 GB NVMe SSD</li>
+                            <li><i class="fas fa-shield-alt"></i> Protección DDoS Avanzada</li>
+                            <li><i class="fas fa-users"></i> Slots Ilimitados</li>
+                            <li><i class="fas fa-headset"></i> Soporte 24/7</li>
+                        </ul>
+                        <a href="service-unavailable.html" class="btn-buy">Comprar Ahora</a>
+                    </div>
+
+                    <!-- Plan Card: Diamante (Recomendado) -->
+                    <div class="plan-card border-2 border-primary" style="box-shadow: 0 0 30px rgba(0,206,209,0.8);">
+                        <p class="text-primary text-sm font-bold mb-2">¡MÁS POPULAR!</p>
+                        <img src="./images/diamante.png" alt="Diamante Minecraft" class="plan-image">
+                        <h3 class="text-2xl font-bold mb-4 text-text-light">PLAN DIAMANTE</h3>
+                        <p class="price">$3.87<span>/mes</span></p>
+                        <p class="text-text-muted mb-4">Perfecto para comunidades en crecimiento.</p>
+                        <ul>
+                            <li><i class="fas fa-memory"></i> 4 GB RAM Dedicada</li>
+                            <li><i class="fas fa-microchip"></i> 4 vCPU Cores</li>
+                            <li><i class="fas fa-hdd"></i> 100 GB NVMe SSD</li>
+                            <li><i class="fas fa-shield-alt"></i> Protección DDoS Avanzada</li>
+                            <li><i class="fas fa-users"></i> Slots Ilimitados</li>
+                            <li><i class="fas fa-headset"></i> Soporte Prioritario 24/7</li>
+                            <li><i class="fas fa-cloud-upload-alt"></i> Copias de Seguridad Automáticas</li>
+                        </ul>
+                        <a href="service-unavailable.html" class="btn-buy">Comprar Ahora</a>
+                    </div>
+
+                    <!-- Plan Card: Netherita -->
+                    <div class="plan-card">
+                        <img src="./images/netherite.png" alt="Netherita Minecraft" class="plan-image">
+                        <h3 class="text-2xl font-bold mb-4 text-text-light">PLAN NETHERITA</h3>
+                        <p class="price">$7.50<span>/mes</span></p>
+                        <p class="text-text-muted mb-4">Máximo rendimiento para grandes servidores.</p>
+                        <ul>
+                            <li><i class="fas fa-memory"></i> 8 GB RAM Dedicada</li>
+                            <li><i class="fas fa-microchip"></i> 8 vCPU Cores</li>
+                            <li><i class="fas fa-hdd"></i> 200 GB NVMe SSD</li>
+                            <li><i class="fas fa-shield-alt"></i> Protección DDoS Avanzada</li>
+                            <li><i class="fas fa-users"></i> Slots Ilimitados</li>
+                            <li><i class="fas fa-headset"></i> Soporte Premium 24/7</li>
+                            <li><i class="fas fa-cloud-upload-alt"></i> Copias de Seguridad Automáticas</li>
+                            <li><i class="fas fa-cogs"></i> Acceso FTP Completo</li>
+                        </ul>
+                        <a href="service-unavailable.html" class="btn-buy">Comprar Ahora</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Características Destacadas Section -->
+        <section id="features" class="py-12 md:py-20 text-text-light" style="background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/fondopagina.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+            <div class="container mx-auto px-4 text-center max-w-screen-lg">
+                <h2 class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
+                    CARACTERÍSTICAS <span style="color: var(--color-secondary);">DESTACADAS</span>
+                </h2>
+                <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-text-muted">
+                    Descubre por qué Voltix Cloud es la mejor opción para tu servidor de Minecraft.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Protección DDoS Avanzada</h3>
+                        <p>Mantén tu servidor seguro de ataques maliciosos con nuestra protección de nivel empresarial.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Configuración Instantánea</h3>
+                        <p>Tu servidor estará listo para jugar en minutos después de la compra. ¡Sin esperas!</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-headset"></i>
+                        <h3>Soporte 24/7</h3>
+                        <p>Nuestro equipo de expertos está disponible a todas horas para ayudarte con cualquier problema.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-cubes"></i>
+                        <h3>Soporte para Mods y Plugins</h3>
+                        <p>Instala tus modpacks y plugins favoritos con facilidad desde nuestro panel de control.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>Compatible con Java y Bedrock</h3>
+                        <p>Ofrecemos compatibilidad para ambas ediciones de Minecraft para que todos puedan unirse.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Precios Competitivos</h3>
+                        <p>Obtén el mejor rendimiento y características al mejor precio del mercado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section (Bottom) -->
+        <section id="cta-bottom" class="bg-primary text-dark-bg py-12 md:py-20 text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold mb-5">
+                    ¡Listo para construir tu mundo Minecraft?
+                </h2>
+                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
+                    Elige tu plan hoy y experimenta el hosting de Minecraft de próxima generación.
+                </p>
+                <a href="#planes" class="bg-dark-bg text-primary font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-medium-dark-bg hover:shadow-xl" style="background-color: var(--color-dark-bg); color: var(--color-primary);">
+                    ¡Empieza Ahora!
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="text-text-muted py-10">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+            <!-- Footer Column 1: Logo & Description -->
+            <div>
+                <a href="index.html" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">Voltix Cloud</a>
+                <p class="text-sm">
+                    Voltix Cloud ofrece hosting de Minecraft de alto rendimiento con soporte excepcional y control total para tu servidor.
+                </p>
+                <div class="flex justify-center md:justify-start space-x-3 mt-5">
+                    <a href="https://www.youtube.com/@VoltixCloud" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://discord.gg/jhA9DHTHAW" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.facebook.com/VoltixCloud" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/VoltixCloud" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/VoltixCloud" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Footer Column 2: Quick Links -->
+            <div>
+                <h4 class="text-lg font-semibold text-text-light mb-3">Enlaces Rápidos</h4>
+                <ul class="space-y-1">
+                    <li><a href="index.html#locations" class="hover:text-primary transition-colors duration-300 text-sm">Ubicaciones</a></li>
+                    <li><a href="index.html#faq" class="hover:text-primary transition-colors duration-300 text-sm">Preguntas Frecuentes</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 3: Legal & Contact -->
+            <div>
+                <h4 class="text-lg font-semibold text-text-light mb-3">Legal</h4>
+                <ul class="space-y-1">
+                    <li><a href="terms-and-conditions.html" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Privacidad</a></li>
+                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
+                </ul>
+                <h4 class="text-lg font-semibold text-text-light mb-3 mt-5">Contacto</h4>
+                <p class="text-sm">Email: <a href="mailto:info@voltixcloud.com" class="hover:text-primary">info@voltixcloud.com</a></p>
+            </div>
+        </div>
+        <div class="text-center text-xs text-text-muted mt-10 pt-6 border-t border-border" style="border-color: var(--color-border);">
+            &copy; 2025 Voltix Cloud. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- Floating Discord Button -->
+    <div class="floating-discord-button flex items-center justify-between">
+        <a href="https://discord.gg/jhA9DHTHAW" target="_blank" class="flex items-center gap-2 text-white no-underline">
+            <i class="fab fa-discord"></i>
+            <div class="flex flex-col text-left">
+                <span class="text-xs font-bold">DISCORD</span>
+                <span id="discord-member-count" class="text-sm">Cargando...</span>
+            </div>
+        </a>
+        <button onclick="window.open('https://discord.gg/jhA9DHTHAW', '_blank')" class="text-xs font-semibold py-1 px-3 rounded-md transition-colors duration-200">
+            Ingresar
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mainHeader = document.getElementById('main-header'); // Get the header element
+            let lastScrollY = 0; // To track scroll direction
+            
+            // Discord Widget Configuration
+            const DISCORD_GUILD_ID = '1375999220569473115'; // Your Discord Guild ID - This is a placeholder, you might need to update this if the widget.json changes.
+            const discordMemberCountElement = document.getElementById('discord-member-count');
+
+            // Function to fetch Discord member count
+            async function fetchDiscordMemberCount() {
+                try {
+                    const response = await fetch(`https://discord.com/api/guilds/${DISCORD_GUILD_ID}/widget.json`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    if (data && data.presence_count !== undefined) {
+                        discordMemberCountElement.textContent = `${data.presence_count} Miembros en línea`;
+                    } else {
+                        discordMemberCountElement.textContent = 'N/A Miembros';
+                    }
+                } catch (error) {
+                    console.error('Error fetching Discord member count:', error);
+                    discordMemberCountElement.textContent = 'Error al cargar';
+                }
+            }
+
+            // Call function to fetch member count on load
+            fetchDiscordMemberCount();
+            // Optionally, refresh member count every few minutes
+            setInterval(fetchDiscordMemberCount, 5 * 60 * 1000); // Every 5 minutes
+
+            // Function to toggle mobile menu visibility
+            function toggleMobileMenu() {
+                if (mobileMenu) { // Added null check here
+                    mobileMenu.classList.toggle('active');
+                    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+                }
+            }
+
+            // Event listener for mobile menu button
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close mobile menu when clicking on a link inside it
+            if (mobileMenu) { // Added null check here
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function(event) {
+                        // If the link is a local anchor (e.g., href="#"), prevent default
+                        // so smooth scrolling works before closing the menu.
+                        if (link.getAttribute('href').startsWith('#')) {
+                            event.preventDefault(); // Prevent instant jump
+                            // Close the menu after a short delay to allow smooth scroll
+                            setTimeout(toggleMobileMenu, 300);
+                        } else {
+                            // For external or full-page links, close the menu immediately
+                            toggleMobileMenu();
+                        }
+                    });
+                });
+
+                // Prevent clicks inside mobile menu from propagating to document (to avoid closing)
+                mobileMenu.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+
+                // Handle mobile dropdown toggles (checkbox based)
+                const mobileDropdownToggles = mobileMenu.querySelectorAll('.mobile-menu .dropdown-toggle-checkbox');
+                mobileDropdownToggles.forEach(toggle => {
+                    const label = toggle.nextElementSibling; // The label associated with the checkbox
+                    const content = label.nextElementSibling; // The dropdown content
+
+                    // Prevent label click from propagating to the mobile menu, which might close it
+                    if (label) {
+                        label.addEventListener('click', function(event) {
+                            event.stopPropagation(); // Stop propagation to prevent document listener from closing mobile menu
+                        });
+                    }
+                    // Prevent content clicks from propagating to the mobile menu
+                    if (content) {
+                        content.addEventListener('click', function(event) {
+                            event.stopPropagation(); // Stop propagation to prevent document listener from closing mobile menu
+                        });
+                    }
+                });
+            }
+
+            // --- Desktop Dropdown Logic ---
+            const desktopDropdowns = document.querySelectorAll('.nav-desktop .dropdown');
+
+            desktopDropdowns.forEach(dropdown => {
+                const dropdownToggle = dropdown.querySelector('.nav-link-dropdown');
+                const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+                if (dropdownToggle && dropdownContent) {
+                    // Click listener for the desktop dropdown toggle
+                    dropdownToggle.addEventListener('click', function(event) {
+                        event.preventDefault(); // Prevent default link behavior
+
+                        // Close other open desktop dropdowns
+                        desktopDropdowns.forEach(otherDropdown => {
+                            const otherContent = otherDropdown.querySelector('.dropdown-content');
+                            if (otherContent && otherContent !== dropdownContent) {
+                                otherContent.classList.remove('show-dropdown');
+                            }
+                        });
+
+                        // Toggle the current dropdown
+                        dropdownContent.classList.toggle('show-dropdown');
+                    });
+
+                    // Prevent clicks inside dropdown content from closing it immediately
+                    dropdownContent.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                    });
+                }
+            });
+
+            // Global click listener to close desktop dropdowns and mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close desktop dropdowns
+                desktopDropdowns.forEach(dropdown => {
+                    const dropdownContent = dropdown.querySelector('.dropdown-content');
+                    const dropdownToggle = dropdown.querySelector('.nav-link-dropdown');
+
+                    // Check if the click was outside the current dropdown's toggle and content
+                    if (dropdownContent && dropdownToggle &&
+                        !dropdownContent.contains(event.target) &&
+                        !dropdownToggle.contains(event.target)) {
+                        dropdownContent.classList.remove('show-dropdown');
+                    }
+                });
+
+                // Close mobile menu if open and click is outside
+                // Ensure mobileMenu is not null before checking its classList or contains method
+                const isClickInsideMobileMenu = mobileMenu && mobileMenu.contains(event.target);
+                const isClickOnMobileMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+                if (mobileMenu && mobileMenu.classList.contains('active') && !isClickInsideMobileMenu && !isClickOnMobileMenuButton) {
+                    toggleMobileMenu();
+                }
+            });
+
+            // --- Hide/Show Header on Scroll ---
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+
+                if (currentScrollY > lastScrollY && currentScrollY > mainHeader.offsetHeight) {
+                    // Scrolling down and past header height
+                    mainHeader.classList.add('header-hidden');
+                } else if (currentScrollY < lastScrollY) {
+                    // Scrolling up
+                    mainHeader.classList.remove('header-hidden');
+                }
+                lastScrollY = currentScrollY;
+            });
+
+            // --- Mouse-follow animation for plan card images ---
+            const planCards = document.querySelectorAll('.plan-card');
+
+            planCards.forEach(card => {
+                const planImage = card.querySelector('.plan-image');
+
+                card.addEventListener('mousemove', (e) => {
+                    if (!planImage) return; // Ensure image exists
+
+                    const rect = card.getBoundingClientRect(); // Use card rect for mouse position
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    // Calculate tilt based on mouse position relative to the card center
+                    // Invert the rotation for a more intuitive "pushing" effect
+                    const tiltX = (y - centerY) / 15; // Adjust divisor for intensity
+                    const tiltY = (x - centerX) / 15; // Adjust divisor for intensity
+
+                    // Apply a subtle 3D transform to the image
+                    planImage.style.transform = `translateZ(20px) rotateX(${-tiltX}deg) rotateY(${tiltY}deg) scale(1.1)`;
+                    planImage.style.transition = 'none'; // Disable transition during mousemove
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (!planImage) return; // Ensure image exists
+                    planImage.style.transform = `translateZ(0px) rotateX(0deg) rotateY(0deg) scale(1)`;
+                    planImage.style.transition = 'all 0.3s ease-in-out'; // Re-enable transition
+                });
+            });
+        });
+    </script>
+</body>
+</html>
