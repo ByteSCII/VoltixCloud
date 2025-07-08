@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketByte - Tu talento, a un clic de distancia</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="description" content="MarketByte - Conecta con profesionales talentosos para cualquier servicio. Ofrece tus habilidades, encuentra soluciones.">
+    <meta name="keywords" content="MarketByte, servicios online, freelancers, profesionales, diseño web, marketing digital, redacción, clases, Venezuela, talento">
+    <meta name="author" content="MarketByte">
+    <meta property="og:title" content="MarketByte - Tu talento, a un clic de distancia">
+    <meta property="og:description" content="La plataforma líder para encontrar y ofrecer servicios digitales y profesionales en Venezuela.">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        // Custom Tailwind CSS Configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                        navigation: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'byte-dark-bg': '#0A0A1A', // Main dark background
+                        'byte-accent-cyan': '#00FFFF', // Electric cyan for accents
+                        'byte-light-bg': '#F8FAFC', // Light background (if used)
+                        'byte-text-dark': '#374151', // Dark text (if used)
+                        'byte-text-light': '#F9FAFB', // Light text
+                        'byte-secondary-dark': '#1A202C', // Secondary dark background (for dropdowns)
+                        'whatsapp-green': '#25D366', // Official WhatsApp color
+                        'whatsapp-dark-green': '#128C7E', // Darker tone for WhatsApp hover
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Box-Sizing universal for consistent box model */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Base styles for HTML and Body */
+        html {
+            height: 100%; /* Ensures HTML has full height */
+            width: 100%; /* Ensures HTML has full width */
+        }
+        body {
+            min-height: 100vh; /* Ensures body takes at least full viewport height, allowing scrolling */
+            width: 100%; /* Ensures body takes full width */
+            overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+            background-color: #0A0A1A; /* Main dark background color */
+            font-family: 'Inter', sans-serif; /* Main font */
+            color: #F9FAFB; /* Main text color */
+            margin: 0;
+            padding: 0;
+            /* Disable text selection for an app-like experience */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Styles for headings (h1-h6) */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif; /* Font for headings */
+            color: #00FFFF; /* Electric cyan for accents */
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Shadow for a glow effect */
+        }
+
+        /* Text stroke style */
+        .text-stroke-cyan {
+            -webkit-text-stroke: 1.5px #00FFFF; /* Cyan stroke for WebKit browsers */
+            text-stroke: 1.5px #00FFFF; /* Standard cyan stroke */
+            color: #FFFFFF; /* Text fill color */
+            text-shadow: none; /* Ensures no text shadows interfere */
+        }
+
+        /* Fall-in animation for AOS (definition kept, but won't be used if AOS.init is removed) */
+        @keyframes fall-in {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Class applied by AOS.js for animating elements (definition kept, but won't be used if AOS.init is removed) */
+        .aos-animate {
+            animation-name: fall-in;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Styles for navigation menu text with cyan stroke */
+        /* Montserrat font applied directly here to ensure display */
+        .nav-menu-text-stroke-cyan {
+            color: #E0E0E0; /* Base silver color for text */
+            -webkit-text-stroke-width: 0.7px; /* Thinner cyan stroke for smaller text */
+            -webkit-text-stroke-color: #A0A0A0; /* Darker gray stroke for silver effect */
+            text-shadow: 0 0 5px rgba(224, 224, 224, 0.3), 0 0 10px rgba(160, 160, 160, 0.2); /* Shadow for depth */
+            transition: color 0.3s ease-in-out, -webkit-text-stroke-color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+            font-family: 'Montserrat', sans-serif; /* DIRECTLY APPLIED HERE */
+        }
+
+        /* Glow and lift effect on menu links on hover */
+        .menu-link-hover-effect { /* New class for hover effects */
+            position: relative;
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .menu-link-hover-effect::before {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Line position below text */
+            left: 0; /* Starts from text beginning */
+            width: 0; /* Line starts with zero width */
+            height: 3px; /* Line thickness */
+            background-color: #00FFFF; /* Cyan color */
+            border-radius: 2px;
+            transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transition for width and opacity */
+            opacity: 0; /* Initially invisible */
+        }
+        .menu-link-hover-effect:hover::before {
+            width: 100%; /* Line expands to 100% of parent width */
+            opacity: 1; /* Becomes visible */
+            background-color: #00FFFF; /* Ensures underline is cyan on hover */
+        }
+        .menu-link-hover-effect:hover .nav-menu-text-stroke-cyan {
+            color: #00FFFF; /* Electric cyan on hover */
+            -webkit-text-stroke-color: #00BFFF; /* Darker cyan for stroke on hover */
+            text-shadow: 0 0 8px #00FFFF, 0 0 15px rgba(0, 255, 255, 0.6); /* Intense glow on hover */
+        }
+        .menu-link-hover-effect:hover {
+            transform: translateY(-5px); /* Lifts the link slightly more for a noticeable "jump" */
+        }
+
+        /* Subtle bounce animation for arrow icon */
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        /* Class to activate arrow rotation and bounce */
+        .js-arrow-icon.arrow-active, .js-arrow-icon-mobile.arrow-active {
+            transform: rotate(180deg);
+            animation: bounce-subtle 0.5s ease-in-out infinite alternate;
+        }
+
+        /* Service card styles */
+        .service-card-item { /* Renamed to avoid conflict with existing .service-card */
+            background: linear-gradient(145deg, #1A202C, #0A0A1A); /* Subtle gradient background */
+            border-radius: 1rem; /* More rounded corners */
+            padding: 1.5rem; /* Reduced padding */
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.2); /* Shadow with accent color */
+            transition: all 0.3s ease-in-out; /* Smooth transition for all changes */
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle border */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .service-card-item:hover {
+            transform: translateY(-8px) scale(1.03); /* Lift and slight increase in size on hover */
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4); /* More pronounced shadow on hover */
+            border-color: #00FFFF; /* More visible border on hover */
+        }
+
+        .service-card-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card-item h3 {
+            color: #F9FAFB; /* Lighter title text */
+            font-size: 1.5rem; /* Reduced title size */
+            margin-bottom: 0.75rem; /* Reduced margin */
+            font-weight: 700; /* Bolder */
+        }
+
+        .service-card-item p {
+            color: #CBD5E0; /* Softer paragraph text */
+            font-size: 0.95rem; /* Reduced paragraph size */
+            line-height: 1.6;
+        }
+
+        .service-card-item .rating {
+            color: #FFD700; /* Gold color for stars */
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .service-card-item .price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00FFFF;
+            margin-top: 1rem;
+        }
+
+        /* Specific styles for service cards on small screens (mobiles) */
+        @media (max-width: 768px) { /* For screens up to 768px (md breakpoint) */
+            .service-card-item {
+                padding: 1.2rem; /* Reduce padding to make cards more compact */
+            }
+            .service-card-item img {
+                height: 150px;
+            }
+            .service-card-item h3 {
+                font-size: 1.3rem; /* Reduce title size */
+                margin-bottom: 0.6rem;
+            }
+            .service-card-item p {
+                font-size: 0.85rem; /* Reduce paragraph size */
+            }
+        }
+
+
+        /* Specific styles for contact section */
+        .contact-section {
+            background: linear-gradient(180deg, #1A202C, #0A0A1A); /* Background gradient */
+            padding: 4rem 0; /* Reduced padding */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate-gradient 20s linear infinite; /* Rotation animation for background */
+            z-index: 0;
+        }
+
+        @keyframes rotate-gradient {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 26, 0.85); /* Semi-transparent background for content */
+            border-radius: 1.5rem;
+            padding: 2.5rem; /* Reduced padding */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px); /* Blur effect */
+        }
+
+        /* Padding adjustment for contact cards - NOW HANDLED IN HTML WITH TAILWIND */
+        .contact-form-card,
+        .contact-info-card {
+            background: #1A202C; /* Dark background for inner cards */
+            /* padding will be moved to HTML */
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.15);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .contact-form-card:hover, .contact-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .contact-form-card input,
+        .contact-form-card textarea {
+            background-color: #0A0A1A; /* Use primary background color */
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan border */
+            color: #F9FAFB; /* Light text color */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .contact-form-card input::placeholder,
+        .contact-form-card textarea::placeholder {
+            color: #b0b0b0; /* Placeholder color */
+        }
+        .contact-form-card input:focus,
+        .contact-form-card textarea:focus {
+            border-color: #00FFFF; /* Cyan on focus */
+            box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.5);
+        }
+        .social-icon-link {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+            color: #F9FAFB; /* Default icon color */
+        }
+        .social-icon-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: #00FFFF; /* Cyan on hover */
+        }
+        .map-container {
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-top: 2rem; /* Reduced margin */
+            width: 100%;
+            /* Map height - NOW CONTROLLED BY TAILWIND IN HTML */
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Disabled link style */
+        .disabled-link {
+            opacity: 0.6; /* Reduced opacity to indicate disabled */
+            cursor: not-allowed; /* "Not allowed" cursor */
+        }
+
+        /* Desktop dropdown menu styles */
+        .js-dropdown-menu {
+            position: absolute;
+            top: 100%; /* Just below parent button */
+            left: 50%;
+            transform: translateX(-50%);
+            /* min-width: 180px; Adjusted via Tailwind classes */
+            background-color: #1A202C; /* Secondary dark color */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            overflow: hidden; /* For rounded corners to work well with elements */
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan border */
+        }
+
+        /* Subcategory hover in aqua green for desktop */
+        .js-dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #F9FAFB; /* Light text color */
+            text-align: center; /* Center text in dropdown */
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .js-dropdown-menu a:hover {
+            background-color: #00FFFF; /* Electric cyan for background */
+            color: #0A0A1A; /* Dark text on hover */
+        }
+
+        /* Floating WhatsApp button (Global) */
+        .whatsapp-float-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            /* Z-index to always be on top of everything, including development banner */
+            z-index: 100000001;
+            display: flex;
+            align-items: center;
+            transition: bottom 0.3s ease-out; /* Transition for movement */
+        }
+
+        .whatsapp-float-button {
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+            transform-origin: center;
+        }
+
+        .whatsapp-float-button:hover {
+            background-color: #128C7E; /* Darker tone on hover */
+            transform: scale(1.05); /* Slight increase in scale on hover */
+            animation: none !important; /* Stop all animations on hover */
+        }
+
+        .whatsapp-float-button svg {
+            fill: white; /* Changed fill to white */
+            stroke: white; /* Added stroke for thickness */
+            stroke-width: 2; /* Increased stroke width for thickness */
+            width: 60%; /* Adjust icon size inside button */
+            height: 60%; /* Adjust icon size inside button */
+        }
+
+        /* Tooltip for WhatsApp button - Message bubble style */
+        .whatsapp-tooltip {
+            background-color: #FFFFFF; /* White background */
+            color: #0A0A1A; /* Dark text */
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem; /* More rounded corners for bubble look */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-right: 15px; /* Space between tooltip and button */
+            opacity: 0; /* Initially hidden */
+            visibility: hidden; /* Initially hidden */
+            transform: translateX(20px); /* Starts slightly to the right */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s ease-out;
+            white-space: nowrap; /* Prevents text wrapping */
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle light border */
+            position: relative; /* Necessary for pseudo-element positioning */
+        }
+
+        .whatsapp-tooltip.show-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0); /* Slides into view */
+        }
+
+        /* Tail of the dialogue bubble */
+        .whatsapp-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -10px; /* Position outside the bubble */
+            top: 50%; /* Vertically centered with the bubble */
+            transform: translateY(-50%); /* Adjustment for vertical centering */
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid #FFFFFF; /* White border to match bubble background */
+        }
+
+        /* Shake animation for WhatsApp button */
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        /* Pulse glow animation for WhatsApp button */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Mobile dropdown menu styles */
+        .js-dropdown-menu-mobile {
+            background-color: #1A202C; /* Secondary dark color */
+            border-radius: 0.5rem;
+            margin-top: 0.5rem; /* Space between parent link and submenu */
+            padding: 0.5rem 0; /* Padding inside dropdown */
+            position: relative; /* Necessary for absolute centering */
+            left: 50%; /* Horizontal centering */
+            transform: translateX(-50%); /* Horizontal centering */
+            width: 90%; /* Adjust width to be more adaptable */
+            max-width: 200px; /* Max width to prevent it from being too large */
+        }
+
+        /* Subcategory hover in aqua green for mobile */
+        .js-dropdown-menu-mobile a {
+            padding: 0.75rem 1.5rem; /* Indent sub-elements */
+            text-align: center; /* CENTERING SUBCATEGORIES ON MOBILE */
+            border-radius: 0; /* Remove rounded borders for individual elements */
+        }
+
+        .js-dropdown-menu-mobile a:hover {
+            background-color: #00FFFF; /* Electric cyan for background */
+            color: #0A0A1A; /* Dark text on hover */
+        }
+
+        /* New style for active mobile menu links (underline and text color) */
+        .mobile-menu-link-active::before {
+            width: 100% !important; /* Force width to 100% */
+            opacity: 1 !important; /* Force visibility */
+            background-color: #00FFFF !important; /* Ensure cyan color */
+        }
+
+        .mobile-menu-link-active {
+            transform: translateY(-5px) !important; /* Lift the link */
+        }
+
+        /* --- Styles for size reduction on PC and large screens --- */
+        @media (min-width: 1024px) { /* Adjust this breakpoint as needed (lg in Tailwind) */
+            .header-nav-item {
+                font-size: 0.95rem; /* Smaller font for navigation links */
+            }
+
+            .main-cta-button {
+                padding: 0.6rem 1.5rem; /* Slightly smaller button padding */
+                font-size: 0.9rem; /* Smaller font for CTA button */
+            }
+
+            .hero-section-padding {
+                padding-top: 6rem; /* Adjust top padding for hero section */
+                padding-bottom: 6rem; /* Adjust bottom padding for hero section */
+            }
+
+            .hero-heading {
+                font-size: 3.5rem; /* Smaller heading for hero section */
+            }
+
+            .hero-subheading {
+                font-size: 1.1rem; /* Smaller subheading for hero section */
+            }
+
+            .section-heading {
+                font-size: 2.5rem; /* Smaller general section headings */
+            }
+
+            .service-card-item {
+                padding: 1.5rem; /* Smaller padding for service cards */
+            }
+
+            .service-card-item img {
+                height: 150px;
+            }
+
+            .service-card-item h3 {
+                font-size: 1.3rem; /* Smaller title in service cards */
+            }
+
+            .service-card-item p {
+                font-size: 0.85rem; /* Smaller paragraph text in service cards */
+            }
+
+            .contact-section {
+                padding: 3rem 0; /* Smaller padding for contact section */
+            }
+
+            .contact-content {
+                padding: 2rem; /* Smaller padding for contact content card */
+            }
+
+            .contact-form-card,
+            .contact-info-card {
+                padding: 1.5rem; /* Smaller padding for inner contact cards */
+            }
+
+            .contact-form-card input,
+            .contact-form-card textarea {
+                font-size: 0.8rem; /* Smaller font for form fields */
+            }
+
+            .social-icon-link svg {
+                width: 24px; /* Smaller social icons */
+                height: 24px;
+            }
+
+            .whatsapp-float-button {
+                width: 50px; /* Smaller WhatsApp button */
+                height: 50px;
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #1A202C; /* Secondary dark background */
+            color: #F9FAFB; /* Light text */
+            padding: 2rem 0; /* Padding for footer */
+            border-top: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan top border */
+        }
+
+        .footer a {
+            color: #00FFFF; /* Cyan for links */
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #00BFFF; /* Darker cyan on hover */
+        }
+
+        .footer-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem; /* Larger font for headings */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #00FFFF; /* Cyan color for headings */
+        }
+
+        .footer-link-item {
+            margin-bottom: 0.5rem; /* Space between list items */
+        }
+
+        .footer-social-icon {
+            font-size: 1.75rem; /* Size of social icons */
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-social-icon:hover {
+            color: #00FFFF; /* Cyan on hover */
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        /* Animation for the prices icon image */
+        @keyframes rotate-3d {
+            /* Modified to rotate only on Y-axis */
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .price-icon-animated {
+            animation: rotate-3d 12s linear infinite; /* 3D rotation animation, slower */
+            transform-style: preserve-3d; /* Needed for 3D rotation to work */
+        }
+
+
+        /* Spin animation for header text */
+        @keyframes text-flip-out {
+            0% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+            50% {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotateY(180deg);
+            }
+        }
+
+        @keyframes text-flip-in {
+            0% {
+                opacity: 0;
+                transform: rotateY(-90deg);
+            }
+            50% {
+                opacity: 0;
+                transform: rotateY(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+        }
+
+        .text-flip-out {
+            animation: text-flip-out 0.8s ease-in-out forwards;
+        }
+
+        .text-flip-in {
+            animation: text-flip-in 0.8s ease-in-out forwards;
+        }
+
+        /* Styles to ensure h1 maintains its height and centering */
+        #hero-heading-text {
+            height: 8rem; /* Fixed height to accommodate longer text on multiple lines */
+            display: flex; /* Enable flexbox */
+            align-items: center; /* Vertically center content */
+            justify-content: center; /* Horizontally center content */
+            perspective: 1000px; /* Necessary for 3D flip animation */
+        }
+
+        /* Adjustments for smaller screens if text overflows */
+        @media (max-width: 768px) {
+            #hero-heading-text {
+                height: 7rem; /* Fixed height for mobile screens */
+            }
+        }
+
+        /* Styles to disable text selection and pointer events on images */
+        img {
+            pointer-events: none;
+        }
+        p, h1, h2, h3, h4, h5, h6, span, div:not(.map-container):not(.payment-card) {
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Styles for filter modal */
+        .filter-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex; /* Changed to flex */
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Above everything else */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .filter-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .filter-modal-content {
+            background-color: #1A202C; /* Secondary dark background */
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+            position: relative;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+        }
+
+        .filter-modal-overlay.show .filter-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .filter-modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #00FFFF;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .filter-modal-close-button:hover {
+            color: #00BFFF;
+        }
+
+        .filter-modal-category-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .filter-modal-category-item:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+        }
+
+        .filter-modal-category-item input[type="radio"] {
+            margin-right: 0.75rem;
+            accent-color: #00FFFF; /* Cyan color for radio button */
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .filter-modal-category-item label {
+            color: #F9FAFB;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .filter-modal-apply-button {
+            background-color: #00FFFF;
+            color: #0A0A1A;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .filter-modal-apply-button:hover {
+            background-color: #00BFFF;
+            transform: translateY(-2px);
+        }
+        .filter-modal-input-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .filter-modal-input-group input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #0A0A1A;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #F9FAFB;
+            font-size: 1rem;
+        }
+        .filter-modal-input-group input:focus {
+            outline: none;
+            border-color: #00FFFF;
+            box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.5);
+        }
+    </style>
+
+</head>
+<body>
+
+    <header class="bg-byte-dark-bg text-byte-text-light py-2 shadow-lg sticky top-0 z-50 border-b border-byte-accent-cyan">
+        <div class="w-full px-4 md:px-8 flex justify-between items-center gap-8">
+            <div class="flex items-center justify-start ml-0">
+                <img src="./images/logo.ico" alt="Logo de MarketByte" class="h-16 w-auto object-contain">
+            </div>
+
+            <nav class="hidden sm:flex justify-end flex-grow">
+                <ul class="flex space-x-6 items-center">
+                    <li>
+                        <button onclick="navigate('home')" class="header-nav-item text-base font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-hover-effect">
+                            <span class="nav-menu-text-stroke-cyan">Inicio</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <button onclick="alert('Funcionalidad de registro/login no implementada en este demo.')" class="hidden sm:inline-block bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
+                                         shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-110 text-sm main-cta-button">
+                Regístrate / Inicia Sesión
+            </button>
+
+            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-byte-accent-cyan hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan ml-auto">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <nav id="mobile-menu" class="sm:hidden bg-byte-dark-bg py-4 px-4 hidden fixed top-20 w-full z-40 max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <ul class="flex flex-col space-y-4 text-center">
+            <li>
+                <button onclick="navigate('home'); mobileMenu.classList.add('hidden'); mobileMenuButton.click();" class="block text-lg font-semibold transition duration-300 ease-in-out py-2 cursor-pointer menu-link-hover-effect">
+                    <span class="nav-menu-text-stroke-cyan">Inicio</span>
+                </button>
+            </li>
+            <li>
+                <button onclick="alert('Funcionalidad de registro/login no implementada en este demo.'); mobileMenu.classList.add('hidden'); mobileMenuButton.click();" class="block bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
+                                             shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-110 text-center mt-4 text-sm main-cta-button">
+                    Regístrate / Inicia Sesión
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <main id="main-content-area" class="flex-grow">
+        <!-- Dynamic content will be loaded here by JavaScript -->
+    </main>
+
+    <footer class="footer bg-byte-secondary-dark text-byte-text-light py-8">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div class="md:col-span-3 flex justify-center space-x-4 mt-3">
+                <!-- Instagram Icon -->
+                <a href="https://www.instagram.com/byteweb_design?igsh=ZTI4NDE2eWptZThu" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <i class="fab fa-instagram footer-social-icon text-byte-text-light"></i>
+                </a>
+                <!-- WhatsApp Icon -->
+                <a href="https://wa.me/584125646508" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp footer-social-icon text-byte-text-light"></i>
+                </a>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 text-center text-xs text-gray-400 mt-8 border-t border-gray-700 pt-4">
+            <p class="mb-2">
+                Al navegar en la página de MarketByte, aceptas nuestros
+                <a href="#" class="text-byte-accent-cyan hover:underline">Términos de Servicio</a> y
+                <a href="#" class="text-byte-accent-cyan hover:underline">Condiciones</a>.
+            </p>
+            <p>© 2025 MarketByte. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="whatsapp-float-container z-[100000001]">
+        <div id="whatsapp-tooltip" class="whatsapp-tooltip">
+            ¡Hola! ¿Necesitas ayuda?
+        </div>
+        <a href="https://wa.me/584125646508" target="_blank" rel="noopener noreferrer" class="whatsapp-float-button" id="whatsapp-float-button" aria-label="Chatear por WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 29.079097 3.1186875 32.88588 4.984375 36.208984 L 2.0371094 46.730469 A 1.0001 1.0001 0 0 0 3.2402344 47.970703 L 14.210938 45.251953 C 17.434629 46.972929 21.092591 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 21.278025 46 17.792121 45.029635 14.761719 43.333984 A 1.0001 1.0001 0 0 0 14.033203 43.236328 L 4.4257812 45.617188 L 7.0019531 36.425781 A 1.0001 1.0001 0 0 0 6.9023438 35.646484 C 5.0606869 32.523592 4 28.890107 4 25 C 4 13.390466 13.390466 4 25 4 z M 16.642578 13 C 16.001539 13 15.086045 13.23849 14.333984 14.048828 C 13.882268 14.535548 12 16.369511 12 19.59375 C 12 22.955271 14.331391 25.855848 14.613281 26.228516 L 14.615234 26.228516 L 14.615234 26.230469 C 14.588494 26.195329 14.973031 26.752191 15.486328 27.419922 C 15.999626 28.087653 16.717405 28.96464 17.619141 29.914062 C 19.422612 31.812909 21.958282 34.007419 25.105469 35.349609 C 26.554789 35.966779 27.698179 36.339417 28.564453 36.611328 C 30.169845 37.115426 31.632073 37.038799 32.730469 36.876953 C 33.55263 36.755876 34.456878 36.361114 35.351562 35.794922 C 36.246248 35.22873 37.12309 34.524722 37.509766 33.455078 C 37.786772 32.688244 37.927591 31.979598 37.978516 31.396484 C 38.003976 31.104927 38.007211 30.847602 37.988281 30.609375 C 37.969311 30.371148 37.989581 30.188664 37.767578 29.824219 C 37.302009 29.059804 36.774753 29.039853 36.224609 28.767578 C 35.918939 28.616297 35.048661 28.191329 34.175781 27.775391 C 33.303883 27.35992 32.54892 26.991953 32.083984 26.826172 C 31.790239 26.720488 31.431556 26.568352 30.914062 26.626953 C 30.396569 26.685553 29.88546 27.058933 29.587891 27.5 C 29.305837 27.918069 28.170387 29.258349 27.824219 29.652344 C 27.819619 29.649544 27.849659 29.663383 27.712891 29.595703 C 27.284761 29.383815 26.761157 29.203652 25.986328 28.794922 C 25.2115 28.386192 24.242255 27.782635 23.181641 26.847656 L 23.181641 26.845703 C 21.603029 25.455949 20.497272 23.711106 20.148438 23.125 C 20.171937 23.09704 20.145643 23.130901 20.195312 23.082031 L 20.197266 23.080078 C 20.553781 22.728924 20.869739 22.309521 21.136719 22.001953 C 21.515257 21.565866 21.68231 21.181437 21.863281 20.822266 C 22.223954 20.10644 22.02313 19.318742 21.814453 18.904297 L 21.814453 18.902344 C 21.828863 18.931014 21.701572 18.650157 21.564453 18.326172 C 21.426943 18.001263 21.251663 17.580039 21.064453 17.130859 C 20.690033 16.232501 20.272027 15.224912 20.023438 14.634766 L 20.023438 14.632812 C 19.730591 13.937684 19.334395 13.436908 18.816406 13.195312 C 18.298417 12.953717 17.840778 13.022402 17.822266 13.021484 L 17.820312 13.021484 C 17.450668 13.004432 17.045038 13 16.642578 13 z M 16.642578 15 C 17.028118 15 17.408214 15.004701 17.726562 15.019531 C 18.054056 15.035851 18.033687 15.037192 17.970703 15.007812 C 17.906713 14.977972 17.993533 14.968282 18.179688 15.410156 C 18.423098 15.98801 18.84317 16.999249 19.21875 17.900391 C 19.40654 18.350961 19.582292 18.773816 19.722656 19.105469 C 19.863021 19.437122 19.939077 19.622295 20.027344 19.798828 L 20.027344 19.800781 L 20.029297 19.802734 C 20.115837 19.973483 20.108185 19.864164 20.078125 19.923828 C 19.867096 20.342656 19.838461 20.445493 19.625 20.691406 C 19.29998 21.065838 18.968453 21.483404 18.792969 21.65625 C 18.639439 21.80707 18.36242 22.042032 18.189453 22.501953 C 18.016221 22.962578 18.097073 23.59457 18.375 24.066406 C 18.745032 24.6946 19.964406 26.679307 21.859375 28.347656 C 23.05276 29.399678 24.164563 30.095933 25.052734 30.564453 C 25.940906 31.032973 26.664301 31.306607 26.826172 31.386719 C 27.210549 31.576953 27.630655 31.72467 28.119141 31.666016 C 28.607627 31.607366 29.02878 31.310979 29.296875 31.007812 L 29.298828 31.005859 C 29.655629 30.601347 30.715848 29.390728 31.224609 28.644531 C 31.246169 28.652131 31.239109 28.646231 31.408203 28.707031 L 31.408203 28.708984 L 31.410156 28.708984 C 31.487356 28.736474 32.454286 29.169267 33.316406 29.580078 C 34.178526 29.990889 35.053561 30.417875 35.337891 30.558594 C 35.748225 30.761674 35.942113 30.893881 35.992188 30.894531 C 35.995572 30.982516 35.998992 31.07786 35.986328 31.222656 C 35.951258 31.624292 35.8439 32.180225 35.628906 32.775391 C 35.523582 33.066746 34.975018 33.667661 34.283203 34.105469 C 33.591388 34.543277 32.749338 34.852514 32.4375 34.898438 C 31.499896 35.036591 30.386672 35.087027 29.164062 34.703125 C 28.316336 34.437036 27.259305 34.092596 25.890625 33.509766 C 23.114812 32.325956 20.755591 30.311513 19.070312 28.537109 C 18.227674 27.649908 17.552562 26.824019 17.072266 26.199219 C 16.592866 25.575584 16.383528 25.251054 16.208984 25.021484 L 16.207031 25.019531 C 15.897202 24.609805 14 21.970851 14 19.59375 C 14 17.077989 15.168497 16.091436 15.800781 15.410156 C 16.132721 15.052495 16.495617 15 16.642578 15 z"/>
+            </svg>
+        </a>
+    </div>
+
+    <div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-[10000] bg-byte-secondary-dark text-byte-text-light p-4 shadow-lg rounded-t-lg text-center transition-all duration-300 ease-out">
+        <p class="mb-2 text-sm md:text-base">
+            Esta página web utiliza cookies para mejorar tu experiencia y entender qué le interesa a nuestros clientes.
+            Al continuar navegando, aceptas nuestros
+            <a href="#" class="text-byte-accent-cyan hover:underline">Términos de Servicio</a> y
+            <a href="#" class="text-byte-accent-cyan hover:underline">Condiciones</a>.
+        </p>
+        <button id="accept-cookies-button" class="bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                                     shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 text-sm">
+            Aceptar
+        </button>
+        <p class="mt-2 text-xs text-gray-400">© 2025 MarketByte. Todos los derechos reservados.</p>
+    </div>
+
+    <!-- Filter Modal Structure -->
+    <div id="filter-modal" class="filter-modal-overlay">
+        <div class="filter-modal-content">
+            <button id="filter-modal-close-button" class="filter-modal-close-button">&times;</button>
+            <h3 class="text-2xl font-bold text-byte-accent-cyan mb-6 text-center">Filtrar Servicios</h3>
+
+            <div class="mb-6">
+                <p class="text-byte-text-light text-lg mb-3">Categoría:</p>
+                <div id="category-filter-options" class="space-y-2">
+                    <!-- Categories will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-byte-text-light text-lg mb-3">Rango de Precios ($):</p>
+                <div class="filter-modal-input-group">
+                    <input type="number" id="min-price-filter" placeholder="Mínimo" class="w-1/2">
+                    <span class="text-byte-text-light">-</span>
+                    <input type="number" id="max-price-filter" placeholder="Máximo" class="w-1/2">
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-byte-text-light text-lg mb-3">Distancia Máxima (km):</p>
+                <div class="filter-modal-input-group">
+                    <input type="number" id="max-distance-filter" placeholder="Ej. 50" class="w-full">
+                </div>
+            </div>
+
+            <button id="apply-filters-button" class="filter-modal-apply-button">
+                Aplicar Filtros
+            </button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Chatbot integration (kept as is from original file)
+        (function() {
+            var chatBotEl = document.createElement('chat-bot');
+            chatBotEl.setAttribute('platform_id', '7def0408-a3e8-4a58-90bb-c6e5e3e750b2');
+            chatBotEl.setAttribute('user_id', 'e71d960f-62bf-4b52-9c34-89801d0d8023');
+            chatBotEl.setAttribute('chatbot_id', 'cb3c57ca-bd69-47a9-8df1-1e2756ae556a');
+            var chatbotLink = document.createElement('a');
+            chatbotLink.href = 'https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral';
+            chatbotLink.innerHTML = 'chatsimple';
+            chatBotEl.appendChild(chatbotLink); // This line appends chatbotLink to chatBotEl
+
+            // Corrected order: define cs before appending and append chatBotEl
+            var cs = document.createElement('script');
+            cs.src = 'https://chatsimple-widget.s3.us-east-2.amazonaws.com/chat-bot-loader.js';
+            document.body.appendChild(chatBotEl); // Append chatBotEl to body
+            document.body.appendChild(cs); // Append cs to body
+        })();
+    </script>
+
+    <script>
+        // Mock Data for demonstration purposes
+        const mockServices = [
+            {
+                id: 's1',
+                title: 'Diseño de Logotipo Profesional',
+                category: 'Diseño Gráfico',
+                price: 150,
+                description: 'Creación de un logotipo único y memorable para tu marca. Incluye 3 revisiones y archivos en múltiples formatos.',
+                providerId: 'p1',
+                imageUrl: 'https://placehold.co/400x300/F0F8FF/0A0A1A?text=Logo+Design',
+                rating: 4.8,
+                reviews: 25,
+                deliveryTime: '3 días',
+                location: { lat: 10.4806, lon: -66.9036 } // Caracas
+            },
+            {
+                id: 's2',
+                title: 'Redacción de Contenido Web SEO',
+                category: 'Redacción y Traducción',
+                price: 80,
+                description: 'Artículos optimizados para SEO, entradas de blog y contenido web que atrae tráfico y convierte.',
+                providerId: 'p2',
+                imageUrl: 'https://placehold.co/400x300/F0F8FF/0A0A1A?text=SEO+Content',
+                rating: 4.9,
+                reviews: 30,
+                deliveryTime: '2 días',
+                location: { lat: 10.1667, lon: -68.0000 } // Valencia
+            },
+            {
+                id: 's3',
+                title: 'Desarrollo de Landing Page',
+                category: 'Desarrollo Web',
+                price: 300,
+                description: 'Creación de una landing page responsiva y de alta conversión para tus campañas de marketing.',
+                providerId: 'p1',
+                imageUrl: 'https://placehold.co/400x300/F0F8FF/0A0A1A?text=Landing+Page',
+                rating: 4.7,
+                reviews: 18,
+                deliveryTime: '5 días',
+                location: { lat: 10.4806, lon: -66.9036 } // Caracas
+            },
+            {
+                id: 's4',
+                title: 'Clases de Inglés Online',
+                category: 'Clases y Tutorías',
+                price: 25,
+                description: 'Clases personalizadas de inglés para todos los niveles, enfocadas en conversación y gramática.',
+                providerId: 'p3',
+                imageUrl: 'https://placehold.co/400x300/F0F8FF/0A0A1A?text=English+Class',
+                rating: 5.0,
+                reviews: 12,
+                deliveryTime: '1 hora',
+                location: { lat: 10.6667, lon: -71.6167 } // Maracaibo
+            },
+            {
+                id: 's5',
+                title: 'Consultoría de Marketing Digital',
+                category: 'Marketing Digital',
+                price: 200,
+                description: 'Estrategias personalizadas de marketing digital para impulsar tu negocio online.',
+                providerId: 'p2',
+                imageUrl: 'https://placehold.co/400x300/F0F8FF/0A0A1A?text=Digital+Marketing',
+                rating: 4.6,
+                reviews: 10,
+                deliveryTime: '7 días',
+                location: { lat: 10.1667, lon: -68.0000 } // Valencia
+            },
+        ];
+
+        const mockProviders = [
+            {
+                id: 'p1',
+                name: 'Ana García',
+                profession: 'Diseñadora Gráfica y Desarrolladora Web',
+                bio: 'Apasionada por crear soluciones visuales y digitales que conectan con las audiencias. Más de 8 años de experiencia en diseño de marcas y desarrollo front-end.',
+                profileImageUrl: 'https://placehold.co/150x150/F0F8FF/0A0A1A?text=Ana+G',
+                rating: 4.8,
+                reviews: 43,
+                location: { lat: 10.4806, lon: -66.9036 }, // Caracas
+                servicesOffered: ['s1', 's3'] // IDs of services offered by this provider
+            },
+            {
+                id: 'p2',
+                name: 'Carlos Rodríguez',
+                profession: 'Redactor SEO y Consultor de Marketing',
+                bio: 'Experto en generar contenido de alto impacto y estrategias de marketing digital que producen resultados medibles. Ayudo a las empresas a crecer online.',
+                profileImageUrl: 'https://placehold.co/150x150/F0F8FF/0A0A1A?text=Carlos+R',
+                rating: 4.7,
+                reviews: 40,
+                location: { lat: 10.1667, lon: -68.0000 }, // Valencia
+                servicesOffered: ['s2', 's5']
+            },
+            {
+                id: 'p3',
+                name: 'María López',
+                profession: 'Profesora de Idiomas',
+                bio: 'Profesora certificada con más de 10 años de experiencia en la enseñanza de inglés y español. Mi objetivo es que mis estudiantes alcancen fluidez y confianza.',
+                profileImageUrl: 'https://placehold.co/150x150/F0F8FF/0A0A1A?text=Maria+L',
+                rating: 5.0,
+                reviews: 15,
+                location: { lat: 10.6667, lon: -71.6167 }, // Maracaibo
+                servicesOffered: ['s4']
+            },
+        ];
+
+        // User's approximate current location for distance calculation (e.g., Caracas)
+        const userLocation = { lat: 10.4806, lon: -66.9036 };
+
+        // Helper function to calculate distance between two coordinates (simplified Euclidean for demo)
+        // For real-world applications, use Haversine formula for geographical accuracy.
+        function calculateDistance(loc1, loc2) {
+            const R = 6371; // Radius of Earth in kilometers
+            const dLat = (loc2.lat - loc1.lat) * Math.PI / 180;
+            const dLon = (loc2.lon - loc1.lon) * Math.PI / 180;
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(loc1.lat * Math.PI / 180) * Math.cos(loc2.lat * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Distance in km
+            return distance;
+        }
+
+        // Helper function to get provider details by ID
+        const getProviderById = (id) => mockProviders.find(p => p.id === id);
+
+        // Helper function to get service details by ID
+        const getServiceById = (id) => mockServices.find(s => s.id === id);
+
+        // Global state for current page and parameters
+        let currentPage = 'home';
+        let currentParams = {};
+        let currentSearchTerm = '';
+        let currentCategoryFilter = ''; // This will still be used internally for filtering
+        let currentMinPriceFilter = '';
+        let currentMaxPriceFilter = '';
+        let currentMaxDistanceFilter = '';
+
+        // Function to navigate between pages/views
+        function navigate(page, params = {}) {
+            currentPage = page;
+            currentParams = params;
+            renderPage();
+        }
+
+        // Function to filter services based on search term and category
+        function filterServices() {
+            let filteredServices = mockServices;
+
+            // Apply text search filter
+            const searchTerm = document.getElementById('search-input') ? document.getElementById('search-input').value : '';
+            if (searchTerm) {
+                const lowerCaseSearchTerm = searchTerm.toLowerCase();
+                filteredServices = filteredServices.filter(service =>
+                    service.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    service.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    service.category.toLowerCase().includes(lowerCaseSearchTerm)
+                );
+            }
+            currentSearchTerm = searchTerm; // Update global state
+
+            // Apply category filter
+            if (currentCategoryFilter) {
+                filteredServices = filteredServices.filter(service => service.category === currentCategoryFilter);
+            }
+
+            // Apply price range filter
+            const minPrice = parseFloat(currentMinPriceFilter);
+            const maxPrice = parseFloat(currentMaxPriceFilter);
+            if (!isNaN(minPrice)) {
+                filteredServices = filteredServices.filter(service => service.price >= minPrice);
+            }
+            if (!isNaN(maxPrice)) {
+                filteredServices = filteredServices.filter(service => service.price <= maxPrice);
+            }
+
+            // Apply distance filter
+            const maxDistance = parseFloat(currentMaxDistanceFilter);
+            if (!isNaN(maxDistance)) {
+                filteredServices = filteredServices.filter(service => {
+                    const provider = getProviderById(service.providerId);
+                    if (provider && provider.location) {
+                        const distance = calculateDistance(userLocation, provider.location);
+                        return distance <= maxDistance;
+                    }
+                    return false; // Exclude if no location data
+                });
+            }
+
+            renderPage(); // Re-render home page with filters applied
+        }
+
+        // Function to render a service card HTML string
+        function createServiceCardHtml(service) {
+            const provider = getProviderById(service.providerId);
+            const providerName = provider ? provider.name : 'Proveedor Desconocido';
+            const providerProfileImageUrl = provider ? provider.profileImageUrl : 'https://placehold.co/150x150/F0F8FF/0A0A1A?text=No+Img';
+
+            // Calculate distance for display (if provider location exists)
+            let distanceHtml = '';
+            if (provider && provider.location) {
+                const distance = calculateDistance(userLocation, provider.location);
+                distanceHtml = `<p class="text-xs text-gray-500 mt-1">Aprox. ${distance.toFixed(1)} km de ti</p>`;
+            }
+
+            return `
+                <div class="service-card-item cursor-pointer" onclick="navigate('serviceDetail', { id: '${service.id}' })">
+                    <img src="${service.imageUrl}" alt="${service.title}" class="w-full h-48 object-cover rounded-t-xl" onerror="this.src='https://placehold.co/400x300/F0F8FF/0A0A1A?text=No+Image';">
+                    <div class="p-5 flex flex-col flex-grow w-full">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 text-byte-text-light">${service.title}</h3>
+                        <p class="text-sm text-gray-400 mb-3 line-clamp-2">${service.description}</p>
+                        <div class="flex items-center text-gray-400 text-sm mb-3">
+                            <span class="text-yellow-500 mr-1">★</span>
+                            ${service.rating} (${service.reviews} reseñas)
+                        </div>
+                        <button onclick="event.stopPropagation(); navigate('providerProfile', { id: '${service.providerId}' })" class="flex items-center text-byte-accent-cyan hover:underline mb-4 self-start">
+                            <img src="${providerProfileImageUrl}" alt="${providerName}" class="w-8 h-8 rounded-full mr-2 border-2 border-byte-accent-cyan" onerror="this.src='https://placehold.co/150x150/F0F8FF/0A0A1A?text=No+Img';">
+                            <span class="font-medium">${providerName}</span>
+                        </button>
+                        ${distanceHtml}
+                        <div class="mt-auto flex justify-between items-center pt-4 border-t border-gray-700 w-full">
+                            <span class="text-2xl font-extrabold text-byte-accent-cyan">$${service.price}</span>
+                            <button
+                                onclick="event.stopPropagation(); navigate('serviceDetail', { id: '${service.id}' })"
+                                class="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold shadow-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                            >
+                                Ver Detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render the Home Page
+        function renderHomePage(container) {
+            let filteredServices = mockServices;
+
+            // Apply text search filter
+            const searchTerm = document.getElementById('search-input') ? document.getElementById('search-input').value : '';
+            if (searchTerm) {
+                const lowerCaseSearchTerm = searchTerm.toLowerCase();
+                filteredServices = filteredServices.filter(service =>
+                    service.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    service.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    service.category.toLowerCase().includes(lowerCaseSearchTerm)
+                );
+            }
+
+            // Apply category filter
+            if (currentCategoryFilter) {
+                filteredServices = filteredServices.filter(service => service.category === currentCategoryFilter);
+            }
+
+            // Apply price range filter
+            const minPrice = parseFloat(currentMinPriceFilter);
+            const maxPrice = parseFloat(currentMaxPriceFilter);
+            if (!isNaN(minPrice)) {
+                filteredServices = filteredServices.filter(service => service.price >= minPrice);
+            }
+            if (!isNaN(maxPrice)) {
+                filteredServices = filteredServices.filter(service => service.price <= maxPrice);
+            }
+
+            // Apply distance filter
+            const maxDistance = parseFloat(currentMaxDistanceFilter);
+            if (!isNaN(maxDistance)) {
+                filteredServices = filteredServices.filter(service => {
+                    const provider = getProviderById(service.providerId);
+                    if (provider && provider.location) {
+                        const distance = calculateDistance(userLocation, provider.location);
+                        return distance <= maxDistance;
+                    }
+                    return false; // Exclude if no location data
+                });
+            }
+
+
+            container.innerHTML = `
+                <section id="hero-section" class="relative bg-byte-dark-bg text-white py-24 md:py-48 overflow-hidden flex items-center justify-center hero-section-padding">
+                    <video autoplay loop muted playsinline preload="auto"
+                                   class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 brightness-75">
+                        <source src="./images/fondo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="container mx-auto px-4 relative z-10 text-center">
+                        <h1 id="hero-heading-text" class="text-3xl md:text-6xl lg:text-5xl font-extrabold leading-tight mb-4 text-white drop-shadow-lg text-stroke-cyan hero-heading">
+                            Encuentra el talento que necesitas
+                        </h1>
+                        <p class="text-base md:text-xl lg:text-lg mb-8 max-w-3xl mx-auto text-byte-text-light opacity-90 hero-subheading">
+                            Conecta con profesionales para cualquier proyecto.
+                        </p>
+                        <div class="max-w-3xl mx-auto flex rounded-full shadow-lg overflow-hidden border border-byte-accent-cyan">
+                            <input
+                                type="text"
+                                id="search-input"
+                                placeholder="Buscar servicios (ej. diseño de logo, redacción SEO)"
+                                class="flex-grow p-4 text-lg rounded-l-full focus:outline-none bg-byte-secondary-dark text-byte-text-light placeholder-gray-400 focus:ring-2 focus:ring-byte-accent-cyan"
+                                value="${currentSearchTerm}"
+                            />
+                            <button id="search-button" class="bg-byte-accent-cyan text-byte-dark-bg px-8 py-4 text-lg font-semibold rounded-r-none hover:bg-cyan-400 transition-colors duration-300">
+                                Buscar
+                            </button>
+                            <button id="filters-button" class="bg-blue-600 text-white px-6 py-4 text-lg font-semibold rounded-r-full hover:bg-blue-700 transition-colors duration-300">
+                                Filtros
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="featured-services" class="py-12 lg:py-10 bg-byte-dark-bg text-byte-text-light">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-2xl md:text-4xl lg:text-3xl font-extrabold text-center mb-10 section-heading text-stroke-cyan">Servicios Destacados</h2>
+                        <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${filteredServices.length > 0 ?
+                                filteredServices.map(service => createServiceCardHtml(service)).join('') :
+                                '<p class="text-center text-gray-400 text-lg col-span-full">No se encontraron servicios que coincidan con tu búsqueda.</p>'
+                            }
+                        </div>
+                    </div>
+                </section>
+            `;
+
+            // Re-attach event listeners for search button and new filters button after content is rendered
+            document.getElementById('search-button').addEventListener('click', () => {
+                filterServices();
+            });
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    filterServices();
+                }
+            });
+            document.getElementById('filters-button').addEventListener('click', () => {
+                showFilterModal();
+            });
+        }
+
+        // Function to render the Service Detail Page
+        function renderServiceDetailPage(container, serviceId) {
+            const service = getServiceById(serviceId);
+            const provider = service ? getProviderById(service.providerId) : null;
+
+            // Calculate distance for display (if provider location exists)
+            let distanceInfoHtml = '';
+            if (provider && provider.location) {
+                const distance = calculateDistance(userLocation, provider.location);
+                distanceInfoHtml = `<li class="text-gray-400"><span class="font-semibold text-byte-text-light">Distancia Aproximada:</span> ${distance.toFixed(1)} km</li>`;
+            }
+
+            if (!service) {
+                container.innerHTML = `
+                    <div class="container mx-auto p-8 text-center text-red-500 text-xl bg-byte-secondary-dark rounded-xl shadow-lg my-8">
+                        <p class="mb-4">Servicio no encontrado.</p>
+                        <button onclick="navigate('home')" class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                            Volver al Inicio
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="container mx-auto p-6 my-8 bg-byte-secondary-dark rounded-xl shadow-lg border border-byte-accent-cyan/30">
+                    <button onclick="navigate('home')" class="text-byte-accent-cyan hover:underline mb-6 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        Volver a la búsqueda
+                    </button>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <img src="${service.imageUrl}" alt="${service.title}" class="w-full h-96 object-cover rounded-lg shadow-md border border-byte-accent-cyan/20" onerror="this.src='https://placehold.co/800x600/F0F8FF/0A0A1A?text=No+Image';">
+                            <h1 class="text-4xl font-extrabold text-byte-text-light mt-8 mb-4 text-stroke-cyan">${service.title}</h1>
+                            <p class="text-lg text-gray-400 leading-relaxed mb-6">${service.description}</p>
+                            <div class="bg-byte-dark-bg p-6 rounded-lg shadow-inner border border-byte-accent-cyan/10">
+                                <h2 class="text-2xl font-bold text-byte-accent-cyan mb-4">Detalles del Servicio</h2>
+                                <ul class="list-disc list-inside text-gray-400 space-y-2">
+                                    <li><span class="font-semibold text-byte-text-light">Categoría:</span> ${service.category}</li>
+                                    <li><span class="font-semibold text-byte-text-light">Tiempo de Entrega:</span> ${service.deliveryTime}</li>
+                                    <li><span class="font-semibold text-byte-text-light">Rating:</span> <span class="text-yellow-500">★</span>${service.rating} (${service.reviews} reseñas)</li>
+                                    <li><span class="font-semibold text-byte-text-light">Habilidades Clave:</span> ${service.details}</li>
+                                    ${distanceInfoHtml}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-1">
+                            <div class="bg-byte-dark-bg p-6 rounded-xl shadow-md sticky top-4 border border-byte-accent-cyan/30">
+                                <div class="flex justify-between items-baseline mb-6">
+                                    <span class="text-4xl font-extrabold text-byte-accent-cyan">$${service.price}</span>
+                                    <span class="text-lg text-gray-400">Precio Fijo</span>
+                                </div>
+                                <button onclick="alert('Funcionalidad de \"Contratar Servicio\" no implementada en este demo.')" class="w-full bg-blue-600 text-white py-4 rounded-full text-xl font-bold hover:bg-blue-700 transition-colors duration-300 shadow-lg transform hover:scale-105">
+                                    Contratar Servicio
+                                </button>
+                                <button onclick="alert('Funcionalidad de \"Contactar Proveedor\" no implementada en este demo.')" class="w-full bg-gray-700 text-white py-3 rounded-full text-lg font-semibold mt-4 hover:bg-gray-600 transition-colors duration-300">
+                                    Contactar al Proveedor
+                                </button>
+
+                                ${provider ? `
+                                <div class="mt-8 pt-6 border-t border-gray-700">
+                                    <h3 class="text-xl font-bold text-byte-accent-cyan mb-4">Acerca del Proveedor</h3>
+                                    <div class="flex items-center mb-4">
+                                        <img src="${provider.profileImageUrl}" alt="${provider.name}" class="w-16 h-16 rounded-full mr-4 border-4 border-byte-accent-cyan shadow-md" onerror="this.src='https://placehold.co/150x150/F0F8FF/0A0A1A?text=No+Img';">
+                                        <div>
+                                            <button onclick="navigate('providerProfile', { id: '${provider.id}' })" class="text-byte-accent-cyan text-2xl font-semibold hover:underline">
+                                                ${provider.name}
+                                            </button>
+                                            <p class="text-gray-400 text-sm">${provider.profession}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center text-gray-400 mb-4">
+                                        <span class="text-yellow-500 mr-1 text-lg">★</span>
+                                        <span class="font-medium text-lg">${provider.rating}</span> (${provider.reviews} reseñas)
+                                    </div>
+                                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">${provider.bio}</p>
+                                    <button onclick="navigate('providerProfile', { id: '${provider.id}' })" class="text-byte-accent-cyan font-semibold hover:underline">
+                                        Ver Perfil Completo
+                                    </button>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="mt-12 p-6 bg-byte-dark-bg rounded-xl shadow-inner border border-byte-accent-cyan/10">
+                        <h2 class="text-3xl font-bold text-byte-accent-cyan mb-6">Reseñas de Clientes</h2>
+                        ${service.reviews > 0 ? `
+                            <div class="space-y-6">
+                                <div class="bg-byte-secondary-dark p-5 rounded-lg shadow-sm border border-gray-700">
+                                    <div class="flex items-center mb-2">
+                                        <span class="font-semibold text-byte-text-light mr-2">Cliente Satisfecho</span>
+                                        <span class="text-yellow-500">★★★★★</span>
+                                    </div>
+                                    <p class="text-gray-400">"¡Excelente trabajo! El logo quedó justo como lo imaginé y la comunicación fue fluida. Muy recomendado."</p>
+                                </div>
+                                <div class="bg-byte-secondary-dark p-5 rounded-lg shadow-sm border border-gray-700">
+                                    <div class="flex items-center mb-2">
+                                        <span class="font-semibold text-byte-text-light mr-2">Empresa XYZ</span>
+                                        <span class="text-yellow-500">★★★★☆</span>
+                                    </div>
+                                    <p class="text-gray-400">"Buen servicio, aunque la entrega se demoró un día. El resultado final fue muy bueno."</p>
+                                </div>
+                            </div>
+                        ` : `
+                            <p class="text-gray-400">Sé el primero en dejar una reseña para este servicio.</p>
+                        `}
+                    </section>
+                </div>
+            `;
+        }
+
+        // Function to render the current page
+        function renderPage() {
+            const mainContentArea = document.getElementById('main-content-area');
+            if (mainContentArea) {
+                // Clear previous content before rendering new page
+                mainContentArea.innerHTML = '';
+                switch (currentPage) {
+                    case 'home':
+                        renderHomePage(mainContentArea);
+                        break;
+                    case 'serviceDetail':
+                        renderServiceDetailPage(mainContentArea, currentParams.id);
+                        break;
+                    case 'providerProfile':
+                        renderProviderProfilePage(mainContentArea, currentParams.id);
+                        break;
+                    default:
+                        renderHomePage(mainContentArea);
+                }
+                // Scroll to top of the main content area after rendering new page
+                mainContentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Function to show the filter modal
+        function showFilterModal() {
+            const filterModal = document.getElementById('filter-modal');
+            const categoryOptionsContainer = document.getElementById('category-filter-options');
+            const minPriceInput = document.getElementById('min-price-filter');
+            const maxPriceInput = document.getElementById('max-price-filter');
+            const maxDistanceInput = document.getElementById('max-distance-filter');
+
+            const categories = [...new Set(mockServices.map(s => s.category))];
+
+            // Clear previous options
+            categoryOptionsContainer.innerHTML = '';
+
+            // Add "Todas las categorías" option
+            const allCategoriesHtml = `
+                <div class="filter-modal-category-item">
+                    <input type="radio" id="category-all" name="category-filter" value="" class="cursor-pointer" ${currentCategoryFilter === '' ? 'checked' : ''}>
+                    <label for="category-all" class="cursor-pointer">Todas las categorías</label>
+                </div>
+            `;
+            categoryOptionsContainer.insertAdjacentHTML('beforeend', allCategoriesHtml);
+
+
+            // Add dynamic category options
+            categories.forEach(category => {
+                const isChecked = currentCategoryFilter === category ? 'checked' : '';
+                const categoryHtml = `
+                    <div class="filter-modal-category-item">
+                        <input type="radio" id="category-${category.replace(/\s/g, '-')}" name="category-filter" value="${category}" class="cursor-pointer" ${isChecked}>
+                        <label for="category-${category.replace(/\s/g, '-')}" class="cursor-pointer">${category}</label>
+                    </div>
+                `;
+                categoryOptionsContainer.insertAdjacentHTML('beforeend', categoryHtml);
+            });
+
+            // Pre-fill price and distance inputs
+            minPriceInput.value = currentMinPriceFilter;
+            maxPriceInput.value = currentMaxPriceFilter;
+            maxDistanceInput.value = currentMaxDistanceFilter;
+
+            // Set display to flex before adding 'show' class for transition
+            filterModal.style.display = 'flex';
+            filterModal.classList.add('show');
+        }
+
+        // Function to hide the filter modal
+        function hideFilterModal() {
+            const filterModal = document.getElementById('filter-modal');
+            filterModal.classList.remove('show');
+            // Hide the modal completely after the transition
+            setTimeout(() => {
+                filterModal.style.display = 'none';
+            }, 300); // Match this with the transition duration in CSS (0.3s)
+        }
+
+        // Event listener for applying filters
+        document.addEventListener('click', (event) => {
+            if (event.target.id === 'apply-filters-button') {
+                const selectedCategoryRadio = document.querySelector('input[name="category-filter"]:checked');
+                currentCategoryFilter = selectedCategoryRadio ? selectedCategoryRadio.value : '';
+
+                currentMinPriceFilter = document.getElementById('min-price-filter').value;
+                currentMaxPriceFilter = document.getElementById('max-price-filter').value;
+                currentMaxDistanceFilter = document.getElementById('max-distance-filter').value;
+
+                hideFilterModal();
+                filterServices(); // Re-render services with new filters
+            } else if (event.target.id === 'filter-modal-close-button' || event.target.id === 'filter-modal') {
+                // Close modal if close button or overlay is clicked
+                hideFilterModal();
+            }
+        });
+
+
+        // Global variables for WhatsApp elements
+        const whatsappButton = document.getElementById('whatsapp-float-button');
+        const whatsappTooltip = document.getElementById('whatsapp-tooltip');
+        const whatsappFloatContainer = document.querySelector('.whatsapp-float-container');
+        let initialTooltipTimeout;
+        let animationInterval;
+        let whatsappTooltipEnabled = true; // Flag to control tooltip visibility and animations
+
+        // Global variables for cookie banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptCookiesButton = document.getElementById('accept-cookies-button');
+
+        // Function to show WhatsApp tooltip
+        function showTooltip(autoHide = false) {
+            if (whatsappTooltipEnabled) { // Only show if globally enabled
+                whatsappTooltip.classList.add('show-tooltip');
+                if (autoHide) {
+                    // Clear any existing auto-hide timeout to avoid conflicts
+                    if (initialTooltipTimeout) {
+                        clearTimeout(initialTooltipTimeout);
+                    }
+                    initialTooltipTimeout = setTimeout(() => {
+                        hideTooltip();
+                    }, 8000); // Auto-hide after 8 seconds
+                }
+            }
+        }
+
+        // Function to hide WhatsApp tooltip
+        function hideTooltip() {
+            whatsappTooltip.classList.remove('show-tooltip');
+        }
+
+        // Function to start WhatsApp animation sequence
+        function startWhatsappAnimations() {
+            // Clear any existing animation to restart
+            whatsappButton.style.animation = 'none';
+            void whatsappButton.offsetWidth; // Force reflow
+            whatsappButton.style.animation = ''; // Reset animation property
+
+            whatsappButton.style.animation = 'pulse-glow 2s forwards';
+
+            setTimeout(() => {
+                whatsappButton.style.animation = 'shake 1s forwards';
+            }, 2000);
+        }
+
+        // Function to manage WhatsApp animation cycle
+        function setupAnimationCycle() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+            if (whatsappTooltipEnabled) { // Only start animations if globally enabled
+                startWhatsappAnimations();
+                animationInterval = setInterval(() => {
+                    startWhatsappAnimations();
+                }, 8000);
+            } else {
+                // If animations are disabled, ensure no animation is running
+                whatsappButton.style.animation = 'none';
+            }
+        }
+
+        // Function to update WhatsApp button position based on cookie banner visibility
+        function updateWhatsappPosition() {
+            const isCookieBannerVisible = !cookieBanner.classList.contains('hidden');
+
+            if (isCookieBannerVisible) {
+                // If cookie banner is visible, raise based on cookie banner height
+                // Small delay to ensure cookie banner height renders before calculation
+                setTimeout(() => {
+                    const cookieBannerHeight = cookieBanner.offsetHeight;
+                    whatsappFloatContainer.style.bottom = `${cookieBannerHeight + 20}px`;
+                }, 50);
+            } else {
+                // If no cookie banner is visible, restore default WhatsApp position
+                whatsappFloatContainer.style.bottom = '20px';
+            }
+        }
+
+        // Main page load logic for banners and initial page render
+        window.addEventListener('load', () => {
+            const cookieConsentAccepted = localStorage.getItem('cookieConsentAccepted');
+
+            // Initial render of the home page
+            renderPage();
+
+            // If cookies have NOT been accepted
+            if (!cookieConsentAccepted) {
+                cookieBanner.classList.remove('hidden'); // Show cookie banner
+                updateWhatsappPosition(); // Adjust WhatsApp position for cookie banner
+
+                whatsappTooltipEnabled = false; // Disable tooltip and automatic animations
+                hideTooltip(); // Ensure tooltip is hidden on load
+                clearInterval(animationInterval); // Stop any default animations
+
+                // On clicking 'Accept' on cookie banner
+                acceptCookiesButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsentAccepted', 'true');
+                    cookieBanner.classList.add('hidden'); // Hide cookie banner
+                    updateWhatsappPosition(); // Re-adjust WhatsApp position (will go to 20px by default)
+
+                    whatsappTooltipEnabled = true; // Enable tooltip and automatic animations
+                    // Show tooltip and start animations after a brief delay on accepting cookies
+                    initialTooltipTimeout = setTimeout(() => {
+                        showTooltip(true); // Show and auto-hide
+                        setupAnimationCycle();
+                    }, 1000);
+                });
+            } else { // If cookie consent HAS been given
+                cookieBanner.classList.add('hidden'); // Ensure cookie banner is hidden
+                updateWhatsappPosition(); // Adjust WhatsApp position (will be 20px)
+
+                whatsappTooltipEnabled = true; // Enable tooltip and automatic animations
+                // Show tooltip and start animations after a brief delay on page load
+                initialTooltipTimeout = setTimeout(() => {
+                    showTooltip(true); // Show and auto-hide
+                    setupAnimationCycle();
+                }, 1000);
+            }
+
+            // Event listeners for WhatsApp button (outside banners)
+            if (whatsappButton && whatsappTooltip) {
+                whatsappButton.addEventListener('mouseenter', () => {
+                    clearInterval(animationInterval);
+                    whatsappButton.style.animation = 'none';
+                    showTooltip();
+                });
+
+                whatsappButton.addEventListener('mouseleave', () => {
+                    hideTooltip();
+                    if (whatsappTooltipEnabled) {
+                        setupAnimationCycle();
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // Logic for desktop dropdown menus - REMOVED AS NO DROPDOWNS
+        window.addEventListener('load', () => {
+            // Removed dropdown toggle logic as there are no more dropdown menus in the header
+            document.querySelectorAll('a.disabled-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevents default link action
+                    event.stopPropagation(); // Prevents event propagation so parent menu doesn't close
+                });
+            });
+
+            // Logic for dynamic text in hero section
+            const heroHeadingElement = document.getElementById('hero-heading-text');
+            const heroHeadings = [
+                "Encuentra el talento que necesitas",
+                "¡Ofrece tus servicios y llega a más clientes!"
+            ];
+            let currentHeadingIndex = 0;
+
+            function updateHeroHeading() {
+                // Apply exit animation
+                heroHeadingElement.classList.remove('text-flip-in');
+                heroHeadingElement.classList.add('text-flip-out');
+
+                // After half of the exit animation, change text
+                setTimeout(() => {
+                    currentHeadingIndex = (currentHeadingIndex + 1) % heroHeadings.length;
+                    heroHeadingElement.textContent = heroHeadings[currentHeadingIndex];
+
+                    // Remove exit animation and apply entrance animation
+                    // Force a "reflow" to restart animation
+                    void heroHeadingElement.offsetWidth;
+                    heroHeadingElement.classList.remove('text-flip-out');
+                    heroHeadingElement.classList.add('text-flip-in');
+                }, 400); // Half of text-flip-out duration (0.8s / 2 = 0.4s)
+            }
+
+            // Start text change every 9 seconds
+            setInterval(updateHeroHeading, 9000); // Change text every 9 seconds
+        });
+    </script>
+</body>
+</html>
