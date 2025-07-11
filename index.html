@@ -2,1501 +2,531 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Voltix Cloud - Hosting de Minecraft con alto rendimiento, protección DDoS y soporte 24/7.">
-    <meta name="keywords" content="Hosting Minecraft, Voltix Cloud, VPS, servidores Minecraft, diseño web">
-    <meta name="author" content="Voltix Cloud">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voltix Cloud Hosting</title>
-    <!-- Favicon -->
-    <link rel="icon" href="./images/logo.ico" type="image/x-icon">
+    <title>VoltixCloud - High-Performance Minecraft Hosting</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter para texto general, Poppins para títulos, Bebas Neue para menú -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
-    <!-- Font Awesome para íconos -->
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Configuración de Tailwind para colores y fuentes personalizadas */
-        :root {
-            --color-primary: #00CED1; /* Cian - Color primario para acentos */
-            --color-secondary: #FFD700; /* Amarillo - Azul vibrante para acentos secundarios */
-            --color-dark-bg: rgba(0, 0, 0, 0.95); /* Negro puro con ligera transparencia */
-            --color-medium-dark-bg: rgba(10, 10, 10, 0.8); /* Negro oscuro fuerte con mayor transparencia */
-            --color-card-bg: #2B2B2B; /* Fondo para tarjetas y elementos */
-            --color-text-light: #F4F4F4; /* Texto blanco/gris claro */
-            --color-text-dark: #212121; /* Texto oscuro para el botón cian */
-            --color-text-muted: #A0A0A0; /* Texto gris atenuado */
-            --color-border: #444444; /* Borde oscuro */
-
-            /* Nuevos colores para las tarjetas de ubicación (ya no se usarán como fondo principal) */
-            --color-card-blue: #1E90FF; /* Azul DodgerBlue */
-            --color-card-green: #32CD32; /* Verde Lima */
-            --color-card-purple: #9370DB; /* Púrpura Medio */
-            --color-card-orange: #FF8C00; /* Naranja Oscuro */
-            --color-pink: #FF69B4; /* Rosa para el texto del deslizador (aunque no se puede aplicar directamente) */
-        }
-
-        /* Custom styles to override or extend Tailwind */
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: rgb(10, 10, 10); /* Fondo base negro oscuro fuerte */
-            color: var(--color-text-light);
-            position: relative; /* Necesario para el pseudo-elemento de animación */
-            overflow-x: hidden; /* Evitar desbordamiento horizontal */
-            font-size: 0.95rem; /* Reduced base font size */
+            background-color: #0c0d10; /* Slightly darker, deeper background */
+            color: #e6e6e6; /* Light text color */
         }
-
-        /* Custom Scrollbar Styles for Webkit browsers (Chrome, Safari, Edge) */
-        /* Scrollbar track */
-        ::-webkit-scrollbar {
-            width: 12px; /* Ancho de la barra de desplazamiento vertical */
-            height: 12px; /* Alto de la barra de desplazamiento horizontal */
+        .gradient-text {
+            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        /* Scrollbar track background */
-        ::-webkit-scrollbar-track {
-            background: #333; /* Gris oscuro para el fondo de la barra */
-            border-radius: 10px; /* Bordes redondeados para el track */
+        .btn-primary {
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4); /* More prominent shadow */
         }
-
-        /* Scrollbar thumb (the draggable part) */
-        ::-webkit-scrollbar-thumb {
-            background: var(--color-primary); /* Cian para el deslizador */
-            border-radius: 10px; /* Bordes redondeados para el deslizador */
-            border: 3px solid #333; /* Borde para que se vea flotante sobre el track */
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #a855f7, #6366f1);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6); /* Enhanced shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
         }
-
-        /* Scrollbar thumb on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00A3A6; /* Un poco más oscuro al pasar el ratón */
+        .card-bg {
+            background-color: #1a1c22; /* Darker card background for more contrast */
+            border: 1px solid #2d3748; /* Subtle border for definition */
         }
-
-        /* Pseudo-elemento para la animación de rayo en el fondo del body */
-        body::before {
-            content: '';
-            position: fixed; /* Fijo para cubrir toda la pantalla */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: -1; /* Asegura que esté detrás de todo el contenido */
-            animation: lightning-flash 5s infinite steps(1); /* Animación de destellos rápidos */
-            pointer-events: none; /* Permite que los clics pasen a los elementos de abajo */
+        .card-bg:hover {
+            border-color: #a855f7; /* Highlight border on hover */
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.2); /* Soft shadow on hover */
         }
-
-        /* Keyframes para la animación de destellos de rayo (MEJORADA Y VISIBLE) */
-        @keyframes lightning-flash {
-            0%, 100% {
-                box-shadow: none;
-                opacity: 0;
-            }
-            5% {
-                /* Primer destello más fuerte y brillante */
-                box-shadow:
-                    0 0 120px 60px rgba(255, 255, 255, 1), /* Blanco muy brillante y amplio */
-                    0 0 240px 120px rgba(0, 206, 209, 0.9);   /* Cian muy amplio */
-                opacity: 1;
-            }
-            6% {
-                box-shadow: none;
-                opacity: 0;
-            }
-            10% {
-                /* Segundo destello, ligeramente diferente y fuerte */
-                box-shadow:
-                    0 0 150px 75px rgba(255, 255, 255, 1),
-                    0 0 300px 150px rgba(0, 206, 209, 1);
-                opacity: 1; /* Opacidad total para un flash más impactante */
-            }
-            11% {
-                box-shadow: none;
-                opacity: 0;
-            }
-            15% {
-                /* Tercer destello, más intenso y grande */
-                box-shadow:
-                    0 0 180px 90px rgba(255, 255, 255, 1),
-                    0 0 360px 180px rgba(0, 206, 209, 1);
-                opacity: 1;
-            }
-            16% {
-                box-shadow: none;
-                opacity: 0;
-            }
-            20% {
-                box-shadow:
-                    0 0 80px 40px rgba(0, 206, 209, 0.7);
-                opacity: 0.6;
-            }
-            21% {
-                box-shadow: none;
-                opacity: 0;
-            }
+        .feature-icon {
+            color: #8b5cf6; /* A slightly brighter purple for icons */
         }
-
-        /* Keyframes para la animación de balanceo del cartel (adelante/atrás) */
-        @keyframes swing-sign {
-            0%, 100% {
-                transform: rotateX(0deg);
-            }
-            25% {
-                transform: rotateX(-15deg); /* Swing slightly forward (increased intensity) */
-            }
-            75% {
-                transform: rotateX(15deg);  /* Swing slightly backward (increased intensity) */
-            }
-        }
-
-        h1 {
-            font-family: 'Bebas Neue', sans-serif; /* Usando Bebas Neue para el h1 como fuente de visualización */
-        }
-        h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Hero section background with overlay */
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./images/imagenseccioninicio.png'); /* Updated image path */
+        .hero-section {
+            background-image: url('https://placehold.co/1920x1080/1a202c/ffffff?text=Dark+Minecraft+Background'); /* Placeholder for a dark, abstract Minecraft background */
             background-size: cover;
             background-position: center;
-        }
-
-        /* Specific styles for FAQ accordion */
-        .faq-item input[type="checkbox"] {
-            display: none;
-        }
-
-        .faq-item label {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background-color: var(--color-card-bg);
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            transition: background-color 0.3s ease;
-            color: var(--color-text-light); /* Changed to light text for FAQ questions */
-        }
-
-        .faq-item label:hover {
-            background-color: #3a3a3a;
-        }
-
-        .faq-item label::after {
-            content: '\2b'; /* Plus sign */
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item input[type="checkbox"]:checked + label::after {
-            content: '\2212'; /* Minus sign */
-            transform: rotate(180deg);
-        }
-
-        .faq-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            background-color: var(--color-medium-dark-bg);
-            border-radius: 0.5rem;
-            margin-top: -0.5rem; /* Overlap with label border-radius */
-            margin-bottom: 0.5rem;
-            padding: 0 1.5rem;
-        }
-
-        .faq-item input[type="checkbox"]:checked ~ .faq-content {
-            max-height: 200px; /* Adjust as needed for content */
-            padding: 1rem 1.5rem;
-        }
-
-        /* Styles for the main navigation (desktop) */
-        .nav-desktop a,
-        .nav-desktop label {
-            font-family: 'Bebas Neue', sans-serif; /* Aplicado consistentemente */
-            transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            padding: 0.75rem 1.5rem; /* Increased padding for larger buttons */
-            font-size: 1.1rem; /* Slightly larger font size */
-        }
-
-        /* Animación de salto para enlaces de navegación */
-        .nav-desktop a:hover,
-        .nav-desktop label:hover {
-            transform: translateY(-5px); /* Efecto de salto */
-            color: var(--color-primary);
-        }
-
-        /* Animación de salto para el botón "ÁREA DE CLIENTES" */
-        .nav-desktop a.bg-primary:hover {
-            transform: translateY(-5px); /* Efecto de salto */
-            box-shadow: 0 5px 15px rgba(0, 206, 209, 0.4); /* Sombra para el efecto de salto, ajustado a cian */
-            background-color: var(--color-secondary); /* Cambio de color al hacer hover (ahora amarillo) */
-        }
-
-        /* Dropdown styling */
-        .nav-link-dropdown {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .dropdown {
             position: relative;
+            overflow: hidden;
         }
-
-        .dropdown-content {
-            display: none; /* Controlado por JS ahora */
+        .hero-section::before {
+            content: '';
             position: absolute;
-            background-color: var(--color-medium-dark-bg);
-            min-width: 180px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        /* Custom style for dropdown menus */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #1a1c22;
+            min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
             z-index: 1;
             border-radius: 0.5rem;
-            overflow: hidden;
-            top: 100%; /* Position below the parent link */
-            left: 0;
-            margin-top: 0.5rem; /* Space between link and dropdown */
+            border: 1px solid #2d3748;
+            padding: 0.5rem 0;
+            top: calc(100% + 0.5rem); /* Position below the parent link */
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap; /* Prevent wrapping */
         }
-
-        .dropdown-content.show-dropdown { /* Nueva clase para mostrar el dropdown con JS */
+        .dropdown:hover .dropdown-menu {
             display: block;
         }
-
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: flex; /* Para alinear el icono y el texto */
-            align-items: center; /* Para centrar verticalmente el icono */
-            text-align: left;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .dropdown-content a:hover {
-            background-color: var(--color-card-bg);
-            color: var(--color-primary);
-        }
-
-        /* Mobile Menu - Sidebar Style */
-        .mobile-menu {
-            display: flex; /* Siempre flex para la estructura interna */
-            flex-direction: column;
-            position: fixed;
-            /* Adjusted top position to be below the header */
-            top: 4.5rem; /* Roughly 72px, adjust if header height changes */
-            right: 0;
-            width: min(300px, 85vw);
-            max-height: calc(100vh - 4.5rem); /* Adjust max-height to fit below header */
-            background-color: rgba(10, 10, 10, 0.98);
-            border-left: 1px solid var(--color-border);
-            padding: 1rem 0;
-            transform: translateX(100%); /* Oculto por defecto */
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto; /* Permite el scroll si el contenido es largo */
-            overflow-x: hidden;
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0); /* Se desliza a la vista */
-        }
-
-        header {
-            position: fixed; /* Changed to fixed for hide/show on scroll */
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(10, 10, 10, 0); /* Transparent background */
-            transition: transform 0.3s ease-in-out; /* Smooth transition for header hide/show */
-            z-index: 50; /* Ensure it's above content */
-        }
-        header.header-hidden {
-            transform: translateY(-100%); /* Move header out of view */
-        }
-        header::before {
-            content: none;
-        }
-
-        .mobile-menu::before {
-            content: none;
-        }
-
-        .mobile-menu a,
-        .mobile-menu label {
-            font-family: 'Bebas Neue', sans-serif; /* Aplicado consistentemente */
-            padding: 1rem 1.75rem; /* Increased padding for larger buttons */
-            color: var(--color-text-light);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Alinea texto a izquierda y flecha a derecha */
-            width: 100%;
-            box-sizing: border-box;
-            background-color: transparent;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-            z-index: 1;
-        }
-
-        .mobile-menu a:hover,
-        .mobile-menu label:hover {
-            background-color: rgba(58, 58, 58, 0.3);
-            color: var(--color-primary);
-            transform: translateY(-5px);
-        }
-
-        /* Mobile Dropdown Specific Styles */
-        .mobile-menu .dropdown-content {
-            position: static;
-            display: none;
-            flex-direction: column;
-            width: 100%;
-            box-shadow: none;
-            margin-top: 0;
-            border-radius: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        .mobile-menu .dropdown-content a {
-            justify-content: flex-start;
-            text-align: left;
-            padding-left: 2.5rem;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-            display: flex; /* Para alinear el icono y el texto */
-            align-items: center; /* Para centrar verticalmente el icono */
-        }
-        .mobile-menu .dropdown-content a:hover {
-            transform: translateY(-3px);
-        }
-        /* Show mobile dropdown content when checkbox is checked */
-        .mobile-menu .dropdown-toggle-checkbox:checked ~ .dropdown-content {
-            display: flex;
-        }
-        .mobile-menu .dropdown-toggle-checkbox + label .fas.fa-chevron-down {
-            transition: transform 0.3s ease;
-        }
-        .mobile-menu .dropdown-toggle-checkbox:checked + label .fas.fa-chevron-down {
-            transform: rotate(180deg);
-        }
-
-        /* Apply swing animation to the button */
-        .animate-swing {
-            animation: swing-sign 2s ease-in-out infinite;
-            transform-origin: center top;
-        }
-
-        /* Animation for content change */
-        .fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-out; /* Fade out over 0.5 seconds */
-        }
-
-        .fade-in {
-            opacity: 1;
-            transition: opacity 0.5s ease-in; /* Fade in over 0.5 seconds */
-        }
-
-        /* Styles for the new location cards */
-        .location-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-            gap: 1.5rem; /* Space between cards */
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .location-card {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./images/fondoubicaciones.png'); /* Increased overlay opacity for better readability */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border: 1px solid var(--color-border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Initial subtle shadow */
-            cursor: pointer;
-        }
-
-        .location-card:hover {
-            transform: translateY(-8px) scale(1.02); /* Lift and slightly enlarge */
-            border-color: var(--color-primary); /* Primary color border on hover */
-            box-shadow: 0 0 25px rgba(0, 206, 209, 0.7), 0 0 50px rgba(0, 206, 209, 0.3); /* Stronger glow */
-        }
-
-        .location-card .flag {
-            font-size: 3.5rem; /* Larger flag emoji */
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)); /* Stronger white glow */
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .location-card:hover .flag {
-            transform: scale(1.1); /* Flag bounce on hover */
-        }
-
-        .location-card .location-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .location-card .ping-display {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--color-secondary); /* Yellow for ping text */
-            margin-top: 0.5rem;
-        }
-
-        /* Animation for ping dots (now integrated into card design) */
-        @keyframes pulse {
-            0% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-        }
-
-        .ping-dot {
-            width: 18px; /* Larger dot */
-            height: 18px; /* Larger dot */
-            background-color: var(--color-primary);
-            border-radius: 50%;
-            position: absolute;
-            top: 15px; /* Position inside the card */
-            right: 15px; /* Position inside the card */
-            animation: pulse 1.5s infinite ease-in-out;
-            border: 3px solid var(--color-text-light); /* Thicker border */
-            box-shadow: 0 0 10px var(--color-primary); /* Glow for the dot */
-        }
-
-        /* Styles for animated image containers */
-        .animated-image-container {
-            background-size: cover;
-            background-position: center;
-            animation: float-animation 6s ease-in-out infinite alternate; /* Apply animation */
-            display: flex; /* Use flexbox to center SVG */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            padding: 1rem; /* Add some padding around the SVG */
-        }
-
-        /* Remove background image from animated-image-1 as it will now contain an SVG */
-        .animated-image-1 {
-            background-image: none; /* Remove placeholder image */
-        }
-
-        /* Style for the SVG paths to apply primary color */
-        .animated-image-container svg path {
-            fill: var(--color-primary); /* Apply primary color to all paths in the SVG */
-        }
-        /* Override specific paths that should remain white if any */
-        .animated-image-container svg path[style*="fill:#FFFFFF"] {
-            fill: #FFFFFF !important; /* Keep white paths white */
-        }
-
-
-        .animated-image-2 {
-            /* Removed background-image */
-            background-color: var(--color-card-bg); /* Use card background for consistency */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        .animated-image-2 .animated-text {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem; /* Adjust size as needed */
-            color: var(--color-primary);
-            text-shadow: 0 0 10px rgba(0, 206, 209, 0.7); /* Matching glow */
-            line-height: 1.2;
-            padding: 1rem;
-        }
-
-
-        @keyframes float-animation {
-            0% {
-                transform: translateY(0px) scale(1);
-            }
-            50% {
-                transform: translateY(-10px) scale(1.02);
-            }
-            100% {
-                transform: translateY(0px) scale(1);
-            }
-        }
-
-        /* Background image for sections with increased opacity */
-        #locations, #why-choose-us, #faq, footer {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/fondopagina.jpg'); /* Increased opacity to 0.8 */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed; /* Optional: for parallax effect */
-        }
-
-        /* Thicker font for text within these sections */
-        #locations p, #locations ul li,
-        #why-choose-us p, #why-choose-us ul li,
-        #faq p, #faq ul li,
-        footer p, footer ul li {
-            font-weight: 500; /* Medium font weight */
-        }
-        /* Make headings bold if they aren't already */
-        #locations h2, #why-choose-us h2, #why-choose-us h3, #faq h2, footer h4 {
-            font-weight: 700; /* Bold font weight */
-        }
-
-        /* Adjust container max-width for PC view */
-        .container {
-            max-width: 1100px; /* Slightly smaller max-width for PC */
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .nav-desktop {
-                display: none;
-            }
-            .mobile-menu-button {
-                display: block;
-            }
-            .location-grid {
-                grid-template-columns: 1fr; /* Single column on small screens */
-            }
-            .location-card .flag {
-                font-size: 3rem; /* Slightly smaller flag on mobile */
-            }
-            .location-card .location-name {
-                font-size: 1.3rem;
-            }
-            .location-card .ping-display {
-                font-size: 1.1rem;
-            }
-            /* Adjust padding for mobile sections if needed */
-            #locations, #why-choose-us, #faq, #cta-bottom, footer {
-                padding-top: 3rem;
-                padding-bottom: 3rem;
-            }
-            .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            /* Adjust static social bar for mobile */
-            .social-sidebar {
-                top: 5rem; /* Adjust position to be below header on mobile */
-                right: 0.5rem; /* Keep it slightly off the edge */
-                width: 40px; /* Make it slightly narrower */
-            }
-            .social-sidebar a {
-                padding: 0.4rem; /* Smaller padding for icons */
-                font-size: 1.2rem; /* Smaller icons */
-            }
-            /* Adjust floating Discord button for mobile */
-            .floating-discord-button {
-                width: 200px; /* Make it smaller */
-                padding: 0.5rem;
-                bottom: 1rem;
-                right: 1rem;
-            }
-            .floating-discord-button .fab {
-                font-size: 1.5rem;
-            }
-            .floating-discord-button .text-sm {
-                font-size: 0.75rem;
-            }
-            .floating-discord-button button {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.7rem;
-            }
-        }
-
-        /* Static Social Sidebar Styles */
-        .social-sidebar {
-            position: fixed;
-            top: 100px; /* Adjust as needed to be below the header */
-            right: 1rem;
-            display: flex;
-            flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
-            border-radius: 0.75rem;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            z-index: 900; /* Below header, above most content */
-            border: 1px solid var(--color-border);
-        }
-
-        .social-sidebar a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.75rem;
-            color: var(--color-text-light);
-            font-size: 1.5rem;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-        }
-
-        .social-sidebar a:hover {
-            background-color: var(--color-primary);
-            color: var(--color-text-dark);
-            transform: translateX(-5px); /* Slide effect on hover */
-        }
-
-        /* Floating Discord Button Styles */
-        .floating-discord-button {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            background-color: #5865F2; /* Discord brand color */
-            color: white; /* Texto blanco */
+        .dropdown-menu a {
+            color: #e6e6e6;
             padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.5); /* Sombra con color de Discord */
-            display: flex;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #2d3748;
+            color: #ffffff;
+        }
+        /* Custom gradient background for the SALE button */
+        .sale-gradient-bg {
+            background: linear-gradient(90deg, #ff4d4d, #ff8c00); /* Red to Orange gradient */
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 700; /* font-bold */
+            box-shadow: 0 2px 8px rgba(255, 77, 77, 0.4);
+            display: inline-flex; /* To allow flex centering for content */
             align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            z-index: 950; /* Above social sidebar, below header */
-            animation: float-discord 3s ease-in-out infinite alternate; /* Floating animation */
-            border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
-        }
-
-        .floating-discord-button:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.7); /* Sombra con color de Discord más intenso */
-        }
-
-        .floating-discord-button .fab {
-            font-size: 1.8rem;
-            color: white; /* Icono de Discord blanco */
-        }
-
-        .floating-discord-button button {
-            background-color: var(--color-secondary); /* Cambiado a color secundario (amarillo) */
-            color: var(--color-text-dark); /* Texto oscuro para el botón de ingresar */
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-
-        .floating-discord-button button:hover {
-            background-color: #FFC700; /* Un poco más oscuro al pasar el ratón */
-        }
-
-        @keyframes float-discord {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
+            justify-content: center;
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Header Section -->
-    <header id="main-header" class="bg-medium-dark-bg text-text-light py-4 sticky top-0 z-50" style="background-color: rgba(10, 10, 10, 0);">
-        <div class="w-full px-4 flex justify-between items-center relative">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center">
-                <img src="./images/logo.ico" alt="Logo" class="h-24 mr-2">
-            </a>
-            
+    <!-- Top Bar -->
+    <div class="bg-gray-950 text-gray-400 text-xs py-2 z-50 relative">
+        <div class="container mx-auto px-6 md:px-12">
+            <!-- First row: Panel links (now always centered and with gradient/animation) -->
+            <div class="flex justify-center space-x-6 mb-2">
+                <a href="#" class="gradient-text transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-gamepad mr-2"></i>Panel de Juegos</a>
+                <a href="#" class="gradient-text transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-user-circle mr-2"></i>Área de Cliente</a>
+                <a href="#" class="gradient-text transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-server mr-2"></i>Portal VPS</a>
+                <a href="#" class="gradient-text transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-cogs mr-2"></i>cPanel</a>
+            </div>
+            <!-- Second row: Sale banner (always centered and with gradient/animation) -->
+            <div class="flex items-center justify-center py-1">
+                <span class="sale-gradient-bg transition duration-300 ease-in-out transform hover:scale-105">¡OFERTA!</span>
+                <span class="text-white ml-2">¡Obtén hasta <span class="font-bold">50% OFF</span> HOY con nuestros códigos de descuento!</span>
+                <i class="fas fa-arrow-right text-white ml-2"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Main Navigation Bar -->
+    <header class="bg-gray-900 shadow-lg py-4 px-6 md:px-12 sticky top-0 w-full z-40 rounded-b-xl border-b border-gray-700">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <!-- VoltixCloud Logo -->
+                <svg class="h-10 w-10 mr-3 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 22h20L12 2zm0 4.76L19.58 20H4.42L12 6.76zM13 14h-2v-2h2v2zm0 4h-2v-2h2v2z"/>
+                </svg>
+                <a href="#" class="text-white text-2xl font-extrabold">VOLTIX<span class="gradient-text">CLOUD</span></a>
+            </div>
+            <div class="hidden md:flex space-x-8 items-center ml-12"> <!-- Increased ml for more spacing -->
+                <!-- Navigation Links with Dropdowns -->
+                <div class="relative dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white transition duration-300 font-medium flex items-center">
+                        Minecraft Hosting <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#">Java Plans</a>
+                        <a href="#">Bedrock Plans</a>
+                        <a href="#">Custom Plans</a>
+                    </div>
+                </div>
+                <div class="relative dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white transition duration-300 font-medium flex items-center">
+                        Game Hosting <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#">Rust Hosting</a>
+                        <a href="#">ARK Hosting</a>
+                        <a href="#">Valheim Hosting</a>
+                    </div>
+                </div>
+                <div class="relative dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white transition duration-300 font-medium flex items-center">
+                        Cloud Hosting <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#">Linux VPS</a>
+                        <a href="#">Windows VPS</a>
+                    </div>
+                </div>
+                <div class="relative dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white transition duration-300 font-medium flex items-center">
+                        Resources <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#">Knowledge Base</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Tutorials</a>
+                    </div>
+                </div>
+                <div class="relative dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white transition duration-300 font-medium flex items-center">
+                        More <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#">About Us</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Affiliates</a>
+                    </div>
+                </div>
+                <!-- "View Plans" Button -->
+                <a href="#precios" class="btn-primary py-2 px-6 rounded-lg font-semibold shadow-lg">
+                    View Plans
+                </a>
+            </div>
             <!-- Mobile Menu Button -->
-            <button class="mobile-menu-button md:hidden text-text-light focus:outline-none" aria-label="Toggle navigation">
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
-
-            <!-- Desktop Navigation -->
-            <nav class="nav-desktop hidden md:block">
-                <ul class="flex space-x-6 items-center justify-end">
-                    <!-- Minecraft Hosting Dropdown -->
-                    <li class="dropdown">
-                        <a href="minecraft.html" class="hover:text-primary font-medium nav-link-dropdown">
-                            <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
-                        </a>
-                        <div class="dropdown-content">
-                            <a href="minecraft.html"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
-                            <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="service-unavailable.html" class="hover:text-primary font-medium">
-                            <span>Web Hosting</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="service-unavailable.html" class="hover:text-primary font-medium">
-                            <span>Web Design</span>
-                        </a>
-                    </li>
-                    <!-- Nosotros Dropdown -->
-                    <li class="dropdown">
-                        <a href="#" class="hover:text-primary font-medium nav-link-dropdown">
-                            <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
-                        </a>
-                        <div class="dropdown-content">
-                            <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
-                            <a href="terms-and-conditions.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
-                            <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
-                        </div>
-                    </li>
-                    <li>
-                        <!-- "ÁREA DE CLIENTES" button -->
-                        <a href="#" class="bg-primary text-text-dark px-6 py-3 rounded-md font-semibold flex items-center gap-2" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                            <i class="fas fa-user text-lg"></i>
-                            <span>ÁREA DE CLIENTES</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </a>
-                        <!-- Dropdown content for "ÁREA DE CLIENTES" -->
-                        <div class="dropdown-content">
-                            <a href="service-unavailable.html"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
-                            <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
-                            <a href="service-unavailable.html"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
-                            <a href="https://discord.gg/jhA9DHTHAW" target="_blank" class="block py-2 px-4 hover:bg-gray-700"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 mt-4 rounded-lg py-4 border border-gray-700">
+            <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium">Minecraft Hosting</a>
+            <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium">Game Hosting</a>
+            <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium">Cloud Hosting</a>
+            <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium">Resources</a>
+            <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium">More</a>
+            <div class="mt-4 border-t border-gray-700 pt-4">
+                <a href="#" class="block btn-primary text-center py-2 px-4 rounded-lg font-semibold mx-4 mt-2">View Plans</a>
+                <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 mt-2 font-medium flex items-center justify-center"><i class="fas fa-gamepad mr-2"></i>Game Panel</a>
+                <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium flex items-center justify-center"><i class="fas fa-user-circle mr-2"></i>Client Area</a>
+                <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium flex items-center justify-center"><i class="fas fa-server mr-2"></i>VPS Portal</a>
+                <a href="#" class="block text-gray-300 hover:text-white py-2 px-4 font-medium flex items-center justify-center"><i class="fas fa-cogs mr-2"></i>cPanel</a>
+            </div>
         </div>
     </header>
 
-    <!-- Mobile Menu (initially hidden) -->
-    <div class="mobile-menu md:hidden" id="mobile-menu">
-        <!-- Minecraft Hosting Dropdown for Mobile -->
-        <div class="w-full">
-            <input type="checkbox" id="mobile-minecraft-hosting-toggle" class="dropdown-toggle-checkbox hidden">
-            <label for="mobile-minecraft-hosting-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
-                <span>Minecraft Hosting</span> <i class="fas fa-chevron-down text-xs"></i>
-            </label>
-            <div class="dropdown-content">
-                <a href="minecraft.html"><i class="fas fa-cube mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting</a>
-                <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Minecraft Hosting Dedicado</a>
-            </div>
-        </div>
-        
-        <!-- Web Hosting for Mobile -->
-        <a href="service-unavailable.html" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-            <span>Web Hosting</span>
-        </a>
-
-        <!-- Web Design for Mobile -->
-        <a href="service-unavailable.html" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2">
-            <span>Web Design</span>
-        </a>
-
-        <!-- Nosotros Dropdown for Mobile -->
-        <div class="w-full">
-            <input type="checkbox" id="mobile-nosotros-toggle" class="dropdown-toggle-checkbox hidden">
-            <label for="mobile-nosotros-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
-                <span>Nosotros</span> <i class="fas fa-chevron-down text-xs"></i>
-            </label>
-            <div class="dropdown-content">
-                <a href="service-unavailable.html"><i class="fas fa-info-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Acerca de Voltix Cloud</a>
-                <a href="terms-and-conditions.html"><i class="fas fa-file-alt mr-2 text-primary" style="color: var(--color-primary);"></i>Términos y Condiciones</a>
-                <a href="service-unavailable.html"><i class="fas fa-handshake mr-2 text-primary" style="color: var(--color-primary);"></i>Programas Afiliados</a>
-            </div>
-        </div>
-
-        <!-- "ÁREA DE CLIENTES" button for Mobile -->
-        <div class="w-full">
-            <input type="checkbox" id="mobile-area-clientes-toggle" class="dropdown-toggle-checkbox hidden">
-            <label for="mobile-area-clientes-toggle" class="block py-2 px-4 hover:bg-gray-700 flex justify-between items-center gap-2 cursor-pointer">
-                <span>ÁREA DE CLIENTES</span> <i class="fas fa-chevron-down text-xs"></i>
-            </label>
-            <div class="dropdown-content">
-                <a href="service-unavailable.html"><i class="fas fa-user-circle mr-2 text-primary" style="color: var(--color-primary);"></i>Área de Cliente</a>
-                <a href="service-unavailable.html"><i class="fas fa-server mr-2 text-primary" style="color: var(--color-primary);"></i>Panel de Minecraft</a>
-                <a href="service-unavailable.html"><i class="fas fa-network-wired mr-2 text-primary" style="color: var(--color-primary);"></i>Estado de la Red</a>
-                <a href="https://discord.gg/jhA9DHTHAW" target="_blank" class="block py-2 px-4 hover:bg-gray-700"><i class="fab fa-discord mr-2 text-primary" style="color: var(--color-primary);"></i>Discord Comunitario</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Static Social Sidebar -->
-    <div class="social-sidebar">
-        <a href="https://www.youtube.com/@VoltixCloud" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://discord.gg/jhA9DHTHAW" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
-        <a href="https://www.facebook.com/VoltixCloud" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://twitter.com/VoltixCloud" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/VoltixCloud" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    </div>
-
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="hero-bg text-center py-16 md:py-24 text-text-light relative overflow-hidden">
-            <div class="container mx-auto px-4 z-10 relative">
-                <h1 id="main-heading" class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
-                    <!-- Texto inicial, será cambiado por JavaScript -->
+        <section class="hero-section h-screen flex items-center justify-center text-center">
+            <div class="hero-content p-6 max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                    Hosting de Minecraft <span class="gradient-text">Potente</span> y <span class="gradient-text">Fiable</span>
                 </h1>
-                <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto text-text-muted">
-                    Servidores de Minecraft de alto rendimiento, configuración instantánea y soporte 24/7. ¡Tu aventura empieza aquí!
+                <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                    Experimenta el rendimiento definitivo con VoltixCloud. Servidores optimizados para tu aventura en Minecraft.
                 </p>
-                <a href="#locations" class="bg-primary text-dark-bg font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-secondary hover:shadow-xl" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                    Ver Ubicaciones
-                </a>
-
-                <!-- New section based on user's image -->
-                <div id="dynamic-content-box" class="mt-12 bg-medium-dark-bg bg-opacity-80 p-6 rounded-lg shadow-xl max-w-4xl text-left border border-border">
-                    <!-- Contenido dinámico, será cambiado por JavaScript -->
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#precios" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
+                        Ver Planes
+                    </a>
+                    <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
+                        Contáctanos
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- Locations Section - Redesigned -->
-        <section id="locations" class="py-12 md:py-20 text-text-light">
-            <div class="container mx-auto px-4 text-center max-w-screen-lg">
-                <h2 class="text-3xl md:text-5xl font-extrabold leading-tight mb-3 text-shadow-lg" style="text-shadow: 0 0 15px rgba(0,206,209,0.5);">
-                    JUEGA SIN <span style="color: var(--color-secondary);">LAG</span>
+        <!-- Features Section -->
+        <section id="caracteristicas" class="py-16 md:py-24 bg-gray-900">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
+                    ¿Por qué elegir <span class="gradient-text">VoltixCloud</span>?
                 </h2>
-                <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-text-muted">
-                    Nuestros servidores alrededor del mundo brindan el mejor ping a tus jugadores.
-                </p>
-                <div class="location-grid">
-                    <!-- Location Card: Miami, USA -->
-                    <div class="location-card rounded-lg p-4 md:p-6" data-location-name="Miami, USA" data-initial-ping="45ms">
-                        <span class="ping-dot"></span>
-                        <span class="flag">🇺🇸</span>
-                        <span class="location-name">Miami, USA</span>
-                        <span class="ping-display">45ms</span>
-                    </div>
-
-                    <!-- Location Card: Caracas, Venezuela -->
-                    <div class="location-card rounded-lg p-4 md:p-6" data-location-name="Caracas, Venezuela" data-initial-ping="15ms">
-                        <span class="ping-dot"></span>
-                        <span class="flag">🇻🇪</span>
-                        <span class="location-name">Caracas, Venezuela</span>
-                        <span class="ping-display">15ms</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Why Choose Us Section -->
-        <section id="why-choose-us" class="py-12 md:py-20 text-text-light">
-            <div class="container mx-auto px-4 text-center max-w-screen-lg">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
-                    ¿Por Qué Elegir Voltix Cloud?
-                </h2>
-                <p class="text-lg text-text-muted mb-10 max-w-3xl mx-auto">
-                    Aunque Voltix Cloud es un hosting nuevo en el mercado, estamos comprometidos a ofrecer un servicio de calidad superior, innovando constantemente para brindarte la mejor experiencia de juego.
-                </p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                    <div class="text-left">
-                        <h3 class="text-2xl font-semibold mb-4 text-text-light">Hardware de Vanguardia</h3>
-                        <p class="text-text-muted text-base mb-4">
-                            Utilizamos los últimos procesadores AMD Ryzen y almacenamiento NVMe ultrarrápido para garantizar que tu servidor de Minecraft funcione sin problemas, incluso con muchos jugadores y mods. Olvídate del lag y disfruta de una experiencia de juego fluida.
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-shield-alt text-5xl feature-icon mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-white mb-4">Protección DDoS Avanzada</h3>
+                        <p class="text-gray-400">
+                            Mantén tu servidor seguro de ataques maliciosos con nuestra protección DDoS de última generación.
                         </p>
-                        <ul class="text-text-muted text-base space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> CPUs de alto rendimiento</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> RAM DDR5 de baja latencia</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Discos NVMe para carga rápida</li>
-                        </ul>
                     </div>
-                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl animated-image-container animated-image-1">
-                        <!-- SVG del procesador -->
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" class="w-3/4 h-3/4 max-w-full max-h-full">
-                            <g id="_x30_3_Processor_x2C__Cpu_x2C__Chip_x2C__Technology_x2C__Electronic">
-                                <g>
-                                    <g>
-                                        <g>
-                                            <path style="fill:#FFFFFF;" d="M411.15,70.967c-103.64,0-207.047,0-310.301,0c-16.495,0-29.883,13.387-29.883,29.883c0,17.318,0,293.859,0,310.301c0,16.495,13.387,29.883,29.883,29.883c35.584,0,271.993,0,310.301,0c16.495,0,29.883-13.387-29.883-29.883c0-35.584,0-271.993,0-310.301C441.033,84.354,427.646,70.967,411.15,70.967z"/>
-                                            <path style="fill:#CDDCF9;" d="M120.98,120.981v270.039H391.02V120.981C376.017,120.981,135.983,120.981,120.98,120.981z"/>
-                                            <path style="fill:#FFFFFF;" d="M316.004,220.998c13.816,0,25.012,11.196,25.012,25.002s-11.196,25.002-25.012,25.002c-13.806,0-25.002-11.196-25.002-25.002S302.198,220.998,316.004,220.998z"/>
-                                            <path style="fill:#FFFFFF;" d="M195.996,240.999c13.806,0,25.002,11.196,25.002,25.002s-11.196,25.002-25.002,25.002c-13.816,0-25.012-11.196-25.012-25.002S182.18,240.999,195.996,240.999z"/>
-                                        </g>
-                                    </g>
-                                    <g>
-                                        <g id="XMLID_54_">
-                                            <path d="M411.145,450.989H100.855c-21.969,0-39.843-17.874-39.843-39.843V100.855c0-21.97,17.874-39.843,39.843-39.843h310.291c21.969,0,39.843,17.874,39.843,39.843v310.291C450.989,433.115,433.115,450.989,411.145,450.989z M100.855,80.933c-10.985,0-19.922,8.937-19.922,19.922v310.291c0,10.985,8.937,19.922,19.922,19.922h310.291c10.985,0,19.922-8.937,19.922-19.922V100.855c0-10.985-8.937-19.922-19.922-19.922H100.855z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_53_">
-                                            <path d="M391.02,400.981H120.98c-5.501,0-9.961-4.46-9.961-9.961V120.98c0-5.501,4.46-9.961,9.961-9.961H391.02c5.501,0,9.961,4.46,9.961,9.961V391.02C400.981,396.521,396.521,400.981,391.02,400.981z M130.941,381.059h250.119V130.941H130.941V381.059z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_52_">
-                                            <path d="M501.037,190.949h-60.009c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C510.998,186.49,506.538,190.949,501.037,190.949z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_51_">
-                                            <path d="M501.037,240.957h-60.009c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C510.998,236.498,506.538,240.957,501.037,240.957z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_50_">
-                                            <path d="M501.037,290.964h-60.009c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S506.538,290.964,501.037,290.964z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_49_">
-                                            <path d="M501.037,340.972h-60.009c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S506.538,340.972,501.037,340.972z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_48_">
-                                            <path d="M70.972,190.949H10.963c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C80.933,186.49,76.473,190.949,70.972,190.949z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_47_">
-                                            <path d="M70.972,240.957H10.963c-5.501,0-9.961-4.46-9.961-9.961c0-5.501,4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961C80.933,236.498,76.473,240.957,70.972,240.957z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_46_">
-                                            <path d="M70.972,290.964H10.963c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S76.473,290.964,70.972,290.964z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_45_">
-                                            <path d="M70.972,340.972H10.963c-5.501,0-9.961-4.46-9.961-9.961s4.46-9.961,9.961-9.961h60.009c5.501,0,9.961,4.46,9.961,9.961S76.473,340.972,70.972,340.972z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_44_">
-                                            <path d="M331.011,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C340.972,506.538,336.512,510.998,331.011,510.998z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_43_">
-                                            <path d="M281.003,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C290.964,506.538,286.504,510.998,281.003,510.998z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_42_">
-                                            <path d="M230.997,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C240.958,506.538,236.498,510.998,230.997,510.998z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_41_">
-                                            <path d="M180.989,510.998c-5.501,0-9.961-4.46-9.961-9.961v-60.009c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C190.95,506.538,186.49,510.998,180.989,510.998z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_40_">
-                                            <path d="M331.011,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C340.972,76.473,336.512,80.933,331.011,80.933z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_39_">
-                                            <path d="M281.003,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009C290.964,76.473,286.504,80.933,281.003,80.933z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_38_">
-                                            <path d="M230.997,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C240.958,76.473,236.498,80.933,230.997,80.933z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_37_">
-                                            <path d="M180.989,80.933c-5.501,0-9.961-4.46-9.961-9.961V10.963c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.009C190.95,76.473,186.49,80.933,180.989,80.933z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_36_">
-                                            <path d="M195.991,250.958c-5.501,0-9.961-4.459-9.961-9.96v-60.009c0-5.501,4.46-9.961,9.961-9.961h50.048V120.98c0-5.501,4.46-9.961,9.961-9.961s9.961,4.46,9.961,9.961v60.009c0,5.501-4.46,9.961-9.961,9.961h-50.048v50.048C205.952,246.499,201.492,250.958,195.991,250.958z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_35_">
-                                            <path d="M195.991,300.966c-19.28,0-34.964-15.684-34.964-34.964s15.684-34.965,34.964-34.965s34.965,15.685,34.965,34.965S215.27,300.966,195.991,300.966z M195.991,250.958c-8.295,0-15.042,6.749-15.042,15.043s6.748,15.042,15.042,15.042s15.043-6.748,15.043-15.042S204.285,250.958,195.991,250.958z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_34_">
-                                            <path d="M256,395.98c-5.501,0-9.961-4.46-9.961-9.961v-55.008c0-5.501,4.46-9.961,9.961-9.961h50.048v-50.048c0-5.501,4.46-9.961,9.961-9.961c5.501,0,9.961,4.46,9.961,9.961v60.008c0,5.501-4.46,9.961-9.961,9.961h-50.048v45.048C265.961,391.52,261.501,395.98,256,395.98z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                        <g id="XMLID_33_">
-                                            <path d="M316.009,280.963c-19.28,0-34.965-15.685-34.965-34.965s15.685-34.965,34.965-34.965c19.28,0,34.964,15.685,34.964,34.965S335.289,280.963,316.009,280.963z M316.009,230.955c-8.295,0-15.043,6.748-15.043,15.043c0,8.295,6.749,15.043,15.043,15.043s15.042-6.749,15.042-15.043C331.052,237.704,324.304,230.955,316.009,230.955z" style="fill:var(--color-primary);"/>
-                                        </g>
-                                    </g>
-                                </g>
-                                <g id="Layer_1"/>
-                            </svg>
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent"></div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mt-12 md:mt-20">
-                    <div class="relative w-full h-56 md:h-80 rounded-lg overflow-hidden shadow-2xl animated-image-container animated-image-2 order-last lg:order-first">
-                        <!-- Texto "Activos desde julio de 2025" -->
-                        <span class="animated-text">Activos desde <br> Julio de 2025</span>
-                    </div>
-                    <div class="text-left">
-                        <h3 class="text-2xl font-semibold mb-4 text-text-light">Control Total y Facilidad de Uso</h3>
-                        <p class="text-text-muted text-base mb-4">
-                            Nuestro panel de control personalizado te da el poder de gestionar cada aspecto de tu servidor. Instala modpacks con un clic, configura plugins, accede a la consola y gestiona tus archivos sin complicaciones.
+                    <!-- Feature Card 2 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-bolt text-5xl feature-icon mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-white mb-4">Configuración Instantánea</h3>
+                        <p class="text-gray-400">
+                            Tu servidor estará listo para jugar en minutos, sin esperas.
                         </p>
-                        <ul class="text-text-muted text-base space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Instalador de Modpacks con 1 Clic</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Acceso FTP completo</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i> Consola en tiempo real</li>
-                        </ul>
+                    </div>
+                    <!-- Feature Card 3 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-cogs text-5xl feature-icon mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-white mb-4">Panel de Control Intuitivo</h3>
+                        <p class="text-gray-400">
+                            Administra tu servidor con facilidad usando nuestro panel de control personalizado.
+                        </p>
+                    </div>
+                    <!-- Feature Card 4 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-globe text-5xl feature-icon mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-white mb-4">Ubicaciones Globales</h3>
+                        <p class="text-gray-400">
+                            Elige la ubicación de servidor más cercana para la menor latencia.
+                        </p>
+                    </div>
+                    <!-- Feature Card 5 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-headset text-5xl feature-icon mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-white mb-4">Soporte 24/7</h3>
+                        <p class="text-gray-400">
+                            Nuestro equipo de soporte está disponible las 24 horas para ayudarte.
+                        </p>
+                    </div>
+                    <!-- Feature Card 6 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-server text-5xl feature-icon mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-white mb-4">Hardware de Última Generación</h3>
+                        <p class="text-gray-400">
+                            Servidores construidos con los componentes más recientes para un rendimiento óptimo.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section id="faq" class="py-12 md:py-20 text-text-light">
-            <div class="container mx-auto px-4 text-center max-w-screen-lg">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-primary" style="color: var(--color-primary);">
-                    Preguntas Frecuentes
+        <!-- Pricing Section -->
+        <section id="precios" class="py-16 md:py-24 bg-gray-800">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
+                    Nuestros <span class="gradient-text">Planes de Hosting</span>
                 </h2>
-                <div class="max-w-3xl mx-auto text-left">
-                    <!-- FAQ Item 1 -->
-                    <div class="faq-item mb-3">
-                        <input type="checkbox" id="faq1">
-                        <label for="faq1" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
-                            ¿Cómo instalo mods o plugins en mi servidor?
-                        </label>
-                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-3 pb-3 text-sm">
-                                Nuestro panel de control incluye un instalador de modpacks y plugins con un solo clic. También puedes subir tus propios archivos vía FTP para una personalización completa.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- FAQ Item 2 -->
-                    <div class="faq-item mb-3">
-                        <input type="checkbox" id="faq2">
-                        <label for="faq2" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
-                            ¿Puedo cambiar de plan más adelante si necesito más recursos?
-                        </label>
-                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-3 pb-3 text-sm">
-                                Sí, puedes actualizar o degradar tu plan en cualquier momento directamente desde tu panel de cliente. Los cambios se aplican de forma instantánea sin interrupción del servicio.
-                            </p>
+                <p class="text-xl text-gray-300 mb-12">
+                    Elige el plan perfecto para tu servidor de Minecraft.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Pricing Card 1: Starter -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Starter</h3>
+                            <p class="text-gray-400 mb-6">Ideal para pequeños grupos de amigos.</p>
+                            <div class="text-white mb-8">
+                                <span class="text-5xl font-extrabold">$5</span>
+                                <span class="text-2xl text-gray-400">/mes</span>
                             </div>
+                            <ul class="text-gray-300 text-left space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 2 GB RAM</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 20 GB NVMe SSD</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 2 Núcleos de CPU</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Protección DDoS</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Panel de Control Personalizado</li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn-primary text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-lg block text-center hover:scale-105 transition duration-300">
+                            Comprar Ahora
+                        </a>
                     </div>
-                    <!-- FAQ Item 3 -->
-                    <div class="faq-item mb-3">
-                        <input type="checkbox" id="faq3">
-                        <label for="faq3" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
-                            ¿Qué versiones de Minecraft soportan?
-                        </label>
-                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-3 pb-3 text-sm">
-                                Soportamos todas las versiones de Minecraft Java Edition (desde 1.8 hasta la más reciente), así como Spigot, Paper, Forge, Fabric y Bedrock Edition (via plugins).
-                            </p>
+
+                    <!-- Pricing Card 2: Pro (Most Popular) -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border-2 border-purple-500 flex flex-col justify-between relative transform hover:scale-105 transition duration-300">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white text-sm font-bold py-1 px-4 rounded-full shadow-md">
+                            Más Popular
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Pro</h3>
+                            <p class="text-gray-400 mb-6">Para comunidades en crecimiento.</p>
+                            <div class="text-white mb-8">
+                                <span class="text-5xl font-extrabold">$15</span>
+                                <span class="text-2xl text-gray-400">/mes</span>
+                            </div>
+                            <ul class="text-gray-300 text-left space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 6 GB RAM</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 60 GB NVMe SSD</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 4 Núcleos de CPU</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Protección DDoS Premium</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Copias de Seguridad Diarias</li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn-primary text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-lg block text-center hover:scale-105 transition duration-300">
+                            Comprar Ahora
+                        </a>
+                    </div>
+
+                    <!-- Pricing Card 3: Enterprise -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between hover:border-purple-500 transition duration-300 transform hover:scale-105">
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-4">Enterprise</h3>
+                            <p class="text-gray-400 mb-6">Para grandes redes y servidores.</p>
+                            <div class="text-white mb-8">
+                                <span class="text-5xl font-extrabold">$30</span>
+                                <span class="text-2xl text-gray-400">/mes</span>
+                            </div>
+                            <ul class="text-gray-300 text-left space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 16 GB RAM</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 160 GB NVMe SSD</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 8 Núcleos de CPU</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Protección DDoS Empresarial</li>
+                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Soporte Prioritario 24/7</li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn-primary text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-lg block text-center hover:scale-105 transition duration-300">
+                            Comprar Ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-16 md:py-24 bg-gray-900">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
+                    Lo que dicen nuestros <span class="gradient-text">Clientes</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial Card 1 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700">
+                        <p class="text-gray-300 italic mb-6">
+                            "VoltixCloud ha superado mis expectativas. El rendimiento es increíble y el soporte es de primera."
+                        </p>
+                        <div class="flex items-center justify-center">
+                            <img src="https://placehold.co/60x60/6366f1/ffffff?text=U1" alt="User 1" class="h-12 w-12 rounded-full mr-4">
+                            <div>
+                                <p class="text-white font-semibold">Alex M.</p>
+                                <p class="text-gray-400 text-sm">Propietario de Servidor</p>
+                            </div>
                         </div>
                     </div>
-                    <!-- FAQ Item 4 -->
-                    <div class="faq-item mb-3">
-                        <input type="checkbox" id="faq4">
-                        <label for="faq4" class="text-lg font-semibold bg-card-bg rounded-lg shadow-md px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-300" style="background-color: var(--color-card-bg);">
-                            ¿Ofrecen reembolso?
-                        </label>
-                        <div class="faq-content text-text-muted px-5 py-0 bg-medium-dark-bg rounded-b-lg" style="background-color: var(--color-medium-dark-bg);">
-                            <p class="pt-3 pb-3 text-sm">
-                                Sí, ofrecemos una garantía de devolución de dinero de 7 días. Si no estás satisfecho con nuestro servicio, te reembolsaremos tu compra.
-                            </p>
+                    <!-- Testimonial Card 2 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700">
+                        <p class="text-gray-300 italic mb-6">
+                            "Nunca había tenido un hosting tan fiable. Mi comunidad está encantada con la estabilidad."
+                        </p>
+                        <div class="flex items-center justify-center">
+                            <img src="https://placehold.co/60x60/a855f7/ffffff?text=U2" alt="User 2" class="h-12 w-12 rounded-full mr-4">
+                            <div>
+                                <p class="text-white font-semibold">Maria S.</p>
+                                <p class="text-gray-400 text-sm">Administradora de Red</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial Card 3 -->
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700">
+                        <p class="text-gray-300 italic mb-6">
+                            "El panel de control es muy fácil de usar y la configuración instantánea fue un salvavidas."
+                        </p>
+                        <div class="flex items-center justify-center">
+                            <img src="https://placehold.co/60x60/ec4899/ffffff?text=U3" alt="User 3" class="h-12 w-12 rounded-full mr-4">
+                            <div>
+                                <p class="text-white font-semibold">Carlos R.</p>
+                                <p class="text-gray-400 text-sm">Jugador Entusiasta</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section (Bottom) -->
-        <section id="cta-bottom" class="bg-primary text-dark-bg py-12 md:py-20 text-center" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold mb-5">
-                    ¡Crea tu Mundo Minecraft Hoy!
+        <!-- Call to Action Section -->
+        <section class="py-16 md:py-24 bg-gray-800">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">
+                    ¿Listo para llevar tu servidor al siguiente nivel?
                 </h2>
-                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
-                    Únete a miles de jugadores satisfechos y lleva tu experiencia Minecraft al siguiente nivel con Voltix Cloud.
+                <p class="text-xl text-gray-300 mb-10">
+                    Únete a VoltixCloud hoy y experimenta la diferencia.
                 </p>
-                <a href="#locations" class="bg-dark-bg text-primary font-bold py-3 px-8 rounded-lg text-md uppercase transition-all duration-300 hover:bg-medium-dark-bg hover:shadow-xl" style="background-color: var(--color-dark-bg); color: var(--color-primary);">
-                    ¡Empieza Ahora!
+                <a href="#" class="btn-primary text-white py-4 px-10 rounded-lg text-xl font-semibold shadow-lg hover:scale-105 transition duration-300">
+                    ¡Comienza Ahora!
                 </a>
             </div>
         </section>
     </main>
 
-    <!-- Footer Section -->
-    <footer class="text-text-muted py-10">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
-            <!-- Footer Column 1: Logo & Description -->
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 px-6 md:px-12 text-gray-400 text-sm rounded-t-xl border-t border-gray-700">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Brand Info -->
             <div>
-                <a href="index.html" class="text-2xl font-extrabold text-primary mb-3 block" style="color: var(--color-primary);">Voltix Cloud</a>
-                <p class="text-sm">
-                    Voltix Cloud ofrece hosting de Minecraft de alto rendimiento con soporte excepcional y control total para tu servidor.
+                <a href="#" class="text-white text-2xl font-extrabold mb-4 block">VOLTIX<span class="gradient-text">CLOUD</span></a>
+                <p class="mb-4">
+                    Hosting de Minecraft de alto rendimiento y fiable.
                 </p>
-                <div class="flex justify-center md:justify-start space-x-3 mt-5">
-                    <a href="https://www.youtube.com/@VoltixCloud" target="_blank" aria-label="YouTube" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-youtube text-xl"></i></a>
-                    <a href="https://discord.gg/jhA9DHTHAW" target="_blank" aria-label="Discord" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-discord text-xl"></i></a>
-                    <a href="https://www.facebook.com/VoltixCloud" target="_blank" aria-label="Facebook" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
-                    <a href="https://twitter.com/VoltixCloud" target="_blank" aria-label="Twitter" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-twitter text-xl"></i></a>
-                    <a href="https://www.instagram.com/VoltixCloud" target="_blank" aria-label="Instagram" class="text-text-light hover:text-primary transition-colors duration-300"><i class="fab fa-instagram text-xl"></i></a>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-white transition duration-300"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="hover:text-white transition duration-300"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
 
-            <!-- Footer Column 2: Quick Links -->
+            <!-- Quick Links -->
             <div>
-                <h4 class="text-lg font-semibold text-text-light mb-3">Enlaces Rápidos</h4>
-                <ul class="space-y-1">
-                    <li><a href="#locations" class="hover:text-primary transition-colors duration-300 text-sm">Ubicaciones</a></li>
-                    <li><a href="#faq" class="hover:text-primary transition-colors duration-300 text-sm">Preguntas Frecuentes</a></li>
-                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Soporte</a></li>
+                <h4 class="text-white text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Inicio</a></li>
+                    <li class="mb-2"><a href="#precios" class="hover:text-white transition duration-300">Precios</a></li>
+                    <li class="mb-2"><a href="#caracteristicas" class="hover:text-white transition duration-300">Características</a></li>
+                    <li class="mb-2"><a href="#soporte" class="hover:text-white transition duration-300">Soporte</a></li>
                 </ul>
             </div>
 
-            <!-- Footer Column 3: Legal & Contact -->
+            <!-- Legal -->
             <div>
-                <h4 class="text-lg font-semibold text-text-light mb-3">Legal</h4>
-                <ul class="space-y-1">
-                    <li><a href="terms-and-conditions.html" class="hover:text-primary transition-colors duration-300 text-sm">Términos de Servicio</a></li>
-                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Privacidad</a></li>
-                    <li><a href="service-unavailable.html" class="hover:text-primary transition-colors duration-300 text-sm">Política de Reembolso</a></li>
+                <h4 class="text-white text-lg font-semibold mb-4">Legal</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Términos de Servicio</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Política de Privacidad</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Política de Reembolso</a></li>
                 </ul>
-                <h4 class="text-lg font-semibold text-text-light mb-3 mt-5">Contacto</h4>
-                <p class="text-sm">Email: <a href="mailto:info@voltixcloud.com" class="hover:text-primary">info@voltixcloud.com</a></p>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h4 class="text-white text-lg font-semibold mb-4">Contacto</h4>
+                <ul>
+                    <li class="mb-2">Email: <a href="mailto:soporte@voltixcloud.com" class="hover:text-white transition duration-300">soporte@voltixcloud.com</a></li>
+                    <li class="mb-2">Discord: <a href="#" class="hover:text-white transition duration-300">discord.gg/voltixcloud</a></li>
+                </ul>
             </div>
         </div>
-        <div class="text-center text-xs text-text-muted mt-10 pt-6 border-t border-border" style="border-color: var(--color-border);">
-            &copy; 2025 Voltix Cloud. Todos los derechos reservados.
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+            <p>&copy; 2025 VoltixCloud. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Floating Discord Button -->
-    <div class="floating-discord-button flex items-center justify-between">
-        <a href="https://discord.gg/jhA9DHTHAW" target="_blank" class="flex items-center gap-2 text-white no-underline">
-            <i class="fab fa-discord"></i>
-            <div class="flex flex-col text-left">
-                <span class="text-xs font-bold">DISCORD</span>
-                <span id="discord-member-count" class="text-sm">Cargando...</span>
-            </div>
-        </a>
-        <button onclick="window.open('https://discord.gg/jhA9DHTHAW', '_blank')" class="text-xs font-semibold py-1 px-3 rounded-md transition-colors duration-200">
-            Ingresar
-        </button>
-    </div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mainHeader = document.getElementById('main-header'); // Get the header element
-            let lastScrollY = 0; // To track scroll direction
-            
-            // Discord Widget Configuration
-            const DISCORD_GUILD_ID = '1375999220569473115'; // Your Discord Guild ID - This is a placeholder, you might need to update this if the widget.json changes.
-            const discordMemberCountElement = document.getElementById('discord-member-count');
-
-            // Function to fetch Discord member count
-            async function fetchDiscordMemberCount() {
-                try {
-                    const response = await fetch(`https://discord.com/api/guilds/${DISCORD_GUILD_ID}/widget.json`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    if (data && data.presence_count !== undefined) {
-                        discordMemberCountElement.textContent = `${data.presence_count} Miembros en línea`;
-                    } else {
-                        discordMemberCountElement.textContent = 'N/A Miembros';
-                    }
-                } catch (error) {
-                    console.error('Error fetching Discord member count:', error);
-                    discordMemberCountElement.textContent = 'Error al cargar';
-                }
-            }
-
-            // Call function to fetch member count on load
-            fetchDiscordMemberCount();
-            // Optionally, refresh member count every few minutes
-            setInterval(fetchDiscordMemberCount, 5 * 60 * 1000); // Every 5 minutes
-
-            // Function to toggle mobile menu visibility
-            function toggleMobileMenu() {
-                if (mobileMenu) { // Added null check here
-                    mobileMenu.classList.toggle('active');
-                    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-                }
-            }
-
-            // Event listener for mobile menu button
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', toggleMobileMenu);
-            }
-
-            // Close mobile menu when clicking on a link inside it
-            if (mobileMenu) { // Added null check here
-                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-                mobileMenuLinks.forEach(link => {
-                    link.addEventListener('click', function(event) {
-                        // If the link is a local anchor (e.g., href="#"), prevent default
-                        // so smooth scrolling works before closing the menu.
-                        if (link.getAttribute('href').startsWith('#')) {
-                            event.preventDefault(); // Prevent instant jump
-                            // Close the menu after a short delay to allow smooth scroll
-                            setTimeout(toggleMobileMenu, 300);
-                        } else {
-                            // For external or full-page links, close the menu immediately
-                            toggleMobileMenu();
-                        }
-                    });
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-
-                // Prevent clicks inside mobile menu from propagating to document (to avoid closing)
-                mobileMenu.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-
-                // Handle mobile dropdown toggles (checkbox based)
-                const mobileDropdownToggles = mobileMenu.querySelectorAll('.mobile-menu .dropdown-toggle-checkbox');
-                mobileDropdownToggles.forEach(toggle => {
-                    const label = toggle.nextElementSibling; // The label associated with the checkbox
-                    const content = label.nextElementSibling; // The dropdown content
-
-                    // Prevent label click from propagating to the mobile menu, which might close it
-                    if (label) {
-                        label.addEventListener('click', function(event) {
-                            event.stopPropagation(); // Stop propagation to prevent document listener from closing mobile menu
-                        });
-                    }
-                    // Prevent content clicks from propagating to the mobile menu
-                    if (content) {
-                        content.addEventListener('click', function(event) {
-                            event.stopPropagation(); // Stop propagation to prevent document listener from closing mobile menu
-                        });
-                    }
-                });
-            }
-
-            // --- Desktop Dropdown Logic ---
-            const desktopDropdowns = document.querySelectorAll('.nav-desktop .dropdown');
-
-            desktopDropdowns.forEach(dropdown => {
-                const dropdownToggle = dropdown.querySelector('.nav-link-dropdown');
-                const dropdownContent = dropdown.querySelector('.dropdown-content');
-
-                if (dropdownToggle && dropdownContent) {
-                    // Click listener for the desktop dropdown toggle
-                    dropdownToggle.addEventListener('click', function(event) {
-                        event.preventDefault(); // Prevent default link behavior
-
-                        // Close other open desktop dropdowns
-                        desktopDropdowns.forEach(otherDropdown => {
-                            const otherContent = otherDropdown.querySelector('.dropdown-content');
-                            if (otherContent && otherContent !== dropdownContent) {
-                                otherContent.classList.remove('show-dropdown');
-                            }
-                        });
-
-                        // Toggle the current dropdown
-                        dropdownContent.classList.toggle('show-dropdown');
-                    });
-
-                    // Prevent clicks inside dropdown content from closing it immediately
-                    dropdownContent.addEventListener('click', function(event) {
-                        event.stopPropagation();
-                    });
+                // Close mobile menu if open
+                if (mobileMenu.classList.contains('block')) {
+                    mobileMenu.classList.remove('block');
+                    mobileMenu.classList.add('hidden');
                 }
             });
+        });
 
-            // Global click listener to close desktop dropdowns and mobile menu when clicking outside
-            document.addEventListener('click', function(event) {
-                // Close desktop dropdowns
-                desktopDropdowns.forEach(dropdown => {
-                    const dropdownContent = dropdown.querySelector('.dropdown-content');
-                    const dropdownToggle = dropdown.querySelector('.nav-link-dropdown');
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-                    // Check if the click was outside the current dropdown's toggle and content
-                    if (dropdownContent && dropdownToggle &&
-                        !dropdownContent.contains(event.target) &&
-                        !dropdownToggle.contains(event.target)) {
-                        dropdownContent.classList.remove('show-dropdown');
-                    }
-                });
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('block');
+        });
 
-                // Close mobile menu if open and click is outside
-                // Ensure mobileMenu is not null before checking its classList or contains method
-                const isClickInsideMobileMenu = mobileMenu && mobileMenu.contains(event.target);
-                const isClickOnMobileMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
-                if (mobileMenu && mobileMenu.classList.contains('active') && !isClickInsideMobileMenu && !isClickOnMobileMenuButton) {
-                    toggleMobileMenu();
-                }
-            });
-
-            // --- Hide/Show Header on Scroll ---
-            window.addEventListener('scroll', () => {
-                const currentScrollY = window.scrollY;
-
-                if (currentScrollY > lastScrollY && currentScrollY > mainHeader.offsetHeight) {
-                    // Scrolling down and past header height
-                    mainHeader.classList.add('header-hidden');
-                } else if (currentScrollY < lastScrollY) {
-                    // Scrolling up
-                    mainHeader.classList.remove('header-hidden');
-                }
-                lastScrollY = currentScrollY;
-            });
-
-            // Ping functionality for all location cards
-            const locationCards = document.querySelectorAll('.location-card');
-            locationCards.forEach(card => {
-                const pingDisplay = card.querySelector('.ping-display');
-                const initialPing = card.dataset.initialPing; // Get initial ping from data attribute
-
-                // Function to calculate and display ping
-                const calculateAndDisplayPing = async () => {
-                    pingDisplay.textContent = 'Calculando ping...';
-                    
-                    // Simulate ping to a server based on location
-                    const locationName = card.dataset.locationName;
-                    let simulatedPing;
-
-                    // Simulate different ping times for different locations
-                    switch(locationName) {
-                        case 'Miami, USA':
-                            simulatedPing = Math.floor(Math.random() * (50 - 40 + 1)) + 40; // 40-50ms
-                            break;
-                        case 'Caracas, Venezuela':
-                            simulatedPing = Math.floor(Math.random() * (20 - 10 + 1)) + 10; // 10-20ms
-                            break;
-                        default:
-                            simulatedPing = Math.floor(Math.random() * (200 - 50 + 1)) + 50; // Default range
-                    }
-
-                    // Simulate network delay
-                    await new Promise(resolve => setTimeout(resolve, Math.random() * 500 + 200)); // 200-700ms delay
-
-                    pingDisplay.textContent = `${simulatedPing} ms`;
-                };
-
-                // Function to revert ping display
-                const revertPingDisplay = () => {
-                    setTimeout(() => {
-                        pingDisplay.textContent = initialPing;
-                    }, 500); // Revert after 0.5 seconds
-                };
-
-                // Mouse events for desktop
-                card.addEventListener('mouseenter', calculateAndDisplayPing);
-                card.addEventListener('mouseleave', revertPingDisplay);
-
-                // Touch events for mobile
-                card.addEventListener('touchstart', function(event) {
-                    event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-                    calculateAndDisplayPing();
-                });
-                card.addEventListener('touchend', revertPingDisplay);
-            });
-
-            // Dynamic content for Hero Section
-            const mainHeading = document.getElementById('main-heading');
-            const dynamicContentBox = document.getElementById('dynamic-content-box');
-            
-            const states = [
-                {
-                    heading: 'Que esperas para obtener tu servidor de minecraft',
-                    content: `
-                        <p class="text-primary text-xs font-semibold uppercase mb-1" style="color: var(--color-primary);">ADQUIERE AHORA</p>
-                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-text-light">MINECRAFT HOSTING</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-base">
-                            <div class="flex items-center">
-                                <i class="fas fa-gamepad text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Soporte para Java & Bedrock.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-shield-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Protección <span class="font-bold">Anti-DDoS</span> avanzada.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-infinity text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Slots ilimitados.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-cube text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Todas las versiones y modpacks.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-dollar-sign text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Precios desde $0.95/gb/mes</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
-                            <a href="minecraft.html" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                                <i class="fas fa-play mr-2"></i>
-                                <span>Adquirir un <br> SERVIDOR DE MINECRAFT</span>
-                                <i class="fas fa-angle-right text-sm ml-1"></i>
-                            </a>
-                            <a href="service-unavailable.html" class="text-primary font-semibold hover:underline flex items-center gap-2 text-sm" style="color: var(--color-primary);">
-                                <span>Acerca de Voltix Cloud</span>
-                                <i class="fas fa-angle-right text-xs ml-1"></i>
-                            </a>
-                        </div>
-                    `
-                },
-                {
-                    heading: 'Quieres una web profesional totalmente personalizada contactanos',
-                    content: `
-                        <p class="text-primary text-xs font-semibold uppercase mb-1" style="color: var(--color-primary);">CREA TU PRESENCIA</p>
-                        <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-text-light">DISEÑO WEB PROFESIONAL</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-base">
-                            <div class="flex items-center">
-                                <i class="fas fa-paint-brush text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Diseños 100% personalizados.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-mobile-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Diseño responsivo para todos los dispositivos.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-search-dollar text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Optimización SEO básica.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-share-alt text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Integración de redes sociales.</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-handshake text-primary mr-2 text-xl" style="color: var(--color-primary);"></i>
-                                <span>Soporte post-lanzamiento.</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 gap-3">
-                            <a href="service-unavailable.html" class="bg-primary text-text-dark font-bold py-2 px-6 rounded-lg text-base uppercase transition-all duration-300 hover:bg-secondary hover:shadow-lg flex items-center gap-2 animate-swing" style="background-color: var(--color-primary); color: var(--color-text-dark);">
-                                <i class="fas fa-laptop-code mr-2"></i>
-                                <span>Obtener una <br> WEB PROFESIONAL</span>
-                                <i class="fas fa-angle-right text-sm ml-1"></i>
-                            </a>
-                            <a href="service-unavailable.html" class="text-primary font-semibold hover:underline flex items-center gap-2 text-sm" style="color: var(--color-primary);">
-                                <span>Acerca de Voltix Cloud</span>
-                                <i class="fas fa-angle-right text-xs ml-1"></i>
-                            </a>
-                        </div>
-                    `
-                }
-            ];
-
-            let currentStateIndex = 0;
-
-            // Function to update content with fade animation
-            function updateContentWithAnimation() {
-                // Add fade-out class
-                if (mainHeading) mainHeading.classList.add('fade-out');
-                if (dynamicContentBox) dynamicContentBox.classList.add('fade-out');
-
-                // After fade-out, change content and fade in
-                setTimeout(() => {
-                    currentStateIndex = (currentStateIndex + 1) % states.length;
-                    if (mainHeading) mainHeading.innerHTML = states[currentStateIndex].heading;
-                    if (dynamicContentBox) dynamicContentBox.innerHTML = states[currentStateIndex].content;
-
-                    // Remove fade-out and add fade-in
-                    if (mainHeading) {
-                        mainHeading.classList.remove('fade-out');
-                        mainHeading.classList.add('fade-in');
-                    }
-                    if (dynamicContentBox) {
-                        dynamicContentBox.classList.remove('fade-out');
-                        dynamicContentBox.classList.add('fade-in');
-                    }
-
-                    // Remove fade-in class after animation completes to reset for next cycle
-                    setTimeout(() => {
-                        if (mainHeading) mainHeading.classList.remove('fade-in');
-                        if (dynamicContentBox) dynamicContentBox.classList.remove('fade-in');
-                    }, 500); // Match this with CSS transition duration
-                }, 500); // This delay should match the fade-out transition duration
+        // Close mobile menu when clicking outside (optional, but good UX)
+        document.addEventListener('click', (event) => {
+            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && mobileMenu.classList.contains('block')) {
+                mobileMenu.classList.remove('block');
+                mobileMenu.classList.add('hidden');
             }
-
-            // Initial content load
-            if (mainHeading) mainHeading.innerHTML = states[currentStateIndex].heading;
-            if (dynamicContentBox) dynamicContentBox.innerHTML = states[currentStateIndex].content;
-            currentStateIndex = (currentStateIndex + 1) % states.length; // Prepare for the next state
-
-            // Set interval for content rotation (15 seconds)
-            setInterval(updateContentWithAnimation, 15000);
         });
     </script>
 </body>
