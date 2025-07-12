@@ -473,7 +473,7 @@
             margin-bottom: 3rem; /* mb-12 */
         }
 
-        /* Tarjeta principal para todas las ubicaciones */
+        /* Contenedor principal de ubicaciones para escritorio */
         .main-locations-card {
             background-color: #1a1c22;
             border: 1px solid #2d3748;
@@ -488,7 +488,7 @@
             gap: 1.5rem; /* Añade espacio entre las columnas */
         }
 
-        /* Estilos para cada columna dentro de la tarjeta principal */
+        /* Estilos para cada columna de región en escritorio */
         .location-column {
             flex: 1; /* Cada columna ocupa el mismo espacio */
             min-width: 200px; /* Ancho mínimo para las columnas antes de ajustarse */
@@ -502,16 +502,22 @@
                 border-left: 1px solid #2d3748;
             }
         }
+
         /* Estilos para el diseño 2x2 en móvil */
         @media (max-width: 767px) {
             .main-locations-card {
-                gap: 1rem; /* Espacio ajustado para 2x2 en móvil */
+                /* Cambia a grid para el diseño 2x2 */
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+                gap: 1rem; /* Espacio entre las tarjetas de ubicación */
                 padding: 1rem; /* Relleno reducido para la tarjeta principal en móvil */
-                justify-content: center; /* Centra las filas de tarjetas */
+                justify-items: center; /* Centra los elementos dentro de las celdas de la cuadrícula */
+                align-items: start; /* Alinea los elementos al inicio de la celda */
             }
             .location-column {
-                flex: 0 0 calc(50% - 0.5rem); /* Ocupa aproximadamente la mitad del ancho, considerando el gap */
-                min-width: unset; /* Elimina la restricción de ancho mínimo para móvil */
+                /* Cada columna de ubicación se convierte en una tarjeta individual */
+                width: 100%; /* Ocupa todo el ancho de su celda de cuadrícula */
+                min-width: unset; /* Elimina la restricción de ancho mínimo */
                 padding: 1rem; /* Relleno para cada mini-tarjeta */
                 background-color: #1a1c22; /* Fondo para cada mini-tarjeta */
                 border: 1px solid #2d3748; /* Borde para cada mini-tarjeta */
@@ -520,13 +526,16 @@
                 text-align: left; /* Alinea el texto a la izquierda dentro de cada mini-tarjeta */
                 /* Eliminar bordes específicos que ya no son necesarios con el nuevo diseño de tarjeta */
                 border-bottom: none !important;
-            }
-            /* Elimina el borde izquierdo entre columnas en móvil, ya que cada una es una tarjeta separada */
-            .location-column + .location-column {
-                border-left: none;
+                border-left: none !important; /* Asegura que no haya bordes extra */
             }
             .location-column h3 {
-                text-align: left; /* Alinea el título de la columna a la izquierda dentro de la mini-tarjeta */
+                text-align: center; /* Centra el título de la región dentro de la tarjeta móvil */
+            }
+            .location-list {
+                padding-left: 0; /* Asegura que la lista no tenga padding extra */
+            }
+            .location-item {
+                justify-content: flex-start; /* Alinea los elementos de la lista a la izquierda */
             }
         }
 
@@ -710,18 +719,18 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Animación de keyframe para efecto de sacudida sutil para el botón de Discord */
-        @keyframes shake-discord {
+        /* Se eliminó la animación de sacudida */
+        /* @keyframes shake-discord {
             0% { transform: translateX(0); }
             25% { transform: translateX(-2px); }
             50% { transform: translateX(2px); }
             75% { transform: translateX(-2px); }
             100% { transform: translateX(0); }
-        }
-        /* Clase para aplicar la animación de sacudida temporalmente */
-        .discord-shake-active {
+        } */
+        /* Se eliminó la clase para aplicar la animación de sacudida temporalmente */
+        /* .discord-shake-active {
             animation: shake-discord 0.5s ease-in-out alternate;
-        }
+        } */
 
 
         /* Nuevos estilos para el pie de página y los colores de fondo de la llamada a la acción */
@@ -1042,9 +1051,9 @@
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
                     Nuestras <span class="gradient-text">Ubicaciones</span>
                 </h2>
-                <!-- Single main card for all locations, with 4 columns -->
+                <!-- Single main card for all locations. On desktop, it's a flex container for columns. On mobile, it's a grid for 2x2 individual cards. -->
                 <div class="main-locations-card">
-                    <!-- North America Column -->
+                    <!-- North America Column (becomes a card on mobile) -->
                     <div class="location-column">
                         <h3>North America</h3>
                         <ul class="location-list">
@@ -1087,7 +1096,7 @@
                         </ul>
                     </div>
 
-                    <!-- Europe Column -->
+                    <!-- Europe Column (becomes a card on mobile) -->
                     <div class="location-column">
                         <h3>Europe</h3>
                         <ul class="location-list">
@@ -1121,7 +1130,7 @@
                         </ul>
                     </div>
 
-                    <!-- Asia Column -->
+                    <!-- Asia Column (becomes a card on mobile) -->
                     <div class="location-column">
                         <h3>Asia</h3>
                         <ul class="location-list">
@@ -1146,7 +1155,7 @@
                         </ul>
                     </div>
 
-                    <!-- Oceania Column -->
+                    <!-- Oceania Column (becomes a card on mobile) -->
                     <div class="location-column">
                         <h3>Oceania</h3>
                         <ul class="location-list">
@@ -1456,15 +1465,6 @@
             }
         }
 
-        // Function to trigger the shake animation
-        function triggerDiscordShake() {
-            discordFloatingButton.classList.add('discord-shake-active');
-            // Remove the class after the animation duration to allow it to be re-triggered
-            setTimeout(() => {
-                discordFloatingButton.classList.remove('discord-shake-active');
-            }, 500); // The shake-discord animation is 0.5s long
-        }
-
         // Open Discord invite link when button is clicked
         discordFloatingButton.addEventListener('click', () => {
             window.open(DISCORD_INVITE_LINK, '_blank');
@@ -1474,7 +1474,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             fetchDiscordOnlineUsers();
             setInterval(fetchDiscordOnlineUsers, 30000); // Refresh every 30 seconds
-            setInterval(triggerDiscordShake, 9000); // Trigger shake every 9 seconds
         });
 
         // Geolocation and Ping/Distance Display Logic
