@@ -119,7 +119,7 @@
             animation: float 2s ease-in-out infinite; /* Aplica la animación de flotación */
         }
         .btn-mobile-client-area:hover {
-            background: linear-gradient(90deg, #a855f7, #6366f1); /* Gradiente invertido al pasar el ratón */
+            background: linear-gradient(90deg, #a855f7, #6366f1);
             box-shadow: 0 8px 20px rgba(99, 102, 241, 0.6);
             transform: translateY(-2px);
         }
@@ -183,8 +183,9 @@
             position: relative; /* Necesario para el pseudo-elemento ::before */
             overflow: hidden; /* Oculta el desbordamiento de ::before */
             border-radius: 0.5rem; /* Añadido border-radius */
-            margin: 0.5rem 0; /* Margen vertical, horizontal se centra con parent align-items */
-            /* Eliminadas las propiedades width y max-width para que el contenido se ajuste y se centre mejor */
+            margin: 0.5rem auto; /* Centra horizontalmente, mantiene margen vertical */
+            width: calc(100% - 2rem); /* Ocupa casi todo el ancho del menú móvil */
+            max-width: 280px; /* Limita el ancho máximo */
             transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; /* Transiciones más suaves para color, transformación, sombra */
         }
 
@@ -478,11 +479,11 @@
             padding: 2rem; /* p-8 */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Sombra más fuerte */
             max-width: 1200px; /* Ancho máximo para toda la tarjeta */
-            margin-left: 0; /* Alinea a la izquierda */
-            margin-right: auto; /* Empuja a la izquierda */
+            margin: 0 auto; /* Centra la tarjeta principal */
             display: flex; /* Usa flexbox para columnas internas */
             flex-wrap: wrap; /* Permite que las columnas se ajusten en pantallas más pequeñas */
-            justify-content: flex-start; /* Alinea las columnas al inicio */
+            justify-content: center; /* Centra las columnas dentro de la tarjeta principal */
+            gap: 1.5rem; /* Añade espacio entre las columnas */
         }
 
         /* Estilos para cada columna dentro de la tarjeta principal */
