@@ -502,13 +502,31 @@
                 border-left: 1px solid #2d3748;
             }
         }
+        /* Estilos para el diseño 2x2 en móvil */
         @media (max-width: 767px) {
-            .location-column {
-                width: 100%; /* Ancho completo en móvil */
-                border-bottom: 1px solid #2d3748; /* Añade borde inferior para separación */
+            .main-locations-card {
+                gap: 1rem; /* Espacio ajustado para 2x2 en móvil */
+                padding: 1rem; /* Relleno reducido para la tarjeta principal en móvil */
+                justify-content: center; /* Centra las filas de tarjetas */
             }
-            .location-column:last-child {
-                border-bottom: none; /* Sin borde inferior para la última columna */
+            .location-column {
+                flex: 0 0 calc(50% - 0.5rem); /* Ocupa aproximadamente la mitad del ancho, considerando el gap */
+                min-width: unset; /* Elimina la restricción de ancho mínimo para móvil */
+                padding: 1rem; /* Relleno para cada mini-tarjeta */
+                background-color: #1a1c22; /* Fondo para cada mini-tarjeta */
+                border: 1px solid #2d3748; /* Borde para cada mini-tarjeta */
+                border-radius: 0.75rem; /* Esquinas redondeadas para cada mini-tarjeta */
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para cada mini-tarjeta */
+                text-align: left; /* Alinea el texto a la izquierda dentro de cada mini-tarjeta */
+                /* Eliminar bordes específicos que ya no son necesarios con el nuevo diseño de tarjeta */
+                border-bottom: none !important;
+            }
+            /* Elimina el borde izquierdo entre columnas en móvil, ya que cada una es una tarjeta separada */
+            .location-column + .location-column {
+                border-left: none;
+            }
+            .location-column h3 {
+                text-align: left; /* Alinea el título de la columna a la izquierda dentro de la mini-tarjeta */
             }
         }
 
