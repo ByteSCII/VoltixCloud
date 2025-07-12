@@ -513,6 +513,18 @@
                 padding: 6rem 3rem; /* md:py-24 md:px-12 */
             }
         }
+
+        /* Adjustments for feature cards on mobile */
+        @media (max-width: 767px) { /* For screens smaller than md (768px) */
+            .feature-grid-container {
+                display: grid;
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 1.5rem; /* Space between cards */
+                max-width: 380px; /* Max width for the container */
+                margin-left: auto; /* Center the container */
+                margin-right: auto; /* Center the container */
+            }
+        }
     </style>
 </head>
 <body>
@@ -544,7 +556,8 @@
             <div class="flex items-center">
                 <!-- VoltixCloud Logo (Image) -->
                 <img src="./images/voltixcloud.ico" alt="VoltixCloud Logo" class="h-10 w-10 mr-3">
-                <a href="#" class="text-white text-2xl font-extrabold whitespace-nowrap">Voltix Cloud <span class="gradient-text">Hosting</span></a>
+                <!-- Updated logo text: removed "Hosting", "Cloud" is gradient -->
+                <a href="#" class="text-white text-2xl font-extrabold whitespace-nowrap">Voltix <span class="gradient-text">Cloud</span></a>
             </div>
             <!-- Navigation Links with Dropdowns - Adjusted for smaller size, single line, and right alignment -->
             <div class="hidden md:flex space-x-4 items-center">
@@ -780,8 +793,8 @@
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
                     ¿Por qué elegir <span class="gradient-text">VoltixCloud</span>?
                 </h2>
-                <!-- Adjusted grid for mobile to show 2 columns -->
-                <div class="grid grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Adjusted grid for mobile to show 1 column, centered and smaller -->
+                <div class="feature-grid-container grid lg:grid-cols-3 gap-8">
                     <!-- Feature Card 1 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.1s;">
                         <i class="fas fa-shield-alt text-5xl feature-icon mb-6"></i>
@@ -855,7 +868,7 @@
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
             <!-- Brand Info -->
             <div>
-                <a href="#" class="text-white text-2xl font-extrabold mb-4 block">Voltix Cloud <span class="gradient-text">Hosting</span></a>
+                <a href="#" class="text-white text-2xl font-extrabold mb-4 block">Voltix <span class="gradient-text">Cloud</span></a>
                 <p class="mb-4">
                     Hosting de Minecraft de alto rendimiento y fiable.
                 </p>
