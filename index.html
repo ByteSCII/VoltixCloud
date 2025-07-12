@@ -45,27 +45,6 @@
         .feature-icon {
             color: #8b5cf6; /* A slightly brighter purple for icons */
         }
-        .hero-section {
-            background-image: url('https://placehold.co/1920x1080/1a202c/ffffff?text=Dark+Minecraft+Background'); /* Placeholder for a dark, abstract Minecraft background */
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7); /* Dark overlay */
-            z-index: 0;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
         /* Custom style for dropdown menus */
         .dropdown-menu {
             display: none;
@@ -308,6 +287,113 @@
             -webkit-text-fill-color: transparent;
             transform: scale(1.05); /* Keep the scale effect */
         }
+
+        /* Hero Carousel specific styles (full-width, full-height) */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            z-index: 0; /* Ensure slides are behind content overlay */
+            filter: brightness(0.6); /* Darken background images slightly */
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 1; /* Bring active slide to front */
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Slightly lighter overlay for better visibility of background */
+            z-index: 2; /* Overlay on top of background image */
+        }
+
+        .carousel-content {
+            position: relative;
+            z-index: 3; /* Content on top of overlay */
+            padding: 1.5rem; /* p-6 */
+            max-width: 48rem; /* max-w-4xl */
+            margin-left: auto;
+            margin-right: auto;
+            color: #e6e6e6;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4; /* On top of everything */
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #a855f7; /* Purple for active dot */
+        }
+
+        .carousel-features {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center features */
+            gap: 0.75rem; /* space-y-3 */
+        }
+
+        .carousel-features li {
+            display: flex;
+            align-items: center;
+            font-size: 1.125rem; /* text-lg */
+            color: #cbd5e0; /* text-gray-300 */
+        }
+
+        .carousel-features li i {
+            color: #34d399; /* text-green-500 */
+            margin-right: 0.75rem; /* mr-3 */
+        }
+
+        @media (min-width: 768px) { /* md breakpoint */
+            .carousel-features {
+                flex-direction: row; /* Row direction on desktop */
+                justify-content: center; /* Center features on desktop */
+                flex-wrap: wrap; /* Allow wrapping */
+                column-gap: 2rem; /* gap-8 */
+                row-gap: 0.75rem; /* space-y-3 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -427,23 +513,95 @@
     </div>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero-section h-screen flex items-center justify-center text-center">
-            <div class="hero-content p-6 max-w-4xl mx-auto">
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
-                    Hosting de Minecraft <span class="gradient-text">Potente</span> y <span class="gradient-text">Fiable</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-10">
-                    Experimenta el rendimiento definitivo con VoltixCloud. Servidores optimizados para tu aventura en Minecraft.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    <a href="#precios" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
-                        Ver Planes
-                    </a>
-                    <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
-                        Contáctanos
-                    </a>
+        <!-- Hero Carousel Section -->
+        <section class="hero-carousel">
+            <!-- Slide 1: Web Hosting -->
+            <div class="carousel-slide" data-background="./images/webhosting.jpg" style="background-image: url('./images/webhosting.jpg');">
+                <div class="carousel-content">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                        Web Hosting <span class="gradient-text">Rápido</span> y <span class="gradient-text">Seguro</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                        Aloja tu sitio web con el mejor rendimiento y seguridad.
+                    </p>
+                    <ul class="carousel-features">
+                        <li><i class="fas fa-check-circle"></i> Uptime 99.9%</li>
+                        <li><i class="fas fa-check-circle"></i> SSL Gratuito</li>
+                        <li><i class="fas fa-check-circle"></i> Soporte 24/7</li>
+                        <li><i class="fas fa-check-circle"></i> SSD NVMe</li>
+                        <li><i class="fas fa-check-circle"></i> Panel de Control Intuitivo</li>
+                    </ul>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
+                        <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
+                            Comenzar Web Hosting
+                        </a>
+                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
+                            Contáctanos
+                        </a>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Slide 2: Minecraft Hosting -->
+            <div class="carousel-slide" data-background="./images/minecrafthosting.png" style="background-image: url('./images/minecrafthosting.png');">
+                <div class="carousel-content">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                        Hosting de Minecraft <span class="gradient-text">Potente</span> y <span class="gradient-text">Fiable</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                        Experimenta el rendimiento definitivo con VoltixCloud. Servidores optimizados para tu aventura en Minecraft.
+                    </p>
+                    <ul class="carousel-features">
+                        <li><i class="fas fa-check-circle"></i> Protección DDoS Avanzada</li>
+                        <li><i class="fas fa-check-circle"></i> Configuración Instantánea</li>
+                        <li><i class="fas fa-check-circle"></i> Panel de Control Intuitivo</li>
+                        <li><i class="fas fa-check-circle"></i> Ubicaciones Globales</li>
+                        <li><i class="fas fa-check-circle"></i> Soporte 24/7</li>
+                        <li><i class="fas fa-check-circle"></i> Hardware de Última Generación</li>
+                    </ul>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
+                        <a href="#precios" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
+                            Ver Planes de Minecraft
+                        </a>
+                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
+                            Contáctanos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Web Design -->
+            <div class="carousel-slide" data-background="./images/webdesign.jpg" style="background-image: url('./images/webdesign.jpg');">
+                <div class="carousel-content">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                        Diseño Web <span class="gradient-text">Profesional</span> y <span class="gradient-text">Moderno</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                        Creamos sitios web impactantes y funcionales para tu negocio.
+                    </p>
+                    <ul class="carousel-features">
+                        <li><i class="fas fa-check-circle"></i> Diseño Responsivo</li>
+                        <li><i class="fas fa-check-circle"></i> Optimización SEO</li>
+                        <li><i class="fas fa-check-circle"></i> Integración de E-commerce</li>
+                        <li><i class="fas fa-check-circle"></i> Soporte Post-Lanzamiento</li>
+                        <li><i class="fas fa-check-circle"></i> Diseño Personalizado</li>
+                    </ul>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
+                        <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
+                            Solicitar Diseño Web
+                        </a>
+                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
+                            Contáctanos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Dots -->
+            <div class="carousel-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
             </div>
         </section>
 
@@ -631,7 +789,7 @@
                             <img src="https://placehold.co/60x60/ec4899/ffffff?text=U3" alt="User 3" class="h-12 w-12 rounded-full mr-4">
                             <div>
                                 <p class="text-white font-semibold">Carlos R.</p>
-                                <p class="text-gray-400 text-sm">Jugador Entusiasta</p>
+                                <p class="text-gray-400 text-sm">Jugador Entusiasto</p>
                             </div>
                         </div>
                     </div>
@@ -765,6 +923,63 @@
             }
             lastScrollTop = currentScrollTop;
         });
+
+        // Hero Carousel Logic (Full-width carousel)
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            // Deactivate all slides and dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            Array.from(dotsContainer.children).forEach(dot => dot.classList.remove('active'));
+
+            // Set background image
+            const activeSlide = slides[index];
+            const backgroundImage = activeSlide.getAttribute('data-background');
+            activeSlide.style.backgroundImage = `url('${backgroundImage}')`;
+
+            // Activate the current slide and dot
+            activeSlide.classList.add('active');
+            dotsContainer.children[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 8000); // Change slide every 8 seconds
+        }
+
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // Event listeners for dots
+        dotsContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('dot')) {
+                const slideIndex = parseInt(event.target.dataset.slide);
+                if (!isNaN(slideIndex)) {
+                    stopAutoSlide(); // Stop auto-slide on manual interaction
+                    currentSlide = slideIndex;
+                    showSlide(currentSlide);
+                    startAutoSlide(); // Restart auto-slide after a brief pause
+                }
+            }
+        });
+
+        // Initialize carousel on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(currentSlide);
+            startAutoSlide();
+        });
+
+        // Optional: Pause carousel on hover over the carousel area
+        document.querySelector('.hero-carousel').addEventListener('mouseenter', stopAutoSlide);
+        document.querySelector('.hero-carousel').addEventListener('mouseleave', startAutoSlide);
     </script>
 </body>
 </html>
