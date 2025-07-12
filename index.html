@@ -305,13 +305,13 @@
             opacity: 0;
             transition: opacity 1s ease-in-out; /* Smooth fade transition */
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            align-items: center; /* Center vertically */
+            justify-content: flex-start; /* Align content box to the left */
+            padding-left: 6rem; /* Add padding from the left edge */
             background-size: cover;
             background-position: center;
             z-index: 0; /* Ensure slides are behind content overlay */
-            filter: brightness(0.6); /* Darken background images slightly */
+            filter: brightness(0.5); /* Darken background images slightly more for better text contrast */
         }
 
         .carousel-slide.active {
@@ -326,18 +326,24 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.4); /* Slightly lighter overlay for better visibility of background */
+            background: rgba(0, 0, 0, 0.5); /* Slightly darker overlay for better visibility of background and text */
             z-index: 2; /* Overlay on top of background image */
         }
 
+        /* Styles for the content box within the carousel */
         .carousel-content {
             position: relative;
             z-index: 3; /* Content on top of overlay */
-            padding: 1.5rem; /* p-6 */
+            padding: 2.5rem; /* Increased padding for the box */
             max-width: 48rem; /* max-w-4xl */
-            margin-left: auto;
-            margin-right: auto;
+            /* Removed margin-left: auto; margin-right: auto; to allow left alignment */
             color: #e6e6e6;
+            background-color: rgba(12, 13, 16, 0.8); /* Dark background with opacity */
+            border-radius: 1rem; /* Rounded corners for the box */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+            backdrop-filter: blur(5px); /* Optional: subtle blur effect */
+            -webkit-backdrop-filter: blur(5px); /* For Safari */
+            text-align: left; /* Aligned text to the left */
         }
 
         .carousel-dots {
@@ -369,7 +375,7 @@
             margin-top: 1.5rem;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center features */
+            align-items: flex-start; /* Aligned features to the left */
             gap: 0.75rem; /* space-y-3 */
         }
 
@@ -388,11 +394,23 @@
         @media (min-width: 768px) { /* md breakpoint */
             .carousel-features {
                 flex-direction: row; /* Row direction on desktop */
-                justify-content: center; /* Center features on desktop */
+                justify-content: flex-start; /* Aligned features to the left on desktop */
                 flex-wrap: wrap; /* Allow wrapping */
                 column-gap: 2rem; /* gap-8 */
                 row-gap: 0.75rem; /* space-y-3 */
             }
+        }
+
+        /* New style for the fade overlay at the bottom of the hero section */
+        .hero-fade-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px; /* Height of the fade effect */
+            background: linear-gradient(to top, #0c0d10, transparent); /* Fades to the body background color */
+            z-index: 3; /* Ensure it's above the carousel slides and their content overlay */
+            pointer-events: none; /* Allow clicks to pass through */
         }
     </style>
 </head>
@@ -418,9 +436,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Separator Line -->
-    <div class="w-full h-px bg-[#ec4899]"></div>
 
     <!-- Header / Main Navigation Bar -->
     <header class="main-header bg-black shadow-lg py-4 sticky top-0 w-full z-40 rounded-b-xl border-b border-gray-700">
@@ -531,7 +546,7 @@
                         <li><i class="fas fa-check-circle"></i> SSD NVMe</li>
                         <li><i class="fas fa-check-circle"></i> Panel de Control Intuitivo</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
+                    <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
                         <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
                             Comenzar Web Hosting
                         </a>
@@ -559,7 +574,7 @@
                         <li><i class="fas fa-check-circle"></i> Soporte 24/7</li>
                         <li><i class="fas fa-check-circle"></i> Hardware de Última Generación</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
+                    <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
                         <a href="#precios" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
                             Ver Planes de Minecraft
                         </a>
@@ -586,7 +601,7 @@
                         <li><i class="fas fa-check-circle"></i> Soporte Post-Lanzamiento</li>
                         <li><i class="fas fa-check-circle"></i> Diseño Personalizado</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
+                    <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
                         <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
                             Solicitar Diseño Web
                         </a>
@@ -603,10 +618,13 @@
                 <span class="dot" data-slide="1"></span>
                 <span class="dot" data-slide="2"></span>
             </div>
+
+            <!-- Fade Overlay at the bottom of the hero section -->
+            <div class="hero-fade-overlay"></div>
         </section>
 
         <!-- Features Section -->
-        <section id="caracteristicas" class="py-16 md:py-24 bg-gray-900">
+        <section id="caracteristicas" class="py-16 md:py-24" style="background-color: #0c0d10;">
             <div class="container mx-auto px-6 md:px-12 text-center">
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
                     ¿Por qué elegir <span class="gradient-text">VoltixCloud</span>?
