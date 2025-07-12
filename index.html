@@ -311,7 +311,7 @@
             background-size: cover;
             background-position: center;
             z-index: 0; /* Ensure slides are behind content overlay */
-            filter: brightness(0.5); /* Darken background images slightly more for better text contrast */
+            filter: brightness(0.85); /* Adjusted brightness for better visibility */
         }
 
         .carousel-slide.active {
@@ -344,6 +344,16 @@
             backdrop-filter: blur(5px); /* Optional: subtle blur effect */
             -webkit-backdrop-filter: blur(5px); /* For Safari */
             text-align: left; /* Aligned text to the left */
+        }
+
+        /* Adjusted font sizes for carousel content */
+        .carousel-content h1 {
+            font-size: 2rem; /* Reduced from 3.5rem */
+            line-height: 1.2;
+        }
+
+        .carousel-content p {
+            font-size: 1rem; /* Reduced from 1.25rem */
         }
 
         .carousel-dots {
@@ -382,7 +392,7 @@
         .carousel-features li {
             display: flex;
             align-items: center;
-            font-size: 1.125rem; /* text-lg */
+            font-size: 1.125rem; /* Kept original size for features list items */
             color: #cbd5e0; /* text-gray-300 */
         }
 
@@ -499,7 +509,7 @@
                     </div>
                 </div>
                 <!-- "View Plans" Button -->
-                <a href="#precios" class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link">
+                <a href="#caracteristicas" class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link">
                     View Plans
                 </a>
             </div>
@@ -533,10 +543,10 @@
             <!-- Slide 1: Web Hosting -->
             <div class="carousel-slide" data-background="./images/webhosting.jpg" style="background-image: url('./images/webhosting.jpg');">
                 <div class="carousel-content">
-                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                    <h1 class="font-extrabold text-white leading-tight mb-6">
                         Web Hosting <span class="gradient-text">Rápido</span> y <span class="gradient-text">Seguro</span>
                     </h1>
-                    <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                    <p class="text-gray-300 mb-10">
                         Aloja tu sitio web con el mejor rendimiento y seguridad.
                     </p>
                     <ul class="carousel-features">
@@ -560,10 +570,10 @@
             <!-- Slide 2: Minecraft Hosting -->
             <div class="carousel-slide" data-background="./images/minecrafthosting.png" style="background-image: url('./images/minecrafthosting.png');">
                 <div class="carousel-content">
-                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                    <h1 class="font-extrabold text-white leading-tight mb-6">
                         Hosting de Minecraft <span class="gradient-text">Potente</span> y <span class="gradient-text">Fiable</span>
                     </h1>
-                    <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                    <p class="text-gray-300 mb-10">
                         Experimenta el rendimiento definitivo con VoltixCloud. Servidores optimizados para tu aventura en Minecraft.
                     </p>
                     <ul class="carousel-features">
@@ -575,7 +585,7 @@
                         <li><i class="fas fa-check-circle"></i> Hardware de Última Generación</li>
                     </ul>
                     <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-                        <a href="#precios" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
+                        <a href="#caracteristicas" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
                             Ver Planes de Minecraft
                         </a>
                         <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
@@ -588,10 +598,10 @@
             <!-- Slide 3: Web Design -->
             <div class="carousel-slide" data-background="./images/webdesign.jpg" style="background-image: url('./images/webdesign.jpg');">
                 <div class="carousel-content">
-                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                    <h1 class="font-extrabold text-white leading-tight mb-6">
                         Diseño Web <span class="gradient-text">Profesional</span> y <span class="gradient-text">Moderno</span>
                     </h1>
-                    <p class="text-xl md:text-2xl text-gray-300 mb-10">
+                    <p class="text-gray-300 mb-10">
                         Creamos sitios web impactantes y funcionales para tu negocio.
                     </p>
                     <ul class="carousel-features">
@@ -682,139 +692,6 @@
             </div>
         </section>
 
-        <!-- Pricing Section -->
-        <section id="precios" class="py-16 md:py-24 bg-gray-800">
-            <div class="container mx-auto px-6 md:px-12 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
-                    Nuestros <span class="gradient-text">Planes de Hosting</span>
-                </h2>
-                <p class="text-xl text-gray-300 mb-12">
-                    Elige el plan perfecto para tu servidor de Minecraft.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Pricing Card 1: Starter -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between hover:border-purple-500 transition duration-300 transform hover:scale-105">
-                        <div>
-                            <h3 class="text-3xl font-bold text-white mb-4">Starter</h3>
-                            <p class="text-gray-400 mb-6">Ideal para pequeños grupos de amigos.</p>
-                            <div class="text-white mb-8">
-                                <span class="text-5xl font-extrabold">$5</span>
-                                <span class="text-2xl text-gray-400">/mes</span>
-                            </div>
-                            <ul class="text-gray-300 text-left space-y-3 mb-8">
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 2 GB RAM</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 20 GB NVMe SSD</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 2 Núcleos de CPU</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Protección DDoS</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Panel de Control Personalizado</li>
-                            </ul>
-                        </div>
-                        <a href="#" class="btn-primary text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-lg block text-center hover:scale-105 transition duration-300">
-                            Comprar Ahora
-                        </a>
-                    </div>
-
-                    <!-- Pricing Card 2: Pro (Most Popular) -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border-2 border-purple-500 flex flex-col justify-between relative transform hover:scale-105 transition duration-300">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white text-sm font-bold py-1 px-4 rounded-full shadow-md">
-                            Más Popular
-                        </div>
-                        <div>
-                            <h3 class="text-3xl font-bold text-white mb-4">Pro</h3>
-                            <p class="text-gray-400 mb-6">Para comunidades en crecimiento.</p>
-                            <div class="text-white mb-8">
-                                <span class="text-5xl font-extrabold">$15</span>
-                                <span class="text-2xl text-gray-400">/mes</span>
-                            </div>
-                            <ul class="text-gray-300 text-left space-y-3 mb-8">
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 6 GB RAM</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 60 GB NVMe SSD</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 4 Núcleos de CPU</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Protección DDoS Premium</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Copias de Seguridad Diarias</li>
-                            </ul>
-                        </div>
-                        <a href="#" class="btn-primary text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-lg block text-center hover:scale-105 transition duration-300">
-                            Comprar Ahora
-                        </a>
-                    </div>
-
-                    <!-- Pricing Card 3: Enterprise -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 flex flex-col justify-between hover:border-purple-500 transition duration-300 transform hover:scale-105">
-                        <div>
-                            <h3 class="text-3xl font-bold text-white mb-4">Enterprise</h3>
-                            <p class="text-gray-400 mb-6">Para grandes redes y servidores.</p>
-                            <div class="text-white mb-8">
-                                <span class="text-5xl font-extrabold">$30</span>
-                                <span class="text-2xl text-gray-400">/mes</span>
-                            </div>
-                            <ul class="text-gray-300 text-left space-y-3 mb-8">
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 16 GB RAM</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 160 GB NVMe SSD</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 8 Núcleos de CPU</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Protección DDoS Empresarial</li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Soporte Prioritario 24/7</li>
-                            </ul>
-                        </div>
-                        <a href="#" class="btn-primary text-white py-3 px-6 rounded-lg text-lg font-semibold shadow-lg block text-center hover:scale-105 transition duration-300">
-                            Comprar Ahora
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="py-16 md:py-24 bg-gray-900">
-            <div class="container mx-auto px-6 md:px-12 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
-                    Lo que dicen nuestros <span class="gradient-text">Clientes</span>
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Testimonial Card 1 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700">
-                        <p class="text-gray-300 italic mb-6">
-                            "VoltixCloud ha superado mis expectativas. El rendimiento es increíble y el soporte es de primera."
-                        </p>
-                        <div class="flex items-center justify-center">
-                            <img src="https://placehold.co/60x60/6366f1/ffffff?text=U1" alt="User 1" class="h-12 w-12 rounded-full mr-4">
-                            <div>
-                                <p class="text-white font-semibold">Alex M.</p>
-                                <p class="text-gray-400 text-sm">Propietario de Servidor</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Testimonial Card 2 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700">
-                        <p class="text-gray-300 italic mb-6">
-                            "Nunca había tenido un hosting tan fiable. Mi comunidad está encantada con la estabilidad."
-                        </p>
-                        <div class="flex items-center justify-center">
-                            <img src="https://placehold.co/60x60/a855f7/ffffff?text=U2" alt="User 2" class="h-12 w-12 rounded-full mr-4">
-                            <div>
-                                <p class="text-white font-semibold">Maria S.</p>
-                                <p class="text-gray-400 text-sm">Administradora de Red</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Testimonial Card 3 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700">
-                        <p class="text-gray-300 italic mb-6">
-                            "El panel de control es muy fácil de usar y la configuración instantánea fue un salvavidas."
-                        </p>
-                        <div class="flex items-center justify-center">
-                            <img src="https://placehold.co/60x60/ec4899/ffffff?text=U3" alt="User 3" class="h-12 w-12 rounded-full mr-4">
-                            <div>
-                                <p class="text-white font-semibold">Carlos R.</p>
-                                <p class="text-gray-400 text-sm">Jugador Entusiasto</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Call to Action Section -->
         <section class="py-16 md:py-24 bg-gray-800">
             <div class="container mx-auto px-6 md:px-12 text-center">
@@ -852,7 +729,6 @@
                 <h4 class="text-white text-lg font-semibold mb-4">Enlaces Rápidos</h4>
                 <ul>
                     <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Inicio</a></li>
-                    <li class="mb-2"><a href="#precios" class="hover:text-white transition duration-300">Precios</a></li>
                     <li class="mb-2"><a href="#caracteristicas" class="hover:text-white transition duration-300">Características</a></li>
                     <li class="mb-2"><a href="#soporte" class="hover:text-white transition duration-300">Soporte</a></li>
                 </ul>
