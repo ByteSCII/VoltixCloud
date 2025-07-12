@@ -482,7 +482,7 @@
             margin: 0 auto; /* Centra la tarjeta principal */
             display: flex; /* Usa flexbox para columnas internas */
             flex-wrap: wrap; /* Permite que las columnas se ajusten en pantallas más pequeñas */
-            justify-content: center; /* Centra las columnas dentro de la tarjeta principal */
+            justify-content: flex-start; /* Alinea las columnas a la izquierda dentro de la tarjeta */
             gap: 1.5rem; /* Añade espacio entre las columnas */
         }
 
@@ -550,25 +550,19 @@
             color: #e6e6e6;
         }
 
-        .location-item .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem; /* space-x-1 */
-            font-size: 0.875rem; /* text-sm */
-            font-weight: 500;
-            color: #34d399; /* Verde para online */
-        }
-
-        .location-item .status-indicator .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #34d399; /* Verde para online */
-        }
-
+        /* Oculta los indicadores de estado y el icono de gráfico por defecto */
+        .location-item .status-indicator,
         .location-item .chart-icon {
-            font-size: 0.875rem; /* text-sm */
-            margin-left: 0.5rem; /* ml-2 */
+            opacity: 0;
+            transition: opacity 0.3s ease; /* Transición suave para la visibilidad */
+        }
+
+        /* Muestra los indicadores de estado y el icono de gráfico al pasar el cursor o al estar activo */
+        .location-item:hover .status-indicator,
+        .location-item:hover .chart-icon,
+        .location-item.active-ping .status-indicator, /* Para dispositivos táctiles */
+        .location-item.active-ping .chart-icon { /* Para dispositivos táctiles */
+            opacity: 1;
         }
 
         .chart-icon.yellow {
