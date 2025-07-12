@@ -176,17 +176,37 @@
             font-size: 1.125rem; /* text-lg */
             font-weight: 700; /* font-bold */
             text-decoration: none;
-            transition: background 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out; /* Smoother transitions */
+            position: relative; /* Needed for ::before pseudo-element */
+            overflow: hidden; /* Hide overflow of ::before */
             font-family: 'Oswald', sans-serif; /* Applied Oswald font */
             border-radius: 0.5rem; /* Added border-radius */
             margin: 0.5rem 1rem; /* Added margin for spacing */
+            transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; /* Smoother transitions for color, transform, shadow */
+        }
+
+        .mobile-nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #6366f1, #a855f7); /* Purple-pink gradient */
+            z-index: -1; /* Behind the text */
+            transform: scaleX(0); /* Starts invisible horizontally */
+            transform-origin: center; /* Expands from the center */
+            transition: transform 0.7s ease-in-out; /* Smooth transition for scale */
+            border-radius: 0.5rem; /* Match parent border-radius */
         }
 
         .mobile-nav-link:hover {
-            background: linear-gradient(90deg, #6366f1, #a855f7); /* Purple-pink gradient on hover */
             color: #ffffff; /* White text on hover */
             transform: scale(1.02); /* Subtle scale on hover */
             box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); /* Shadow on hover */
+        }
+
+        .mobile-nav-link:hover::before {
+            transform: scaleX(1); /* Expands to fill the button */
         }
 
         .mobile-nav-link .fas {
@@ -215,17 +235,47 @@
 
         /* Animation for desktop navigation links on hover */
         .desktop-nav-link {
-            transition: transform 0.5s ease-in-out, color 0.5s ease-in-out, background 0.5s ease-in-out, box-shadow 0.5s ease-in-out; /* Smoother transitions */
+            color: #e6e6e6; /* Initial text color */
+            font-weight: 500; /* Match font-medium */
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            position: relative; /* Needed for ::before pseudo-element */
+            overflow: hidden; /* Hide overflow of ::before */
             border-radius: 0.5rem; /* Added border-radius */
             padding: 0.5rem 0.75rem; /* Adjusted padding for better hover area */
+            transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; /* Smoother transitions for color, transform, shadow */
+        }
+
+        .desktop-nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #6366f1, #a855f7); /* Purple-pink gradient */
+            z-index: -1; /* Behind the text */
+            transform: scaleX(0); /* Starts invisible horizontally */
+            transform-origin: center; /* Expands from the center */
+            transition: transform 0.7s ease-in-out; /* Smooth transition for scale */
+            border-radius: 0.5rem; /* Match parent border-radius */
         }
 
         .desktop-nav-link:hover {
             transform: translateY(-2px); /* Subtle lift on hover */
-            background: linear-gradient(90deg, #6366f1, #a855f7); /* Purple-pink gradient on hover */
             color: #ffffff; /* White text on hover */
             box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); /* Shadow on hover */
         }
+        .desktop-nav-link:hover::before {
+            transform: scaleX(1); /* Expands to fill the button */
+        }
+
+        .desktop-nav-link .fas {
+            color: #a855f7; /* Initial icon color */
+            transition: color 0.7s ease-in-out; /* Smooth transition for icon color */
+        }
+
         .desktop-nav-link:hover .fas {
             color: #ffffff; /* Ensure icon color also changes to white on hover */
         }
@@ -245,6 +295,19 @@
         .offer-animation {
             animation: fall-and-rise 13s infinite; /* Apply fall-and-rise animation, repeat every 13 seconds */
         }
+
+        /* Styles for top panel links */
+        .top-panel-link {
+            color: #ffffff; /* Initial white color */
+            transition: all 0.5s ease-in-out; /* Smooth transition for all properties */
+        }
+
+        .top-panel-link:hover {
+            background: linear-gradient(90deg, #ec4899, #a855f7); /* Pink to purple gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: scale(1.05); /* Keep the scale effect */
+        }
     </style>
 </head>
 <body>
@@ -252,12 +315,12 @@
     <!-- Top Bar -->
     <div class="bg-black text-gray-400 text-xs py-2 z-50 relative">
         <div class="container mx-auto px-6 md:px-12">
-            <!-- First row: Panel links (hidden on mobile, centered on desktop, yellow text) -->
+            <!-- First row: Panel links (hidden on mobile, centered on desktop, white text with gradient hover) -->
             <div class="hidden md:flex justify-center space-x-6 mb-2">
-                <a href="#" class="text-yellow-400 transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-gamepad mr-2"></i>Game Panel</a>
-                <a href="#" class="text-yellow-400 transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-user-circle mr-2"></i>Client Area</a>
-                <a href="#" class="text-yellow-400 transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-server mr-2"></i>VPS Portal</a>
-                <a href="#" class="text-yellow-400 transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-cogs mr-2"></i>cPanel</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-gamepad mr-2"></i>Game Panel</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-user-circle mr-2"></i>Client Area</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-server mr-2"></i>VPS Portal</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-cogs mr-2"></i>cPanel</a>
             </div>
             <!-- Second row: Sale banner (always centered and with gradient/animation, in Spanish) -->
             <div class="flex items-center justify-center py-1">
@@ -274,8 +337,8 @@
     <div class="w-full h-px bg-[#ec4899]"></div>
 
     <!-- Header / Main Navigation Bar -->
-    <header class="main-header bg-black shadow-lg py-4 px-6 md:px-12 sticky top-0 w-full z-40 rounded-b-xl border-b border-gray-700">
-        <nav class="container mx-auto flex justify-between items-center">
+    <header class="main-header bg-black shadow-lg py-4 sticky top-0 w-full z-40 rounded-b-xl border-b border-gray-700">
+        <nav class="flex justify-between items-center w-full max-w-7xl mx-auto px-6 md:px-12">
             <div class="flex items-center">
                 <!-- VoltixCloud Logo -->
                 <svg class="h-10 w-10 mr-3 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -286,7 +349,7 @@
             <!-- Navigation Links with Dropdowns - Adjusted for smaller size, single line, and right alignment -->
             <div class="hidden md:flex space-x-4 items-center">
                 <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 hover:text-white font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
                         Minecraft Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
                     <div class="dropdown-menu">
@@ -296,7 +359,7 @@
                     </div>
                 </div>
                 <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 hover:text-white font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
                         Game Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
                     <div class="dropdown-menu">
@@ -306,7 +369,7 @@
                     </div>
                 </div>
                 <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 hover:text-white font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
                         Cloud Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
                     <div class="dropdown-menu">
@@ -315,7 +378,7 @@
                     </div>
                 </div>
                 <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 hover:text-white font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
                         Resources <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
                     <div class="dropdown-menu">
@@ -325,7 +388,7 @@
                     </div>
                 </div>
                 <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 hover:text-white font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
                         More <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
                     <div class="dropdown-menu">
