@@ -861,7 +861,7 @@
             width: 100%;
             background-color: #1a1c22; /* Fondo de tarjeta oscuro */
             color: #e6e6e6;
-            padding: 1.5rem;
+            padding: 1.5rem 1rem; /* Adjusted padding for mobile */
             text-align: center;
             box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
             z-index: 1000; /* Alto z-index para estar encima */
@@ -1241,7 +1241,8 @@
             <div id="language-submenu" class="mobile-minecraft-submenu"> <!-- Reusing mobile-minecraft-submenu for styling -->
                 <a href="#" data-lang="en"><img src="https://flagcdn.com/us.svg" alt="English Flag"> EN</a>
                 <a href="#" data-lang="es"><img src="https://flagcdn.com/es.svg" alt="Spanish Flag"> ES</a>
-                <a href="#" data-lang="fr"><img src="https://flagcdn.com/fr.svg" alt="French Flag"> FR
+                <a href="#" data-lang="fr">
+                            <img src="https://flagcdn.com/fr.svg" alt="French Flag"> FR
                         </a>
                         <a href="#" data-lang="ct">
                             <img src="https://flagcdn.com/ca.svg" alt="Catalan Flag"> CT
@@ -1855,8 +1856,8 @@
                 responsiveDesign: "Design Responsive",
                 seoOptimization: "Optimisation SEO",
                 ecommerceIntegration: "Intégration E-commerce",
-                postLaunchSupport: "Support Post-Lancement",
-                customDesign: "Design Personnalisé",
+                postLaunchSupport: "Support Post-Lanzamiento",
+                customDesign: "Design Personalizado",
                 requestWebDesign: "Demander une Conception Web",
                 locationsTitle: "Nos <span class='gradient-text'>Emplacements</span>",
                 northAmerica: "Amérique du Nord",
@@ -1872,7 +1873,7 @@
                 globalLocationsDesc: "Choisissez l'emplacement de serveur le plus proche pour une latence minimale.",
                 support247Desc: "Notre équipe de support est disponible 24h/24 pour vous aider.",
                 latestHardwareDesc: "Serveurs construits avec les composants les plus récents pour des performances optimales.",
-                ctaTitle: "Prêt à faire passer votre serveur au niveau supérieur ?",
+                ctaTitle: "Prêt à faire passer votre servidor au niveau supérieur ?",
                 ctaDesc: "Rejoignez VoltixCloud aujourd'hui et découvrez la différence.",
                 startNow: "Commencer Maintenant !",
                 footerDesc: "Hébergement Minecraft haute performance et fiable.",
@@ -1884,7 +1885,7 @@
                 termsOfService: "Conditions d'Utilisation",
                 privacyPolicy: "Politique de Confidentialité",
                 refundPolicy: "Politique de Remboursement",
-                contact: "Contact",
+                contact: "Contacto",
                 copyright: "&copy; 2025 VoltixCloud. Tous droits réservés.",
                 loading: "Chargement...",
                 onlineStatus: "en ligne"
@@ -2325,24 +2326,8 @@
         const mobileLocationsCarousel = document.getElementById('mobile-locations-carousel'); // New reference for mobile carousel wrapper
         const carouselTrack = mobileLocationsCarousel.querySelector('.carousel-track'); // The track inside the mobile carousel
 
-        // Get the original location columns from the desktop grid to clone them for the carousel
-        const originalLocationColumnsForCloning = Array.from(desktopLocationsGrid.querySelectorAll('.location-column'));
-
-        // Clear any existing content in the carouselTrack (important for re-runs in dev environment)
-        carouselTrack.innerHTML = '';
-
-        // Clone first and last original columns for infinite loop and add all to the track
-        const firstLocationClone = originalLocationColumnsForCloning[0].cloneNode(true);
-        firstLocationClone.classList.add('clone');
-        const lastLocationClone = originalLocationColumnsForCloning[originalLocationColumnsForCloning.length - 1].cloneNode(true);
-        lastLocationClone.classList.add('clone');
-
-        carouselTrack.appendChild(lastLocationClone); // Prepend last clone
-        originalLocationColumnsForCloning.forEach(item => carouselTrack.appendChild(item.cloneNode(true))); // Add original items (cloned)
-        carouselTrack.appendChild(firstLocationClone); // Append first clone
-
-        // Re-query carousel items to include clones, now they are direct children of carouselTrack
-        let locationCarouselItems = Array.from(carouselTrack.querySelectorAll('.location-column'));
+        // This variable will hold the carousel items, including clones
+        let locationCarouselItems;
 
         // Navigation Arrows for locations carousel
         const locationLeftArrow = mobileLocationsCarousel.querySelector('.left-arrow');
@@ -2363,15 +2348,35 @@
             }
 
             // If on mobile, show mobile carousel and hide desktop grid
-            mobileLocationsCarousel.style.display = 'block';
+            mobileLocationsCarousel.style.display = 'block'; // Ensure it's visible before measuring
             desktopLocationsGrid.style.display = 'none'; // Hide the original desktop grid
 
-            const itemWidthWithMargin = locationCarouselItems[0].offsetWidth + (parseFloat(getComputedStyle(locationCarouselItems[0]).marginLeft) || 0) + (parseFloat(getComputedStyle(locationCarouselItems[0]).marginRight) || 0);
+            // Ensure locationCarouselItems is populated before proceeding
+            // It should be populated during DOMContentLoaded, but this is a safeguard
+            if (!locationCarouselItems || locationCarouselItems.length === 0) {
+                console.warn("locationCarouselItems is empty or not initialized. Attempting to re-query.");
+                locationCarouselItems = Array.from(carouselTrack.querySelectorAll('.location-column'));
+                if (locationCarouselItems.length === 0) {
+                    console.error("Failed to populate locationCarouselItems after re-query. Carousel will remain empty.");
+                    return; // Exit if still empty
+                }
+            }
+
+            const itemWidthWithMargin = locationCarouselItems[0].offsetWidth +
+                                        (parseFloat(getComputedStyle(locationCarouselItems[0]).marginLeft) || 0) +
+                                        (parseFloat(getComputedStyle(locationCarouselItems[0]).marginRight) || 0);
+
+            if (itemWidthWithMargin === 0) {
+                console.warn("itemWidthWithMargin is 0. Elements might not have rendered yet. Retrying...");
+                // Retry after a short delay if elements don't have a width yet
+                requestAnimationFrame(() => updateLocationCarousel(instant));
+                return;
+            }
 
             // Calculate offset to center the active item
-            const viewportCenter = mobileLocationsCarousel.offsetWidth / 2;
-            const itemCenterOffset = itemWidthWithMargin / 2;
-            const offset = -currentLocationSlideIndex * itemWidthWithMargin + viewportCenter - itemCenterOffset;
+            const viewportWidth = mobileLocationsCarousel.offsetWidth;
+            const targetX = -currentLocationSlideIndex * itemWidthWithMargin;
+            const offset = targetX + (viewportWidth / 2) - (itemWidthWithMargin / 2);
 
             if (instant) {
                 carouselTrack.style.transition = 'none';
@@ -2402,6 +2407,7 @@
                 void carouselTrack.offsetWidth;
                 carouselTrack.style.transition = 'transform 0.5s ease-in-out';
             }
+            console.log(`Updated Locations Carousel: currentSlideIndex=${currentLocationSlideIndex}, offset=${offset}, itemWidth=${itemWidthWithMargin}`);
         }
 
         // Function to move to the next location slide
@@ -2424,9 +2430,9 @@
         carouselTrack.addEventListener('transitionend', () => {
             // Check if we've transitioned to a clone
             if (currentLocationSlideIndex === 0) { // Moved to lastLocationClone (index 0)
-                currentLocationSlideIndex = originalLocationColumnsForCloning.length; // Jump to the real last item
+                currentLocationSlideIndex = locationCarouselItems.length - 2; // Jump to the real last item (before the first clone)
                 updateLocationCarousel(true); // Instant jump
-            } else if (currentLocationSlideIndex === originalLocationColumnsForCloning.length + 1) { // Moved to firstLocationClone (index = original.length + 1)
+            } else if (currentLocationSlideIndex === locationCarouselItems.length - 1) { // Moved to firstLocationClone (last item in the track)
                 currentLocationSlideIndex = 1; // Jump to the real first item
                 updateLocationCarousel(true); // Instant jump
             }
@@ -2452,26 +2458,9 @@
         const mobileFeaturesCarousel = document.getElementById('mobile-features-carousel');
         const featureCarouselTrack = mobileFeaturesCarousel.querySelector('.carousel-track');
 
-        // Get the original feature cards to clone them for the carousel
-        const originalFeatureCardsForCloning = Array.from(desktopFeatureGrid.querySelectorAll('.card-bg'));
+        let featureCarouselItems; // This variable will hold the carousel items, including clones
 
-        // Clear any existing content in the featureCarouselTrack
-        featureCarouselTrack.innerHTML = '';
-
-        // Clone first and last original cards for infinite loop and add all to the track
-        const firstFeatureClone = originalFeatureCardsForCloning[0].cloneNode(true);
-        firstFeatureClone.classList.add('clone');
-        const lastFeatureClone = originalFeatureCardsForCloning[originalFeatureCardsForCloning.length - 1].cloneNode(true);
-        lastFeatureClone.classList.add('clone');
-
-        featureCarouselTrack.appendChild(lastFeatureClone); // Prepend last clone
-        originalFeatureCardsForCloning.forEach(item => featureCarouselTrack.appendChild(item.cloneNode(true))); // Add original items (cloned)
-        featureCarouselTrack.appendChild(firstFeatureClone); // Append first clone
-
-        // Re-query carousel items to include clones
-        let featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
-
-        // Navigation Arrows for features carousel
+        // Navigation Arrows for features carousel (these are hidden by CSS now)
         const featureLeftArrow = mobileFeaturesCarousel.querySelector('.left-arrow');
         const featureRightArrow = mobileFeaturesCarousel.querySelector('.right-arrow');
 
@@ -2490,11 +2479,29 @@
             mobileFeaturesCarousel.style.display = 'block';
             desktopFeatureGrid.style.display = 'none'; // Hide the original desktop grid
 
-            const itemWidthWithMargin = featureCarouselItems[0].offsetWidth + (parseFloat(getComputedStyle(featureCarouselItems[0]).marginLeft) || 0) + (parseFloat(getComputedStyle(featureCarouselItems[0]).marginRight) || 0);
+            // Ensure featureCarouselItems is populated before proceeding
+            if (!featureCarouselItems || featureCarouselItems.length === 0) {
+                console.warn("featureCarouselItems is empty or not initialized. Attempting to re-query.");
+                featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
+                if (featureCarouselItems.length === 0) {
+                    console.error("Failed to populate featureCarouselItems after re-query. Carousel will remain empty.");
+                    return; // Exit if still empty
+                }
+            }
 
-            const viewportCenter = mobileFeaturesCarousel.offsetWidth / 2;
-            const itemCenterOffset = itemWidthWithMargin / 2;
-            const offset = -currentFeatureSlideIndex * itemWidthWithMargin + viewportCenter - itemCenterOffset;
+            const itemWidthWithMargin = featureCarouselItems[0].offsetWidth +
+                                        (parseFloat(getComputedStyle(featureCarouselItems[0]).marginLeft) || 0) +
+                                        (parseFloat(getComputedStyle(featureCarouselItems[0]).marginRight) || 0);
+
+            if (itemWidthWithMargin === 0) {
+                console.warn("Feature itemWidthWithMargin is 0. Elements might not have rendered yet. Retrying...");
+                requestAnimationFrame(() => updateFeatureCarousel(instant));
+                return;
+            }
+
+            const viewportWidth = mobileFeaturesCarousel.offsetWidth;
+            const targetX = -currentFeatureSlideIndex * itemWidthWithMargin;
+            const offset = targetX + (viewportWidth / 2) - (itemWidthWithMargin / 2);
 
             if (instant) {
                 featureCarouselTrack.style.transition = 'none';
@@ -2522,6 +2529,7 @@
                 void featureCarouselTrack.offsetWidth;
                 featureCarouselTrack.style.transition = 'transform 0.5s ease-in-out';
             }
+            console.log(`Updated Features Carousel: currentSlideIndex=${currentFeatureSlideIndex}, offset=${offset}, itemWidth=${itemWidthWithMargin}`);
         }
 
         function nextFeatureSlide() {
@@ -2540,14 +2548,15 @@
 
         featureCarouselTrack.addEventListener('transitionend', () => {
             if (currentFeatureSlideIndex === 0) {
-                currentFeatureSlideIndex = originalFeatureCardsForCloning.length;
+                currentFeatureSlideIndex = featureCarouselItems.length - 2;
                 updateFeatureCarousel(true);
-            } else if (currentFeatureSlideIndex === originalFeatureCardsForCloning.length + 1) {
+            } else if (currentFeatureSlideIndex === featureCarouselItems.length - 1) {
                 currentFeatureSlideIndex = 1;
                 updateFeatureCarousel(true);
             }
         });
 
+        // Note: Feature carousel arrows are hidden by CSS, so these event listeners won't be triggered by user clicks
         featureLeftArrow.addEventListener('click', () => {
             stopFeatureAutoSlide();
             currentFeatureSlideIndex--;
@@ -2588,13 +2597,57 @@
             fetchDiscordOnlineUsers();
             setInterval(fetchDiscordOnlineUsers, 30000);
             showCookieConsent();
-            // Initial call to update carousels based on screen size
-            updateLocationCarousel(true);
-            startLocationAutoSlide();
 
-            updateFeatureCarousel(true); // Initialize feature carousel
-            startFeatureAutoSlide(); // Start auto-slide for feature carousel
+            // Initial population of carousel items for Locations
+            const originalLocationColumnsForCloning = Array.from(desktopLocationsGrid.querySelectorAll('.location-column'));
+            carouselTrack.innerHTML = ''; // Clear any existing content
+            if (originalLocationColumnsForCloning.length > 0) {
+                const firstLocationClone = originalLocationColumnsForCloning[0].cloneNode(true);
+                firstLocationClone.classList.add('clone');
+                const lastLocationClone = originalLocationColumnsForCloning[originalLocationColumnsForCloning.length - 1].cloneNode(true);
+                lastLocationClone.classList.add('clone');
 
+                carouselTrack.appendChild(lastLocationClone);
+                originalLocationColumnsForCloning.forEach(item => carouselTrack.appendChild(item.cloneNode(true)));
+                carouselTrack.appendChild(firstLocationClone);
+
+                locationCarouselItems = Array.from(carouselTrack.querySelectorAll('.location-column'));
+                console.log("Locations carousel items populated. Count:", locationCarouselItems.length);
+
+                // Call update after a short delay to ensure elements are rendered and have dimensions
+                requestAnimationFrame(() => {
+                    updateLocationCarousel(true); // Initial call for locations
+                    startLocationAutoSlide();
+                });
+
+            } else {
+                console.error("No original location columns found for cloning.");
+            }
+
+            // Initial population of carousel items for Features
+            const originalFeatureCardsForCloning = Array.from(desktopFeatureGrid.querySelectorAll('.card-bg'));
+            featureCarouselTrack.innerHTML = '';
+            if (originalFeatureCardsForCloning.length > 0) {
+                const firstFeatureClone = originalFeatureCardsForCloning[0].cloneNode(true);
+                firstFeatureClone.classList.add('clone');
+                const lastFeatureClone = originalFeatureCardsForCloning[originalFeatureCardsForCloning.length - 1].cloneNode(true);
+                lastFeatureClone.classList.add('clone');
+
+                featureCarouselTrack.appendChild(lastFeatureClone);
+                originalFeatureCardsForCloning.forEach(item => featureCarouselTrack.appendChild(item.cloneNode(true)));
+                featureCarouselTrack.appendChild(firstFeatureClone);
+
+                featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
+                console.log("Features carousel items populated. Count:", featureCarouselItems.length);
+
+                requestAnimationFrame(() => {
+                    updateFeatureCarousel(true); // Initial call for features
+                    startFeatureAutoSlide();
+                });
+            } else {
+                console.error("No original feature cards found for cloning.");
+            }
+            
             // Desktop Language Dropdown Logic (only if it exists)
             const desktopLanguageDropdown = document.querySelector('.language-dropdown');
             if (desktopLanguageDropdown) {
