@@ -53,12 +53,15 @@
         }
         .card-bg {
             background-color: #1a1c22; /* Fondo de tarjeta más oscuro para mayor contraste */
-            border: 1px solid #2d3748; /* Borde sutil para definición */
-            transition: all 0.3s ease; /* Transición suave para efectos de hover */
+            border: 3px solid transparent; /* Establece un borde transparente para reservar espacio para el degradado */
+            background-clip: padding-box; /* Asegura que el fondo no se extienda al borde */
+            border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Borde degradado rosamorado */
+            transition: all 0.3s ease, border-image 0.5s ease-in-out; /* Transición suave para todas las propiedades y el borde degradado */
+            /* En escritorio, estas tarjetas solo tienen el borde degradado. La sombra y animación se aplican solo en móvil. */
         }
         .card-bg:hover {
-            border-color: #a855f7; /* Borde resaltado al pasar el ratón */
-            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.2); /* Sombra suave al pasar el ratón */
+            border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invierte el degradado al pasar el ratón */
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4); /* Sombra más fuerte al pasar el ratón */
             transform: translateY(-5px) scale(1.02); /* Levantamiento más pronunciado y ligera escala */
         }
         .feature-icon {
@@ -474,68 +477,163 @@
         }
 
         /* Contenedor principal de ubicaciones para escritorio */
-        .main-locations-card {
+        #desktop-locations-grid { /* Changed from .main-locations-card */
             background-color: #1a1c22;
-            border: 1px solid #2d3748;
             border-radius: 0.75rem; /* rounded-xl */
             padding: 2rem; /* p-8 */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Sombra más fuerte */
             max-width: 1200px; /* Ancho máximo para toda la tarjeta */
             margin: 0 auto; /* Centra la tarjeta principal */
-            display: flex; /* Usa flexbox para columnas internas */
-            flex-wrap: wrap; /* Permite que las columnas se ajusten en pantallas más pequeñas */
-            justify-content: flex-start; /* Alinea las columnas a la izquierda dentro de la tarjeta */
-            gap: 1.5rem; /* Añade espacio entre las columnas */
+            display: none; /* Hidden by default, shown on desktop */
+            /* Apply gradient border to the main grid container */
+            border: 3px solid transparent; /* Set a transparent border to reserve space */
+            background-clip: padding-box; /* Ensures background doesn't extend into the border */
+            border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Rosamorado gradient border */
+            transition: border-image 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
         }
+
+        /* Hover effect for desktop grid container */
+        #desktop-locations-grid:hover {
+            border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invert gradient on hover */
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.5); /* Enhanced shadow on hover */
+        }
+
 
         /* Estilos para cada columna de región en escritorio */
-        .location-column {
-            flex: 1; /* Cada columna ocupa el mismo espacio */
-            min-width: 200px; /* Ancho mínimo para las columnas antes de ajustarse */
-            padding: 1rem; /* p-4 */
-            text-align: left; /* Alinea el texto dentro de las columnas a la izquierda */
-        }
-
-        /* Añade bordes entre columnas en pantallas más grandes */
         @media (min-width: 768px) {
-            .location-column + .location-column {
-                border-left: 1px solid #2d3748;
+            #desktop-locations-grid {
+                display: flex; /* Show on desktop */
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                gap: 1.5rem;
+            }
+            .location-column { /* These styles apply to columns in both desktop and mobile carousel */
+                flex: 1; /* Each column occupies the same space */
+                min-width: 200px; /* Ancho mínimo para las columnas antes de ajustarse */
+                padding: 1rem; /* p-4 */
+                text-align: left; /* Alinea el texto dentro de las columnas a la izquierda */
+                /* Add subtle shadow for desktop columns */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                animation: subtle-float 3s ease-in-out infinite; /* Apply levitating animation */
+                /* Remove individual column borders if the main grid has a border */
+                border: none; /* Remove individual borders from columns within the main grid */
+            }
+            #desktop-locations-grid .location-column:hover {
+                transform: translateY(-5px); /* Lift on hover */
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+            }
+            /* Remove the border-left rule that was causing issues */
+            #desktop-locations-grid .location-column + .location-column {
+                border-left: none;
+            }
+            /* Hide carousel arrows on desktop */
+            .carousel-nav-arrow {
+                display: none !important;
             }
         }
 
-        /* Estilos para el diseño 2x2 en móvil */
+        /* Estilos para el diseño de carrusel en móvil */
+        #mobile-locations-carousel { /* New ID for the mobile carousel wrapper */
+            position: relative;
+            width: 100%; /* Take full width of its parent container */
+            max-width: 400px; /* Adjust this to control how much of side items are visible */
+            margin: 0 auto; /* Center the viewport */
+            overflow: hidden; /* This hides the overflowing parts of the items */
+            border-radius: 0.75rem; /* Match card radius */
+            display: none; /* Hidden by default, shown on mobile */
+        }
+
         @media (max-width: 767px) {
-            .main-locations-card {
-                /* Cambia a grid para el diseño 2x2 */
-                display: grid;
-                grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
-                gap: 1rem; /* Espacio entre las tarjetas de ubicación */
-                padding: 1rem; /* Relleno reducido para la tarjeta principal en móvil */
-                justify-items: center; /* Centra los elementos dentro de las celdas de la cuadrícula */
-                align-items: start; /* Alinea los elementos al inicio de la celda */
+            #desktop-locations-grid {
+                display: none; /* Hide desktop version on mobile */
             }
-            .location-column {
-                /* Cada columna de ubicación se convierte en una tarjeta individual */
-                width: 100%; /* Ocupa todo el ancho de su celda de cuadrícula */
-                min-width: unset; /* Elimina la restricción de ancho mínimo */
-                padding: 1rem; /* Relleno para cada mini-tarjeta */
-                background-color: #1a1c22; /* Fondo para cada mini-tarjeta */
-                border: 1px solid #2d3748; /* Borde para cada mini-tarjeta */
-                border-radius: 0.75rem; /* Esquinas redondeadas para cada mini-tarjeta */
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para cada mini-tarjeta */
-                text-align: left; /* Alinea el texto a la izquierda dentro de cada mini-tarjeta */
-                /* Eliminar bordes específicos que ya no son necesarios con el nuevo diseño de tarjeta */
-                border-bottom: none !important;
-                border-left: none !important; /* Asegura que no haya bordes extra */
+            #mobile-locations-carousel {
+                display: block; /* Show mobile carousel on mobile */
             }
-            .location-column h3 {
-                text-align: center; /* Centra el título de la región dentro de la tarjeta móvil */
+
+            .carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                width: fit-content;
+                padding: 1rem 0;
             }
-            .location-list {
-                padding-left: 0; /* Asegura que la lista no tenga padding extra */
+
+            .location-column { /* These styles apply to carousel items on mobile */
+                flex-shrink: 0;
+                width: 280px; /* Fixed width for each card */
+                padding: 1rem;
+                background-color: #1a1c22;
+                border-radius: 0.75rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for mobile cards */
+                box-sizing: border-box;
+                margin: 0 0.5rem; /* Space between items */
+                opacity: 0.3; /* Default semi-transparent */
+                transform: scale(0.9); /* Slightly smaller for non-active */
+                transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, border-image 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+                text-align: left;
+                /* Add gradient border for mobile carousel items */
+                border: 3px solid transparent; /* Set a transparent border to reserve space */
+                background-clip: padding-box; /* Ensures background doesn't extend into the border */
+                border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Rosamorado gradient border */
+                animation: subtle-float 3s ease-in-out infinite; /* Apply levitating animation */
             }
-            .location-item {
-                justify-content: flex-start; /* Alinea los elementos de la lista a la izquierda */
+
+            .location-column.active {
+                opacity: 1;
+                transform: scale(1); /* Full size for active item */
+                /* Apply gradient border to active item */
+                border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Rosamorado gradient border */
+            }
+            /* Hover effect for mobile carousel items */
+            .location-column:hover {
+                border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invert gradient on hover */
+                box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4); /* Enhanced shadow on hover */
+            }
+
+
+            /* No border-left for mobile carousel items */
+            .carousel-track .location-column + .location-column {
+                border-left: none;
+            }
+
+            /* Navigation Arrows */
+            .carousel-nav-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                padding: 0.75rem;
+                background: linear-gradient(90deg, #ec4899, #a855f7); /* Rosamorado gradient */
+                color: white; /* Icon color */
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                z-index: 10;
+                transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+                display: flex; /* Use flex to center icon */
+                align-items: center;
+                justify-content: center;
+                width: 48px; /* Larger size */
+                height: 48px; /* Larger size */
+                box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4); /* Matching shadow */
+            }
+
+            .carousel-nav-arrow i {
+                font-size: 1.5rem; /* Larger icon */
+            }
+
+            .carousel-nav-arrow:hover {
+                background: linear-gradient(90deg, #a855f7, #ec4899); /* Invert gradient on hover */
+                transform: translateY(-50%) scale(1.1);
+                box-shadow: 0 6px 15px rgba(236, 72, 153, 0.6);
+            }
+
+            .carousel-nav-arrow.left-arrow {
+                left: 0.5rem; /* Closer to the viewport edge */
+            }
+
+            .carousel-nav-arrow.right-arrow {
+                right: 0.5rem; /* Closer to the viewport edge */
             }
         }
 
@@ -606,23 +704,6 @@
             color: #ef4444; /* Tailwind red-500 */
         }
 
-        /* Área de visualización de ping */
-        #ping-display-area {
-            background-color: #1a1c22;
-            border: 1px solid #2d3748;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            margin-top: 2rem;
-            font-size: 1.125rem;
-            color: #e6e6e6;
-            text-align: center;
-            min-height: 3rem; /* Asegura que tenga algo de altura incluso cuando esté vacío */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
         /* Keyframe para animación de aparición */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -674,6 +755,12 @@
             .carousel-features li {
                 font-size: 1rem; /* Texto de característica ligeramente más pequeño en móvil */
             }
+
+            /* Estilos específicos para las tarjetas de características en móvil (sombra y animación) */
+            .card-bg {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Sombra sutil para móvil */
+                animation: subtle-float 3s ease-in-out infinite; /* Animación de levitación */
+            }
         }
 
         /* Estilos del botón flotante de Discord */
@@ -719,18 +806,12 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Se eliminó la animación de sacudida */
-        /* @keyframes shake-discord {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-2px); }
-            50% { transform: translateX(2px); }
-            75% { transform: translateX(-2px); }
-            100% { transform: translateX(0); }
-        } */
-        /* Se eliminó la clase para aplicar la animación de sacudida temporalmente */
-        /* .discord-shake-active {
-            animation: shake-discord 0.5s ease-in-out alternate;
-        } */
+        /* Keyframe for subtle levitating animation */
+        @keyframes subtle-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); } /* Moves up 3px */
+            100% { transform: translateY(0px); }
+        }
 
 
         /* Nuevos estilos para el pie de página y los colores de fondo de la llamada a la acción */
@@ -1051,13 +1132,14 @@
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
                     Nuestras <span class="gradient-text">Ubicaciones</span>
                 </h2>
-                <!-- Single main card for all locations. On desktop, it's a flex container for columns. On mobile, it's a grid for 2x2 individual cards. -->
-                <div class="main-locations-card">
-                    <!-- North America Column (becomes a card on mobile) -->
+
+                <!-- Desktop Layout of Locations (original structure) -->
+                <div id="desktop-locations-grid" class="main-locations-card">
+                    <!-- North America Column -->
                     <div class="location-column">
                         <h3>North America</h3>
                         <ul class="location-list">
-                            <li class="location-item" data-location-name="Miami, Florida" data-ping="69" data-lat="25.7617" data-lon="-80.1918">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
                                 <span class="name">Miami, Florida</span>
                                 <div class="status-indicator">
@@ -1066,7 +1148,7 @@
                                     <i class="fas fa-chart-line chart-icon green"></i> <!-- Green chart for online -->
                                 </div>
                             </li>
-                            <li class="location-item" data-location-name="Dallas, Texas" data-ping="55" data-lat="32.7767" data-lon="-96.7970">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
                                 <span class="name">Dallas, Texas</span>
                                 <div class="status-indicator">
@@ -1075,7 +1157,7 @@
                                     <i class="fas fa-chart-line chart-icon yellow"></i> <!-- Yellow chart for coming soon -->
                                 </div>
                             </li>
-                            <li class="location-item" data-location-name="Salt Lake City, Utah" data-ping="72" data-lat="40.7608" data-lon="-111.8910">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
                                 <span class="name">Salt Lake City, Utah</span>
                                 <div class="status-indicator">
@@ -1084,7 +1166,7 @@
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
-                            <li class="location-item" data-location-name="Ashburn, Virginia" data-ping="48" data-lat="39.0438" data-lon="-77.4874">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
                                 <span class="name">Ashburn, Virginia</span>
                                 <div class="status-indicator">
@@ -1096,11 +1178,11 @@
                         </ul>
                     </div>
 
-                    <!-- Europe Column (becomes a card on mobile) -->
+                    <!-- Europe Column -->
                     <div class="location-column">
                         <h3>Europe</h3>
                         <ul class="location-list">
-                            <li class="location-item" data-location-name="Paris, France" data-ping="120" data-lat="48.8566" data-lon="2.3522">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/fr.svg" alt="Bandera de Francia" class="flag-icon">
                                 <span class="name">Paris, France</span>
                                 <div class="status-indicator">
@@ -1109,7 +1191,7 @@
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
-                            <li class="location-item" data-location-name="Falkenstein, Germany" data-ping="135" data-lat="50.4795" data-lon="12.3861">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/de.svg" alt="Bandera de Alemania" class="flag-icon">
                                 <span class="name">Falkenstein, Germany</span>
                                 <div class="status-indicator">
@@ -1118,7 +1200,7 @@
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
-                            <li class="location-item" data-location-name="Helsinki, Finland" data-ping="150" data-lat="60.1699" data-lon="24.9384">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/fi.svg" alt="Bandera de Finlandia" class="flag-icon">
                                 <span class="name">Helsinki, Finland</span>
                                 <div class="status-indicator">
@@ -1130,11 +1212,11 @@
                         </ul>
                     </div>
 
-                    <!-- Asia Column (becomes a card on mobile) -->
+                    <!-- Asia Column -->
                     <div class="location-column">
                         <h3>Asia</h3>
                         <ul class="location-list">
-                            <li class="location-item" data-location-name="Singapore, Asia" data-ping="220" data-lat="1.3521" data-lon="103.8198">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/sg.svg" alt="Bandera de Singapur" class="flag-icon">
                                 <span class="name">Singapore, Asia</span>
                                 <div class="status-indicator">
@@ -1143,7 +1225,7 @@
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
-                            <li class="location-item" data-location-name="Mumbai, India" data-ping="250" data-lat="19.0760" data-lon="72.8777">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/in.svg" alt="Bandera de India" class="flag-icon">
                                 <span class="name">Mumbai, India</span>
                                 <div class="status-indicator">
@@ -1155,11 +1237,11 @@
                         </ul>
                     </div>
 
-                    <!-- Oceania Column (becomes a card on mobile) -->
+                    <!-- Oceania Column -->
                     <div class="location-column">
                         <h3>Oceania</h3>
                         <ul class="location-list">
-                            <li class="location-item" data-location-name="Sydney, Australia" data-ping="180" data-lat="-33.8688" data-lon="151.2093">
+                            <li class="location-item">
                                 <img src="https://flagcdn.com/au.svg" alt="Bandera de Australia" class="flag-icon">
                                 <span class="name">Sydney, Australia</span>
                                 <div class="status-indicator">
@@ -1171,9 +1253,18 @@
                         </ul>
                     </div>
                 </div>
-                <!-- Ping Display Area -->
-                <div id="ping-display-area" class="mt-8 text-lg font-semibold text-gray-300">
-                    Cargando ubicación...
+
+                <!-- Mobile Carousel Layout of Locations -->
+                <div id="mobile-locations-carousel" class="carousel-viewport">
+                    <div class="carousel-track">
+                        <!-- Location columns will be dynamically cloned/added here by JS -->
+                    </div>
+                    <button class="carousel-nav-arrow left-arrow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav-arrow right-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -1184,10 +1275,10 @@
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
                     ¿Por qué elegir <span class="gradient-text">VoltixCloud</span>?
                 </h2>
-                <!-- Adjusted grid for mobile to show 1 column, centered and smaller -->
-                <div class="feature-grid-container grid lg:grid-cols-3 gap-8">
+                <!-- Desktop Layout of Features -->
+                <div class="feature-grid-container grid lg:grid-cols-3 gap-8 hidden md:grid" id="desktop-feature-grid">
                     <!-- Feature Card 1 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.1s;">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-shield-alt text-5xl feature-icon mb-6"></i>
                         <h3 class="text-2xl font-semibold text-white mb-4">Protección DDoS Avanzada</h3>
                         <p class="text-gray-400">
@@ -1195,7 +1286,7 @@
                         </p>
                     </div>
                     <!-- Feature Card 2 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.2s;">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-bolt text-5xl feature-icon mb-6"></i>
                         <h3 class="text-2xl font-semibold text-white mb-4">Configuración Instantánea</h3>
                         <p class="text-gray-400">
@@ -1203,7 +1294,7 @@
                         </p>
                     </div>
                     <!-- Feature Card 3 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.3s;">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-cogs text-5xl feature-icon mb-6"></i>
                         <h3 class="text-2xl font-semibold text-white mb-4">Panel de Control Intuitivo</h3>
                         <p class="text-gray-400">
@@ -1211,7 +1302,7 @@
                         </p>
                     </div>
                     <!-- Feature Card 4 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.4s;">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-globe text-5xl feature-icon mb-6"></i>
                         <h3 class="text-2xl font-semibold text-white mb-4">Ubicaciones Globales</h3>
                         <p class="text-gray-400">
@@ -1219,7 +1310,7 @@
                         </p>
                     </div>
                     <!-- Feature Card 5 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.5s;">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-headset text-5xl feature-icon mb-6"></i>
                         <h3 class="text-2xl font-semibold text-white mb-4">Soporte 24/7</h3>
                         <p class="text-gray-400">
@@ -1227,13 +1318,26 @@
                         </p>
                     </div>
                     <!-- Feature Card 6 -->
-                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105 feature-card-animated" style="animation-delay: 0.6s;">
+                    <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-server text-5xl feature-icon mb-6"></i>
                         <h3 class="text-2xl font-semibold text-white mb-4">Hardware de Última Generación</h3>
                         <p class="text-gray-400">
                             Servidores construidos con los componentes más recientes para un rendimiento óptimo.
                         </p>
                     </div>
+                </div>
+
+                <!-- Mobile Features Carousel Layout -->
+                <div id="mobile-features-carousel" class="carousel-viewport hidden">
+                    <div class="carousel-track">
+                        <!-- Feature cards will be dynamically cloned/added here by JS -->
+                    </div>
+                    <button class="carousel-nav-arrow left-arrow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav-arrow right-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -1476,129 +1580,250 @@
             setInterval(fetchDiscordOnlineUsers, 30000); // Refresh every 30 seconds
         });
 
-        // Geolocation and Ping/Distance Display Logic
-        const pingDisplayArea = document.getElementById('ping-display-area');
-        const locationItems = document.querySelectorAll('.location-item');
+        // Location Carousel Logic for Mobile
+        const locationsSection = document.getElementById('ubicaciones');
+        const desktopLocationsGrid = document.getElementById('desktop-locations-grid'); // New reference for desktop grid
+        const mobileLocationsCarousel = document.getElementById('mobile-locations-carousel'); // New reference for mobile carousel wrapper
+        const carouselTrack = mobileLocationsCarousel.querySelector('.carousel-track'); // The track inside the mobile carousel
 
-        let userLat = null;
-        let userLon = null;
-        let geolocationAvailable = false;
-        let watchId; // To store the watchPosition ID
+        // Get the original location columns from the desktop grid to clone them for the carousel
+        const originalLocationColumnsForCloning = Array.from(desktopLocationsGrid.querySelectorAll('.location-column'));
 
-        // Haversine formula to calculate distance between two points on Earth
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Radius of Earth in kilometers
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a =
-                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            const distance = R * c; // Distance in km
-            return distance;
-        }
+        // Clear any existing content in the carouselTrack (important for re-runs in dev environment)
+        carouselTrack.innerHTML = '';
 
-        // Function to update ping display based on current user location and hovered item
-        function updatePingDisplay(locationName, simulatedPing, targetLat, targetLon) {
-            if (geolocationAvailable && userLat !== null && userLon !== null) {
-                const distance = calculateDistance(userLat, userLon, targetLat, targetLon);
-                pingDisplayArea.textContent = `Nodo ${locationName}: ${distance.toFixed(0)} km`;
-            } else {
-                pingDisplayArea.textContent = `Nodo ${locationName}: ${simulatedPing} ms`;
+        // Clone first and last original columns for infinite loop and add all to the track
+        const firstLocationClone = originalLocationColumnsForCloning[0].cloneNode(true);
+        firstLocationClone.classList.add('clone');
+        const lastLocationClone = originalLocationColumnsForCloning[originalLocationColumnsForCloning.length - 1].cloneNode(true);
+        lastLocationClone.classList.add('clone');
+
+        carouselTrack.appendChild(lastLocationClone); // Prepend last clone
+        originalLocationColumnsForCloning.forEach(item => carouselTrack.appendChild(item.cloneNode(true))); // Add original items (cloned)
+        carouselTrack.appendChild(firstLocationClone); // Append first clone
+
+        // Re-query carousel items to include clones, now they are direct children of carouselTrack
+        let locationCarouselItems = Array.from(carouselTrack.querySelectorAll('.location-column'));
+
+        // Navigation Arrows for locations carousel
+        const locationLeftArrow = mobileLocationsCarousel.querySelector('.left-arrow');
+        const locationRightArrow = mobileLocationsCarousel.querySelector('.right-arrow');
+
+        // Initial index pointing to the first ORIGINAL item (after the last clone)
+        let currentLocationSlideIndex = 1; // Index 0 is the lastClone
+        let locationSlideInterval; // Variable to hold the interval for location carousel
+
+        function updateLocationCarousel(instant = false) {
+            // Check if we are on a mobile screen size
+            if (window.innerWidth >= 768) {
+                // If on desktop, hide mobile carousel and show desktop grid
+                mobileLocationsCarousel.style.display = 'none';
+                desktopLocationsGrid.style.display = 'flex'; // Show the original desktop container
+                stopLocationAutoSlide(); // Stop auto-slide on desktop
+                return;
             }
-        }
 
-        // Function to set initial or default ping display message
-        function setDefaultPingDisplay() {
-            if (geolocationAvailable && userLat !== null && userLon !== null) {
-                pingDisplayArea.textContent = 'Ubicación detectada. Pasa el cursor sobre un nodo para ver la distancia.';
-            } else if (!geolocationAvailable && navigator.geolocation) {
-                // If geolocation was denied or failed, keep the specific error message
-                // This prevents it from reverting to "Cargando ubicación..." if denied.
-                // The error callback of watchPosition already sets the correct message.
+            // If on mobile, show mobile carousel and hide desktop grid
+            mobileLocationsCarousel.style.display = 'block';
+            desktopLocationsGrid.style.display = 'none'; // Hide the original desktop container
+
+            const itemWidthWithMargin = locationCarouselItems[0].offsetWidth + (parseFloat(getComputedStyle(locationCarouselItems[0]).marginLeft) || 0) + (parseFloat(getComputedStyle(locationCarouselItems[0]).marginRight) || 0);
+
+            // Calculate offset to center the active item
+            const viewportCenter = mobileLocationsCarousel.offsetWidth / 2;
+            const itemCenterOffset = itemWidthWithMargin / 2;
+            const offset = -currentLocationSlideIndex * itemWidthWithMargin + viewportCenter - itemCenterOffset;
+
+            if (instant) {
+                carouselTrack.style.transition = 'none';
             } else {
-                pingDisplayArea.textContent = 'Tu navegador no soporta la geolocalización. Se mostrará el ping simulado.';
+                carouselTrack.style.transition = 'transform 0.5s ease-in-out';
             }
-        }
+            carouselTrack.style.transform = `translateX(${offset}px)`;
 
-        // Function to get user's geolocation with real-time updates
-        function startGeolocationWatch() {
-            if (navigator.geolocation) {
-                pingDisplayArea.textContent = 'Cargando ubicación...';
-                watchId = navigator.geolocation.watchPosition(
-                    (position) => {
-                        userLat = position.coords.latitude;
-                        userLon = position.coords.longitude;
-                        geolocationAvailable = true;
-                        setDefaultPingDisplay(); // Update display once location is known
-                    },
-                    (error) => {
-                        geolocationAvailable = false;
-                        userLat = null;
-                        userLon = null;
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                pingDisplayArea.textContent = 'No tenemos acceso a tu ubicación. Se mostrará el ping simulado.';
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                pingDisplayArea.textContent = 'Información de ubicación no disponible. Se mostrará el ping simulado.';
-                                break;
-                            case error.TIMEOUT:
-                                pingDisplayArea.textContent = 'La solicitud para obtener la ubicación ha caducado. Se mostrará el ping simulado.';
-                                break;
-                            case error.UNKNOWN_ERROR:
-                                pingDisplayArea.textContent = 'Ha ocurrido un error desconocido al obtener la ubicación. Se mostrará el ping simulado.';
-                                break;
-                        }
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 5000,
-                        maximumAge: 0
-                    }
-                );
-            } else {
-                geolocationAvailable = false;
-                pingDisplayArea.textContent = 'Tu navegador no soporta la geolocalización. Se mostrará el ping simulado.';
-            }
-        }
+            // Update active state, opacity, and scale for items
+            locationCarouselItems.forEach((item, index) => {
+                item.classList.remove('active');
+                item.style.opacity = '0.3'; // Default semi-transparent
+                item.style.transform = 'scale(0.9)'; // Default smaller scale
 
-        // Add event listeners to location items
-        locationItems.forEach(item => {
-            const locationName = item.dataset.locationName;
-            const simulatedPing = item.dataset.ping;
-            const targetLat = parseFloat(item.dataset.lat);
-            const targetLon = parseFloat(item.dataset.lon);
-
-            // For desktop hover
-            item.addEventListener('mouseenter', () => {
-                updatePingDisplay(locationName, simulatedPing, targetLat, targetLon);
+                if (index === currentLocationSlideIndex) {
+                    item.classList.add('active');
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)'; // Full size for active item
+                } else if (index === currentLocationSlideIndex - 1 || index === currentLocationSlideIndex + 1) {
+                    item.style.opacity = '0.7'; // Slightly more visible for immediate neighbors
+                    item.style.transform = 'scale(0.95)'; // Slightly larger than others, smaller than active
+                }
+                // Items further away will remain at opacity 0.3 and scale 0.9
             });
 
-            item.addEventListener('mouseleave', () => {
-                setDefaultPingDisplay(); // Reset to default message
-            });
+            if (instant) {
+                // Force reflow to apply 'none' transition before re-enabling
+                void carouselTrack.offsetWidth;
+                carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            }
+        }
 
-            // For mobile touch (click event)
-            item.addEventListener('click', () => {
-                // Remove active state from all other items (for touch)
-                locationItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active-ping');
-                    }
-                });
+        // Function to move to the next location slide
+        function nextLocationSlide() {
+            currentLocationSlideIndex++;
+            updateLocationCarousel();
+        }
 
-                // Toggle active state for the clicked item
-                item.classList.toggle('active-ping');
+        // Function to start auto-sliding for location carousel
+        function startLocationAutoSlide() {
+            stopLocationAutoSlide(); // Clear any existing interval first
+            locationSlideInterval = setInterval(nextLocationSlide, 7000); // Change slide every 7 seconds
+        }
 
-                if (item.classList.contains('active-ping')) {
-                    updatePingDisplay(locationName, simulatedPing, targetLat, targetLon);
-                } else {
-                    setDefaultPingDisplay(); // Reset to default message
+        // Function to stop auto-sliding for location carousel
+        function stopLocationAutoSlide() {
+            clearInterval(locationSlideInterval);
+        }
+
+        // Add event listener for transition end to handle snapping for locations carousel
+        carouselTrack.addEventListener('transitionend', () => {
+            // Check if we've transitioned to a clone
+            if (currentLocationSlideIndex === 0) { // Moved to lastLocationClone (index 0)
+                currentLocationSlideIndex = originalLocationColumnsForCloning.length; // Jump to the real last item
+                updateLocationCarousel(true); // Instant jump
+            } else if (currentLocationSlideIndex === originalLocationColumnsForCloning.length + 1) { // Moved to firstLocationClone (index = original.length + 1)
+                currentLocationSlideIndex = 1; // Jump to the real first item
+                updateLocationCarousel(true); // Instant jump
+            }
+        });
+
+        locationLeftArrow.addEventListener('click', () => {
+            stopLocationAutoSlide(); // Stop auto-slide on manual interaction
+            currentLocationSlideIndex--;
+            updateLocationCarousel();
+            startLocationAutoSlide(); // Restart auto-slide after interaction
+        });
+
+        locationRightArrow.addEventListener('click', () => {
+            stopLocationAutoSlide(); // Stop auto-slide on manual interaction
+            currentLocationSlideIndex++;
+            updateLocationCarousel();
+            startLocationAutoSlide(); // Restart auto-slide after interaction
+        });
+
+
+        // Feature Carousel Logic for Mobile
+        const desktopFeatureGrid = document.getElementById('desktop-feature-grid');
+        const mobileFeaturesCarousel = document.getElementById('mobile-features-carousel');
+        const featureCarouselTrack = mobileFeaturesCarousel.querySelector('.carousel-track');
+
+        // Get the original feature cards to clone them for the carousel
+        const originalFeatureCardsForCloning = Array.from(desktopFeatureGrid.querySelectorAll('.card-bg'));
+
+        // Clear any existing content in the featureCarouselTrack
+        featureCarouselTrack.innerHTML = '';
+
+        // Clone first and last original cards for infinite loop and add all to the track
+        const firstFeatureClone = originalFeatureCardsForCloning[0].cloneNode(true);
+        firstFeatureClone.classList.add('clone');
+        const lastFeatureClone = originalFeatureCardsForCloning[originalFeatureCardsForCloning.length - 1].cloneNode(true);
+        lastFeatureClone.classList.add('clone');
+
+        featureCarouselTrack.appendChild(lastFeatureClone); // Prepend last clone
+        originalFeatureCardsForCloning.forEach(item => featureCarouselTrack.appendChild(item.cloneNode(true))); // Add original items (cloned)
+        featureCarouselTrack.appendChild(firstFeatureClone); // Append first clone
+
+        // Re-query carousel items to include clones
+        let featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
+
+        // Navigation Arrows for features carousel
+        const featureLeftArrow = mobileFeaturesCarousel.querySelector('.left-arrow');
+        const featureRightArrow = mobileFeaturesCarousel.querySelector('.right-arrow');
+
+        // Initial index pointing to the first ORIGINAL item (after the last clone)
+        let currentFeatureSlideIndex = 1; // Index 0 is the lastClone
+        let featureSlideInterval; // Variable to hold the interval for feature carousel
+
+        function updateFeatureCarousel(instant = false) {
+            if (window.innerWidth >= 768) {
+                mobileFeaturesCarousel.style.display = 'none';
+                desktopFeatureGrid.style.display = 'grid'; // Show the original desktop grid
+                stopFeatureAutoSlide(); // Stop auto-slide on desktop
+                return;
+            }
+
+            mobileFeaturesCarousel.style.display = 'block';
+            desktopFeatureGrid.style.display = 'none'; // Hide the original desktop grid
+
+            const itemWidthWithMargin = featureCarouselItems[0].offsetWidth + (parseFloat(getComputedStyle(featureCarouselItems[0]).marginLeft) || 0) + (parseFloat(getComputedStyle(featureCarouselItems[0]).marginRight) || 0);
+
+            const viewportCenter = mobileFeaturesCarousel.offsetWidth / 2;
+            const itemCenterOffset = itemWidthWithMargin / 2;
+            const offset = -currentFeatureSlideIndex * itemWidthWithMargin + viewportCenter - itemCenterOffset;
+
+            if (instant) {
+                featureCarouselTrack.style.transition = 'none';
+            } else {
+                featureCarouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            }
+            featureCarouselTrack.style.transform = `translateX(${offset}px)`;
+
+            featureCarouselItems.forEach((item, index) => {
+                item.classList.remove('active');
+                item.style.opacity = '0.3';
+                item.style.transform = 'scale(0.9)';
+
+                if (index === currentFeatureSlideIndex) {
+                    item.classList.add('active');
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
+                } else if (index === currentFeatureSlideIndex - 1 || index === currentFeatureSlideIndex + 1) {
+                    item.style.opacity = '0.7';
+                    item.style.transform = 'scale(0.95)';
                 }
             });
+
+            if (instant) {
+                void featureCarouselTrack.offsetWidth;
+                featureCarouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            }
+        }
+
+        function nextFeatureSlide() {
+            currentFeatureSlideIndex++;
+            updateFeatureCarousel();
+        }
+
+        function startFeatureAutoSlide() {
+            stopFeatureAutoSlide();
+            featureSlideInterval = setInterval(nextFeatureSlide, 7000); // Same speed as locations carousel
+        }
+
+        function stopFeatureAutoSlide() {
+            clearInterval(featureSlideInterval);
+        }
+
+        featureCarouselTrack.addEventListener('transitionend', () => {
+            if (currentFeatureSlideIndex === 0) {
+                currentFeatureSlideIndex = originalFeatureCardsForCloning.length;
+                updateFeatureCarousel(true);
+            } else if (currentFeatureSlideIndex === originalFeatureCardsForCloning.length + 1) {
+                currentFeatureSlideIndex = 1;
+                updateFeatureCarousel(true);
+            }
         });
+
+        featureLeftArrow.addEventListener('click', () => {
+            stopFeatureAutoSlide();
+            currentFeatureSlideIndex--;
+            updateFeatureCarousel();
+            startFeatureAutoSlide();
+        });
+
+        featureRightArrow.addEventListener('click', () => {
+            stopFeatureAutoSlide();
+            currentFeatureSlideIndex++;
+            updateFeatureCarousel();
+            startFeatureAutoSlide();
+        });
+
 
         // Cookie Consent Logic
         const cookieConsentBar = document.getElementById('cookie-consent-bar');
@@ -1618,12 +1843,35 @@
 
         acceptCookiesBtn.addEventListener('click', hideCookieConsent);
 
-        // Initialize on page load
+
+        // Initial setup on page load
         document.addEventListener('DOMContentLoaded', () => {
-            startGeolocationWatch(); // Start watching for location changes
             fetchDiscordOnlineUsers();
-            setInterval(fetchDiscordOnlineUsers, 30000); // Refresh Discord count every 30 seconds
-            showCookieConsent(); // Show cookie consent if not seen before
+            setInterval(fetchDiscordOnlineUsers, 30000);
+            showCookieConsent();
+            // Initial call to update carousels based on screen size
+            updateLocationCarousel(true);
+            startLocationAutoSlide();
+
+            updateFeatureCarousel(true); // Initialize feature carousel
+            startFeatureAutoSlide(); // Start auto-slide for feature carousel
+        });
+
+        // Add a resize listener to handle orientation changes or window resize
+        window.addEventListener('resize', () => {
+            updateLocationCarousel(true); // Re-calculate and snap on resize for locations
+            if (window.innerWidth < 768) {
+                startLocationAutoSlide();
+            } else {
+                stopLocationAutoSlide();
+            }
+
+            updateFeatureCarousel(true); // Re-calculate and snap on resize for features
+            if (window.innerWidth < 768) {
+                startFeatureAutoSlide();
+            } else {
+                stopFeatureAutoSlide();
+            }
         });
     </script>
 </body>
