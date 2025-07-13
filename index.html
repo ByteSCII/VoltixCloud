@@ -57,6 +57,7 @@
             background-clip: padding-box; /* Asegura que el fondo no se extienda al borde */
             border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Borde degradado rosamorado */
             transition: all 0.3s ease, border-image 0.5s ease-in-out; /* Transición suave para todas las propiedades y el borde degradado */
+            box-sizing: border-box; /* IMPORTANT: Include padding and border in the element's total width and height */
         }
         .card-bg:hover {
             border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invierte el degradado al pasar el ratón */
@@ -558,7 +559,7 @@
         /* Estilos para el diseño de carrusel en móvil */
         #mobile-locations-carousel { /* New ID for the mobile carousel wrapper */
             position: relative;
-            width: 100%; /* Take full width of its parent container */
+            width: calc(100% - 2rem); /* Take full width of its parent container, with padding */
             max-width: 400px; /* Adjust this to control how much of side items are visible */
             margin: 0 auto; /* Center the viewport */
             overflow: hidden; /* This hides the overflowing parts of the items */
@@ -583,7 +584,7 @@
 
             .location-column { /* These styles apply to carousel items on mobile */
                 flex-shrink: 0;
-                width: 280px; /* Fixed width for each card */
+                width: calc(100% - 1rem); /* Make cards take almost full width with margin */
                 padding: 1rem;
                 background-color: #1a1c22;
                 border-radius: 0.75rem;
@@ -656,6 +657,11 @@
 
             .carousel-nav-arrow.right-arrow {
                 right: 0.5rem; /* Closer to the viewport edge */
+            }
+
+            /* NEW: Hide carousel arrows for the features carousel on mobile */
+            #mobile-features-carousel .carousel-nav-arrow {
+                display: none !important;
             }
         }
 
@@ -879,6 +885,7 @@
             font-size: 0.95rem;
             line-height: 1.4;
             max-width: 100%; /* IMPORTANT: Ensure text wraps within the paragraph */
+            text-align: center; /* Centra el texto en móvil */
         }
 
         #cookie-consent-bar .cookie-accept-btn {
@@ -1234,8 +1241,9 @@
             <div id="language-submenu" class="mobile-minecraft-submenu"> <!-- Reusing mobile-minecraft-submenu for styling -->
                 <a href="#" data-lang="en"><img src="https://flagcdn.com/us.svg" alt="English Flag"> EN</a>
                 <a href="#" data-lang="es"><img src="https://flagcdn.com/es.svg" alt="Spanish Flag"> ES</a>
-                <a href="#" data-lang="fr"><img src="https://flagcdn.com/fr.svg" alt="French Flag"> FR</a>
-                <a href="#" data-lang="ct">
+                <a href="#" data-lang="fr"><img src="https://flagcdn.com/fr.svg" alt="French Flag"> FR
+                        </a>
+                        <a href="#" data-lang="ct">
                             <img src="https://flagcdn.com/ca.svg" alt="Catalan Flag"> CT
                         </a>
                         <a href="#" data-lang="de">
@@ -1547,7 +1555,7 @@
                 </div>
 
                 <!-- Mobile Features Carousel Layout -->
-                <div id="mobile-features-carousel" class="carousel-viewport hidden">
+                <div id="mobile-features-carousel" class="carousel-viewport">
                     <div class="carousel-track">
                         <!-- Feature cards will be dynamically cloned/added here by JS -->
                     </div>
@@ -1854,13 +1862,13 @@
                 northAmerica: "Amérique du Nord",
                 online: "En ligne",
                 comingSoon: "Bientôt Disponible",
-                europe: "Europe",
+                europe: "Europa",
                 asia: "Asie",
                 oceania: "Océanie",
                 whyChooseVoltix: "Pourquoi choisir <span class='gradient-text'>VoltixCloud</span> ?",
                 ddosProtectionDesc: "Protégez votre serveur des attaques malveillantes grâce à notre protection DDoS de pointe.",
                 instantSetupDesc: "Votre serveur sera prêt à jouer en quelques minutes, sans attente.",
-                intuitivePanelDesc: "Gérez votre serveur en toute simplicité grâce à notre panneau de contrôle personnalisé.",
+                intuitivePanelDesc: "Gérez votre servidor en toute simplicité grâce à notre panneau de contrôle personnalisé.",
                 globalLocationsDesc: "Choisissez l'emplacement de serveur le plus proche pour une latence minimale.",
                 support247Desc: "Notre équipe de support est disponible 24h/24 pour vous aider.",
                 latestHardwareDesc: "Serveurs construits avec les composants les plus récents pour des performances optimales.",
