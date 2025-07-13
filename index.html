@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voltix Cloud Hosting - Alojamiento de Minecraft, Juegos y Diseño Web</title> <!-- Título de la pestaña del navegador actualizado para SEO -->
-    <meta name="description" content="Voltix Cloud ofrece alojamiento de Minecraft, juegos y servidores VPS de alto rendimiento, además de servicios de diseño web profesional. ¡Experimenta la mejor latencia y soporte 24/7!">
-    <meta name="keywords" content="Voltix Cloud, alojamiento Minecraft, hosting juegos, servidores VPS, diseño web, hosting de alto rendimiento, protección DDoS, servidores rápidos, alojamiento seguro, Minecraft hosting, game hosting, cloud hosting, web design, soporte 24/7">
+    <title>Voltix Cloud Hosting - Minecraft, Game, & Web Design Hosting</title> <!-- Título de la pestaña del navegador actualizado para SEO -->
+    <meta name="description" content="Voltix Cloud offers high-performance Minecraft, game, and VPS server hosting, plus professional web design services. Experience the best latency and 24/7 support!">
+    <meta name="keywords" content="Voltix Cloud, Minecraft hosting, game hosting, VPS servers, web design, high-performance hosting, DDoS protection, fast servers, secure hosting, Minecraft hosting, game hosting, cloud hosting, web design, 24/7 support">
     <!-- Favicon -->
     <link rel="icon" href="./images/voltixcloud.ico" type="image/x-icon">
     <!-- Tailwind CSS CDN -->
@@ -57,7 +57,6 @@
             background-clip: padding-box; /* Asegura que el fondo no se extienda al borde */
             border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Borde degradado rosamorado */
             transition: all 0.3s ease, border-image 0.5s ease-in-out; /* Transición suave para todas las propiedades y el borde degradado */
-            /* En escritorio, estas tarjetas solo tienen el borde degradado. La sombra y animación se aplican solo en móvil. */
         }
         .card-bg:hover {
             border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invierte el degradado al pasar el ratón */
@@ -74,7 +73,7 @@
         }
         /* Estilo personalizado para menús desplegables */
         .dropdown-menu {
-            display: none;
+            display: none; /* Oculto por defecto */
             position: absolute;
             background-color: #1a1c22;
             min-width: 160px;
@@ -88,14 +87,32 @@
             transform: translateX(-50%);
             white-space: nowrap; /* Evita el ajuste de línea */
         }
-        .dropdown:hover .dropdown-menu {
-            display: block;
+        /* New: Controlled by JS */
+        .dropdown-menu.is-active-dropdown {
+            display: block; /* Para desplegables generales */
         }
+        /* Minecraft dropdown specific styles - now relies on .dropdown-menu for default 'display: none' */
+        .minecraft-dropdown-menu {
+            z-index: 10; /* Higher z-index to ensure it's on top */
+            border-radius: 1rem; /* Rounded corners for the entire dropdown box */
+            padding: 1rem; /* More padding */
+            flex-direction: row; /* Display buttons in a row */
+            flex-wrap: nowrap; /* IMPORTANT: Prevent wrapping to keep them in one line */
+            justify-content: center; /* Center items horizontally */
+            align-items: center; /* Center items vertically */
+            gap: 1rem; /* Increased gap between buttons */
+            min-width: 850px; /* Adjusted minimum width to fit all buttons horizontally */
+        }
+        .minecraft-dropdown-menu.is-active-dropdown {
+            display: flex; /* Explicitly set to flex when active */
+        }
+
+
         .dropdown-menu a {
             color: #e6e6e6;
             padding: 0.75rem 1rem;
             text-decoration: none;
-            display: block;
+            /* Removed display: block; from here to allow inline-flex on buttons */
             text-align: left;
         }
         .dropdown-menu a:hover {
@@ -178,20 +195,31 @@
         /* Estilos para los enlaces principales del menú móvil */
         .mobile-nav-link {
             display: flex;
-            justify-content: center; /* Centra el texto y el icono */
             align-items: center;
+            justify-content: space-between; /* Distribuye el espacio entre los elementos */
             color: #e6e6e6;
-            padding: 0.75rem 1rem; /* Relleno ajustado para mejor espaciado */
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 700; /* font-bold */
+            padding: 0.75rem 1rem;
+            font-size: 1.125rem;
+            font-weight: 700;
             text-decoration: none;
-            position: relative; /* Necesario para el pseudo-elemento ::before */
-            overflow: hidden; /* Oculta el desbordamiento de ::before */
-            border-radius: 0.5rem; /* Añadido border-radius */
-            margin: 0.5rem auto; /* Centra horizontalmente, mantiene margen vertical */
-            width: calc(100% - 2rem); /* Ocupa casi todo el ancho del menú móvil */
-            max-width: 280px; /* Limita el ancho máximo */
-            transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; /* Transiciones más suaves para color, transformación, sombra */
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            margin: 0.5rem auto;
+            width: calc(100% - 2rem);
+            max-width: 280px;
+            transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out;
+        }
+
+        .mobile-nav-link span {
+            flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
+            text-align: center; /* Centra el texto dentro del span */
+        }
+
+        .mobile-nav-link .fas {
+            /* No se necesita margin-left: auto aquí si justify-content: space-between */
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
         }
 
         .mobile-nav-link::before {
@@ -217,12 +245,6 @@
 
         .mobile-nav-link:hover::before {
             transform: scaleX(1); /* Se expande para llenar el botón */
-        }
-
-        .mobile-nav-link .fas {
-            margin-left: 0.5rem; /* Espacio entre el texto y el icono */
-            font-size: 0.75rem; /* text-xs */
-            transition: transform 0.3s ease;
         }
 
         .mobile-nav-link:hover .fas {
@@ -309,7 +331,7 @@
         }
 
         .top-panel-link:hover {
-            background: linear-gradient(90deg, #ec4899, #a855f7); /* Gradiente de Rosa a Púrpura */
+            background: linear-gradient(90deg, #ec4899, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             transform: scale(1.05); /* Mantiene el efecto de escala */
@@ -760,6 +782,7 @@
             .card-bg {
                 box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Sombra sutil para móvil */
                 animation: subtle-float 3s ease-in-out infinite; /* Animación de levitación */
+                box-sizing: border-box; /* IMPORTANT: Include padding and border in the element's total width and height */
             }
         }
 
@@ -844,6 +867,7 @@
             align-items: center; /* Centra los elementos horizontalmente */
             justify-content: center;
             gap: 1rem; /* Espacio entre el texto y el botón */
+            box-sizing: border-box; /* IMPORTANT: Ensure padding is included in the width */
         }
 
         #cookie-consent-bar.show {
@@ -854,6 +878,7 @@
             margin-bottom: 0; /* Elimina el margen de párrafo predeterminado */
             font-size: 0.95rem;
             line-height: 1.4;
+            max-width: 100%; /* IMPORTANT: Ensure text wraps within the paragraph */
         }
 
         #cookie-consent-bar .cookie-accept-btn {
@@ -869,7 +894,7 @@
         }
 
         #cookie-consent-bar .cookie-accept-btn:hover {
-            background: linear-gradient(90deg, #6366f1, #a855f7); /* Invierte el gradiente al pasar el ratón */
+            background: linear-gradient(90deg, #6366f1, #a855f7); /* Invierte el degradado al pasar el ratón */
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(168, 85, 247, 0.5);
         }
@@ -909,6 +934,175 @@
             color: #ec4899; /* Rosa al pasar el ratón */
             text-decoration: underline;
         }
+
+        /* Estilos para los botones del menú de Minecraft Hosting */
+        .minecraft-hosting-btn {
+            background-color: #1a1c22; /* Fallback background */
+            color: white; /* Default text color, overridden by specific classes */
+            padding: 0.75rem 1.25rem; /* Adjusted padding for better fit in a row */
+            border-radius: 0.75rem; /* rounded-xl */
+            font-weight: 600;
+            display: inline-flex !important; /* IMPORTANT: Ensures buttons are inline-flex items */
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: none; /* Ensure no default border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Initial subtle shadow */
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+
+        .minecraft-hosting-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* Specific styles for each Minecraft button */
+        .minecraft-hosting-btn.java {
+            background-image: linear-gradient(90deg, #facc15, #fbbf24); /* Yellow gradient background */
+            color: #1a1c22; /* Dark text on yellow */
+        }
+        .minecraft-hosting-btn.java:hover {
+            box-shadow: 0 8px 20px rgba(250, 204, 21, 0.6); /* Stronger yellow glow */
+            background-image: linear-gradient(90deg, #fbbf24, #facc15); /* Invert gradient on hover */
+        }
+
+        .minecraft-hosting-btn.bedrock {
+            background-image: linear-gradient(90deg, #cbd5e0, #94a3b8); /* Gray gradient background */
+            color: #1a1c22; /* Dark text on gray */
+        }
+        .minecraft-hosting-btn.bedrock:hover {
+            box-shadow: 0 8px 20px rgba(148, 163, 184, 0.6); /* Stronger gray glow */
+            background-image: linear-gradient(90deg, #94a3b8, #cbd5e0);
+        }
+
+        .minecraft-hosting-btn.modded {
+            background-image: linear-gradient(90deg, #ef4444, #dc2626); /* Red gradient background */
+            color: white; /* White text on red */
+        }
+        .minecraft-hosting-btn.modded:hover {
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.6); /* Stronger red glow */
+            background-image: linear-gradient(90deg, #dc2626, #ef4444);
+        }
+
+        .minecraft-hosting-btn.budget {
+            background-image: linear-gradient(90deg, #34d399, #10b981); /* Green gradient background */
+            color: white; /* White text on green */
+        }
+        .minecraft-hosting-btn.budget:hover {
+            box-shadow: 0 8px 20px rgba(52, 211, 153, 0.6); /* Stronger green glow */
+            background-image: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        /* Language Selector Dropdown */
+        .language-dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #1a1c22;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1;
+            border-radius: 0.5rem;
+            border: 1px solid #2d3748;
+            padding: 0.5rem 0;
+            top: calc(100% + 0.5rem);
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        /* This rule now correctly targets the parent with the active class */
+        .language-dropdown.is-active-dropdown .language-dropdown-menu {
+            display: block; /* Show language dropdown when active */
+        }
+        /* Adjusted image size and alignment for desktop language dropdown */
+        .language-dropdown-menu img {
+            width: 24px; /* Slightly larger for better visibility */
+            height: 24px; /* Make it square */
+            border-radius: 50%; /* Circular flags */
+            margin-right: 0.75rem; /* More space from text */
+            object-fit: cover; /* Ensure image covers the circular area */
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .language-dropdown-menu a {
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Vertically center flag and text */
+            padding: 0.5rem 1rem; /* Adjust padding for better look */
+            color: #e6e6e6;
+            text-decoration: none;
+        }
+        .language-dropdown-menu a:hover {
+            background-color: #2d3748;
+            color: #ffffff;
+        }
+
+
+        /* Mobile menu language selector */
+        .mobile-language-selector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Distribuye el espacio entre los elementos */
+            color: #e6e6e6;
+            padding: 0.75rem 1rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            margin: 0.5rem auto;
+            width: calc(100% - 2rem);
+            max-width: 280px;
+            background-color: #1a1c22; /* Same as dropdown background */
+            border: 1px solid #2d3748;
+            transition: all 0.3s ease;
+        }
+        .mobile-language-selector span {
+            flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
+            text-align: center; /* Centra el texto dentro del span */
+        }
+        .mobile-language-selector .fas {
+            /* No se necesita margin-left: auto aquí si justify-content: space-between */
+            font-size: 0.75rem;
+        }
+        .mobile-language-selector:hover {
+            background-color: #2d3748;
+            color: #ffffff;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .mobile-language-selector img {
+            width: 22px; /* Reduced flag size for mobile selector */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 0.75rem;
+            border-radius: 3px;
+        }
+
+        /* Mobile Minecraft Submenu styles */
+        .mobile-minecraft-submenu {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - 4rem); /* Slightly narrower than parent link */
+            max-width: 240px; /* Max width for sub-menu */
+            margin-top: 0.5rem; /* Space below parent link */
+            padding: 0.75rem;
+            background-color: #0d0e11; /* Slightly darker background for submenu */
+            border-radius: 0.5rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4); /* Inner shadow for depth */
+            border: 1px solid #2d3748;
+        }
+        .mobile-minecraft-submenu.is-open {
+            display: flex; /* Show when toggled */
+        }
+        .mobile-minecraft-submenu .minecraft-hosting-btn {
+            width: 100%; /* Full width within its container */
+            margin-bottom: 0.5rem; /* Space between buttons */
+            padding: 0.6rem 1rem; /* Slightly smaller padding */
+            font-size: 0.95rem; /* Slightly smaller font */
+            border-width: 2px; /* Thinner border for sub-buttons */
+        }
+        .mobile-minecraft-submenu .minecraft-hosting-btn:last-child {
+            margin-bottom: 0; /* No margin on last button */
+        }
+
     </style>
 </head>
 <body>
@@ -918,17 +1112,17 @@
         <div class="container mx-auto px-6 md:px-12">
             <!-- First row: Panel links (hidden on mobile, centered on desktop, white text with gradient hover) -->
             <div class="hidden md:flex justify-center space-x-6 mb-2">
-                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-gamepad mr-2"></i>Game Panel</a>
-                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-user-circle mr-2"></i>Client Area</a>
-                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-server mr-2"></i>VPS Portal</a>
-                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center"><i class="fas fa-cogs mr-2"></i>cPanel</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center" data-lang-key="gamePanel"><i class="fas fa-gamepad mr-2"></i>Game Panel</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center" data-lang-key="clientArea"><i class="fas fa-user-circle mr-2"></i>Client Area</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center" data-lang-key="vpsPortal"><i class="fas fa-server mr-2"></i>VPS Portal</a>
+                <a href="#" class="top-panel-link transition duration-300 ease-in-out transform hover:scale-105 flex items-center" data-lang-key="cPanel"><i class="fas fa-cogs mr-2"></i>cPanel</a>
             </div>
             <!-- Second row: Sale banner (always centered and with gradient/animation, in Spanish) -->
             <div class="flex items-center justify-center py-1">
-                <span class="sale-gradient-bg transition duration-300 ease-in-out transform hover:scale-105">¡OFERTA!</span>
+                <span class="sale-gradient-bg transition duration-300 ease-in-out transform hover:scale-105" data-lang-key="offerBanner">SALE!</span>
                 <!-- Adjusted text size for mobile here, with new gradient and animation -->
                 <span class="ml-2 mr-2 text-base md:text-xs font-bold offer-animation" style="background: linear-gradient(90deg, #ec4899 30%, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">50% OFF</span>
-                <span class="text-white"> HOY con nuestros códigos de descuento!</span>
+                <span class="text-white ml-2" data-lang-key="offerText">Today with our discount codes!</span> <!-- Added ml-2 here -->
                 <i class="fas fa-arrow-right text-white ml-2"></i>
             </div>
         </div>
@@ -941,7 +1135,7 @@
             <div class="flex justify-between items-center w-full md:w-auto mb-2 md:mb-0">
                 <div class="flex items-center">
                     <!-- VoltixCloud Logo (Image) -->
-                    <img src="./images/voltixcloud.ico" alt="Logotipo de Voltix Cloud" class="h-10 w-10 mr-3">
+                    <img src="./images/voltixcloud.ico" alt="Voltix Cloud Logo" class="h-10 w-10 mr-3">
                     <a href="#" class="text-white text-2xl font-extrabold whitespace-nowrap">Voltix <span class="gradient-text">Cloud</span></a>
                 </div>
                 <!-- Mobile Menu Button -->
@@ -949,59 +1143,58 @@
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
-            <!-- Navigation Links with Dropdowns - Adjusted for smaller size, single line, and right alignment -->
+            <!-- Navigation Links for Desktop -->
             <div class="hidden md:flex space-x-4 items-center mt-2 md:mt-0">
-                <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
+                <!-- Minecraft Hosting with Dropdown -->
+                <div class="relative dropdown" data-dropdown-type="minecraft">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" data-target="minecraft-desktop-menu" data-lang-key="minecraftHosting">
                         Minecraft Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
-                    <div class="dropdown-menu">
-                        <a href="#">Java Plans</a>
-                        <a href="#">Bedrock Plans</a>
-                        <a href="#">Custom Plans</a>
+                    <div class="minecraft-dropdown-menu dropdown-menu" id="minecraft-desktop-menu"> <!-- Added dropdown-menu class here -->
+                        <a href="#" class="minecraft-hosting-btn java" data-lang-key="javaEdition">Java Edition</a>
+                        <a href="#" class="minecraft-hosting-btn bedrock" data-lang-key="bedrockEdition">Bedrock Edition</a>
+                        <a href="#" class="minecraft-hosting-btn modded" data-lang-key="moddedHosting">Modded Hosting</a>
+                        <a href="#" class="minecraft-hosting-btn budget" data-lang-key="budgetHosting">Budget Hosting</a>
                     </div>
                 </div>
-                <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
-                        Game Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                <!-- Other links remain simple (no dropdowns) -->
+                <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" data-lang-key="gameHosting">
+                    Game Hosting
+                </a>
+                <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" data-lang-key="cloudHosting">
+                    Cloud Hosting
+                </a>
+                <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" data-lang-key="resources">
+                    Resources
+                </a>
+                <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" data-lang-key="more">
+                    More
+                </a>
+                <!-- Language Selector (still with dropdown) -->
+                <div class="relative dropdown language-dropdown" data-dropdown-type="language">
+                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" id="desktop-language-toggle">
+                        <img src="https://flagcdn.com/us.svg" alt="English Flag" class="w-5 h-auto mr-1 rounded-sm"> EN <i class="fas fa-chevron-down ml-1 text-xs"></i>
                     </a>
-                    <div class="dropdown-menu">
-                        <a href="#">Rust Hosting</a>
-                        <a href="#">ARK Hosting</a>
-                        <a href="#">Valheim Hosting</a>
-                    </div>
-                </div>
-                <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
-                        Cloud Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="#">Linux VPS</a>
-                        <a href="#">Windows VPS</a>
-                    </div>
-                </div>
-                <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
-                        Resources <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="#">Knowledge Base</a>
-                        <a href="#">Blog</a>
-                        <a href="#">Tutorials</a>
-                    </div>
-                </div>
-                <div class="relative dropdown">
-                    <a href="#" class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link">
-                        More <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="#">About Us</a>
-                        <a href="#">Contact</a>
-                        <a href="#">Affiliates</a>
+                    <div class="language-dropdown-menu">
+                        <a href="#" data-lang="en">
+                            <img src="https://flagcdn.com/us.svg" alt="English Flag"> EN
+                        </a>
+                        <a href="#" data-lang="es">
+                            <img src="https://flagcdn.com/es.svg" alt="Spanish Flag"> ES
+                        </a>
+                        <a href="#" data-lang="fr">
+                            <img src="https://flagcdn.com/fr.svg" alt="French Flag"> FR
+                        </a>
+                        <a href="#" data-lang="ct">
+                            <img src="https://flagcdn.com/ca.svg" alt="Catalan Flag"> CT
+                        </a>
+                        <a href="#" data-lang="de">
+                            <img src="https://flagcdn.com/de.svg" alt="German Flag"> DE
+                        </a>
                     </div>
                 </div>
                 <!-- "View Plans" Button -->
-                <a href="#caracteristicas" class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link">
+                <a href="#caracteristicas" class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link" data-lang-key="viewPlans">
                     View Plans
                 </a>
             </div>
@@ -1010,7 +1203,7 @@
 
     <!-- Development Notice - Moved outside the header -->
     <div class="development-notice">
-        Este sitio está en desarrollo. Sugerencias en <a href="https://discord.gg/jhA9DHTHAW" target="_blank" rel="noopener noreferrer">Discord</a>.
+        <span data-lang-key="devNotice">This site is under development. Suggestions on </span><a href="https://discord.gg/jhA9DHTHAW" target="_blank" rel="noopener noreferrer">Discord</a>.
     </div>
 
     <!-- Mobile Menu Backdrop -->
@@ -1019,14 +1212,41 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="bg-black py-4 border border-gray-700">
         <!-- Main navigation links (in Spanish, with new styling) -->
-        <a href="#" class="mobile-nav-link"><span>Alojamiento de Minecraft</span> <i class="fas fa-chevron-down"></i></a>
-        <a href="#" class="mobile-nav-link"><span>Alojamiento de Juegos</span> <i class="fas fa-chevron-down"></i></a>
-        <a href="#" class="mobile-nav-link"><span>Alojamiento en la Nube</span> <i class="fas fa-chevron-down"></i></a>
-        <a href="#" class="mobile-nav-link"><span>Recursos</span> <i class="fas fa-chevron-down"></i></a>
-        <a href="#" class="mobile-nav-link"><span>Más</span> <i class="fas fa-chevron-down"></i></a>
-        <div class="mt-4 border-t border-gray-700 pt-4">
+        <div class="w-full flex flex-col items-center">
+            <a href="#" class="mobile-nav-link mobile-dropdown-toggle" data-target="minecraft-submenu" data-lang-key="minecraftHostingMobile"><span>Minecraft Hosting</span> <i class="fas fa-chevron-down"></i></a>
+            <div id="minecraft-submenu" class="mobile-minecraft-submenu">
+                <a href="#" class="minecraft-hosting-btn java" data-lang-key="javaEdition">Java Edition</a>
+                <a href="#" class="minecraft-hosting-btn bedrock" data-lang-key="bedrockEdition">Bedrock Edition</a>
+                <a href="#" class="minecraft-hosting-btn modded" data-lang-key="moddedHosting">Modded Hosting</a>
+                <a href="#" class="minecraft-hosting-btn budget" data-lang-key="budgetHosting">Budget Hosting</a>
+            </div>
+        </div>
+
+        <a href="#" class="mobile-nav-link" data-lang-key="gameHostingMobile"><span>Game Hosting</span> <i class="fas fa-chevron-down"></i></a>
+        <a href="#" class="mobile-nav-link" data-lang-key="cloudHostingMobile"><span>Cloud Hosting</span> <i class="fas fa-chevron-down"></i></a>
+        <a href="#" class="mobile-nav-link" data-lang-key="resourcesMobile"><span>Resources</span> <i class="fas fa-chevron-down"></i></a>
+        <a href="#" class="mobile-nav-link" data-lang-key="moreMobile"><span>More</span> <i class="fas fa-chevron-down"></i></a>
+        <!-- Mobile Language Selector -->
+        <div class="w-full flex flex-col items-center">
+            <a href="#" class="mobile-language-selector mobile-dropdown-toggle" data-target="language-submenu">
+                <img src="https://flagcdn.com/us.svg" alt="English Flag" id="current-mobile-flag"> <span id="current-mobile-lang-text">EN</span> <i class="fas fa-chevron-down"></i>
+            </a>
+            <div id="language-submenu" class="mobile-minecraft-submenu"> <!-- Reusing mobile-minecraft-submenu for styling -->
+                <a href="#" data-lang="en"><img src="https://flagcdn.com/us.svg" alt="English Flag"> EN</a>
+                <a href="#" data-lang="es"><img src="https://flagcdn.com/es.svg" alt="Spanish Flag"> ES</a>
+                <a href="#" data-lang="fr"><img src="https://flagcdn.com/fr.svg" alt="French Flag"> FR</a>
+                <a href="#" data-lang="ct">
+                            <img src="https://flagcdn.com/ca.svg" alt="Catalan Flag"> CT
+                        </a>
+                        <a href="#" data-lang="de">
+                            <img src="https://flagcdn.com/de.svg" alt="German Flag"> DE
+                        </a>
+            </div>
+        </div>
+
+        <div class="mt-4 border-t border-gray-700 pt-4 w-full flex justify-center">
             <!-- Client Area button (in English, now purple-pink gradient, with float animation) -->
-            <a href="#" class="block btn-mobile-client-area text-center py-2 px-4 rounded-lg font-semibold mt-4">Client Area</a>
+            <a href="#" class="block btn-mobile-client-area text-center py-2 px-4 rounded-lg font-semibold mt-4" data-lang-key="clientAreaMobileBtn">Client Area</a>
         </div>
     </div>
 
@@ -1036,25 +1256,24 @@
             <!-- Slide 1: Web Hosting -->
             <div class="carousel-slide" data-background="./images/webhosting.jpg" style="background-image: url('./images/webhosting.jpg');">
                 <div class="carousel-content">
-                    <h1 class="font-extrabold text-white leading-tight mb-6">
-                        Web Hosting <span class="gradient-text">Rápido</span> y <span class="gradient-text">Seguro</span>
+                    <h1 class="font-extrabold text-white leading-tight mb-6" data-lang-key="heroWebHostingTitle">
+                        Fast and <span class="gradient-text">Secure</span> Web Hosting
                     </h1>
-                    <p class="text-gray-300 mb-10">
-                        Aloja tu sitio web con el mejor rendimiento y seguridad.
+                    <p class="text-gray-300 mb-10" data-lang-key="heroWebHostingDesc">
+                        Host your website with the best performance and security.
                     </p>
                     <ul class="carousel-features">
-                        <li><i class="fas fa-check-circle"></i> Uptime 99.9%</li>
-                        <li><i class="fas fa-check-circle"></i> SSL Gratuito</li>
-                        <li><i class="fas fa-check-circle"></i> Soporte 24/7</li>
-                        <li><i class="fas fa-check-circle"></i> SSD NVMe</li>
-                        <li><i class="fas fa-check-circle"></i> Panel de Control Intuitivo</li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="uptime">99.9% Uptime</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="freeSSL">Free SSL</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="nvmeSSD">NVMe SSD</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="intuitivePanel">Intuitive Control Panel</span></li>
                     </ul>
                     <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-                        <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
-                            Comenzar Web Hosting
+                        <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300" data-lang-key="startWebHosting">
+                            Start Web Hosting
                         </a>
-                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
-                            Contáctanos
+                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600" data-lang-key="contactUs">
+                            Contact Us
                         </a>
                     </div>
                 </div>
@@ -1063,26 +1282,26 @@
             <!-- Slide 2: Minecraft Hosting -->
             <div class="carousel-slide" data-background="./images/minecrafthosting.png" style="background-image: url('./images/minecrafthosting.png');">
                 <div class="carousel-content">
-                    <h1 class="font-extrabold text-white leading-tight mb-6">
-                        Hosting de Minecraft <span class="gradient-text">Potente</span> y <span class="gradient-text">Fiable</span>
+                    <h1 class="font-extrabold text-white leading-tight mb-6" data-lang-key="heroMinecraftTitle">
+                        Powerful and <span class="gradient-text">Reliable</span> Minecraft Hosting
                     </h1>
-                    <p class="text-gray-300 mb-10">
-                        Experimenta el rendimiento definitivo con VoltixCloud. Servidores optimizados para tu aventura en Minecraft.
+                    <p class="text-gray-300 mb-10" data-lang-key="heroMinecraftDesc">
+                        Experience ultimate performance with VoltixCloud. Optimized servers for your Minecraft adventure.
                     </p>
                     <ul class="carousel-features">
-                        <li><i class="fas fa-check-circle"></i> Protección DDoS Avanzada</li>
-                        <li><i class="fas fa-check-circle"></i> Configuración Instantánea</li>
-                        <li><i class="fas fa-check-circle"></i> Panel de Control Intuitivo</li>
-                        <li><i class="fas fa-check-circle"></i> Ubicaciones Globales</li>
-                        <li><i class="fas fa-check-circle"></i> Soporte 24/7</li>
-                        <li><i class="fas fa-check-circle"></i> Hardware de Última Generación</li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="advancedDDoS">Advanced DDoS Protection</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="instantSetup">Instant Setup</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="intuitivePanel">Intuitive Control Panel</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="globalLocations">Global Locations</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="support247">24/7 Support</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="latestHardware">Latest Generation Hardware</span></li>
                     </ul>
                     <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-                        <a href="#caracteristicas" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
-                            Ver Planes de Minecraft
+                        <a href="#caracteristicas" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300" data-lang-key="viewMinecraftPlans">
+                            View Minecraft Plans
                         </a>
-                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
-                            Contáctanos
+                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600" data-lang-key="contactUs">
+                            Contact Us
                         </a>
                     </div>
                 </div>
@@ -1091,25 +1310,25 @@
             <!-- Slide 3: Web Design -->
             <div class="carousel-slide" data-background="./images/webdesign.jpg" style="background-image: url('./images/webdesign.jpg');">
                 <div class="carousel-content">
-                    <h1 class="font-extrabold text-white leading-tight mb-6">
-                        Diseño Web <span class="gradient-text">Profesional</span> y <span class="gradient-text">Moderno</span>
+                    <h1 class="font-extrabold text-white leading-tight mb-6" data-lang-key="heroWebDesignTitle">
+                        Professional and <span class="gradient-text">Modern</span> Web Design
                     </h1>
-                    <p class="text-gray-300 mb-10">
-                        Creamos sitios web impactantes y funcionales para tu negocio.
+                    <p class="text-gray-300 mb-10" data-lang-key="heroWebDesignDesc">
+                        We create impactful and functional websites for your business.
                     </p>
                     <ul class="carousel-features">
-                        <li><i class="fas fa-check-circle"></i> Diseño Responsivo</li>
-                        <li><i class="fas fa-check-circle"></i> Optimización SEO</li>
-                        <li><i class="fas fa-check-circle"></i> Integración de E-commerce</li>
-                        <li><i class="fas fa-check-circle"></i> Soporte Post-Lanzamiento</li>
-                        <li><i class="fas fa-check-circle"></i> Diseño Personalizado</li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="responsiveDesign">Responsive Design</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="seoOptimization">SEO Optimization</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="ecommerceIntegration">E-commerce Integration</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="postLaunchSupport">Post-Launch Support</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-lang-key="customDesign">Custom Design</span></li>
                     </ul>
                     <div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-                        <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300">
-                            Solicitar Diseño Web
+                        <a href="#" class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300" data-lang-key="requestWebDesign">
+                            Request Web Design
                         </a>
-                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600">
-                            Contáctanos
+                        <a href="#" class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600" data-lang-key="contactUs">
+                            Contact Us
                         </a>
                     </div>
                 </div>
@@ -1129,49 +1348,49 @@
         <!-- Nuestras Ubicaciones Section -->
         <section id="ubicaciones" class="locations-section">
             <div class="container mx-auto px-6 md:px-12">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
-                    Nuestras <span class="gradient-text">Ubicaciones</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12" data-lang-key="locationsTitle">
+                    Our <span class="gradient-text">Locations</span>
                 </h2>
 
                 <!-- Desktop Layout of Locations (original structure) -->
                 <div id="desktop-locations-grid" class="main-locations-card">
                     <!-- North America Column -->
                     <div class="location-column">
-                        <h3>North America</h3>
+                        <h3 data-lang-key="northAmerica">North America</h3>
                         <ul class="location-list">
                             <li class="location-item">
-                                <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
+                                <img src="https://flagcdn.com/us.svg" alt="United States Flag" class="flag-icon">
                                 <span class="name">Miami, Florida</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #34d399;"></span> <!-- Green dot for online -->
-                                    <span>Online</span>
+                                    <span data-lang-key="online">Online</span>
                                     <i class="fas fa-chart-line chart-icon green"></i> <!-- Green chart for online -->
                                 </div>
                             </li>
                             <li class="location-item">
-                                <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
+                                <img src="https://flagcdn.com/us.svg" alt="United States Flag" class="flag-icon">
                                 <span class="name">Dallas, Texas</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span> <!-- Yellow dot for coming soon -->
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i> <!-- Yellow chart for coming soon -->
                                 </div>
                             </li>
                             <li class="location-item">
-                                <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
+                                <img src="https://flagcdn.com/us.svg" alt="United States Flag" class="flag-icon">
                                 <span class="name">Salt Lake City, Utah</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
                             <li class="location-item">
-                                <img src="https://flagcdn.com/us.svg" alt="Bandera de Estados Unidos" class="flag-icon">
+                                <img src="https://flagcdn.com/us.svg" alt="United States Flag" class="flag-icon">
                                 <span class="name">Ashburn, Virginia</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
@@ -1180,32 +1399,32 @@
 
                     <!-- Europe Column -->
                     <div class="location-column">
-                        <h3>Europe</h3>
+                        <h3 data-lang-key="europe">Europe</h3>
                         <ul class="location-list">
                             <li class="location-item">
-                                <img src="https://flagcdn.com/fr.svg" alt="Bandera de Francia" class="flag-icon">
+                                <img src="https://flagcdn.com/fr.svg" alt="France Flag" class="flag-icon">
                                 <span class="name">Paris, France</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
                             <li class="location-item">
-                                <img src="https://flagcdn.com/de.svg" alt="Bandera de Alemania" class="flag-icon">
+                                <img src="https://flagcdn.com/de.svg" alt="Germany Flag" class="flag-icon">
                                 <span class="name">Falkenstein, Germany</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
                             <li class="location-item">
-                                <img src="https://flagcdn.com/fi.svg" alt="Bandera de Finlandia" class="flag-icon">
+                                <img src="https://flagcdn.com/fi.svg" alt="Finland Flag" class="flag-icon">
                                 <span class="name">Helsinki, Finland</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
@@ -1214,23 +1433,23 @@
 
                     <!-- Asia Column -->
                     <div class="location-column">
-                        <h3>Asia</h3>
+                        <h3 data-lang-key="asia">Asia</h3>
                         <ul class="location-list">
                             <li class="location-item">
-                                <img src="https://flagcdn.com/sg.svg" alt="Bandera de Singapur" class="flag-icon">
+                                <img src="https://flagcdn.com/sg.svg" alt="Singapore Flag" class="flag-icon">
                                 <span class="name">Singapore, Asia</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
                             <li class="location-item">
-                                <img src="https://flagcdn.com/in.svg" alt="Bandera de India" class="flag-icon">
+                                <img src="https://flagcdn.com/in.svg" alt="India Flag" class="flag-icon">
                                 <span class="name">Mumbai, India</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #facc15;"></span>
-                                    <span>Próximamente</span>
+                                    <span data-lang-key="comingSoon">Coming Soon</span>
                                     <i class="fas fa-chart-line chart-icon yellow"></i>
                                 </div>
                             </li>
@@ -1239,14 +1458,14 @@
 
                     <!-- Oceania Column -->
                     <div class="location-column">
-                        <h3>Oceania</h3>
+                        <h3 data-lang-key="oceania">Oceania</h3>
                         <ul class="location-list">
                             <li class="location-item">
-                                <img src="https://flagcdn.com/au.svg" alt="Bandera de Australia" class="flag-icon">
+                                <img src="https://flagcdn.com/au.svg" alt="Australia Flag" class="flag-icon">
                                 <span class="name">Sydney, Australia</span>
                                 <div class="status-indicator">
                                     <span class="dot" style="background-color: #34d399;"></span>
-                                    <span>Online</span>
+                                    <span data-lang-key="online">Online</span>
                                     <i class="fas fa-chart-line chart-icon green"></i>
                                 </div>
                             </li>
@@ -1272,57 +1491,57 @@
         <!-- Features Section -->
         <section id="caracteristicas" class="py-16 md:py-24">
             <div class="container mx-auto px-6 md:px-12 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12">
-                    ¿Por qué elegir <span class="gradient-text">VoltixCloud</span>?
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-12" data-lang-key="whyChooseVoltix">
+                    Why choose <span class="gradient-text">VoltixCloud</span>?
                 </h2>
                 <!-- Desktop Layout of Features -->
                 <div class="feature-grid-container grid lg:grid-cols-3 gap-8 hidden md:grid" id="desktop-feature-grid">
                     <!-- Feature Card 1 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-shield-alt text-5xl feature-icon mb-6"></i>
-                        <h3 class="text-2xl font-semibold text-white mb-4">Protección DDoS Avanzada</h3>
-                        <p class="text-gray-400">
-                            Mantén tu servidor seguro de ataques maliciosos con nuestra protección DDoS de última generación.
+                        <h3 class="text-2xl font-semibold text-white mb-4" data-lang-key="advancedDDoS">Advanced DDoS Protection</h3>
+                        <p class="text-gray-400" data-lang-key="ddosProtectionDesc">
+                            Keep your server safe from malicious attacks with our state-of-the-art DDoS protection.
                         </p>
                     </div>
                     <!-- Feature Card 2 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-bolt text-5xl feature-icon mb-6"></i>
-                        <h3 class="text-2xl font-semibold text-white mb-4">Configuración Instantánea</h3>
-                        <p class="text-gray-400">
-                            Tu servidor estará listo para jugar en minutos, sin esperas.
+                        <h3 class="text-2xl font-semibold text-white mb-4" data-lang-key="instantSetup">Instant Setup</h3>
+                        <p class="text-gray-400" data-lang-key="instantSetupDesc">
+                            Your server will be ready to play in minutes, no waiting.
                         </p>
                     </div>
                     <!-- Feature Card 3 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-cogs text-5xl feature-icon mb-6"></i>
-                        <h3 class="text-2xl font-semibold text-white mb-4">Panel de Control Intuitivo</h3>
-                        <p class="text-gray-400">
-                            Administra tu servidor con facilidad usando nuestro panel de control personalizado.
+                        <h3 class="text-2xl font-semibold text-white mb-4" data-lang-key="intuitivePanel">Intuitive Control Panel</h3>
+                        <p class="text-gray-400" data-lang-key="intuitivePanelDesc">
+                            Manage your server with ease using our custom control panel.
                         </p>
                     </div>
                     <!-- Feature Card 4 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-globe text-5xl feature-icon mb-6"></i>
-                        <h3 class="text-2xl font-semibold text-white mb-4">Ubicaciones Globales</h3>
-                        <p class="text-gray-400">
-                            Elige la ubicación de servidor más cercana para la menor latencia.
+                        <h3 class="text-2xl font-semibold text-white mb-4" data-lang-key="globalLocations">Global Locations</h3>
+                        <p class="text-gray-400" data-lang-key="globalLocationsDesc">
+                            Choose the closest server location for the lowest latency.
                         </p>
                     </div>
                     <!-- Feature Card 5 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-headset text-5xl feature-icon mb-6"></i>
-                        <h3 class="text-2xl font-semibold text-white mb-4">Soporte 24/7</h3>
-                        <p class="text-gray-400">
-                            Nuestro equipo de soporte está disponible las 24 horas para ayudarte.
+                        <h3 class="text-2xl font-semibold text-white mb-4" data-lang-key="support247">24/7 Support</h3>
+                        <p class="text-gray-400" data-lang-key="support247Desc">
+                            Our support team is available 24 hours a day to help you.
                         </p>
                     </div>
                     <!-- Feature Card 6 -->
                     <div class="card-bg p-8 rounded-xl shadow-lg border border-gray-700 hover:border-purple-500 transition duration-300 transform hover:scale-105">
                         <i class="fas fa-server text-5xl feature-icon mb-6"></i>
-                        <h3 class="text-2xl font-semibold text-white mb-4">Hardware de Última Generación</h3>
-                        <p class="text-gray-400">
-                            Servidores construidos con los componentes más recientes para un rendimiento óptimo.
+                        <h3 class="text-2xl font-semibold text-white mb-4" data-lang-key="latestHardware">Latest Generation Hardware</h3>
+                        <p class="text-gray-400" data-lang-key="latestHardwareDesc">
+                            Servers built with the latest components for optimal performance.
                         </p>
                     </div>
                 </div>
@@ -1345,14 +1564,14 @@
         <!-- Call to Action Section -->
         <section class="py-16 md:py-24 cta-bg-gradient">
             <div class="container mx-auto px-6 md:px-12 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">
-                    ¿Listo para llevar tu servidor al siguiente nivel?
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-8" data-lang-key="ctaTitle">
+                    Ready to take your server to the next level?
                 </h2>
-                <p class="text-xl text-gray-300 mb-10">
-                    Únete a VoltixCloud hoy y experimenta la diferencia.
+                <p class="text-xl text-gray-300 mb-10" data-lang-key="ctaDesc">
+                    Join VoltixCloud today and experience the difference.
                 </p>
-                <a href="#" class="btn-primary text-white py-4 px-10 rounded-lg text-xl font-semibold shadow-lg hover:scale-105 transition duration-300">
-                    ¡Comienza Ahora!
+                <a href="#" class="btn-primary text-white py-4 px-10 rounded-lg text-xl font-semibold shadow-lg hover:scale-105 transition duration-300" data-lang-key="startNow">
+                    Get Started Now!
                 </a>
             </div>
         </section>
@@ -1364,8 +1583,8 @@
             <!-- Brand Info -->
             <div>
                 <a href="#" class="text-white text-2xl font-extrabold mb-4 block">Voltix <span class="gradient-text">Cloud</span></a>
-                <p class="mb-4">
-                    Hosting de Minecraft de alto rendimiento y fiable.
+                <p class="mb-4" data-lang-key="footerDesc">
+                    High-performance and reliable Minecraft hosting.
                 </p>
                 <div class="flex space-x-4 text-xl">
                     <a href="#" class="hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
@@ -1377,52 +1596,484 @@
 
             <!-- Quick Links -->
             <div>
-                <h4 class="text-white text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                <h4 class="text-white text-lg font-semibold mb-4" data-lang-key="quickLinks">Quick Links</h4>
                 <ul>
-                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Inicio</a></li>
-                    <li class="mb-2"><a href="#caracteristicas" class="hover:text-white transition duration-300">Características</a></li>
-                    <li class="mb-2"><a href="#soporte" class="hover:text-white transition duration-300">Soporte</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300" data-lang-key="home">Home</a></li>
+                    <li class="mb-2"><a href="#caracteristicas" class="hover:text-white transition duration-300" data-lang-key="features">Features</a></li>
+                    <li class="mb-2"><a href="#soporte" class="hover:text-white transition duration-300" data-lang-key="support">Support</a></li>
                 </ul>
             </div>
 
             <!-- Legal -->
             <div>
-                <h4 class="text-white text-lg font-semibold mb-4">Legal</h4>
+                <h4 class="text-white text-lg font-semibold mb-4" data-lang-key="legal">Legal</h4>
                 <ul>
-                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Términos de Servicio</a></li>
-                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Política de Privacidad</a></li>
-                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300">Política de Reembolso</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300" data-lang-key="termsOfService">Terms of Service</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300" data-lang-key="privacyPolicy">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white transition duration-300" data-lang-key="refundPolicy">Refund Policy</a></li>
                 </ul>
             </div>
 
             <!-- Contact Info -->
             <div>
-                <h4 class="text-white text-lg font-semibold mb-4">Contacto</h4>
+                <h4 class="text-white text-lg font-semibold mb-4" data-lang-key="contact">Contact</h4>
                 <ul>
                     <li class="mb-2">Email: <a href="mailto:soporte@voltixcloud.com" class="hover:text-white transition duration-300">soporte@voltixcloud.com</a></li>
                     <!-- Discord contact link updated -->
-                    <li class="mb-2">Discord: <a href="https://discord.gg/jhA9DHTHAW" class="hover:text-white transition duration-300">discord.gg/voltixcloud</a></li>
+                    <a href="https://discord.gg/jhA9DHTHAW" class="hover:text-white transition duration-300">discord.gg/voltixcloud</a></li>
                 </ul>
             </div>
         </div>
         <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p>&copy; 2025 VoltixCloud. Todos los derechos reservados.</p>
+            <p><span data-lang-key="copyright">&copy; 2025 VoltixCloud. All rights reserved.</span></p>
         </div>
     </footer>
 
     <!-- Floating Discord Button -->
     <button id="discord-floating-button" class="discord-floating-button">
         <i class="fab fa-discord"></i>
-        <span id="discord-online-count" class="online-count">Cargando...</span>
+        <span id="discord-online-count" class="online-count"><span data-lang-key="loading">Loading...</span></span>
     </button>
 
     <!-- Cookie Consent Bar -->
     <div id="cookie-consent-bar">
-        <p>Utilizamos cookies para mejorar tu experiencia en nuestro sitio web y ofrecerte un servicio más personalizado. Al continuar navegando, aceptas nuestra política de cookies.</p>
-        <button class="cookie-accept-btn" id="accept-cookies">Aceptar</button>
+        <p data-lang-key="cookieText">We use cookies to improve your experience on our website and offer you a more personalized service. By continuing to browse, you accept our cookie policy.</p>
+        <button class="cookie-accept-btn" id="accept-cookies" data-lang-key="accept">Accept</button>
     </div>
 
     <script>
+        // Translations object
+        const translations = {
+            en: {
+                gamePanel: "Game Panel",
+                clientArea: "Client Area",
+                vpsPortal: "VPS Portal",
+                cPanel: "cPanel",
+                offerBanner: "SALE!",
+                offerText: "Today with our discount codes!",
+                minecraftHosting: "Minecraft Hosting",
+                gameHosting: "Game Hosting",
+                cloudHosting: "Cloud Hosting",
+                resources: "Resources",
+                more: "More",
+                viewPlans: "View Plans",
+                devNotice: "This site is under development. Suggestions on",
+                minecraftHostingMobile: "Minecraft Hosting",
+                gameHostingMobile: "Game Hosting",
+                cloudHostingMobile: "Cloud Hosting",
+                resourcesMobile: "Resources",
+                moreMobile: "More",
+                clientAreaMobileBtn: "Client Area",
+                javaEdition: "Java Edition",
+                bedrockEdition: "Bedrock Edition",
+                moddedHosting: "Modded Hosting",
+                budgetHosting: "Budget Hosting",
+                heroWebHostingTitle: "Fast and <span class='gradient-text'>Secure</span> Web Hosting",
+                heroWebHostingDesc: "Host your website with the best performance and security.",
+                uptime: "99.9% Uptime",
+                freeSSL: "Free SSL",
+                nvmeSSD: "NVMe SSD",
+                intuitivePanel: "Intuitive Control Panel",
+                startWebHosting: "Start Web Hosting",
+                contactUs: "Contact Us",
+                heroMinecraftTitle: "Powerful and <span class='gradient-text'>Reliable</span> Minecraft Hosting",
+                heroMinecraftDesc: "Experience ultimate performance with VoltixCloud. Optimized servers for your Minecraft adventure.",
+                advancedDDoS: "Advanced DDoS Protection",
+                instantSetup: "Instant Setup",
+                globalLocations: "Global Locations",
+                support247: "24/7 Support",
+                latestHardware: "Latest Generation Hardware",
+                viewMinecraftPlans: "View Minecraft Plans",
+                heroWebDesignTitle: "Professional and <span class='gradient-text'>Modern</span> Web Design",
+                heroWebDesignDesc: "We create impactful and functional websites for your business.",
+                responsiveDesign: "Responsive Design",
+                seoOptimization: "SEO Optimization",
+                ecommerceIntegration: "E-commerce Integration",
+                postLaunchSupport: "Post-Launch Support",
+                customDesign: "Custom Design",
+                requestWebDesign: "Request Web Design",
+                locationsTitle: "Our <span class='gradient-text'>Locations</span>",
+                northAmerica: "North America",
+                online: "Online",
+                comingSoon: "Coming Soon",
+                europe: "Europe",
+                asia: "Asia",
+                oceania: "Oceania",
+                whyChooseVoltix: "Why choose <span class='gradient-text'>VoltixCloud</span>?",
+                ddosProtectionDesc: "Keep your server safe from malicious attacks with our state-of-the-art DDoS protection.",
+                instantSetupDesc: "Your server will be ready to play in minutes, no waiting.",
+                intuitivePanelDesc: "Manage your server with ease using our custom control panel.",
+                globalLocationsDesc: "Choose the closest server location for the lowest latency.",
+                support247Desc: "Our support team is available 24 hours a day to help you.",
+                latestHardwareDesc: "Servers built with the latest components for optimal performance.",
+                ctaTitle: "Ready to take your server to the next level?",
+                ctaDesc: "Join VoltixCloud today and experience the difference.",
+                startNow: "Get Started Now!",
+                footerDesc: "High-performance and reliable Minecraft hosting.",
+                quickLinks: "Quick Links",
+                home: "Home",
+                features: "Features",
+                support: "Support",
+                legal: "Legal",
+                termsOfService: "Terms of Service",
+                privacyPolicy: "Privacy Policy",
+                refundPolicy: "Refund Policy",
+                contact: "Contact",
+                copyright: "&copy; 2025 VoltixCloud. All rights reserved.",
+                loading: "Loading...",
+                onlineStatus: "online"
+            },
+            es: {
+                gamePanel: "Panel de Juegos",
+                clientArea: "Área de Cliente",
+                vpsPortal: "Portal VPS",
+                cPanel: "cPanel",
+                offerBanner: "¡OFERTA!",
+                offerText: "Hoy con nuestros códigos de descuento!",
+                minecraftHosting: "Alojamiento de Minecraft",
+                gameHosting: "Alojamiento de Juegos",
+                cloudHosting: "Alojamiento en la Nube",
+                resources: "Recursos",
+                more: "Más",
+                viewPlans: "Ver Planes",
+                devNotice: "Este sitio está en desarrollo. Sugerencias en",
+                minecraftHostingMobile: "Alojamiento de Minecraft",
+                gameHostingMobile: "Alojamiento de Juegos",
+                cloudHostingMobile: "Alojamiento en la Nube",
+                resourcesMobile: "Recursos",
+                moreMobile: "Más",
+                clientAreaMobileBtn: "Área de Cliente",
+                javaEdition: "Java Edition",
+                bedrockEdition: "Bedrock Edition",
+                moddedHosting: "Alojamiento con Mods",
+                budgetHosting: "Alojamiento Económico",
+                heroWebHostingTitle: "Hosting Web <span class='gradient-text'>Rápido</span> y <span class='gradient-text'>Seguro</span>",
+                heroWebHostingDesc: "Aloja tu sitio web con el mejor rendimiento y seguridad.",
+                uptime: "Uptime 99.9%",
+                freeSSL: "SSL Gratuito",
+                nvmeSSD: "SSD NVMe",
+                intuitivePanel: "Panel de Control Intuitivo",
+                startWebHosting: "Comenzar Web Hosting",
+                contactUs: "Contáctanos",
+                heroMinecraftTitle: "Hosting de Minecraft <span class='gradient-text'>Potente</span> y <span class='gradient-text'>Fiable</span>",
+                heroMinecraftDesc: "Experimenta el rendimiento definitivo con VoltixCloud. Servidores optimizados para tu aventura en Minecraft.",
+                advancedDDoS: "Protección DDoS Avanzada",
+                instantSetup: "Configuración Instantánea",
+                globalLocations: "Ubicaciones Globales",
+                support247: "Soporte 24/7",
+                latestHardware: "Hardware de Última Generación",
+                viewMinecraftPlans: "Ver Planes de Minecraft",
+                heroWebDesignTitle: "Diseño Web <span class='gradient-text'>Profesional</span> y <span class='gradient-text'>Moderno</span>",
+                heroWebDesignDesc: "Creamos sitios web impactantes y funcionales para tu negocio.",
+                responsiveDesign: "Diseño Responsivo",
+                seoOptimization: "Optimización SEO",
+                ecommerceIntegration: "Integración de E-commerce",
+                postLaunchSupport: "Soporte Post-Lanzamiento",
+                customDesign: "Diseño Personalizado",
+                requestWebDesign: "Solicitar Diseño Web",
+                locationsTitle: "Nuestras <span class='gradient-text'>Ubicaciones</span>",
+                northAmerica: "Norteamérica",
+                online: "Online",
+                comingSoon: "Próximamente",
+                europe: "Europa",
+                asia: "Asia",
+                oceania: "Oceanía",
+                whyChooseVoltix: "¿Por qué elegir <span class='gradient-text'>VoltixCloud</span>?",
+                ddosProtectionDesc: "Mantén tu servidor seguro de ataques maliciosos con nuestra protección DDoS de última generación.",
+                instantSetupDesc: "Tu servidor estará listo para jugar en minutos, sin esperas.",
+                intuitivePanelDesc: "Administra tu servidor con facilidad usando nuestro panel de control personalizado.",
+                globalLocationsDesc: "Elige la ubicación de servidor más cercana para la menor latencia.",
+                support247Desc: "Nuestro equipo de soporte está disponible las 24 horas para ayudarte.",
+                latestHardwareDesc: "Servidores construidos con los componentes más recientes para un rendimiento óptimo.",
+                ctaTitle: "¿Listo para llevar tu servidor al siguiente nivel?",
+                ctaDesc: "Únete a VoltixCloud hoy y experimenta la diferencia.",
+                startNow: "¡Comienza Ahora!",
+                footerDesc: "Hosting de Minecraft de alto rendimiento y fiable.",
+                quickLinks: "Enlaces Rápidos",
+                home: "Inicio",
+                features: "Características",
+                support: "Soporte",
+                legal: "Legal",
+                termsOfService: "Términos de Servicio",
+                privacyPolicy: "Política de Privacidad",
+                refundPolicy: "Política de Reembolso",
+                contact: "Contacto",
+                copyright: "&copy; 2025 VoltixCloud. Todos los derechos reservados.",
+                loading: "Cargando...",
+                onlineStatus: "en línea"
+            },
+            fr: {
+                gamePanel: "Panneau de Jeu",
+                clientArea: "Espace Client",
+                vpsPortal: "Portail VPS",
+                cPanel: "cPanel",
+                offerBanner: "PROMO !",
+                offerText: "Aujourd'hui avec nos codes de réduction !",
+                minecraftHosting: "Hébergement Minecraft",
+                gameHosting: "Hébergement de Jeux",
+                cloudHosting: "Hébergement Cloud",
+                resources: "Ressources",
+                more: "Plus",
+                viewPlans: "Voir les Offres",
+                devNotice: "Ce site est en développement. Suggestions sur",
+                minecraftHostingMobile: "Hébergement Minecraft",
+                gameHostingMobile: "Hébergement de Jeux",
+                cloudHostingMobile: "Hébergement Cloud",
+                resourcesMobile: "Ressources",
+                moreMobile: "Plus",
+                clientAreaMobileBtn: "Espace Client",
+                javaEdition: "Édition Java",
+                bedrockEdition: "Édition Bedrock",
+                moddedHosting: "Hébergement Moddé",
+                budgetHosting: "Hébergement Économique",
+                heroWebHostingTitle: "Hébergement Web <span class='gradient-text'>Rapide</span> et <span class='gradient-text'>Sécurisé</span>",
+                heroWebHostingDesc: "Hébergez votre site web avec les meilleures performances et sécurité.",
+                uptime: "99.9% Disponibilité",
+                freeSSL: "SSL Gratuit",
+                nvmeSSD: "SSD NVMe",
+                intuitivePanel: "Panneau de Contrôle Intuitif",
+                startWebHosting: "Démarrer l'Hébergement Web",
+                contactUs: "Nous Contacter",
+                heroMinecraftTitle: "Hébergement Minecraft <span class='gradient-text'>Puissant</span> et <span class='gradient-text'>Fiable</span>",
+                heroMinecraftDesc: "Découvrez des performances ultimes avec VoltixCloud. Serveurs optimisés pour votre aventure Minecraft.",
+                advancedDDoS: "Protection DDoS Avancée",
+                instantSetup: "Configuration Instantanée",
+                globalLocations: "Emplacements Mondiaux",
+                support247: "Support 24/7",
+                latestHardware: "Matériel de Dernière Génération",
+                viewMinecraftPlans: "Voir les Offres Minecraft",
+                heroWebDesignTitle: "Conception Web <span class='gradient-text'>Professionnelle</span> et <span class='gradient-text'>Moderne</span>",
+                heroWebDesignDesc: "Nous créons des sites web percutants et fonctionnels pour votre entreprise.",
+                responsiveDesign: "Design Responsive",
+                seoOptimization: "Optimisation SEO",
+                ecommerceIntegration: "Intégration E-commerce",
+                postLaunchSupport: "Support Post-Lancement",
+                customDesign: "Design Personnalisé",
+                requestWebDesign: "Demander une Conception Web",
+                locationsTitle: "Nos <span class='gradient-text'>Emplacements</span>",
+                northAmerica: "Amérique du Nord",
+                online: "En ligne",
+                comingSoon: "Bientôt Disponible",
+                europe: "Europe",
+                asia: "Asie",
+                oceania: "Océanie",
+                whyChooseVoltix: "Pourquoi choisir <span class='gradient-text'>VoltixCloud</span> ?",
+                ddosProtectionDesc: "Protégez votre serveur des attaques malveillantes grâce à notre protection DDoS de pointe.",
+                instantSetupDesc: "Votre serveur sera prêt à jouer en quelques minutes, sans attente.",
+                intuitivePanelDesc: "Gérez votre serveur en toute simplicité grâce à notre panneau de contrôle personnalisé.",
+                globalLocationsDesc: "Choisissez l'emplacement de serveur le plus proche pour une latence minimale.",
+                support247Desc: "Notre équipe de support est disponible 24h/24 pour vous aider.",
+                latestHardwareDesc: "Serveurs construits avec les composants les plus récents pour des performances optimales.",
+                ctaTitle: "Prêt à faire passer votre serveur au niveau supérieur ?",
+                ctaDesc: "Rejoignez VoltixCloud aujourd'hui et découvrez la différence.",
+                startNow: "Commencer Maintenant !",
+                footerDesc: "Hébergement Minecraft haute performance et fiable.",
+                quickLinks: "Liens Rapides",
+                home: "Accueil",
+                features: "Fonctionnalités",
+                support: "Support",
+                legal: "Légal",
+                termsOfService: "Conditions d'Utilisation",
+                privacyPolicy: "Politique de Confidentialité",
+                refundPolicy: "Politique de Remboursement",
+                contact: "Contact",
+                copyright: "&copy; 2025 VoltixCloud. Tous droits réservés.",
+                loading: "Chargement...",
+                onlineStatus: "en ligne"
+            },
+            ct: {
+                gamePanel: "Panell de Joc",
+                clientArea: "Àrea de Client",
+                vpsPortal: "Portal VPS",
+                cPanel: "cPanel",
+                offerBanner: "OFERTA!",
+                offerText: "Avui amb els nostres codis de descompte!",
+                minecraftHosting: "Allotjament de Minecraft",
+                gameHosting: "Allotjament de Jocs",
+                cloudHosting: "Allotjament al Núvol",
+                resources: "Recursos",
+                more: "Més",
+                viewPlans: "Veure Plans",
+                devNotice: "Aquest lloc està en desenvolupament. Suggeriments a",
+                minecraftHostingMobile: "Allotjament de Minecraft",
+                gameHostingMobile: "Allotjament de Jocs",
+                cloudHostingMobile: "Allotjament al Núvol",
+                resourcesMobile: "Recursos",
+                moreMobile: "Més",
+                clientAreaMobileBtn: "Àrea de Client",
+                javaEdition: "Edició Java",
+                bedrockEdition: "Edició Bedrock",
+                moddedHosting: "Allotjament Modificat",
+                budgetHosting: "Allotjament Econòmic",
+                heroWebHostingTitle: "Hosting Web <span class='gradient-text'>Ràpid</span> i <span class='gradient-text'>Segur</span>",
+                heroWebHostingDesc: "Allotja el teu lloc web amb el millor rendiment i seguretat.",
+                uptime: "99.9% Temps d'activitat",
+                freeSSL: "SSL Gratuït",
+                nvmeSSD: "SSD NVMe",
+                intuitivePanel: "Panell de Control Intuitiu",
+                startWebHosting: "Començar Hosting Web",
+                contactUs: "Contacta'ns",
+                heroMinecraftTitle: "Allotjament de Minecraft <span class='gradient-text'>Potent</span> i <span class='gradient-text'>Fiable</span>",
+                heroMinecraftDesc: "Experimenta el rendiment definitiu amb VoltixCloud. Servidors optimitzats per a la teva aventura a Minecraft.",
+                advancedDDoS: "Protecció DDoS Avançada",
+                instantSetup: "Configuració Instantània",
+                globalLocations: "Ubicacions Globals",
+                support247: "Suport 24/7",
+                latestHardware: "Maquinari d'Última Generació",
+                viewMinecraftPlans: "Veure Plans de Minecraft",
+                heroWebDesignTitle: "Disseny Web <span class='gradient-text'>Professional</span> i <span class='gradient-text'>Modern</span>",
+                heroWebDesignDesc: "Creem llocs web impactants i funcionals per al teu negoci.",
+                responsiveDesign: "Disseny Adaptatiu",
+                seoOptimization: "Optimització SEO",
+                ecommerceIntegration: "Integració de Comerç Electrònic",
+                postLaunchSupport: "Suport Post-Llançament",
+                customDesign: "Disseny Personalitzat",
+                requestWebDesign: "Sol·licitar Disseny Web",
+                locationsTitle: "Les nostres <span class='gradient-text'>Ubicacions</span>",
+                northAmerica: "Amèrica del Nord",
+                online: "En línia",
+                comingSoon: "Properament",
+                europe: "Europa",
+                asia: "Àsia",
+                oceania: "Oceania",
+                whyChooseVoltix: "Per què triar <span class='gradient-text'>VoltixCloud</span>?",
+                ddosProtectionDesc: "Mantén el teu servidor segur d'atacs maliciosos amb la nostra protecció DDoS d'última generació.",
+                instantSetupDesc: "El teu servidor estarà llest per jugar en minuts, sense esperes.",
+                intuitivePanelDesc: "Administra el teu servidor amb facilitat utilitzant el nostre panell de control personalitzat.",
+                globalLocationsDesc: "Tria la ubicació de servidor més propera per a la menor latència.",
+                support247Desc: "El nostre equip de suport està disponible les 24 hores del dia per ajudar-te.",
+                latestHardwareDesc: "Servidors construïts amb els components més recents per a un rendiment òptim.",
+                ctaTitle: "Llest per portar el teu servidor al següent nivell?",
+                ctaDesc: "Uneix-te a VoltixCloud avui i experimenta la diferència.",
+                startNow: "Comença Ara!",
+                footerDesc: "Hosting de Minecraft d'alt rendiment i fiable.",
+                quickLinks: "Enllaços Ràpids",
+                home: "Inici",
+                features: "Característiques",
+                support: "Suport",
+                legal: "Legal",
+                termsOfService: "Condicions del Servei",
+                privacyPolicy: "Política de Privacitat",
+                refundPolicy: "Política de Reemborsament",
+                contact: "Contacte",
+                copyright: "&copy; 2025 VoltixCloud. Tots els drets reservats.",
+                loading: "Carregant...",
+                onlineStatus: "en línia"
+            },
+            de: {
+                gamePanel: "Game Panel",
+                clientArea: "Kundenbereich",
+                vpsPortal: "VPS Portal",
+                cPanel: "cPanel",
+                offerBanner: "SALE!",
+                offerText: "Heute mit unseren Rabattcodes!",
+                minecraftHosting: "Minecraft Hosting",
+                gameHosting: "Game Hosting",
+                cloudHosting: "Cloud Hosting",
+                resources: "Ressourcen",
+                more: "Mehr",
+                viewPlans: "Pläne Ansehen",
+                devNotice: "Diese Seite befindet sich in Entwicklung. Vorschläge auf",
+                minecraftHostingMobile: "Minecraft Hosting",
+                gameHostingMobile: "Game Hosting",
+                cloudHostingMobile: "Cloud Hosting",
+                resourcesMobile: "Ressourcen",
+                moreMobile: "Mehr",
+                clientAreaMobileBtn: "Kundenbereich",
+                javaEdition: "Java Edition",
+                bedrockEdition: "Bedrock Edition",
+                moddedHosting: "Modded Hosting",
+                budgetHosting: "Budget Hosting",
+                heroWebHostingTitle: "Schnelles und <span class='gradient-text'>Sicheres</span> Webhosting",
+                heroWebHostingDesc: "Hosten Sie Ihre Website mit der besten Leistung und Sicherheit.",
+                uptime: "99.9% Verfügbarkeit",
+                freeSSL: "Kostenloses SSL",
+                nvmeSSD: "NVMe SSD",
+                intuitivePanel: "Intuitives Control Panel",
+                startWebHosting: "Webhosting Starten",
+                contactUs: "Kontaktieren Sie Uns",
+                heroMinecraftTitle: "Leistungsstarkes und <span class='gradient-text'>Zuverlässiges</span> Minecraft Hosting",
+                heroMinecraftDesc: "Erleben Sie ultimative Leistung mit VoltixCloud. Optimierte Server für Ihr Minecraft-Abenteuer.",
+                advancedDDoS: "Erweiterter DDoS-Schutz",
+                instantSetup: "Sofortige Einrichtung",
+                globalLocations: "Globale Standorte",
+                support247: "24/7 Support",
+                latestHardware: "Hardware der neuesten Generation",
+                viewMinecraftPlans: "Minecraft Pläne Ansehen",
+                heroWebDesignTitle: "Professionelles und <span class='gradient-text'>Modernes</span> Webdesign",
+                heroWebDesignDesc: "Wir erstellen beeindruckende und funktionale Websites für Ihr Unternehmen.",
+                responsiveDesign: "Responsives Design",
+                seoOptimization: "SEO-Optimierung",
+                ecommerceIntegration: "E-Commerce-Integration",
+                postLaunchSupport: "Support nach dem Start",
+                customDesign: "Individuelles Design",
+                requestWebDesign: "Webdesign Anfragen",
+                locationsTitle: "Unsere <span class='gradient-text'>Standorte</span>",
+                northAmerica: "Nordamerika",
+                online: "Online",
+                comingSoon: "Demnächst",
+                europe: "Europa",
+                asia: "Asien",
+                oceania: "Ozeanien",
+                whyChooseVoltix: "Warum <span class='gradient-text'>VoltixCloud</span> wählen?",
+                ddosProtectionDesc: "Schützen Sie Ihren Server vor bösartigen Angriffen mit unserem hochmodernen DDoS-Schutz.",
+                instantSetupDesc: "Ihr Server ist in wenigen Minuten spielbereit, ohne Wartezeiten.",
+                intuitivePanelDesc: "Verwalten Sie Ihren Server einfach mit unserem benutzerdefinierten Control Panel.",
+                globalLocationsDesc: "Wählen Sie den nächstgelegenen Serverstandort für die geringste Latenz.",
+                support247Desc: "Unser Support-Team steht Ihnen 24 Stunden am Tag zur Verfügung.",
+                latestHardwareDesc: "Server, die mit den neuesten Komponenten für optimale Leistung gebaut wurden.",
+                ctaTitle: "Bereit, Ihren Server auf die nächste Stufe zu heben?",
+                ctaDesc: "Treten Sie VoltixCloud noch heute bei und erleben Sie den Unterschied.",
+                startNow: "Jetzt Starten!",
+                footerDesc: "Leistungsstarkes und zuverlässiges Minecraft Hosting.",
+                quickLinks: "Schnellzugriffe",
+                home: "Startseite",
+                features: "Funktionen",
+                support: "Support",
+                legal: "Rechtliches",
+                termsOfService: "Nutzungsbedingungen",
+                privacyPolicy: "Datenschutzbestimmungen",
+                refundPolicy: "Rückgaberichtlinie",
+                contact: "Kontakt",
+                copyright: "&copy; 2025 VoltixCloud. Alle Rechte vorbehalten.",
+                loading: "Wird geladen...",
+                onlineStatus: "online"
+            }
+        };
+
+        let currentLang = 'en'; // Default language
+
+        function updateContentLanguage(lang) {
+            const selectedTranslations = translations[lang] || translations['en'];
+            currentLang = lang;
+            document.documentElement.lang = lang; // Update HTML lang attribute
+
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                // Fallback to English if the specific key is not found in the selected language
+                const translatedText = selectedTranslations[key] !== undefined ? selectedTranslations[key] : translations['en'][key];
+
+                if (translatedText !== undefined) { // Check if a translation exists at all
+                    element.innerHTML = translatedText; // Directly set innerHTML
+                }
+            });
+
+            // Special handling for Discord online count text
+            const discordOnlineCountSpan = document.getElementById('discord-online-count');
+            if (discordOnlineCountSpan) {
+                const currentCount = parseInt(discordOnlineCountSpan.textContent);
+                const onlineStatusText = selectedTranslations.onlineStatus !== undefined ? selectedTranslations.onlineStatus : translations['en'].onlineStatus;
+                const loadingText = selectedTranslations.loading !== undefined ? selectedTranslations.loading : translations['en'].loading;
+
+                if (!isNaN(currentCount)) {
+                    discordOnlineCountSpan.textContent = `${currentCount} ${onlineStatusText}`;
+                } else {
+                    discordOnlineCountSpan.textContent = loadingText;
+                }
+            }
+        }
+
+
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1435,29 +2086,108 @@
             document.body.classList.toggle('overflow-hidden'); // Prevent scrolling body when menu is open
         });
 
-        // Close mobile menu when clicking backdrop or a link
+        // Close mobile menu when clicking backdrop
         mobileMenuBackdrop.addEventListener('click', () => {
             mobileMenu.classList.remove('is-open');
             mobileMenuBackdrop.classList.remove('is-visible');
             document.body.classList.remove('overflow-hidden');
+            // Close any open mobile submenus when main menu closes
+            document.querySelectorAll('.mobile-minecraft-submenu.is-open').forEach(submenu => {
+                submenu.classList.remove('is-open');
+            });
         });
 
-        // Close mobile menu when clicking a link inside the menu
+        // Handle clicks inside the mobile menu
         document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', function (event) {
+                // Check if the clicked link is a dropdown toggle
+                if (this.classList.contains('mobile-dropdown-toggle')) {
+                    event.preventDefault(); // Prevent default link behavior (e.g., navigating)
+                    const targetId = this.dataset.target;
+                    const targetSubmenu = document.getElementById(targetId);
+
+                    if (targetSubmenu) {
+                        // Close other open submenus before opening this one
+                        document.querySelectorAll('.mobile-minecraft-submenu.is-open').forEach(submenu => {
+                            if (submenu.id !== targetId) {
+                                submenu.classList.remove('is-open');
+                            }
+                        });
+                        targetSubmenu.classList.toggle('is-open');
+                    }
+                } else {
+                    // If it's a regular link, close the main menu and any open submenus
+                    mobileMenu.classList.remove('is-open');
+                    mobileMenuBackdrop.classList.remove('is-visible');
+                    document.body.classList.remove('overflow-hidden');
+                    document.querySelectorAll('.mobile-minecraft-submenu.is-open').forEach(submenu => {
+                        submenu.classList.remove('is-open');
+                    });
+                }
+            });
+        });
+
+        // Language selector logic for mobile
+        document.querySelectorAll('#language-submenu a').forEach(langLink => {
+            langLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                const selectedLang = this.dataset.lang;
+                const flagSrc = this.querySelector('img').src;
+                const langText = this.textContent.trim();
+
+                // Update the main mobile language selector display
+                document.getElementById('current-mobile-flag').src = flagSrc;
+                document.getElementById('current-mobile-lang-text').textContent = langText;
+
+                // Close the language submenu
+                document.getElementById('language-submenu').classList.remove('is-open');
+
+                // Update content language
+                updateContentLanguage(selectedLang);
+
+                // Optionally, close the main mobile menu if desired after language selection
                 mobileMenu.classList.remove('is-open');
                 mobileMenuBackdrop.classList.remove('is-visible');
                 document.body.classList.remove('overflow-hidden');
+
+                console.log(`Language changed to: ${selectedLang}`);
             });
         });
+
+        // Language selector logic for desktop
+        document.querySelectorAll('.language-dropdown-menu a').forEach(langLink => {
+            langLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                const selectedLang = this.dataset.lang;
+                const flagSrc = this.querySelector('img').src;
+                const langText = this.textContent.trim();
+
+                // Update the main desktop language selector display
+                document.getElementById('desktop-language-toggle').querySelector('img').src = flagSrc;
+                document.getElementById('desktop-language-toggle').childNodes[2].nodeValue = ` ${langText} `; // Update text node
+
+                // Update content language
+                updateContentLanguage(selectedLang);
+
+                console.log(`Language changed to: ${selectedLang}`);
+            });
+        });
+
 
         // Smooth scrolling for navigation links (main navigation)
         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const href = this.getAttribute('href');
+                // Only attempt to scroll if the href is not just "#" (which is used for dropdown toggles)
+                if (href && href !== '#') {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else if (href === '#') {
+                    // If href is just '#', prevent default behavior to avoid scrolling to top
+                    e.preventDefault();
+                }
             });
         });
 
@@ -1529,6 +2259,7 @@
             }
         });
 
+
         // Initialize carousel on page load
         document.addEventListener('DOMContentLoaded', () => {
             showSlide(currentSlide);
@@ -1548,7 +2279,7 @@
         const DISCORD_INVITE_LINK = `https://discord.gg/${DISCORD_INVITE_CODE}`; // Enlace de invitación
 
         async function fetchDiscordOnlineUsers() {
-            discordOnlineCount.textContent = 'Cargando...'; // Loading state
+            discordOnlineCount.textContent = translations[currentLang].loading; // Set loading text based on current language
 
             try {
                 // Using the invite API with with_counts=true
@@ -1558,7 +2289,7 @@
                 }
                 const data = await response.json();
                 if (data && data.approximate_presence_count !== undefined) {
-                    discordOnlineCount.textContent = `${data.approximate_presence_count} en línea`;
+                    discordOnlineCount.textContent = `${data.approximate_presence_count} ${translations[currentLang].onlineStatus}`;
                 } else {
                     discordOnlineCount.textContent = 'Error';
                     console.error('Discord invite data not found or invalid:', data);
@@ -1625,7 +2356,7 @@
 
             // If on mobile, show mobile carousel and hide desktop grid
             mobileLocationsCarousel.style.display = 'block';
-            desktopLocationsGrid.style.display = 'none'; // Hide the original desktop container
+            desktopLocationsGrid.style.display = 'none'; // Hide the original desktop grid
 
             const itemWidthWithMargin = locationCarouselItems[0].offsetWidth + (parseFloat(getComputedStyle(locationCarouselItems[0]).marginLeft) || 0) + (parseFloat(getComputedStyle(locationCarouselItems[0]).marginRight) || 0);
 
@@ -1677,7 +2408,6 @@
             locationSlideInterval = setInterval(nextLocationSlide, 7000); // Change slide every 7 seconds
         }
 
-        // Function to stop auto-sliding for location carousel
         function stopLocationAutoSlide() {
             clearInterval(locationSlideInterval);
         }
@@ -1846,6 +2576,7 @@
 
         // Initial setup on page load
         document.addEventListener('DOMContentLoaded', () => {
+            updateContentLanguage(currentLang); // Set initial language
             fetchDiscordOnlineUsers();
             setInterval(fetchDiscordOnlineUsers, 30000);
             showCookieConsent();
@@ -1855,6 +2586,58 @@
 
             updateFeatureCarousel(true); // Initialize feature carousel
             startFeatureAutoSlide(); // Start auto-slide for feature carousel
+
+            // Desktop Language Dropdown Logic (only if it exists)
+            const desktopLanguageDropdown = document.querySelector('.language-dropdown');
+            if (desktopLanguageDropdown) {
+                const desktopLanguageToggle = document.getElementById('desktop-language-toggle');
+                // Corrected: Toggle 'is-active-dropdown' on the parent div, not the menu itself
+                desktopLanguageToggle.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation(); // Prevent document click from immediately closing it
+
+                    // Close any other open desktop dropdowns (only minecraft in this case)
+                    const desktopMinecraftDropdownMenu = document.getElementById('minecraft-desktop-menu');
+                    if (desktopMinecraftDropdownMenu) {
+                        desktopMinecraftDropdownMenu.classList.remove('is-active-dropdown');
+                    }
+
+                    desktopLanguageDropdown.classList.toggle('is-active-dropdown'); // Toggles on the parent .language-dropdown
+                });
+
+                // Close language dropdown when clicking outside
+                document.addEventListener('click', (event) => {
+                    if (!desktopLanguageDropdown.contains(event.target)) {
+                        desktopLanguageDropdown.classList.remove('is-active-dropdown'); // Removes from the parent .language-dropdown
+                    }
+                });
+            }
+
+            // Desktop Minecraft Dropdown Logic
+            const desktopMinecraftDropdownToggle = document.querySelector('.desktop-nav-link[data-target="minecraft-desktop-menu"]');
+            const desktopMinecraftDropdownMenu = document.getElementById('minecraft-desktop-menu');
+
+            if (desktopMinecraftDropdownToggle && desktopMinecraftDropdownMenu) {
+                desktopMinecraftDropdownToggle.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation(); // Crucial: Stop propagation to prevent document click from immediately closing it
+
+                    // Close any other open desktop dropdowns (only language in this case)
+                    const desktopLanguageDropdown = document.querySelector('.language-dropdown');
+                    if (desktopLanguageDropdown) {
+                        desktopLanguageDropdown.classList.remove('is-active-dropdown');
+                    }
+
+                    desktopMinecraftDropdownMenu.classList.toggle('is-active-dropdown');
+                });
+
+                // Close desktop Minecraft dropdown when clicking anywhere outside it
+                document.addEventListener('click', (event) => {
+                    if (!desktopMinecraftDropdownMenu.contains(event.target) && !desktopMinecraftDropdownToggle.contains(event.target)) {
+                        desktopMinecraftDropdownMenu.classList.remove('is-active-dropdown');
+                    }
+                });
+            }
         });
 
         // Add a resize listener to handle orientation changes or window resize
