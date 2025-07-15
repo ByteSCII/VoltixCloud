@@ -56,22 +56,26 @@
             background-color: #1a1c22; /* Fondo de tarjeta más oscuro para mayor contraste */
             border: 3px solid transparent; /* Establece un borde transparente para reservar espacio para el degradado */
             background-clip: padding-box; /* Asegura que el fondo no se extienda al borde */
-            border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Borde degradado rosamorado */
-            transition: all 0.3s ease, border-image 0.5s ease-in-out; /* Transición suave para todas las propiedades y el borde degradado */
+            border-image: linear-gradient(90deg, #8B5CF6, #EC4899) 1; /* Borde degradado púrpura a rosa */
+            transition: all 0.3s ease, border-image 0.5s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease; /* Transición suave para todas las propiedades y el borde degradado */
             box-sizing: border-box; /* IMPORTANT: Include padding and border in the element's total width and height */
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.2); /* Sombra sutil para la tarjeta */
+            /* Removed animation: subtle-float 3s ease-in-out infinite; */
         }
         .card-bg:hover {
-            border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invierte el degradado al pasar el ratón */
-            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4); /* Sombra más fuerte al pasar el ratón */
-            transform: translateY(-5px) scale(1.02); /* Levantamiento más pronunciado y ligera escala */
+            border-image: linear-gradient(90deg, #EC4899, #8B5CF6) 1; /* Invierte el degradado al pasar el ratón */
+            box-shadow: 0 10px 35px rgba(168, 85, 247, 0.6); /* Sombra más fuerte al pasar el ratón */
+            transform: translateY(-5px) scale(1.03); /* Ligero levantamiento (consistent with location-column) and slight scale */
+            filter: brightness(1.1); /* Efecto de brillo al pasar el ratón */
         }
         .feature-icon {
-            color: #8b5cf6; /* Un púrpura ligeramente más brillante para los iconos */
+            color: #A855F7; /* Un púrpura más brillante para los iconos */
             transition: transform 0.3s ease, color 0.3s ease; /* Transición suave para la animación del icono */
+            font-size: 4rem; /* text-6xl (64px) */
         }
         .card-bg:hover .feature-icon {
-            transform: translateY(-5px) rotate(5deg); /* El icono se mueve hacia arriba y gira ligeramente al pasar el ratón */
-            color: #ec4899; /* Cambia el color del icono al pasar el ratón */
+            transform: translateY(-10px) rotate(10deg); /* El icono se mueve hacia arriba y gira ligeramente al pasar el ratón */
+            color: #EC4899; /* Cambia el color del icono al pasar el ratón */
         }
         /* Estilo personalizado para menús desplegables */
         .dropdown-menu {
@@ -539,7 +543,7 @@
                 /* Add subtle shadow for desktop columns */
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
                 transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-                animation: subtle-float 3s ease-in-out infinite; /* Apply levitating animation */
+                /* Removed animation: subtle-float 3s ease-in-out infinite; */
                 /* Remove individual column borders if the main grid has a border */
                 border: none; /* Remove individual borders from columns within the main grid */
             }
@@ -558,113 +562,127 @@
         }
 
         /* Estilos para el diseño de carrusel en móvil */
-        #mobile-locations-carousel { /* New ID for the mobile carousel wrapper */
-            position: relative;
-            width: calc(100% - 2rem); /* Take full width of its parent container, with padding */
-            max-width: 400px; /* Adjust this to control how much of side items are visible */
-            margin: 0 auto; /* Center the viewport */
-            overflow: hidden; /* This hides the overflowing parts of the items */
-            border-radius: 0.75rem; /* Match card radius */
-            display: none; /* Hidden by default, shown on mobile */
+        /* NEW: Styles for the 3D rotating effect on mobile locations carousel */
+        @media (min-width: 768px) {
+            #mobile-locations-carousel-3d {
+                display: none !important; /* Hide 3D carousel on desktop */
+            }
         }
-
         @media (max-width: 767px) {
-            #desktop-locations-grid {
-                display: none; /* Hide desktop version on mobile */
-            }
-            #mobile-locations-carousel {
-                display: block; /* Show mobile carousel on mobile */
-            }
-
-            .carousel-track {
-                display: flex;
-                transition: transform 0.5s ease-in-out;
-                width: fit-content;
-                padding: 1rem 0;
+            #mobile-locations-carousel-3d {
+                perspective: 1000px; /* Essential for 3D */
+                width: 100%;
+                height: 380px; /* Adjusted height for better visibility */
+                margin-top: 2rem;
+                overflow: hidden;
+                position: relative;
+                touch-action: pan-y; /* Allow vertical scrolling, prevent horizontal interference */
+                display: block; /* Show 3D carousel on mobile */
             }
 
-            .location-column { /* These styles apply to carousel items on mobile */
-                flex-shrink: 0;
-                width: calc(100% - 1rem); /* Make cards take almost full width with margin */
-                padding: 1rem;
-                background-color: #1a1c22;
-                border-radius: 0.75rem;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for mobile cards */
-                box-sizing: border-box;
-                margin: 0 0.5rem; /* Space between items */
-                opacity: 0.3; /* Default semi-transparent */
-                transform: scale(0.9); /* Slightly smaller for non-active */
-                transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, border-image 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
-                text-align: left;
-                /* Add gradient border for mobile carousel items */
-                border: 3px solid transparent; /* Set a transparent border to reserve space */
-                background-clip: padding-box; /* Ensures background doesn't extend into the border */
-                border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Rosamorado gradient border */
-                animation: subtle-float 3s ease-in-out infinite; /* Apply levitating animation */
-            }
-
-            .location-column.active {
-                opacity: 1;
-                transform: scale(1); /* Full size for active item */
-                /* Apply gradient border to active item */
-                border-image: linear-gradient(90deg, #ec4899, #a855f7) 1; /* Rosamorado gradient border */
-            }
-            /* Hover effect for mobile carousel items */
-            .location-column:hover {
-                border-image: linear-gradient(90deg, #a855f7, #ec4899) 1; /* Invert gradient on hover */
-                box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4); /* Enhanced shadow on hover */
-            }
-
-
-            /* No border-left for mobile carousel items */
-            .carousel-track .location-column + .location-column {
-                border-left: none;
-            }
-
-            /* Navigation Arrows */
-            .carousel-nav-arrow {
+            .carousel-3d-track {
+                transform-style: preserve-3d; /* Essential for children to be in 3D */
+                width: 100%;
+                height: 100%;
                 position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                padding: 0.75rem;
-                background: linear-gradient(90deg, #ec4899, #a855f7); /* Rosamorado gradient */
-                color: white; /* Icon color */
-                border: none;
-                border-radius: 50%;
-                cursor: pointer;
-                z-index: 10;
-                transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-                display: flex; /* Use flex to center icon */
+                transition: transform 1s ease; /* Smooth transition for track rotation */
+                will-change: transform; /* Optimize for animation */
+            }
+
+            .carousel-3d-slide {
+                position: absolute; /* Position slides within the 3D track */
+                width: 55%; /* Adjusted width for better fit */
+                height: 85%; /* Adjusted height for better fit */
+                left: 22.5%; /* Center the slide horizontally */
+                top: 5%; /* Center the slide vertically */
+                background-color: rgba(12, 13, 16, 0.85); /* Dark background with opacity */
+                border: 2px solid;
+                border-image: linear-gradient(45deg, #ff00cc, #3333ff) 1; /* Gradient border */
+                color: #fff;
+                padding: 0.7rem; /* Adjusted padding */
+                border-radius: 20px;
+                font-size: 0.8rem; /* Adjusted font size */
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 0.3rem; /* Reduced gap */
+                overflow: hidden;
+                backface-visibility: hidden; /* Prevent back of element from showing */
+                box-sizing: border-box; /* Include padding and border in the element's total width and height */
+                /* Removed animation: subtle-float 3s ease-in-out infinite; */
+            }
+
+            .carousel-3d-slide h3 {
+                color: #fff;
+                font-size: 0.95rem; /* Adjusted font size */
+                font-weight: bold;
+                margin: 0 0 0.3rem 0; /* Reduced margin */
+                text-align: center;
+                width: 100%;
+            }
+
+            .location-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            .location-item {
+                display: flex;
                 align-items: center;
-                justify-content: center;
-                width: 48px; /* Larger size */
-                height: 48px; /* Larger size */
-                box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4); /* Matching shadow */
+                justify-content: space-between;
+                gap: 0.3rem; /* Reduced gap */
+                flex-wrap: wrap;
+                background: rgba(255,255,255,0.03);
+                padding: 0.2rem 0.4rem; /* Reduced padding */
+                border-radius: 10px; /* Slightly smaller border-radius */
+                width: 100%;
+                box-sizing: border-box;
+                min-height: 2.5rem; /* Ensure consistent height */
             }
 
-            .carousel-nav-arrow i {
-                font-size: 1.5rem; /* Larger icon */
+            .location-item .flag-icon {
+                width: 16px; /* Reduced from 18px */
+                height: auto;
+                margin-right: 0.3rem; /* Reduced from 0.4rem */
             }
 
-            .carousel-nav-arrow:hover {
-                background: linear-gradient(90deg, #a855f7, #ec4899); /* Invert gradient on hover */
-                transform: translateY(-50%) scale(1.1);
-                box-shadow: 0 6px 15px rgba(236, 72, 153, 0.6);
+            .location-item .name {
+                flex: 1;
+                color: #ddd;
+                font-size: 0.8rem; /* Adjusted font size */
+                text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
-            .carousel-nav-arrow.left-arrow {
-                left: 0.5rem; /* Closer to the viewport edge */
+            .status-label {
+                font-size: 0.65rem; /* Reduced from 0.7rem */
+                padding: 1px 4px; /* Reduced padding */
+                border-radius: 10px; /* Slightly smaller border-radius */
+                white-space: nowrap;
+                display: none; /* Hidden by default, shown by JS */
+            }
+            .status-label.available {
+                background: #28a745; /* Green */
+                color: white;
+                display: inline-block;
+            }
+            .status-label.soon {
+                background: #ffc107; /* Yellow */
+                color: black;
+                display: inline-block;
             }
 
-            .carousel-nav-arrow.right-arrow {
-                right: 0.5rem; /* Closer to the viewport edge */
-            }
-
-            /* NEW: Hide carousel arrows for the features carousel on mobile */
-            #mobile-features-carousel .carousel-nav-arrow {
+            /* Hide default carousel arrows as 3D carousel handles navigation */
+            .carousel-nav-arrow {
                 display: none !important;
             }
         }
+
 
         .location-column h3 {
             font-size: 1.5rem; /* text-2xl */
@@ -756,7 +774,7 @@
                 display: grid;
                 grid-template-columns: 1fr; /* Columna única en móvil */
                 gap: 1.5rem; /* Espacio entre tarjetas */
-                max-width: 320px; /* Ancho máximo ajustado para tarjetas más pequeñas */
+                max-width: 300px; /* Ancho máximo ajustado para tarjetas más pequeñas */
                 margin-left: auto; /* Centra el contenedor */
                 margin-right: auto; /* Centra el contenedor */
             }
@@ -788,8 +806,39 @@
             /* Estilos específicos para las tarjetas de características en móvil (sombra y animación) */
             .card-bg {
                 box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Sombra sutil para móvil */
-                animation: subtle-float 3s ease-in-out infinite; /* Animación de levitación */
                 box-sizing: border-box; /* IMPORTANT: Include padding and border in the element's total width and height */
+            }
+
+            /* NEW: Styles for the rotating effect on mobile feature carousel */
+            #mobile-features-carousel {
+                perspective: 1000px; /* Essential for 3D */
+                width: 100%;
+                height: 380px; /* Adjusted height for better visibility */
+                margin-top: 2rem;
+                overflow: hidden;
+                position: relative;
+                touch-action: pan-y; /* Allow vertical scrolling, prevent horizontal interference */
+                display: block; /* Show 3D carousel on mobile */
+            }
+
+            #mobile-features-carousel .carousel-track { /* This is the track for features */
+                transform-style: preserve-3d; /* Essential for children to be in 3D */
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                transition: transform 0.5s ease-in-out; /* Smooth transition for track rotation */
+                will-change: transform; /* Optimize for animation */
+            }
+
+            #mobile-features-carousel .card-bg { /* These are the individual cards */
+                position: absolute; /* Position cards within the 3D track */
+                left: 22.5%; /* Center the slide horizontally */
+                top: 5%; /* Center the slide vertically */
+                width: 55%; /* Adjusted width for better fit */
+                height: 85%; /* Adjusted height for better fit */
+                transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition for individual card changes */
+                backface-visibility: hidden;
+                padding: 0.7rem; /* Adjusted padding */
             }
         }
 
@@ -839,7 +888,7 @@
         /* Keyframe for subtle levitating animation */
         @keyframes subtle-float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); } /* Moves up 3px */
+            50% { transform: translateY(-5px); } /* Moves up 5px - Adjusted from 3px */
             100% { transform: translateY(0px); }
         }
 
@@ -1136,7 +1185,7 @@
 </div>
 <!-- Header / Main Navigation Bar -->
 <header class="main-header bg-black shadow-lg py-4 sticky top-0 w-full z-40 rounded-b-xl">
-
+<nav class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto px-6 md:px-12">
 <!-- This div will hold logo and mobile button on one row for mobile -->
 <div class="flex justify-between items-center w-full md:w-auto mb-2 md:mb-0">
 <div class="flex items-center">
@@ -1204,7 +1253,7 @@
                     View Plans
                 </a>
 </div>
-
+</nav>
 </header>
 <!-- Development Notice - Moved outside the header -->
 <div class="development-notice">
@@ -1356,7 +1405,7 @@
 <ul class="location-list">
 <li class="location-item">
 <img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
-<span class="name">Miami, Florida</span>
+<span class="name">Miami, Florida</span><span style="color: #00ff88; font-weight: bold; margin-left: 6px;"> (Disponible)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #34d399;"></span> <!-- Green dot for online -->
 <span data-lang-key="online">Online</span>
@@ -1365,7 +1414,7 @@
 </li>
 <li class="location-item">
 <img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
-<span class="name">Dallas, Texas</span>
+<span class="name">Dallas, Texas</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span> <!-- Yellow dot for coming soon -->
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1374,7 +1423,7 @@
 </li>
 <li class="location-item">
 <img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
-<span class="name">Salt Lake City, Utah</span>
+<span class="name">Salt Lake City, Utah</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1383,7 +1432,7 @@
 </li>
 <li class="location-item">
 <img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
-<span class="name">Ashburn, Virginia</span>
+<span class="name">Ashburn, Virginia</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1398,7 +1447,7 @@
 <ul class="location-list">
 <li class="location-item">
 <img alt="France Flag" class="flag-icon" src="https://flagcdn.com/fr.svg"/>
-<span class="name">Paris, France</span>
+<span class="name">Paris, France</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1407,7 +1456,7 @@
 </li>
 <li class="location-item">
 <img alt="Germany Flag" class="flag-icon" src="https://flagcdn.com/de.svg"/>
-<span class="name">Falkenstein, Germany</span>
+<span class="name">Falkenstein, Germany</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1416,7 +1465,7 @@
 </li>
 <li class="location-item">
 <img alt="Finland Flag" class="flag-icon" src="https://flagcdn.com/fi.svg"/>
-<span class="name">Helsinki, Finland</span>
+<span class="name">Helsinki, Finland</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1431,7 +1480,7 @@
 <ul class="location-list">
 <li class="location-item">
 <img alt="Singapore Flag" class="flag-icon" src="https://flagcdn.com/sg.svg"/>
-<span class="name">Singapore, Asia</span>
+<span class="name">Singapore, Asia</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1440,7 +1489,7 @@
 </li>
 <li class="location-item">
 <img alt="India Flag" class="flag-icon" src="https://flagcdn.com/in.svg"/>
-<span class="name">Mumbai, India</span>
+<span class="name">Mumbai, India</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #facc15;"></span>
 <span data-lang-key="comingSoon">Coming Soon</span>
@@ -1455,7 +1504,7 @@
 <ul class="location-list">
 <li class="location-item">
 <img alt="Australia Flag" class="flag-icon" src="https://flagcdn.com/au.svg"/>
-<span class="name">Sydney, Australia</span>
+<span class="name">Sydney, Australia</span><span style="color: #ffcc00; font-weight: bold; margin-left: 6px;"> (Próximamente)</span>
 <div class="status-indicator">
 <span class="dot" style="background-color: #34d399;"></span>
 <span data-lang-key="online">Online</span>
@@ -1465,17 +1514,84 @@
 </ul>
 </div>
 </div>
-<!-- Mobile Carousel Layout of Locations -->
-<div class="carousel-viewport" id="mobile-locations-carousel">
-<div class="carousel-track">
-<!-- Location columns will be dynamically cloned/added here by JS -->
+<!-- Mobile 3D Carousel Layout of Locations -->
+<div id="mobile-locations-carousel-3d">
+<div class="carousel-3d-track">
+<!-- Slide 1: North America -->
+<div class="carousel-3d-slide">
+<h3 data-lang-key="northAmerica">North America</h3>
+<ul class="location-list">
+<li class="location-item" data-status="Disponible">
+<img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
+<span class="name">Miami, Florida</span>
+<span class="status-label hidden"></span>
+</li>
+<li class="location-item" data-status="Próximamente">
+<img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
+<span class="name">Dallas, Texas</span>
+<span class="status-label hidden"></span>
+</li>
+<li class="location-item" data-status="Próximamente">
+<img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
+<span class="name">Salt Lake City, Utah</span>
+<span class="status-label hidden"></span>
+</li>
+<li class="location-item" data-status="Próximamente">
+<img alt="United States Flag" class="flag-icon" src="https://flagcdn.com/us.svg"/>
+<span class="name">Ashburn, Virginia</span>
+<span class="status-label hidden"></span>
+</li>
+</ul>
 </div>
-<button class="carousel-nav-arrow left-arrow">
-<i class="fas fa-chevron-left"></i>
-</button>
-<button class="carousel-nav-arrow right-arrow">
-<i class="fas fa-chevron-right"></i>
-</button>
+<!-- Slide 2: Europe -->
+<div class="carousel-3d-slide">
+<h3 data-lang-key="europe">Europe</h3>
+<ul class="location-list">
+<li class="location-item" data-status="Próximamente">
+<img alt="France Flag" class="flag-icon" src="https://flagcdn.com/fr.svg"/>
+<span class="name">Paris, France</span>
+<span class="status-label hidden"></span>
+</li>
+<li class="location-item" data-status="Próximamente">
+<img alt="Germany Flag" class="flag-icon" src="https://flagcdn.com/de.svg"/>
+<span class="name">Falkenstein, Germany</span>
+<span class="status-label hidden"></span>
+</li>
+<li class="location-item" data-status="Próximamente">
+<img alt="Finland Flag" class="flag-icon" src="https://flagcdn.com/fi.svg"/>
+<span class="name">Helsinki, Finland</span>
+<span class="status-label hidden"></span>
+</li>
+</ul>
+</div>
+<!-- Slide 3: Asia -->
+<div class="carousel-3d-slide">
+<h3 data-lang-key="asia">Asia</h3>
+<ul class="location-list">
+<li class="location-item" data-status="Próximamente">
+<img alt="Singapore Flag" class="flag-icon" src="https://flagcdn.com/sg.svg"/>
+<span class="name">Singapore</span>
+<span class="status-label hidden"></span>
+</li>
+<li class="location-item" data-status="Próximamente">
+<img alt="India Flag" class="flag-icon" src="https://flagcdn.com/in.svg"/>
+<span class="name">Mumbai, India</span>
+<span class="status-label hidden"></span>
+</li>
+</ul>
+</div>
+<!-- Slide 4: Oceania -->
+<div class="carousel-3d-slide">
+<h3 data-lang-key="oceania">Oceania</h3>
+<ul class="location-list">
+<li class="location-item" data-status="Disponible">
+<img alt="Australia Flag" class="flag-icon" src="https://flagcdn.com/au.svg"/>
+<span class="name">Sydney, Australia</span>
+<span class="status-label hidden"></span>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -1539,7 +1655,7 @@
 <!-- Mobile Features Carousel Layout -->
 <div class="carousel-viewport" id="mobile-features-carousel">
 <div class="carousel-track">
-<!-- Feature cards will be dynamically cloned/added here by JS -->
+<!-- Feature cards will be dynamically added here by JS -->
 </div>
 <button class="carousel-nav-arrow left-arrow">
 <i class="fas fa-chevron-left"></i>
@@ -1619,7 +1735,7 @@
 <span class="online-count" id="discord-online-count"><span data-lang-key="loading">Loading...</span></span>
 </button>
 <!-- Cookie Consent Bar -->
-<div id="cookie-consent-bar">
+<div id="cookie-consent-bar" class="hidden md:flex">
 <p data-lang-key="cookieText">We use cookies to improve your experience on our website and offer you a more personalized service. By continuing to browse, you accept our cookie policy.</p>
 <button class="cookie-accept-btn" data-lang-key="accept" id="accept-cookies">Accept</button>
 </div>
@@ -1841,7 +1957,7 @@
                 oceania: "Océanie",
                 whyChooseVoltix: "Pourquoi choisir <span class='gradient-text'>VoltixCloud</span> ?",
                 ddosProtectionDesc: "Protégez votre serveur des attaques malveillantes grâce à notre protection DDoS de pointe.",
-                instantSetupDesc: "Votre serveur sera prêt à jouer en quelques minutes, sans attente.",
+                instantSetupDesc: "Votre servidor sera prêt à jouer en quelques minutes, sans attente.",
                 intuitivePanelDesc: "Gérez votre servidor en toute simplicité grâce à notre panneau de contrôle personnalisé.",
                 globalLocationsDesc: "Choisissez l'emplacement de serveur le plus proche pour une latence minimale.",
                 support247Desc: "Notre équipe de support est disponible 24h/24 pour vous aider.",
@@ -1976,14 +2092,14 @@
                 contactUs: "Kontaktieren Sie Uns",
                 heroMinecraftTitle: "Leistungsstarkes und <span class='gradient-text'>Zuverlässiges</span> Minecraft Hosting",
                 heroMinecraftDesc: "Erleben Sie ultimative Leistung mit VoltixCloud. Optimierte Server für Ihr Minecraft-Abenteuer.",
-                advancedDDoS: "Erweiterter DDoS-Schutz",
+                advancedDDoS: "Erweiterter DDoS-DDoS-Schutz",
                 instantSetup: "Sofortige Einrichtung",
                 globalLocations: "Globale Standorte",
                 support247: "24/7 Support",
                 latestHardware: "Hardware der neuesten Generation",
                 viewMinecraftPlans: "Minecraft Pläne Ansehen",
                 heroWebDesignTitle: "Professionelles und <span class='gradient-text'>Modernes</span> Webdesign",
-                heroWebDesignDesc: "Wir erstellen beeindruckende und funktionale Websites für Ihr Unternehmen.",
+                heroWebHostingDesc: "Wir erstellen beeindruckende und funktionale Websites für Ihr Unternehmen.",
                 responsiveDesign: "Responsives Design",
                 seoOptimization: "SEO-Optimierung",
                 ecommerceIntegration: "E-Commerce-Integration",
@@ -2044,8 +2160,9 @@
             const discordOnlineCountSpan = document.getElementById('discord-online-count');
             if (discordOnlineCountSpan) {
                 const currentCount = parseInt(discordOnlineCountSpan.textContent);
-                const onlineStatusText = selectedTranslations.onlineStatus !== undefined ? selectedTranslations.onlineStatus : translations['en'].onlineStatus;
-                const loadingText = selectedTranslations.loading !== undefined ? selectedTranslations.loading : translations['en'].loading;
+                // Corrected: Access properties directly from selectedTranslations, not from a 'key' variable that's out of scope here.
+                const onlineStatusText = selectedTranslations.onlineStatus;
+                const loadingText = selectedTranslations.loading;
 
                 if (!isNaN(currentCount)) {
                     discordOnlineCountSpan.textContent = `${currentCount} ${onlineStatusText}`;
@@ -2241,6 +2358,36 @@
             }
         });
 
+        // Touch swipe for Hero Carousel
+        let heroTouchStartX = 0;
+        let heroTouchEndX = 0;
+        const heroCarousel = document.querySelector('.hero-carousel');
+
+        heroCarousel.addEventListener('touchstart', (e) => {
+            heroTouchStartX = e.touches[0].clientX;
+            stopAutoSlide(); // Stop auto-slide on touch start
+        });
+
+        heroCarousel.addEventListener('touchmove', (e) => {
+            heroTouchEndX = e.touches[0].clientX;
+        });
+
+        heroCarousel.addEventListener('touchend', () => {
+            const swipeDistance = heroTouchEndX - heroTouchStartX;
+            const minSwipeDistance = 50; // Minimum distance for a recognized swipe
+
+            if (swipeDistance > minSwipeDistance) {
+                // Swipe right (previous slide)
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            } else if (swipeDistance < -minSwipeDistance) {
+                // Swipe left (next slide)
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+            startAutoSlide(); // Restart auto-slide after touch interaction
+        });
+
 
         // Initialize carousel on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -2293,136 +2440,181 @@
             setInterval(fetchDiscordOnlineUsers, 30000); // Refresh every 30 seconds
         });
 
-        // Location Carousel Logic for Mobile
-        const locationsSection = document.getElementById('ubicaciones');
-        const desktopLocationsGrid = document.getElementById('desktop-locations-grid'); // New reference for desktop grid
-        const mobileLocationsCarousel = document.getElementById('mobile-locations-carousel'); // New reference for mobile carousel wrapper
-        const carouselTrack = mobileLocationsCarousel.querySelector('.carousel-track'); // The track inside the mobile carousel
+        // Location 3D Carousel Logic for Mobile
+        const desktopLocationsGrid = document.getElementById('desktop-locations-grid');
+        const mobileLocationsCarousel3D = document.getElementById('mobile-locations-carousel-3d');
+        const carousel3DTrack = mobileLocationsCarousel3D.querySelector('.carousel-3d-track');
+        let carousel3DSlides; // Will be populated dynamically
 
-        // This variable will hold the carousel items, including clones
-        let locationCarouselItems;
+        let current3DSlideIndex = 0; // Index of the currently front-facing slide
+        let autoRotateInterval;
+        let locations3DRadius; // Radius for locations 3D carousel
 
-        // Navigation Arrows for locations carousel
-        const locationLeftArrow = mobileLocationsCarousel.querySelector('.left-arrow');
-        const locationRightArrow = mobileLocationsCarousel.querySelector('.right-arrow');
+        // Function to initialize 3D positioning of slides
+        function setupLocations3DCarousel() {
+            carousel3DSlides = Array.from(carousel3DTrack.querySelectorAll('.carousel-3d-slide')); // Re-query after DOM is ready
+            const numSlides = carousel3DSlides.length;
+            if (numSlides === 0) return; // Exit if no slides
 
-        // Initial index pointing to the first ORIGINAL item (after the last clone)
-        let currentLocationSlideIndex = 1; // Index 0 is the lastClone
-        let locationSlideInterval; // Variable to hold the interval for location carousel
+            const angleStep = 360 / numSlides;
+            const slideWidth = carousel3DSlides[0].offsetWidth; // Assuming all slides have same width
+            locations3DRadius = (slideWidth / 2) / Math.tan(Math.PI / numSlides); // Calculate radius to fit slides perfectly
 
-        function updateLocationCarousel(instant = false) {
-            // Check if we are on a mobile screen size
-            if (window.innerWidth >= 768) {
-                // If on desktop, hide mobile carousel and show desktop grid
-                mobileLocationsCarousel.style.display = 'none';
-                desktopLocationsGrid.style.display = 'flex'; // Show the original desktop container
-                stopLocationAutoSlide(); // Stop auto-slide on desktop
-                return;
-            }
-
-            // If on mobile, show mobile carousel and hide desktop grid
-            mobileLocationsCarousel.style.display = 'block'; // Ensure it's visible before measuring
-            desktopLocationsGrid.style.display = 'none'; // Hide the original desktop grid
-
-            // Ensure locationCarouselItems is populated before proceeding
-            // It should be populated during DOMContentLoaded, but this is a safeguard
-            if (!locationCarouselItems || locationCarouselItems.length === 0) {
-                console.warn("locationCarouselItems is empty or not initialized. Attempting to re-query.");
-                locationCarouselItems = Array.from(carouselTrack.querySelectorAll('.location-column'));
-                if (locationCarouselItems.length === 0) {
-                    console.error("Failed to populate locationCarouselItems after re-query. Carousel will remain empty.");
-                    return; // Exit if still empty
-                }
-            }
-
-            const itemWidthWithMargin = locationCarouselItems[0].offsetWidth +
-                                        (parseFloat(getComputedStyle(locationCarouselItems[0]).marginLeft) || 0) +
-                                        (parseFloat(getComputedStyle(locationCarouselItems[0]).marginRight) || 0);
-
-            if (itemWidthWithMargin === 0) {
-                console.warn("itemWidthWithMargin is 0. Elements might not have rendered yet. Retrying...");
-                // Retry after a short delay if elements don't have a width yet
-                requestAnimationFrame(() => updateLocationCarousel(instant));
-                return;
-            }
-
-            // Calculate offset to center the active item
-            const viewportWidth = mobileLocationsCarousel.offsetWidth;
-            const targetX = -currentLocationSlideIndex * itemWidthWithMargin;
-            const offset = targetX + (viewportWidth / 2) - (itemWidthWithMargin / 2);
-
-            if (instant) {
-                carouselTrack.style.transition = 'none';
-            } else {
-                carouselTrack.style.transition = 'transform 0.5s ease-in-out';
-            }
-            carouselTrack.style.transform = `translateX(${offset}px)`;
-
-            // Update active state, opacity, and scale for items
-            locationCarouselItems.forEach((item, index) => {
-                item.classList.remove('active');
-                item.style.opacity = '0.3'; // Default semi-transparent
-                item.style.transform = 'scale(0.9)'; // Default smaller scale
-
-                if (index === currentLocationSlideIndex) {
-                    item.classList.add('active');
-                    item.style.opacity = '1';
-                    item.style.transform = 'scale(1)'; // Full size for active item
-                } else if (index === currentLocationSlideIndex - 1 || index === currentLocationSlideIndex + 1) {
-                    item.style.opacity = '0.7'; // Slightly more visible for immediate neighbors
-                    item.style.transform = 'scale(0.95)'; // Slightly larger than others, smaller than active
-                }
-                // Items further away will remain at opacity 0.3 and scale 0.9
+            carousel3DSlides.forEach((slide, i) => {
+                // Position each slide in a circle
+                slide.style.position = 'absolute'; // Ensure absolute positioning
+                slide.style.left = '50%';
+                slide.style.top = '50%';
+                // Apply initial transform to place them in a circle
+                slide.style.transform = `translateX(-50%) translateY(-50%) rotateY(${i * angleStep}deg) translateZ(${locations3DRadius}px)`;
+                slide.style.opacity = 0.5; // Initial opacity for non-active slides
             });
 
-            if (instant) {
-                // Force reflow to apply 'none' transition before re-enabling
-                void carouselTrack.offsetWidth;
-                carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            // Initial rotation of the track to bring the first slide to the front
+            carousel3DTrack.style.transform = `rotateY(${0}deg)`;
+            update3DCarouselAppearance(); // Apply initial appearance
+        }
+
+        function update3DCarouselAppearance() {
+            // Add a check to ensure carousel3DSlides is not null/undefined and has elements
+            if (!carousel3DSlides || carousel3DSlides.length === 0) {
+                console.warn("carousel3DSlides is not initialized or empty. Cannot update appearance.");
+                return;
             }
-            console.log(`Updated Locations Carousel: currentSlideIndex=${currentLocationSlideIndex}, offset=${offset}, itemWidth=${itemWidthWithMargin}`);
+
+            const numSlides = carousel3DSlides.length;
+            const angleStep = 360 / numSlides;
+
+            carousel3DSlides.forEach((slide, i) => {
+                // Calculate the angle difference from the current front slide
+                let diff = i - current3DSlideIndex;
+                // Adjust for circularity (e.g., if index 0 and 3 are neighbors in a 4-slide carousel)
+                if (diff > numSlides / 2) diff -= numSlides;
+                if (diff < -numSlides / 2) diff += numSlides;
+
+                const absDiff = Math.abs(diff);
+
+                let opacity = 0.3;
+                let scale = 0.8;
+                let translateZBoost = 0; // To make the active slide pop out more
+
+                if (absDiff === 0) { // Active slide
+                    opacity = 1;
+                    scale = 1;
+                    translateZBoost = 50; // Pull active slide slightly forward
+                } else if (absDiff === 1) { // Immediate neighbors
+                    opacity = 0.7;
+                    scale = 0.9;
+                    translateZBoost = 20;
+                } else if (absDiff === 2) { // Second neighbors
+                    opacity = 0.5;
+                    scale = 0.85;
+                    translateZBoost = 0;
+                }
+
+                // Re-apply the initial positioning transform, then add scale and translateZBoost
+                const initialTransform = `translateX(-50%) translateY(-50%) rotateY(${i * angleStep}deg) translateZ(${locations3DRadius}px)`;
+                slide.style.transform = `${initialTransform} scale(${scale}) translateZ(${translateZBoost}px)`;
+                slide.style.opacity = opacity;
+            });
+
+            // Rotate the entire track to bring the desired slide to the front
+            carousel3DTrack.style.transform = `rotateY(${-current3DSlideIndex * angleStep}deg)`;
         }
 
-        // Function to move to the next location slide
-        function nextLocationSlide() {
-            currentLocationSlideIndex++;
-            updateLocationCarousel();
-        }
 
-        // Function to start auto-sliding for location carousel
-        function startLocationAutoSlide() {
-            stopLocationAutoSlide(); // Clear any existing interval first
-            locationSlideInterval = setInterval(nextLocationSlide, 7000); // Change slide every 7 seconds
-        }
-
-        function stopLocationAutoSlide() {
-            clearInterval(locationSlideInterval);
-        }
-
-        // Add event listener for transition end to handle snapping for locations carousel
-        carouselTrack.addEventListener('transitionend', () => {
-            // Check if we've transitioned to a clone
-            if (currentLocationSlideIndex === 0) { // Moved to lastLocationClone (index 0)
-                currentLocationSlideIndex = locationCarouselItems.length - 2; // Jump to the real last item (before the first clone)
-                updateLocationCarousel(true); // Instant jump
-            } else if (currentLocationSlideIndex === locationCarouselItems.length - 1) { // Moved to firstLocationClone (last item in the track)
-                currentLocationSlideIndex = 1; // Jump to the real first item
-                updateLocationCarousel(true); // Instant jump
+        function nextLocation3DSlide() {
+            // Add a check to ensure carousel3DSlides is not null/undefined and has elements
+            if (!carousel3DSlides || carousel3DSlides.length === 0) {
+                console.warn("carousel3DSlides is not initialized or empty. Cannot go to next slide.");
+                return;
             }
+            current3DSlideIndex = (current3DSlideIndex + 1) % carousel3DSlides.length;
+            update3DCarouselAppearance();
+        }
+
+        function prevLocation3DSlide() {
+            // Add a check to ensure carousel3DSlides is not null/undefined and has elements
+            if (!carousel3DSlides || carousel3DSlides.length === 0) {
+                console.warn("carousel3DSlides is not initialized or empty. Cannot go to previous slide.");
+                return;
+            }
+            current3DSlideIndex = (current3DSlideIndex - 1 + carousel3DSlides.length) % carousel3DSlides.length;
+            update3DCarouselAppearance();
+        }
+
+        function startAutoRotate() {
+            stopAutoRotate();
+            // Only start auto-rotate if there are slides to rotate
+            if (carousel3DSlides && carousel3DSlides.length > 1) {
+                autoRotateInterval = setInterval(nextLocation3DSlide, 9000);
+            }
+        }
+
+        function stopAutoRotate() {
+            clearInterval(autoRotateInterval);
+        }
+
+        // Touch swipe for 3D Carousel (Locations)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        mobileLocationsCarousel3D.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            stopAutoRotate();
         });
 
-        locationLeftArrow.addEventListener('click', () => {
-            stopLocationAutoSlide(); // Stop auto-slide on manual interaction
-            currentLocationSlideIndex--;
-            updateLocationCarousel();
-            startLocationAutoSlide(); // Restart auto-slide after interaction
+        mobileLocationsCarousel3D.addEventListener('touchmove', (e) => {
+            touchEndX = e.touches[0].clientX;
         });
 
-        locationRightArrow.addEventListener('click', () => {
-            stopLocationAutoSlide(); // Stop auto-slide on manual interaction
-            currentLocationSlideIndex++;
-            updateLocationCarousel();
-            startLocationAutoSlide(); // Restart auto-slide after interaction
+        mobileLocationsCarousel3D.addEventListener('touchend', () => {
+            const swipeDistance = touchEndX - touchStartX;
+            const minSwipeDistance = 50;
+
+            if (swipeDistance > minSwipeDistance) {
+                prevLocation3DSlide();
+            } else if (swipeDistance < -minSwipeDistance) {
+                nextLocation3DSlide();
+            }
+            startAutoRotate(); // Restart auto-slide after touch interaction
+        });
+
+        // Event listener for location item clicks inside the 3D carousel
+        document.querySelectorAll('#mobile-locations-carousel-3d .location-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const label = item.querySelector('.status-label');
+                // Ensure label exists before proceeding
+                if (!label) return;
+
+                // Use the translated "Online" string for comparison
+                const availableText = translations[currentLang].online;
+                const soonText = translations[currentLang].comingSoon;
+
+                const currentStatus = label.classList.contains('available') || label.classList.contains('soon');
+                
+                // Hide all status labels first within the current slide
+                item.closest('.carousel-3d-slide').querySelectorAll('.status-label').forEach(l => {
+                    l.classList.remove('available', 'soon');
+                    l.style.display = 'none';
+                });
+
+                if (!currentStatus) {
+                    const status = item.dataset.status; // This will be "Disponible" or "Próximamente" from HTML
+                    
+                    // Translate the status from HTML to the current language's "Online" or "Coming Soon"
+                    let translatedStatus = status;
+                    if (status === "Disponible") {
+                        translatedStatus = availableText;
+                    } else if (status === "Próximamente") {
+                        translatedStatus = soonText;
+                    }
+
+                    label.textContent = translatedStatus;
+                    label.classList.add(status === "Disponible" ? 'available' : 'soon'); // Use original data-status for class
+                    label.style.display = 'inline-block';
+                }
+            });
         });
 
 
@@ -2430,118 +2622,149 @@
         const desktopFeatureGrid = document.getElementById('desktop-feature-grid');
         const mobileFeaturesCarousel = document.getElementById('mobile-features-carousel');
         const featureCarouselTrack = mobileFeaturesCarousel.querySelector('.carousel-track');
+        let featureCarouselItems; // Will be populated dynamically
 
-        let featureCarouselItems; // This variable will hold the carousel items, including clones
+        let currentFeatureSlideIndex = 0; // Index of the currently front-facing slide
+        let featureSlideInterval;
+        let features3DRadius; // Radius for features 3D carousel
 
-        // Navigation Arrows for features carousel (these are hidden by CSS now)
-        const featureLeftArrow = mobileFeaturesCarousel.querySelector('.left-arrow');
-        const featureRightArrow = mobileFeaturesCarousel.querySelector('.right-arrow');
+        // Function to populate and setup the mobile feature carousel
+        function setupFeaturesCarousel() {
+            // Clear existing items in mobile carousel track to avoid duplicates
+            featureCarouselTrack.innerHTML = '';
 
-        // Initial index pointing to the first ORIGINAL item (after the last clone)
-        let currentFeatureSlideIndex = 1; // Index 0 is the lastClone
-        let featureSlideInterval; // Variable to hold the interval for feature carousel
+            // Get the original feature cards from the desktop grid
+            const originalFeatureCards = Array.from(desktopFeatureGrid.querySelectorAll('.card-bg'));
 
-        function updateFeatureCarousel(instant = false) {
-            if (window.innerWidth >= 768) {
-                mobileFeaturesCarousel.style.display = 'none';
-                desktopFeatureGrid.style.display = 'grid'; // Show the original desktop grid
-                stopFeatureAutoSlide(); // Stop auto-slide on desktop
+            if (originalFeatureCards.length === 0) {
+                console.warn("No feature cards found in desktop grid to populate mobile carousel.");
                 return;
             }
 
-            mobileFeaturesCarousel.style.display = 'block';
-            desktopFeatureGrid.style.display = 'none'; // Hide the original desktop grid
-
-            // Ensure featureCarouselItems is populated before proceeding
-            if (!featureCarouselItems || featureCarouselItems.length === 0) {
-                console.warn("featureCarouselItems is empty or not initialized. Attempting to re-query.");
-                featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
-                if (featureCarouselItems.length === 0) {
-                    console.error("Failed to populate featureCarouselItems after re-query. Carousel will remain empty.");
-                    return; // Exit if still empty
-                }
-            }
-
-            const itemWidthWithMargin = featureCarouselItems[0].offsetWidth +
-                                        (parseFloat(getComputedStyle(featureCarouselItems[0]).marginLeft) || 0) +
-                                        (parseFloat(getComputedStyle(featureCarouselItems[0]).marginRight) || 0);
-
-            if (itemWidthWithMargin === 0) {
-                console.warn("Feature itemWidthWithMargin is 0. Elements might not have rendered yet. Retrying...");
-                requestAnimationFrame(() => updateFeatureCarousel(instant));
-                return;
-            }
-
-            const viewportWidth = mobileFeaturesCarousel.offsetWidth;
-            const targetX = -currentFeatureSlideIndex * itemWidthWithMargin;
-            const offset = targetX + (viewportWidth / 2) - (itemWidthWithMargin / 2);
-
-            if (instant) {
-                featureCarouselTrack.style.transition = 'none';
-            } else {
-                featureCarouselTrack.style.transition = 'transform 0.5s ease-in-out';
-            }
-            featureCarouselTrack.style.transform = `translateX(${offset}px)`;
-
-            featureCarouselItems.forEach((item, index) => {
-                item.classList.remove('active');
-                item.style.opacity = '0.3';
-                item.style.transform = 'scale(0.9)';
-
-                if (index === currentFeatureSlideIndex) {
-                    item.classList.add('active');
-                    item.style.opacity = '1';
-                    item.style.transform = 'scale(1)';
-                } else if (index === currentFeatureSlideIndex - 1 || index === currentFeatureSlideIndex + 1) {
-                    item.style.opacity = '0.7';
-                    item.style.transform = 'scale(0.95)';
-                }
+            // Clone and append each card to the mobile carousel track
+            originalFeatureCards.forEach(card => {
+                const clonedCard = card.cloneNode(true); // Deep clone
+                featureCarouselTrack.appendChild(clonedCard);
             });
 
-            if (instant) {
-                void featureCarouselTrack.offsetWidth;
-                featureCarouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
+            const numItems = featureCarouselItems.length;
+            if (numItems === 0) return; // Exit if no items after cloning
+
+            const itemWidth = featureCarouselItems[0].offsetWidth; // Assuming all items have same width
+            features3DRadius = (itemWidth / 2) / Math.tan(Math.PI / numItems); // Calculate radius to fit items perfectly
+
+            featureCarouselItems.forEach((item, i) => {
+                item.style.position = 'absolute';
+                item.style.left = '50%';
+                item.style.top = '50%';
+                item.style.transform = `translateX(-50%) translateY(-50%) rotateY(${i * (360 / numItems)}deg) translateZ(${features3DRadius}px)`;
+                item.style.opacity = 0.5; // Initial opacity
+            });
+
+            featureCarouselTrack.style.transform = `rotateY(${0}deg)`; // Initial track rotation
+            updateFeatureCarouselAppearance();
+        }
+
+        function updateFeatureCarouselAppearance() {
+            // Add a check to ensure featureCarouselItems is not null/undefined and has elements
+            if (!featureCarouselItems || featureCarouselItems.length === 0) {
+                console.warn("featureCarouselItems is not initialized or empty. Cannot update appearance.");
+                return;
             }
-            console.log(`Updated Features Carousel: currentSlideIndex=${currentFeatureSlideIndex}, offset=${offset}, itemWidth=${itemWidthWithMargin}`);
+
+            const numItems = featureCarouselItems.length;
+            const angleStep = 360 / numItems;
+
+            featureCarouselItems.forEach((item, i) => {
+                let diff = i - currentFeatureSlideIndex;
+                if (diff > numItems / 2) diff -= numItems;
+                if (diff < -numItems / 2) diff += numItems;
+
+                const absDiff = Math.abs(diff);
+
+                let opacity = 0.3;
+                let scale = 0.8;
+                let translateZBoost = 0;
+
+                if (absDiff === 0) { // Active slide
+                    opacity = 1;
+                    scale = 1;
+                    translateZBoost = 50; // Pull active slide slightly forward
+                    item.classList.add('active');
+                } else if (absDiff === 1) { // Immediate neighbors
+                    opacity = 0.7;
+                    scale = 0.9;
+                    translateZBoost = 20;
+                } else if (absDiff === 2) { // Second neighbors
+                    opacity = 0.5;
+                    scale = 0.85;
+                    translateZBoost = 0;
+                }
+
+                const initialTransform = `translateX(-50%) translateY(-50%) rotateY(${i * angleStep}deg) translateZ(${features3DRadius}px)`;
+                item.style.transform = `${initialTransform} scale(${scale}) translateZ(${translateZBoost}px)`;
+                item.style.opacity = opacity;
+            });
+
+            featureCarouselTrack.style.transform = `rotateY(${-currentFeatureSlideIndex * angleStep}deg)`;
         }
 
         function nextFeatureSlide() {
-            currentFeatureSlideIndex++;
-            updateFeatureCarousel();
+            // Add a check to ensure featureCarouselItems is not null/undefined and has elements
+            if (!featureCarouselItems || featureCarouselItems.length === 0) {
+                console.warn("featureCarouselItems is not initialized or empty. Cannot go to next slide.");
+                return;
+            }
+            currentFeatureSlideIndex = (currentFeatureSlideIndex + 1) % featureCarouselItems.length;
+            updateFeatureCarouselAppearance();
+        }
+
+        function prevFeatureSlide() {
+            // Add a check to ensure featureCarouselItems is not null/undefined and has elements
+            if (!featureCarouselItems || featureCarouselItems.length === 0) {
+                console.warn("featureCarouselItems is not initialized or empty. Cannot go to previous slide.");
+                return;
+            }
+            currentFeatureSlideIndex = (currentFeatureSlideIndex - 1 + featureCarouselItems.length) % featureCarouselItems.length;
+            updateFeatureCarouselAppearance();
         }
 
         function startFeatureAutoSlide() {
             stopFeatureAutoSlide();
-            featureSlideInterval = setInterval(nextFeatureSlide, 7000); // Same speed as locations carousel
+            // Only start auto-slide if there are items to slide
+            if (featureCarouselItems && featureCarouselItems.length > 1) {
+                featureSlideInterval = setInterval(nextFeatureSlide, 7000);
+            }
         }
 
         function stopFeatureAutoSlide() {
             clearInterval(featureSlideInterval);
         }
 
-        featureCarouselTrack.addEventListener('transitionend', () => {
-            if (currentFeatureSlideIndex === 0) {
-                currentFeatureSlideIndex = featureCarouselItems.length - 2;
-                updateFeatureCarousel(true);
-            } else if (currentFeatureSlideIndex === featureCarouselItems.length - 1) {
-                currentFeatureSlideIndex = 1;
-                updateFeatureCarousel(true);
+        // Touch swipe for Features Carousel
+        let featureTouchStartX = 0;
+        let featureTouchEndX = 0;
+
+        mobileFeaturesCarousel.addEventListener('touchstart', (e) => {
+            featureTouchStartX = e.touches[0].clientX;
+            stopFeatureAutoSlide();
+        });
+
+        mobileFeaturesCarousel.addEventListener('touchmove', (e) => {
+            featureTouchEndX = e.touches[0].clientX;
+        });
+
+        mobileFeaturesCarousel.addEventListener('touchend', () => {
+            const swipeDistance = featureTouchEndX - featureTouchStartX;
+            const minSwipeDistance = 50;
+
+            if (swipeDistance > minSwipeDistance) {
+                prevFeatureSlide();
+            } else if (swipeDistance < -minSwipeDistance) {
+                nextFeatureSlide();
             }
-        });
-
-        // Note: Feature carousel arrows are hidden by CSS, so these event listeners won't be triggered by user clicks
-        featureLeftArrow.addEventListener('click', () => {
-            stopFeatureAutoSlide();
-            currentFeatureSlideIndex--;
-            updateFeatureCarousel();
-            startFeatureAutoSlide();
-        });
-
-        featureRightArrow.addEventListener('click', () => {
-            stopFeatureAutoSlide();
-            currentFeatureSlideIndex++;
-            updateFeatureCarousel();
-            startFeatureAutoSlide();
+            startFeatureAutoSlide(); // Restart auto-slide after touch interaction
         });
 
 
@@ -2551,7 +2774,8 @@
         const COOKIE_CONSENT_KEY = 'voltixcloud_cookie_consent';
 
         function showCookieConsent() {
-            if (!localStorage.getItem(COOKIE_CONSENT_KEY)) {
+            // Only show if on desktop (md breakpoint or larger)
+            if (window.innerWidth >= 768 && !localStorage.getItem(COOKIE_CONSENT_KEY)) {
                 cookieConsentBar.classList.add('show');
             }
         }
@@ -2571,54 +2795,28 @@
             setInterval(fetchDiscordOnlineUsers, 30000);
             showCookieConsent();
 
-            // Initial population of carousel items for Locations
-            const originalLocationColumnsForCloning = Array.from(desktopLocationsGrid.querySelectorAll('.location-column'));
-            carouselTrack.innerHTML = ''; // Clear any existing content
-            if (originalLocationColumnsForCloning.length > 0) {
-                const firstLocationClone = originalLocationColumnsForCloning[0].cloneNode(true);
-                firstLocationClone.classList.add('clone');
-                const lastLocationClone = originalLocationColumnsForCloning[originalLocationColumnsForCloning.length - 1].cloneNode(true);
-                lastLocationClone.classList.add('clone');
-
-                carouselTrack.appendChild(lastLocationClone);
-                originalLocationColumnsForCloning.forEach(item => carouselTrack.appendChild(item.cloneNode(true)));
-                carouselTrack.appendChild(firstLocationClone);
-
-                locationCarouselItems = Array.from(carouselTrack.querySelectorAll('.location-column'));
-                console.log("Locations carousel items populated. Count:", locationCarouselItems.length);
-
-                // Call update after a short delay to ensure elements are rendered and have dimensions
-                requestAnimationFrame(() => {
-                    updateLocationCarousel(true); // Initial call for locations
-                    startLocationAutoSlide();
-                });
-
+            // Handle initial display and setup for Locations
+            if (window.innerWidth < 768) {
+                desktopLocationsGrid.style.display = 'none';
+                mobileLocationsCarousel3D.style.display = 'block';
+                setupLocations3DCarousel(); // Call setup function for mobile
+                startAutoRotate();
             } else {
-                console.error("No original location columns found for cloning.");
+                desktopLocationsGrid.style.display = 'flex';
+                mobileLocationsCarousel3D.style.display = 'none';
+                stopAutoRotate();
             }
 
-            // Initial population of carousel items for Features
-            const originalFeatureCardsForCloning = Array.from(desktopFeatureGrid.querySelectorAll('.card-bg'));
-            featureCarouselTrack.innerHTML = '';
-            if (originalFeatureCardsForCloning.length > 0) {
-                const firstFeatureClone = originalFeatureCardsForCloning[0].cloneNode(true);
-                firstFeatureClone.classList.add('clone');
-                const lastFeatureClone = originalFeatureCardsForCloning[originalFeatureCardsForCloning.length - 1].cloneNode(true);
-                lastFeatureClone.classList.add('clone');
-
-                featureCarouselTrack.appendChild(lastFeatureClone);
-                originalFeatureCardsForCloning.forEach(item => featureCarouselTrack.appendChild(item.cloneNode(true)));
-                featureCarouselTrack.appendChild(firstFeatureClone);
-
-                featureCarouselItems = Array.from(featureCarouselTrack.querySelectorAll('.card-bg'));
-                console.log("Features carousel items populated. Count:", featureCarouselItems.length);
-
-                requestAnimationFrame(() => {
-                    updateFeatureCarousel(true); // Initial call for features
-                    startFeatureAutoSlide();
-                });
+            // Handle initial display and setup for Features
+            if (window.innerWidth < 768) {
+                desktopFeatureGrid.style.display = 'none';
+                mobileFeaturesCarousel.style.display = 'block';
+                setupFeaturesCarousel(); // Populate and setup mobile feature carousel
+                startFeatureAutoSlide();
             } else {
-                console.error("No original feature cards found for cloning.");
+                desktopFeatureGrid.style.display = 'grid';
+                mobileFeaturesCarousel.style.display = 'none';
+                stopFeatureAutoSlide();
             }
             
             // Desktop Language Dropdown Logic (only if it exists)
@@ -2676,19 +2874,30 @@
 
         // Add a resize listener to handle orientation changes or window resize
         window.addEventListener('resize', () => {
-            updateLocationCarousel(true); // Re-calculate and snap on resize for locations
+            // Re-evaluate which locations carousel to show on resize
             if (window.innerWidth < 768) {
-                startLocationAutoSlide();
+                desktopLocationsGrid.style.display = 'none';
+                mobileLocationsCarousel3D.style.display = 'block';
+                setupLocations3DCarousel(); // Re-setup on resize
+                startAutoRotate();
             } else {
-                stopLocationAutoSlide();
+                desktopLocationsGrid.style.display = 'flex';
+                mobileLocationsCarousel3D.style.display = 'none';
+                stopAutoRotate();
             }
 
-            updateFeatureCarousel(true); // Re-calculate and snap on resize for features
+            // Re-evaluate which features carousel to show on resize
             if (window.innerWidth < 768) {
+                desktopFeatureGrid.style.display = 'none';
+                mobileFeaturesCarousel.style.display = 'block';
+                setupFeaturesCarousel(); // Populate and setup mobile feature carousel
                 startFeatureAutoSlide();
             } else {
+                desktopFeatureGrid.style.display = 'grid';
+                mobileFeaturesCarousel.style.display = 'none';
                 stopFeatureAutoSlide();
             }
+            showCookieConsent(); // Re-evaluate cookie consent bar visibility on resize
         });
     </script>
 </body>
