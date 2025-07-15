@@ -591,22 +591,22 @@
 
             .carousel-3d-slide {
                 position: absolute; /* Position slides within the 3D track */
-                width: 55%; /* Adjusted width for better fit */
+                width: 85%; /* Increased width for better fit (from 75%) */
                 height: 85%; /* Adjusted height for better fit */
-                left: 22.5%; /* Center the slide horizontally */
+                left: 7.5%; /* Center the slide horizontally (adjusted from 12.5%) */
                 top: 5%; /* Center the slide vertically */
                 background-color: rgba(12, 13, 16, 0.85); /* Dark background with opacity */
                 border: 2px solid;
                 border-image: linear-gradient(45deg, #ff00cc, #3333ff) 1; /* Gradient border */
                 color: #fff;
-                padding: 0.7rem; /* Adjusted padding */
+                padding: 1rem; /* Adjusted padding for better text spacing (from 1.2rem) */
                 border-radius: 20px;
-                font-size: 0.8rem; /* Adjusted font size */
+                font-size: 0.85rem; /* Adjusted font size (from 0.8rem) */
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: flex-start;
-                gap: 0.3rem; /* Reduced gap */
+                gap: 0.6rem; /* Increased gap */
                 overflow: hidden;
                 backface-visibility: hidden; /* Prevent back of element from showing */
                 box-sizing: border-box; /* Include padding and border in the element's total width and height */
@@ -615,9 +615,9 @@
 
             .carousel-3d-slide h3 {
                 color: #fff;
-                font-size: 0.95rem; /* Adjusted font size */
+                font-size: 1.25rem; /* Adjusted font size (from 1.2rem) */
                 font-weight: bold;
-                margin: 0 0 0.3rem 0; /* Reduced margin */
+                margin: 0 0 0.6rem 0; /* Adjusted margin */
                 text-align: center;
                 width: 100%;
             }
@@ -633,26 +633,26 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                gap: 0.3rem; /* Reduced gap */
-                flex-wrap: wrap;
+                gap: 0.6rem; /* Increased gap */
+                flex-wrap: nowrap; /* Prevent wrapping */
                 background: rgba(255,255,255,0.03);
-                padding: 0.2rem 0.4rem; /* Reduced padding */
+                padding: 0.5rem 0.7rem; /* Adjusted padding */
                 border-radius: 10px; /* Slightly smaller border-radius */
                 width: 100%;
                 box-sizing: border-box;
-                min-height: 2.5rem; /* Ensure consistent height */
+                min-height: 3.2rem; /* Ensure consistent height (from 3rem) */
             }
 
             .location-item .flag-icon {
-                width: 16px; /* Reduced from 18px */
+                width: 24px; /* Increased flag size */
                 height: auto;
-                margin-right: 0.3rem; /* Reduced from 0.4rem */
+                margin-right: 0.6rem; /* Increased margin */
             }
 
             .location-item .name {
                 flex: 1;
                 color: #ddd;
-                font-size: 0.8rem; /* Adjusted font size */
+                font-size: 1rem; /* Adjusted font size (from 0.95rem) */
                 text-align: left;
                 white-space: nowrap;
                 overflow: hidden;
@@ -660,8 +660,8 @@
             }
 
             .status-label {
-                font-size: 0.65rem; /* Reduced from 0.7rem */
-                padding: 1px 4px; /* Reduced padding */
+                font-size: 0.85rem; /* Increased font size (from 0.8rem) */
+                padding: 3px 8px; /* Increased padding */
                 border-radius: 10px; /* Slightly smaller border-radius */
                 white-space: nowrap;
                 display: none; /* Hidden by default, shown by JS */
@@ -832,13 +832,24 @@
 
             #mobile-features-carousel .card-bg { /* These are the individual cards */
                 position: absolute; /* Position cards within the 3D track */
-                left: 22.5%; /* Center the slide horizontally */
+                left: 7.5%; /* Center the slide horizontally (adjusted from 12.5%) */
                 top: 5%; /* Center the slide vertically */
-                width: 55%; /* Adjusted width for better fit */
+                width: 85%; /* Adjusted width for better fit (from 75%) */
                 height: 85%; /* Adjusted height for better fit */
                 transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition for individual card changes */
                 backface-visibility: hidden;
-                padding: 0.7rem; /* Adjusted padding */
+                padding: 1.5rem; /* Adjusted padding (from 1.2rem) */
+            }
+
+            /* Adjust font sizes within the feature cards for mobile */
+            #mobile-features-carousel .card-bg .feature-icon {
+                font-size: 3rem; /* Reduced from 4rem */
+            }
+            #mobile-features-carousel .card-bg h3 {
+                font-size: 1.5rem; /* Reduced from 2rem */
+            }
+            #mobile-features-carousel .card-bg p {
+                font-size: 0.9rem; /* Reduced from 1rem */
             }
         }
 
@@ -2558,10 +2569,12 @@
         // Touch swipe for 3D Carousel (Locations)
         let touchStartX = 0;
         let touchEndX = 0;
+        let locationsTouchTimeout; // To manage auto-rotate restart
 
         mobileLocationsCarousel3D.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
-            stopAutoRotate();
+            stopAutoRotate(); // Stop auto-rotate immediately on touch start
+            clearTimeout(locationsTouchTimeout); // Clear any pending restart
         });
 
         mobileLocationsCarousel3D.addEventListener('touchmove', (e) => {
@@ -2577,7 +2590,8 @@
             } else if (swipeDistance < -minSwipeDistance) {
                 nextLocation3DSlide();
             }
-            startAutoRotate(); // Restart auto-slide after touch interaction
+            // Restart auto-rotate after a delay
+            locationsTouchTimeout = setTimeout(startAutoRotate, 3000); // 3 seconds delay before restarting
         });
 
         // Event listener for location item clicks inside the 3D carousel
@@ -2614,6 +2628,9 @@
                     label.classList.add(status === "Disponible" ? 'available' : 'soon'); // Use original data-status for class
                     label.style.display = 'inline-block';
                 }
+                stopAutoRotate(); // Stop auto-rotate on click
+                clearTimeout(locationsTouchTimeout); // Clear any pending restart
+                locationsTouchTimeout = setTimeout(startAutoRotate, 3000); // Restart auto-rotate after a delay
             });
         });
 
@@ -2745,10 +2762,12 @@
         // Touch swipe for Features Carousel
         let featureTouchStartX = 0;
         let featureTouchEndX = 0;
+        let featuresTouchTimeout; // To manage auto-slide restart
 
         mobileFeaturesCarousel.addEventListener('touchstart', (e) => {
             featureTouchStartX = e.touches[0].clientX;
-            stopFeatureAutoSlide();
+            stopFeatureAutoSlide(); // Stop auto-slide immediately on touch start
+            clearTimeout(featuresTouchTimeout); // Clear any pending restart
         });
 
         mobileFeaturesCarousel.addEventListener('touchmove', (e) => {
@@ -2764,7 +2783,8 @@
             } else if (swipeDistance < -minSwipeDistance) {
                 nextFeatureSlide();
             }
-            startFeatureAutoSlide(); // Restart auto-slide after touch interaction
+            // Restart auto-slide after a delay
+            featuresTouchTimeout = setTimeout(startFeatureAutoSlide, 3000); // 3 seconds delay before restarting
         });
 
 
