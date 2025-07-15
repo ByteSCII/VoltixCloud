@@ -2558,7 +2558,7 @@
             stopAutoRotate();
             // Only start auto-rotate if there are slides to rotate
             if (carousel3DSlides && carousel3DSlides.length > 1) {
-                autoRotateInterval = setInterval(nextLocation3DSlide, 9000);
+                autoRotateInterval = setInterval(nextLocation3DSlide, 5000); // Changed to 5 seconds
             }
         }
 
@@ -2751,7 +2751,7 @@
             stopFeatureAutoSlide();
             // Only start auto-slide if there are items to slide
             if (featureCarouselItems && featureCarouselItems.length > 1) {
-                featureSlideInterval = setInterval(nextFeatureSlide, 7000);
+                featureSlideInterval = setInterval(nextFeatureSlide, 5000); // Changed to 5 seconds
             }
         }
 
