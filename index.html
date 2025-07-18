@@ -20,19 +20,14 @@
             font-family: 'Inter', sans-serif;
             color: #e6e6e6; /* Light text color */
             /* Fondos con destellos y líneas sutiles */
-            background:
-                /* Destellos/Resplandores (múltiples gradientes radiales) */
-                radial-gradient(circle at 10% 10%, rgba(102, 0, 255, 0.05) 0%, transparent 70%) top left / 150px 150px no-repeat,
-                radial-gradient(circle at 90% 20%, rgba(255, 153, 0, 0.05) 0%, transparent 70%) top right / 150px 150px no-repeat,
-                radial-gradient(circle at 30% 70%, rgba(0, 153, 255, 0.05) 0%, transparent 70%) bottom left / 150px 150px no-repeat,
-                radial-gradient(circle at 70% 90%, rgba(102, 0, 255, 0.05) 0%, transparent 70%) bottom right / 150px 150px no-repeat,
-                radial-gradient(circle at 50% 50%, rgba(255, 153, 0, 0.03) 0%, transparent 80%) center center / 200px 200px no-repeat,
-
-                /* Líneas diagonales muy tenues (gradientes lineales que se repiten) */
-                linear-gradient(45deg, rgba(0, 153, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(0, 153, 255, 0.01) 75%) 0 0 / 60px 60px repeat,
-                linear-gradient(-45deg, rgba(0, 153, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(0, 153, 255, 0.01) 75%) 0 0 / 60px 60px repeat,
-                #0c0d10; /* Color de fondo oscuro base */
+            /* La imagen de fondo principal ahora se establece dinámicamente en JS */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
+            transition: background-image 1s ease-in-out;
+            /* Default background with overlay (will be updated by JS) */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./images/webhosting.jpg');
         }
         body.overflow-hidden {
             overflow: hidden; /* Evita el scroll del body cuando el menú móvil está abierto */
@@ -228,10 +223,10 @@
 
         /* Ocultar/mostrar encabezado al hacer scroll */
         .main-header {
-            transition: transform 0.3s ease-out, background-image 1s ease-in-out; /* Add transition for background image */
-            background-size: cover; /* Asegura que la imagen cubra todo el elemento */
-            background-position: center; /* Centra la imagen de fondo */
-            background-repeat: no-repeat; /* Evita la repetición de la imagen */
+            transition: transform 0.3s ease-out; /* Keep transition for hide/show */
+            background-color: transparent; /* Make header transparent */
+            border-bottom: none; /* Remove any border */
+            box-shadow: none; /* Remove any shadow */
         }
 
         .main-header.header-hidden {
@@ -316,8 +311,8 @@
             padding-left: 6rem; /* Añade relleno desde el borde izquierdo */
             background-size: cover;
             background-position: center;
-            z-index: 0; /* Asegura que las diapositivas estén detrás de la superposición de contenido */
-            filter: brightness(0.85); /* Brillo ajustado para mejor visibilidad */
+            /* La imagen de fondo del slide ya no se establece aquí, la maneja el body */
+            filter: brightness(1); /* No aplicar brillo aquí, la superposición en el body lo maneja */
         }
 
         .carousel-slide.active {
@@ -332,8 +327,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* Superposición ligeramente más oscura para mejor visibilidad del fondo y el texto */
-            z-index: 2; /* Superposición sobre la imagen de fondo */
+            /* Esta superposición es para el contenido del slide, no para la imagen de fondo */
+            background: rgba(0, 0, 0, 0.2); /* Superposición más sutil para el contenido */
+            z-index: 2; /* Superposición sobre la imagen de fondo (que está en el body) */
         }
 
         /* Estilos para el cuadro de contenido dentro del carrusel */
@@ -558,12 +554,11 @@
             margin-bottom: 0; /* No margin on last button */
         }
 
-        /* New CSS for top-bar-section to ensure visual consistency with main-header */
+        /* Top bar section no longer needs its own background properties, it will be transparent */
         #top-bar-section {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-image 1s ease-in-out;
+            background-color: transparent; /* Ensure transparency */
+            border: none; /* Remove any border */
+            box-shadow: none; /* Remove any shadow */
         }
 
     </style>
@@ -664,7 +659,7 @@
 <!-- Hero Carousel Section -->
 <section class="hero-carousel">
 <!-- Slide 1: Web Hosting -->
-<div class="carousel-slide" data-background="./images/webhosting.jpg" style="background-image: url('./images/webhosting.jpg');">
+<div class="carousel-slide" data-background="./images/webhosting.jpg">
 <div class="carousel-content">
 <h1 class="font-extrabold text-white leading-tight mb-6">
                         Fast and <span class="gradient-text">Secure</span> Web Hosting
@@ -689,7 +684,7 @@
 </div>
 </div>
 <!-- Slide 2: Minecraft Hosting -->
-<div class="carousel-slide" data-background="./images/minecrafthosting.png" style="background-image: url('./images/minecrafthosting.png');">
+<div class="carousel-slide" data-background="./images/minecrafthosting.png">
 <div class="carousel-content">
 <h1 class="font-extrabold text-white leading-tight mb-6">
                         Powerful and <span class="gradient-text">Reliable</span> Minecraft Hosting
@@ -716,7 +711,7 @@
 </div>
 </div>
 <!-- Slide 3: Web Design -->
-<div class="carousel-slide" data-background="./images/webdesign.jpg" style="background-image: url('./images/webdesign.jpg');">
+<div class="carousel-slide" data-background="./images/webdesign.jpg">
 <div class="carousel-content">
 <h1 class="font-extrabold text-white leading-tight mb-6">
                         Professional and <span class="gradient-text">Modern</span> Web Design
@@ -925,16 +920,11 @@
             slides.forEach(slide => slide.classList.remove('active'));
             Array.from(dotsContainer.children).forEach(dot => dot.classList.remove('active'));
 
-            // Set background image for the current slide
+            // Set background image for the body with an overlay for readability
             const activeSlide = slides[index];
             const backgroundImage = activeSlide.getAttribute('data-background');
-            activeSlide.style.backgroundImage = `url('${backgroundImage}')`;
-
-            // Set background image for the main header and top bar with an overlay for readability
             const backgroundWithOverlay = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${backgroundImage}')`;
-            mainHeader.style.backgroundImage = backgroundWithOverlay;
-            topBarSection.style.backgroundImage = backgroundWithOverlay;
-
+            document.body.style.backgroundImage = backgroundWithOverlay;
 
             // Activate the current slide and dot
             activeSlide.classList.add('active');
