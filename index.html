@@ -228,8 +228,7 @@
 
         /* Ocultar/mostrar encabezado al hacer scroll */
         .main-header {
-            transition: transform 0.3s ease-out; /* Keep transition for hide/show */
-            background-image: url('./images/fondomenu.jpg'); /* Fondo de imagen para el menú de navegación */
+            transition: transform 0.3s ease-out, background-image 1s ease-in-out; /* Add transition for background image */
             background-size: cover; /* Asegura que la imagen cubra todo el elemento */
             background-position: center; /* Centra la imagen de fondo */
             background-repeat: no-repeat; /* Evita la repetición de la imagen */
@@ -531,45 +530,6 @@
             background-image: linear-gradient(90deg, #00CC66, #00FF7F);
         }
 
-        /* Language Selector Dropdown (kept for reference in case it's re-added) */
-        .language-dropdown-menu {
-            display: none;
-            position: absolute;
-            background-color: #1a1c22;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1;
-            border-radius: 0.5rem;
-            border: 1px solid #2d3748;
-            padding: 0.5rem 0;
-            top: calc(100% + 0.5rem);
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-        .language-dropdown.is-active-dropdown .language-dropdown-menu {
-            display: block; /* Show language dropdown when active */
-        }
-        .language-dropdown-menu img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 0.75rem;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-        .language-dropdown-menu a {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            color: #e6e6e6;
-            text-decoration: none;
-        }
-        .language-dropdown-menu a:hover {
-            background-color: #2d3748;
-            color: #ffffff;
-        }
-
         /* Mobile Minecraft Submenu styles */
         .mobile-minecraft-submenu {
             display: none; /* Hidden by default */
@@ -598,11 +558,19 @@
             margin-bottom: 0; /* No margin on last button */
         }
 
+        /* New CSS for top-bar-section to ensure visual consistency with main-header */
+        #top-bar-section {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 1s ease-in-out;
+        }
+
     </style>
 </head>
 <body>
 <!-- Top Bar -->
-<div class="bg-transparent text-gray-400 text-xs py-2 z-50 relative">
+<div id="top-bar-section" class="bg-transparent text-gray-400 text-xs py-2 z-50 relative">
 <div class="container mx-auto px-6 md:px-12">
 <!-- First row: Panel links (hidden on mobile, centered on desktop, white text with gradient hover) -->
 <div class="hidden md:flex justify-center space-x-6 mb-2">
@@ -859,6 +827,7 @@
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
         const mainHeader = document.querySelector('.main-header'); // Get the main header
+        const topBarSection = document.getElementById('top-bar-section'); // Get the top bar section
 
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('is-open');
@@ -956,10 +925,16 @@
             slides.forEach(slide => slide.classList.remove('active'));
             Array.from(dotsContainer.children).forEach(dot => dot.classList.remove('active'));
 
-            // Set background image
+            // Set background image for the current slide
             const activeSlide = slides[index];
             const backgroundImage = activeSlide.getAttribute('data-background');
             activeSlide.style.backgroundImage = `url('${backgroundImage}')`;
+
+            // Set background image for the main header and top bar with an overlay for readability
+            const backgroundWithOverlay = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${backgroundImage}')`;
+            mainHeader.style.backgroundImage = backgroundWithOverlay;
+            topBarSection.style.backgroundImage = backgroundWithOverlay;
+
 
             // Activate the current slide and dot
             activeSlide.classList.add('active');
