@@ -8,7 +8,7 @@
 <meta content="VoltixHost offers high-performance Minecraft, game, and VPS server hosting, plus professional web design services. Experience the best latency and 24/7 support!" name="description"/>
 <meta content="VoltixHost, Minecraft hosting, game hosting, VPS servers, web design, high-performance hosting, DDoS protection, fast servers, secure hosting, Minecraft hosting, game hosting, cloud hosting, web design, 24/7 support" name="keywords"/>
 <!-- Favicon -->
-<link href="./images/logo.webp" rel="icon" type="image/x-icon"/>
+<link href="./images/isotipo.webp" rel="icon" type="image/x-icon"/>
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Google Fonts - Inter and Oswald -->
@@ -50,7 +50,6 @@
         .btn-primary:hover {
             background: linear-gradient(90deg, #6600FF, #0099FF);
             box-shadow: 0 8px 25px rgba(0, 153, 255, 0.6); /* Sombra mejorada al pasar el ratón */
-            /* Removed transform: translateY(-2px); */
         }
         .card-bg {
             background-color: #1a1c22; /* Fondo de tarjeta más oscuro para mayor contraste */
@@ -60,22 +59,14 @@
             transition: all 0.3s ease, border-image 0.5s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease; /* Transición suave para todas las propiedades y el borde degradado */
             box-sizing: border-box; /* IMPORTANT: Include padding and border in the element's total width and height */
             box-shadow: 0 5px 20px rgba(102, 0, 255, 0.2); /* Sombra sutil para la tarjeta */
-            /* Removed animation: subtle-float 3s ease-in-out infinite; */
         }
         .card-bg:hover {
             border-image: linear-gradient(90deg, #FF8C00, #6600FF) 1; /* Invierte el degradado al pasar el ratón */
             box-shadow: 0 10px 35px rgba(102, 0, 255, 0.6); /* Sombra más fuerte al pasar el ratón */
-            /* Removed transform: translateY(-5px) scale(1.03); */
-            /* Removed filter: brightness(1.1); */
         }
         .feature-icon {
             color: #6600FF; /* Un púrpura más brillante para los iconos */
-            /* Removed transition: transform 0.3s ease, color 0.3s ease; */
             font-size: 4rem; /* text-6xl (64px) */
-        }
-        .card-bg:hover .feature-icon {
-            /* Removed transform: translateY(-10px) rotate(10deg); */
-            /* Removed color: #EC4899; */
         }
         /* Estilo personalizado para menús desplegables */
         .dropdown-menu {
@@ -118,7 +109,6 @@
             color: #e6e6e6;
             padding: 0.75rem 1rem;
             text-decoration: none;
-            /* Removed display: block; from here to allow inline-flex on buttons */
             text-align: left;
         }
         .dropdown-menu a:hover {
@@ -144,7 +134,6 @@
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 153, 255, 0.4);
-            /* Removed animation: float 2s ease-in-out infinite; */
         }
         .btn-mobile-client-area:hover {
             background: linear-gradient(90deg, #6600FF, #0099FF);
@@ -191,13 +180,6 @@
             display: block;
         }
 
-        /* Removed animation: float */
-        /* @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        } */
-
         /* Estilos para los enlaces principales del menú móvil */
         .mobile-nav-link {
             display: flex;
@@ -215,7 +197,6 @@
             width: calc(100% - 2rem);
             max-width: 280px;
             border: 1px solid #2d3748; /* Added border */
-            /* Removed transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; */
         }
 
         .mobile-nav-link span {
@@ -224,9 +205,7 @@
         }
 
         .mobile-nav-link .fas {
-            /* No se necesita margin-left: auto aquí si justify-content: space-between */
             font-size: 0.75rem;
-            /* Removed transition: transform 0.3s ease; */
         }
 
         .mobile-nav-link::before {
@@ -240,31 +219,20 @@
             z-index: -1; /* Detrás del texto */
             transform: scaleX(0); /* Comienza invisible horizontalmente */
             transform-origin: center; /* Se expande desde el centro */
-            /* Removed transition: transform 0.7s ease-in-out; */
             border-radius: 0.5rem; /* Coincide con el border-radius del padre */
         }
 
         .mobile-nav-link:hover {
             color: #ffffff; /* Texto blanco al pasar el ratón */
-            /* Removed transform: scale(1.02); */
-            /* Removed box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); */
-        }
-
-        .mobile-nav-link:hover::before {
-            /* Removed transform: scaleX(1); */
-        }
-
-        .mobile-nav-link:hover .fas {
-            /* Removed transform: rotate(90deg); */
         }
 
         /* Ocultar/mostrar encabezado al hacer scroll */
         .main-header {
-            /* Removed transition: transform 0.3s ease-out; */
+            transition: transform 0.3s ease-out; /* Keep transition for hide/show */
         }
 
         .main-header.header-hidden {
-            /* Removed transform: translateY(-100%); */
+            transform: translateY(-100%);
         }
 
         /* Fuente Oswald para enlaces de navegación de escritorio */
@@ -284,7 +252,6 @@
             border-radius: 0.5rem; /* Añadido border-radius */
             padding: 0.5rem 0.75rem; /* Relleno ajustado para mejor área de hover */
             border: 1px solid #2d3748; /* Added border */
-            /* Removed transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; */
         }
 
         .desktop-nav-link::before {
@@ -298,51 +265,30 @@
             z-index: -1; /* Detrás del texto */
             transform: scaleX(0); /* Comienza invisible horizontalmente */
             transform-origin: center; /* Se expande desde el centro */
-            /* Removed transition: transform 0.7s ease-in-out; */
             border-radius: 0.5rem; /* Coincide con el border-radius del padre */
         }
 
         .desktop-nav-link:hover {
-            /* Removed transform: translateY(-2px); */
             color: #ffffff; /* Texto blanco al pasar el ratón */
-            /* Removed box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); */
         }
         .desktop-nav-link:hover::before {
-            /* Removed transform: scaleX(1); */
+            transform: scaleX(1);
         }
 
         .desktop-nav-link .fas {
             color: #6600FF; /* Color inicial del icono */
-            /* Removed transition: color 0.7s ease-in-out; */
         }
-
-        .desktop-nav-link:hover .fas {
-            /* Removed color: #ffffff; */
-        }
-
-        /* Removed animation: fall-and-rise */
-        /* @keyframes fall-and-rise {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(-2deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        } */
-
-        /* Removed .offer-animation */
-        /* .offer-animation {
-            animation: fall-and-rise 2s ease-in-out infinite;
-        } */
 
         /* Estilos para los enlaces del panel superior */
         .top-panel-link {
             color: #ffffff; /* Color blanco inicial */
-            /* Removed transition: all 0.5s ease-in-out; */
+            transition: all 0.5s ease-in-out;
         }
 
         .top-panel-link:hover {
             background: linear-gradient(90deg, #FF8C00, #0099FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Removed transform: scale(1.05); */
         }
 
         /* Estilos específicos del carrusel Hero (ancho completo, alto completo) */
@@ -497,7 +443,6 @@
             transition: all 0.3s ease;
             z-index: 50; /* Asegura que esté encima de otro contenido */
             border: 2px solid rgba(255, 255, 255, 0.2); /* Borde blanco sutil */
-            /* Removed animation: float-discord 2s ease-in-out infinite; */
         }
 
         .discord-floating-button:hover {
@@ -515,21 +460,6 @@
             white-space: nowrap; /* Evita el ajuste de línea del texto */
         }
 
-        /* Removed animation: float-discord */
-        /* @keyframes float-discord {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        } */
-
-        /* Removed Keyframe for subtle levitating animation */
-        /* @keyframes subtle-float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        } */
-
-
         /* Nuevos estilos para el pie de página y los colores de fondo de la llamada a la acción */
         .footer-bg-color {
             background-color: #15171e; /* Un azul-gris ligeramente más rico y oscuro para el pie de página */
@@ -538,16 +468,6 @@
         .cta-bg-gradient {
             background: linear-gradient(90deg, #0056B3, #007bff); /* Un gradiente púrpura profundo para CTA */
             box-shadow: 0 10px 30px rgba(0, 86, 179, 0.5); /* Sombra a juego */
-        }
-
-        /* Estilos de la barra de consentimiento de cookies */
-        #cookie-consent-bar {
-            display: none !important; /* Completely hide the cookie bar */
-        }
-
-        /* Nuevo estilo para el aviso de desarrollo */
-        .development-notice {
-            display: none !important; /* Completely hide the development notice */
         }
 
         /* Estilos para los botones del menú de Minecraft Hosting */
@@ -607,7 +527,7 @@
             background-image: linear-gradient(90deg, #00CC66, #00FF7F);
         }
 
-        /* Language Selector Dropdown */
+        /* Language Selector Dropdown (kept for reference in case it's re-added) */
         .language-dropdown-menu {
             display: none;
             position: absolute;
@@ -623,72 +543,27 @@
             transform: translateX(-50%);
             white-space: nowrap;
         }
-        /* This rule now correctly targets the parent with the active class */
         .language-dropdown.is-active-dropdown .language-dropdown-menu {
             display: block; /* Show language dropdown when active */
         }
-        /* Adjusted image size and alignment for desktop language dropdown */
         .language-dropdown-menu img {
-            width: 24px; /* Slightly larger for better visibility */
-            height: 24px; /* Make it square */
-            border-radius: 50%; /* Circular flags */
-            margin-right: 0.75rem; /* More space from text */
-            object-fit: cover; /* Ensure image covers the circular area */
-            flex-shrink: 0; /* Prevent shrinking */
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            object-fit: cover;
+            flex-shrink: 0;
         }
         .language-dropdown-menu a {
-            display: flex; /* Use flexbox for alignment */
-            align-items: center; /* Vertically center flag and text */
-            padding: 0.5rem 1rem; /* Adjust padding for better look */
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
             color: #e6e6e6;
             text-decoration: none;
         }
         .language-dropdown-menu a:hover {
             background-color: #2d3748;
             color: #ffffff;
-        }
-
-
-        /* Mobile menu language selector */
-        .mobile-language-selector {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Distribuye el espacio entre los elementos */
-            color: #e6e6e6;
-            padding: 0.75rem 1rem;
-            font-size: 1.125rem;
-            font-weight: 700;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            margin: 0.5rem auto;
-            width: calc(100% - 2rem);
-            max-width: 280px;
-            background-color: #1a1c22; /* Same as dropdown background */
-            border: 1px solid #2d3748;
-            transition: all 0.3s ease;
-        }
-        .mobile-language-selector span {
-            flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
-            text-align: center; /* Centra el texto dentro del span */
-        }
-        .mobile-language-selector .fas {
-            /* No se necesita margin-left: auto aquí si justify-content: space-between */
-            font-size: 0.75rem;
-        }
-        .mobile-language-selector:hover {
-            background-color: #2d3748;
-            color: #ffffff;
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .mobile-language-selector img {
-            width: 22px; /* Adjusted flag size for mobile selector */
-            height: 16px; /* Adjusted height for better aspect ratio */
-            margin-right: 0.75rem;
-            border-radius: 3px;
-            object-fit: cover; /* Ensure image covers the area */
         }
 
         /* Mobile Minecraft Submenu styles */
@@ -749,8 +624,7 @@
 <div class="flex justify-between items-center w-full md:w-auto mb-2 md:mb-0">
 <div class="flex items-center">
 <!-- VoltixHost Logo (Image) -->
-<img alt="VoltixHost Logo" class="h-12 w-12 mr-3" src="./images/logo.webp"/>
-<!-- Removed the text "Host" next to the logo -->
+<img alt="VoltixHost Logo" class="h-20 w-20 mr-3" src="./images/logo.webp"/>
 </div>
 <!-- Mobile Menu Button -->
 <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
@@ -926,7 +800,7 @@
 <div>
 <a class="text-white text-2xl font-extrabold mb-4 block" href="#">
 <!-- Replaced "Voltix Host" text with the logo image -->
-<img alt="VoltixHost Logo" class="h-10 w-10" src="./images/logo.webp"/>
+<img alt="VoltixHost Logo" class="h-12 w-12" src="./images/logo.webp"/>
 </a>
 <p class="mb-4">
                     High-performance and reliable Minecraft hosting.
@@ -976,91 +850,6 @@
 <span class="online-count" id="discord-online-count"><span>Loading...</span></span>
 </button>
 <script>
-        // Translations object (kept for reference, but not actively used for dynamic switching as per request)
-        const translations = {
-            en: {
-                gamePanel: "Game Panel",
-                clientArea: "Client Area",
-                vpsPortal: "VPS Portal",
-                cPanel: "cPanel",
-                offerBanner: "SALE!",
-                offerText: "Today with our discount codes!",
-                minecraftHosting: "Minecraft Hosting",
-                gameHosting: "Game Hosting",
-                cloudHosting: "Cloud Hosting",
-                resources: "Resources",
-                more: "More",
-                viewPlans: "View Plans",
-                devNotice: "This site is under development. Suggestions on",
-                minecraftHostingMobile: "Minecraft Hosting",
-                gameHostingMobile: "Game Hosting",
-                cloudHostingMobile: "Cloud Hosting",
-                resourcesMobile: "Resources",
-                moreMobile: "More",
-                clientAreaMobileBtn: "Client Area",
-                javaEdition: "Java Edition",
-                bedrockEdition: "Bedrock Edition",
-                moddedHosting: "Modded Hosting",
-                budgetHosting: "Budget Hosting",
-                onlineStatus: "online",
-                loading: "Loading...",
-                heroWebHostingTitle: "Fast and <span class='gradient-text'>Secure</span> Web Hosting",
-                heroWebHostingDesc: "Host your website with the best performance and security.",
-                uptime: "99.9% Uptime",
-                freeSSL: "Free SSL",
-                nvmeSSD: "NVMe SSD",
-                intuitivePanel: "Intuitive Control Panel",
-                startWebHosting: "Start Web Hosting",
-                contactUs: "Contact Us",
-                heroMinecraftTitle: "Powerful and <span class='gradient-text'>Reliable</span> Minecraft Hosting",
-                heroMinecraftDesc: "Experience ultimate performance with VoltixHost. Optimized servers for your Minecraft adventure.",
-                advancedDDoS: "Advanced DDoS Protection",
-                instantSetup: "Instant Setup",
-                globalLocations: "Global Locations",
-                support247: "24/7 Support",
-                latestHardware: "Latest Generation Hardware",
-                viewMinecraftPlans: "View Minecraft Plans",
-                heroWebDesignTitle: "Professional and <span class='gradient-text'>Modern</span> Web Design",
-                heroWebDesignDesc: "We create impactful and functional websites for your business.",
-                responsiveDesign: "Responsive Design",
-                seoOptimization: "SEO Optimization",
-                ecommerceIntegration: "E-commerce Integration",
-                postLaunchSupport: "Post-Launch Support",
-                customDesign: "Custom Design",
-                requestWebDesign: "Request Web Design",
-                locationsTitle: "Our <span class='gradient-text'>Locations</span>",
-                northAmerica: "North America",
-                online: "Online",
-                comingSoon: "Coming Soon",
-                europe: "Europe",
-                asia: "Asia",
-                oceania: "Oceania",
-                whyChooseVoltix: "Why choose <span class='gradient-text'>VoltixHost</span>?",
-                ddosProtectionDesc: "Keep your server safe from malicious attacks with our state-of-the-art DDoS protection.",
-                instantSetupDesc: "Your server will be ready to play in minutes, no waiting.",
-                intuitivePanelDesc: "Manage your server with ease using our custom control panel.",
-                globalLocationsDesc: "Choose the closest server location for the lowest latency.",
-                support247Desc: "Our support team is available 24 hours a day to help you.",
-                latestHardwareDesc: "Servers built with the latest components for optimal performance.",
-                ctaTitle: "Ready to take your server to the next level?",
-                ctaDesc: "Join VoltixHost today and experience the difference.",
-                startNow: "Get Started Now!",
-                footerDesc: "High-performance and reliable Minecraft hosting.",
-                quickLinks: "Quick Links",
-                home: "Home",
-                features: "Features",
-                support: "Support",
-                legal: "Legal",
-                termsOfService: "Terms of Service",
-                privacyPolicy: "Privacy Policy",
-                refundPolicy: "Refund Policy",
-                contact: "Contact",
-                copyright: "&copy; 2025 VoltixHost. All rights reserved."
-            }
-        };
-
-        // Removed updateContentLanguage function as language selection is removed
-
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1113,8 +902,6 @@
                 }
             });
         });
-
-        // Removed Language selector logic for mobile and desktop
 
         // Smooth scrolling for navigation links (main navigation)
         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
@@ -1283,19 +1070,10 @@
             setInterval(fetchDiscordOnlineUsers, 30000); // Refresh every 30 seconds
         });
 
-        // Removed Location 3D Carousel Logic for Mobile
-        // Removed Feature Carousel Logic for Mobile
-        // Removed Cookie Consent Logic
-
         // Initial setup on page load
         document.addEventListener('DOMContentLoaded', () => {
-            // No need to call updateContentLanguage as it's removed
             fetchDiscordOnlineUsers();
             setInterval(fetchDiscordOnlineUsers, 30000);
-            // No need to call showCookieConsent as it's removed
-
-            // Removed all location and feature carousel setup logic for mobile/desktop
-            // as these sections are removed from the HTML.
             
             // Desktop Minecraft Dropdown Logic
             const desktopMinecraftDropdownToggle = document.querySelector('.desktop-nav-link[data-target="minecraft-desktop-menu"]');
@@ -1317,7 +1095,6 @@
             }
         });
 
-        // Removed resize listener logic for locations and features carousels and cookie consent bar
         window.addEventListener('resize', () => {
             // No specific resize logic needed for removed sections or cookie bar
         });
