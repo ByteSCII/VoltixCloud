@@ -8,7 +8,7 @@
 <meta content="VoltixHost offers high-performance Minecraft, game, and VPS server hosting, plus professional web design services. Experience the best latency and 24/7 support!" name="description"/>
 <meta content="VoltixHost, Minecraft hosting, game hosting, VPS servers, web design, high-performance hosting, DDoS protection, fast servers, secure hosting, Minecraft hosting, game hosting, cloud hosting, web design, 24/7 support" name="keywords"/>
 <!-- Favicon -->
-<link href="./images/voltixcloud.ico" rel="icon" type="image/x-icon"/>
+<link href="./images/logo.webp" rel="icon" type="image/x-icon"/>
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Google Fonts - Inter and Oswald -->
@@ -545,26 +545,7 @@
 
         /* Nuevo estilo para el aviso de desarrollo */
         .development-notice {
-            background-color: #1a1c22; /* Fondo de tarjeta más oscuro */
-            color: #cbd5e0; /* Texto gris claro */
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem; /* text-sm */
-            text-align: center;
-            width: 100%; /* Ancho completo */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-            border-bottom: 1px solid #2d3748; /* Borde sutil en la parte inferior */
-            position: relative; /* Necesario para el z-index */
-            z-index: 30; /* Debajo del encabezado, encima del contenido principal */
-        }
-        .development-notice a {
-            color: #0099FF; /* Color de enlace púrpura */
-            font-weight: 600; /* font-semibold */
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .development-notice a:hover {
-            color: #FF8C00; /* Rosa al pasar el ratón */
-            text-decoration: underline;
+            display: none !important; /* Completely hide the development notice */
         }
 
         /* Estilos para los botones del menú de Minecraft Hosting */
@@ -766,8 +747,8 @@
 <div class="flex justify-between items-center w-full md:w-auto mb-2 md:mb-0">
 <div class="flex items-center">
 <!-- VoltixHost Logo (Image) -->
-<img alt="VoltixHost Logo" class="h-10 w-10 mr-3" src="./images/voltixcloud.ico"/>
-<a class="text-white text-2xl font-extrabold whitespace-nowrap" href="#">Voltix <span class="gradient-text">Host</span></a>
+<img alt="VoltixHost Logo" class="h-10 w-10 mr-3" src="./images/logo.webp"/>
+<!-- Removed the text "Host" next to the logo -->
 </div>
 <!-- Mobile Menu Button -->
 <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
@@ -808,10 +789,6 @@
 </div>
 </nav>
 </header>
-<!-- Development Notice - Moved outside the header -->
-<div class="development-notice">
-<span>This site is under development. Suggestions on </span><a href="https://discord.gg/jhA9DHTHAW" rel="noopener noreferrer" target="_blank">Discord</a>.
-    </div>
 <!-- Mobile Menu Backdrop -->
 <div class="hidden" id="mobile-menu-backdrop"></div>
 <!-- Mobile Menu -->
@@ -945,7 +922,10 @@
 <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
 <!-- Brand Info -->
 <div>
-<a class="text-white text-2xl font-extrabold mb-4 block" href="#">Voltix <span class="gradient-text">Host</span></a>
+<a class="text-white text-2xl font-extrabold mb-4 block" href="#">
+<!-- Replaced "Voltix Host" text with the logo image -->
+<img alt="VoltixHost Logo" class="h-10 w-10" src="./images/logo.webp"/>
+</a>
 <p class="mb-4">
                     High-performance and reliable Minecraft hosting.
                 </p>
@@ -1212,7 +1192,7 @@
                 const slideIndex = parseInt(event.target.dataset.slide);
                 if (!isNaN(slideIndex)) {
                     stopAutoSlide(); // Stop auto-slide on manual interaction
-                    currentSlide = slideIndex;a
+                    currentSlide = slideIndex;
                     showSlide(currentSlide);
                     startAutoSlide(); // Restart auto-slide after a brief pause
                 }
