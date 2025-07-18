@@ -214,6 +214,7 @@
             margin: 0.5rem auto;
             width: calc(100% - 2rem);
             max-width: 280px;
+            border: 1px solid #2d3748; /* Added border */
             /* Removed transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; */
         }
 
@@ -282,6 +283,7 @@
             overflow: hidden; /* Oculta el desbordamiento de ::before */
             border-radius: 0.5rem; /* Añadido border-radius */
             padding: 0.5rem 0.75rem; /* Relleno ajustado para mejor área de hover */
+            border: 1px solid #2d3748; /* Added border */
             /* Removed transition: color 0.7s ease-in-out, transform 0.7s ease-in-out, box-shadow 0.7s ease-in-out; */
         }
 
@@ -559,7 +561,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            border: none; /* Ensure no default border */
+            border: 1px solid #2d3748; /* Added border */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Initial subtle shadow */
             flex-shrink: 0; /* Prevent buttons from shrinking */
         }
@@ -741,13 +743,13 @@
 </div>
 </div>
 <!-- Header / Main Navigation Bar -->
-<header class="main-header bg-black shadow-lg py-4 sticky top-0 w-full z-40 rounded-b-xl">
+<header class="main-header bg-transparent py-4 sticky top-0 w-full z-40">
 <nav class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto px-6 md:px-12">
 <!-- This div will hold logo and mobile button on one row for mobile -->
 <div class="flex justify-between items-center w-full md:w-auto mb-2 md:mb-0">
 <div class="flex items-center">
 <!-- VoltixHost Logo (Image) -->
-<img alt="VoltixHost Logo" class="h-10 w-10 mr-3" src="./images/logo.webp"/>
+<img alt="VoltixHost Logo" class="h-12 w-12 mr-3" src="./images/logo.webp"/>
 <!-- Removed the text "Host" next to the logo -->
 </div>
 <!-- Mobile Menu Button -->
@@ -759,31 +761,31 @@
 <div class="hidden md:flex space-x-4 items-center mt-2 md:mt-0">
 <!-- Minecraft Hosting with Dropdown -->
 <div class="relative dropdown" data-dropdown-type="minecraft">
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" data-target="minecraft-desktop-menu" href="#">
+<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" data-target="minecraft-desktop-menu" href="#">
                         Minecraft Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
 </a>
 <div class="minecraft-dropdown-menu dropdown-menu" id="minecraft-desktop-menu"> <!-- Added dropdown-menu class here -->
-<a class="minecraft-hosting-btn java" href="#">Java Edition</a>
-<a class="minecraft-hosting-btn bedrock" href="#">Bedrock Edition</a>
-<a class="minecraft-hosting-btn modded" href="#">Modded Hosting</a>
-<a class="minecraft-hosting-btn budget" href="#">Budget Hosting</a>
+<a class="minecraft-hosting-btn java border border-gray-700" href="#">Java Edition</a>
+<a class="minecraft-hosting-btn bedrock border border-gray-700" href="#">Bedrock Edition</a>
+<a class="minecraft-hosting-btn modded border border-gray-700" href="#">Modded Hosting</a>
+<a class="minecraft-hosting-btn budget border border-gray-700" href="#">Budget Hosting</a>
 </div>
 </div>
 <!-- Other links remain simple (no dropdowns) -->
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" href="#">
+<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
                     Game Hosting
                 </a>
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" href="#">
+<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
                     Cloud Hosting
                 </a>
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" href="#">
+<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
                     Resources
                 </a>
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link" href="#">
+<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
                     More
                 </a>
 <!-- "View Plans" Button -->
-<a class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link" href="#caracteristicas">
+<a class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#caracteristicas">
                     View Plans
                 </a>
 </div>
