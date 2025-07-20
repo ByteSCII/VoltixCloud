@@ -115,27 +115,31 @@
         <div class="laser-ray"></div>
     </div>
 
-    <!-- Logo alineado a la esquina superior izquierda -->
-    <img src="./images/logo.webp" alt="Logo de la Empresa" class="absolute top-0 left-0 z-30 p-4 h-32 w-32 rounded-full shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/128x128/3a005c/ffffff?text=LOGO';">
-
-    <!-- Menú de navegación alineado a la esquina superior derecha -->
-    <nav class="absolute top-0 right-0 z-30 p-4">
-        <ul class="flex flex-col md:flex-row justify-end space-y-2 md:space-y-0 md:space-x-6 text-lg">
-            <li><a href="#inicio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Inicio</a></li>
-            <li><a href="#servicios" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Servicios</a></li>
-            <li><a href="#portafolio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Portafolio</a></li>
-            <li><a href="#contacto" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Contacto</a></li>
-        </ul>
-    </nav>
-    
     <!-- Contenedor principal para el contenido con el borde SVG de carpeta -->
-    <!-- El padding-8 (p-8) crea el espacio de aproximadamente 1cm alrededor del contenido -->
+    <!-- Este div ahora abarca el logo, el menú y la sección de inicio. -->
+    <!-- El padding-8 (p-8) crea el espacio de aproximadamente 1cm alrededor del contenido. -->
     <div class="relative z-10 p-8 mx-auto my-8 max-w-4xl w-full">
         <!-- SVG para el borde de carpeta, posicionado absolutamente para cubrir el contenedor -->
         <svg class="absolute inset-0 w-full h-full pointer-events-none svg-folder-border" viewBox="0 0 100 100" preserveAspectRatio="none">
             <!-- Path que dibuja la forma de "carpeta" con cortes angulares en las esquinas -->
             <path d="M 5 0 L 95 0 L 100 5 L 100 95 L 95 100 L 5 100 L 0 95 L 0 5 Z" />
         </svg>
+
+        <!-- Contenedor para el logo y el menú de navegación dentro del borde SVG -->
+        <header class="relative z-20 flex flex-col md:flex-row justify-between items-center p-4">
+            <!-- Logo alineado a la izquierda -->
+            <img src="./images/logo.webp" alt="Logo de la Empresa" class="h-32 w-32 rounded-full shadow-lg mb-4 md:mb-0" onerror="this.onerror=null;this.src='https://placehold.co/128x128/3a005c/ffffff?text=LOGO';">
+
+            <!-- Menú de navegación alineado a la derecha -->
+            <nav>
+                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-lg">
+                    <li><a href="#inicio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Inicio</a></li>
+                    <li><a href="#servicios" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Servicios</a></li>
+                    <li><a href="#portafolio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Portafolio</a></li>
+                    <li><a href="#contacto" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
 
         <!-- Sección de inicio -->
         <section id="inicio" class="relative z-20 p-8 mt-8 text-center max-w-2xl mx-auto">
@@ -152,6 +156,6 @@
     </div>
 
     <!-- Este es un cuerpo de página con un fondo negro puro, rayos láser diagonales muy oscuros y un borde SVG de carpeta. -->
-    <!-- El menú de navegación ahora está alineado en la esquina superior derecha y el logo en la esquina superior izquierda. -->
+    <!-- El "cuadro" ahora cubre el logo, el menú de navegación y la sección de inicio. -->
 </body>
 </html>
