@@ -1,1072 +1,157 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>VoltixHost Hosting - Minecraft, Game, &amp; Web Design Hosting</title> <!-- Título de la pestaña del navegador actualizado para SEO -->
-<meta content="VoltixHost offers high-performance Minecraft, game, and VPS server hosting, plus professional web design services. Experience the best latency and 24/7 support!" name="description"/>
-<meta content="VoltixHost, Minecraft hosting, game hosting, VPS servers, web design, high-performance hosting, DDoS protection, fast servers, secure hosting, Minecraft hosting, game hosting, cloud hosting, web design, 24/7 support" name="keywords"/>
-<!-- Favicon -->
-<link href="./images/logo.webp" rel="icon" type="image/x-icon"/>
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Google Fonts - Inter and Oswald -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Oswald:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<!-- Font Awesome for icons -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Rayos Láser y Contenido Directo</title>
+    <!-- Enlace a Tailwind CSS para estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Establece la fuente Inter para todo el documento */
         body {
             font-family: 'Inter', sans-serif;
-            color: #e6e6e6; /* Light text color */
-            /* Fondos con destellos y líneas sutiles */
-            /* La imagen de fondo principal ahora se establece dinámicamente en JS */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
-            transition: background-image 1s ease-in-out;
-            /* Default background with overlay (will be updated by JS) */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./images/webhosting.jpg');
-        }
-        body.overflow-hidden {
-            overflow: hidden; /* Evita el scroll del body cuando el menú móvil está abierto */
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #0099FF, #6600FF, #FF8C00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .btn-primary {
-            background: linear-gradient(90deg, #0099FF, #6600FF);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 153, 255, 0.4); /* Sombra más prominente */
-        }
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #6600FF, #0099FF);
-            box-shadow: 0 8px 25px rgba(0, 153, 255, 0.6); /* Sombra mejorada al pasar el ratón */
-        }
-        .card-bg {
-            background-color: #1a1c22; /* Fondo de tarjeta más oscuro para mayor contraste */
-            border: 3px solid transparent; /* Establece un borde transparente para reservar espacio para el degradado */
-            background-clip: padding-box; /* Asegura que el fondo no se extienda al borde */
-            border-image: linear-gradient(90deg, #6600FF, #FF8C00) 1; /* Borde degradado púrpura a rosa */
-            transition: all 0.3s ease, border-image 0.5s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease; /* Transición suave para todas las propiedades y el borde degradado */
-            box-sizing: border-box; /* IMPORTANT: Include padding and border in the element's total width and height */
-            box-shadow: 0 5px 20px rgba(102, 0, 255, 0.2); /* Sombra sutil para la tarjeta */
-        }
-        .card-bg:hover {
-            border-image: linear-gradient(90deg, #FF8C00, #6600FF) 1; /* Invierte el degradado al pasar el ratón */
-            box-shadow: 0 10px 35px rgba(102, 0, 255, 0.6); /* Sombra más fuerte al pasar el ratón */
-        }
-        .feature-icon {
-            color: #6600FF; /* Un púrpura más brillante para los iconos */
-            font-size: 4rem; /* text-6xl (64px) */
-        }
-        /* Estilo personalizado para menús desplegables */
-        .dropdown-menu {
-            display: none; /* Oculto por defecto */
-            position: absolute;
-            background-color: #1a1c22;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1;
-            border-radius: 0.5rem;
-            border: 1px solid #2d3748;
-            padding: 0.5rem 0;
-            top: calc(100% + 0.5rem); /* Posición debajo del enlace padre */
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap; /* Evita el ajuste de línea */
-        }
-        /* New: Controlled by JS */
-        .dropdown-menu.is-active-dropdown {
-            display: block; /* Para desplegables generales */
-        }
-        /* Minecraft dropdown specific styles - now relies on .dropdown-menu for default 'display: none' */
-        .minecraft-dropdown-menu {
-            z-index: 10; /* Higher z-index to ensure it's on top */
-            border-radius: 1rem; /* Rounded corners for the entire dropdown box */
-            padding: 1rem; /* More padding */
-            flex-direction: row; /* Display buttons in a row */
-            flex-wrap: nowrap; /* IMPORTANT: Prevent wrapping to keep them in one line */
-            justify-content: center; /* Center items horizontally */
-            align-items: center; /* Center items vertically */
-            gap: 1rem; /* Increased gap between buttons */
-            min-width: 850px; /* Adjusted minimum width to fit all buttons horizontally */
-        }
-        .minecraft-dropdown-menu.is-active-dropdown {
-            display: flex; /* Explicitly set to flex when active */
+            /* Fondo ahora negro puro para máxima oscuridad */
+            background-color: #000000; /* Negro absoluto */
+            overflow: hidden; /* Evita barras de desplazamiento si los láseres salen de la vista */
         }
 
-
-        .dropdown-menu a {
-            color: #e6e6e6;
-            padding: 0.75rem 1rem;
-            text-decoration: none;
-            text-align: left;
-        }
-        .dropdown-menu a:hover {
-            background-color: #2d3748;
-            color: #ffffff;
-        }
-        /* Fondo de gradiente personalizado para el botón SALE */
-        .sale-gradient-bg {
-            background: linear-gradient(90deg, #FF8C00, #FFD700); /* Gradiente de Rojo a Naranja */
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem; /* rounded-md */
-            font-weight: 700; /* font-bold */
-            box-shadow: 0 2px 8px rgba(255, 140, 0, 0.4);
-            display: inline-flex; /* Para permitir el centrado flex para el contenido */
-            align-items: center;
-            justify-content: center;
-        }
-        /* Botón personalizado para el área de cliente del menú móvil - ahora usa gradiente primario */
-        .btn-mobile-client-area {
-            background: linear-gradient(90deg, #0099FF, #6600FF); /* Gradiente púrpura-rosa */
-            color: #ffffff; /* Texto blanco */
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 153, 255, 0.4);
-        }
-        .btn-mobile-client-area:hover {
-            background: linear-gradient(90deg, #6600FF, #0099FF);
-            box-shadow: 0 8px 20px rgba(0, 153, 255, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Estilos específicos del menú móvil para deslizar */
-        #mobile-menu {
-            position: fixed;
-            top: 0;
-            left: -100%; /* Comienza fuera de la pantalla a la izquierda */
-            width: 75%; /* O un ancho adecuado, por ejemplo, 280px */
-            max-width: 300px; /* Limita el ancho máximo para pantallas más grandes */
-            height: 100%;
-            background-color: #000000; /* Cambiado a negro */
-            z-index: 100; /* Alto z-index para estar encima */
-            transition: left 0.3s ease-in-out; /* Transición suave */
-            overflow-y: auto; /* Permite el scroll si el contenido se desborda */
-            padding-top: 4rem; /* Ajusta para el encabezado fijo */
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5); /* Sombra para profundidad */
-            display: flex; /* Añadido para centrar elementos */
-            flex-direction: column; /* Apila elementos verticalmente */
-            align-items: center; /* Centra los elementos horizontalmente */
-        }
-
-        #mobile-menu.is-open {
-            left: 0; /* Se desliza a la vista */
-        }
-
-        /* Fondo para cuando el menú móvil está abierto */
-        #mobile-menu-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Negro semi-transparente */
-            z-index: 99; /* Debajo del menú, encima del contenido */
-            display: none; /* Oculto por defecto */
-        }
-
-        #mobile-menu-backdrop.is-visible {
-            display: block;
-        }
-
-        /* Estilos para los enlaces principales del menú móvil */
-        .mobile-nav-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Distribuye el espacio entre los elementos */
-            color: #e6e6e6;
-            padding: 0.75rem 1rem;
-            font-size: 1.125rem;
-            font-weight: 700;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            margin: 0.5rem auto;
-            width: calc(100% - 2rem);
-            max-width: 280px;
-            border: 1px solid #2d3748; /* Added border */
-        }
-
-        .mobile-nav-link span {
-            flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
-            text-align: center; /* Centra el texto dentro del span */
-        }
-
-        .mobile-nav-link .fas {
-            font-size: 0.75rem;
-        }
-
-        .mobile-nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, #0099FF, #6600FF); /* Gradiente púrpura-rosa */
-            z-index: -1; /* Detrás del texto */
-            transform: scaleX(0); /* Comienza invisible horizontalmente */
-            transform-origin: center; /* Se expande desde el centro */
-            border-radius: 0.5rem; /* Coincide con el border-radius del padre */
-        }
-
-        .mobile-nav-link:hover {
-            color: #ffffff; /* Texto blanco al pasar el ratón */
-        }
-
-        /* Ocultar/mostrar encabezado al hacer scroll */
-        .main-header {
-            transition: transform 0.3s ease-out; /* Keep transition for hide/show */
-            background-color: transparent; /* Make header transparent */
-            border-bottom: none; /* Remove any border */
-            box-shadow: none; /* Remove any shadow */
-        }
-
-        .main-header.header-hidden {
-            transform: translateY(-100%);
-        }
-
-        /* Fuente Oswald para enlaces de navegación de escritorio */
-        .font-oswald {
-            font-family: 'Oswald', sans-serif;
-        }
-
-        /* Animación para enlaces de navegación de escritorio al pasar el ratón */
-        .desktop-nav-link {
-            color: #e6e6e6; /* Color de texto inicial */
-            font-weight: 500; /* Coincide con font-medium */
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            position: relative; /* Necesario para el pseudo-elemento ::before */
-            overflow: hidden; /* Oculta el desbordamiento de ::before */
-            border-radius: 0.5rem; /* Añadido border-radius */
-            padding: 0.5rem 0.75rem; /* Relleno ajustado para mejor área de hover */
-            border: 1px solid #2d3748; /* Added border */
-        }
-
-        .desktop-nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, #0099FF, #6600FF); /* Gradiente púrpura-rosa */
-            z-index: -1; /* Detrás del texto */
-            transform: scaleX(0); /* Comienza invisible horizontalmente */
-            transform-origin: center; /* Se expande desde el centro */
-            border-radius: 0.5rem; /* Coincide con el border-radius del padre */
-        }
-
-        .desktop-nav-link:hover {
-            color: #ffffff; /* Texto blanco al pasar el ratón */
-        }
-        .desktop-nav-link:hover::before {
-            transform: scaleX(1);
-        }
-
-        .desktop-nav-link .fas {
-            color: #6600FF; /* Color inicial del icono */
-        }
-
-        /* Estilos para los enlaces del panel superior */
-        .top-panel-link {
-            color: #ffffff; /* Color blanco inicial */
-            transition: all 0.5s ease-in-out;
-        }
-
-        .top-panel-link:hover {
-            background: linear-gradient(90deg, #FF8C00, #0099FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Estilos específicos del carrusel Hero (ancho completo, alto completo) */
-        .hero-carousel {
-            position: relative;
-            width: 100%;
-            height: 100vh; /* Altura completa del viewport */
-            overflow: hidden;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out; /* Transición de desvanecimiento suave */
-            display: flex;
-            align-items: center; /* Centra verticalmente */
-            justify-content: flex-start; /* Alinea el cuadro de contenido a la izquierda */
-            padding-left: 6rem; /* Añade relleno desde el borde izquierdo */
-            background-size: cover;
-            background-position: center;
-            /* La imagen de fondo del slide ya no se establece aquí, la maneja el body */
-            filter: brightness(1); /* No aplicar brillo aquí, la superposición en el body lo maneja */
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-            z-index: 1; /* Trae la diapositiva activa al frente */
-        }
-
-        .carousel-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* Esta superposición es para el contenido del slide, no para la imagen de fondo */
-            background: rgba(0, 0, 0, 0.2); /* Superposición más sutil para el contenido */
-            z-index: 2; /* Superposición sobre la imagen de fondo (que está en el body) */
-        }
-
-        /* Estilos para el cuadro de contenido dentro del carrusel */
-        .carousel-content {
-            position: relative;
-            z-index: 3; /* Contenido encima de la superposición */
-            padding: 2.5rem; /* Relleno aumentado para el cuadro */
-            max-width: 48rem; /* max-w-4xl */
-            color: #e6e6e6;
-            background-color: rgba(12, 13, 16, 0.8); /* Fondo oscuro con opacidad */
-            border-radius: 1rem; /* Esquinas redondeadas para el cuadro */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra más fuerte para profundidad */
-            backdrop-filter: blur(5px); /* Opcional: efecto de desenfoque sutil */
-            -webkit-backdrop-filter: blur(5px); /* Para Safari */
-            text-align: left; /* Texto alineado a la izquierda */
-        }
-
-        /* Tamaños de fuente ajustados para el contenido del carrusel */
-        .carousel-content h1 {
-            font-size: 2rem; /* Reducido de 3.5rem */
-            line-height: 1.2;
-        }
-
-        .carousel-content p {
-            font-size: 1rem; /* Reducido de 1.25rem */
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 4; /* Encima de todo */
-            display: flex;
-            gap: 10px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: #6600FF; /* Púrpura para el punto activo */
-        }
-
-        .carousel-features {
-            list-style: none;
-            padding: 0;
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Características alineadas a la izquierda */
-            gap: 0.75rem; /* space-y-3 */
-        }
-
-        .carousel-features li {
-            display: flex;
-            align-items: center;
-            font-size: 1.125rem; /* Mantiene el tamaño original para los elementos de la lista de características */
-            color: #cbd5e0; /* text-gray-300 */
-        }
-
-        .carousel-features li i {
-            color: #34d399; /* text-green-500 */
-            margin-right: 0.75rem; /* mr-3 */
-        }
-
-        @media (min-width: 768px) { /* md breakpoint */
-            .carousel-features {
-                flex-direction: row; /* Dirección de fila en escritorio */
-                justify-content: flex-start; /* Características alineadas a la izquierda en escritorio */
-                flex-wrap: wrap; /* Permite el ajuste de línea */
-                column-gap: 2rem; /* gap-8 */
-                row-gap: 0.75rem; /* space-y-3 */
+        /* Animación para los rayos láser diagonales */
+        @keyframes laser-beam {
+            0% {
+                transform: translateX(-100vw) translateY(0) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1; /* Opacidad muy reducida para un efecto extremadamente sutil */
+            }
+            90% {
+                opacity: 0.1; /* Opacidad muy reducida para un efecto extremadamente sutil */
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg);
+                opacity: 0;
             }
         }
 
-        /* Nuevo estilo para la superposición de desvanecimiento en la parte inferior de la sección hero */
-        .hero-fade-overlay {
+        /* Estilos base para los rayos láser (muy oscuros) */
+        .laser-ray {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 150px; /* Altura del efecto de desvanecimiento */
-            background: linear-gradient(to top, #0c0d10, transparent); /* Se desvanece al color de fondo del body */
-            z-index: 3; /* Asegura que esté por encima de las diapositivas del carrusel y su superposición de contenido */
-            pointer-events: none; /* Permite que los clics pasen a través */
+            background-color: #10001a; /* Morado casi imperceptible para los rayos */
+            box-shadow: 0 0 1px #10001a, 0 0 3px #10001a, 0 0 8px #10001a; /* Resplandor mínimo y muy oscuro */
+            width: 5px; /* Ancho original del rayo */
+            height: 150vh; /* Largo original del rayo */
+            animation: laser-beam linear infinite;
+            pointer-events: none; /* Asegura que los rayos no interfieran con la interacción del usuario */
         }
 
-        /* Estilos del botón flotante de Discord */
-        .discord-floating-button {
-            position: fixed;
-            bottom: 1.5rem; /* 6 (espaciado de tailwind) * 4px = 24px */
-            right: 1.5rem; /* 6 (espaciado de tailwind) * 4px = 24px */
-            background: linear-gradient(90deg, #FF8C00, #6600FF); /* Gradiente de Rosa a Púrpura */
-            color: white;
-            padding: 0.75rem 1.25rem; /* py-3 px-5 */
-            border-radius: 9999px; /* rounded-full */
-            font-weight: 600; /* font-semibold */
-            box-shadow: 0 10px 20px rgba(102, 0, 255, 0.3); /* Sombra rosamorada, más sutil */
-            display: flex;
-            align-items: center;
-            gap: 0.5rem; /* space-x-2 */
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 50; /* Asegura que esté encima de otro contenido */
-            border: 2px solid rgba(255, 255, 255, 0.2); /* Borde blanco sutil */
+        /* Posiciones y duraciones para cada rayo para un efecto más dinámico */
+        .laser-ray:nth-child(1) {
+            left: 10%; /* Posición original */
+            animation-duration: 10s;
+            animation-delay: 0s;
+        }
+        .laser-ray:nth-child(2) {
+            left: 30%; /* Posición original */
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+        .laser-ray:nth-child(3) {
+            left: 50%; /* Posición original */
+            animation-duration: 9s;
+            animation-delay: 4s;
+        }
+        .laser-ray:nth-child(4) {
+            left: 70%; /* Posición original */
+            animation-duration: 11s;
+            animation-delay: 6s;
+        }
+        .laser-ray:nth-child(5) {
+            left: 90%; /* Posición original */
+            animation-duration: 13s;
+            animation-delay: 8s;
+        }
+        .laser-ray:nth-child(6) {
+            left: 20%; /* Posición original */
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+        .laser-ray:nth-child(7) {
+            left: 40%; /* Posición original */
+            animation-duration: 14s;
+            animation-delay: 3s;
+        }
+        .laser-ray:nth-child(8) {
+            left: 60%; /* Posición original */
+            animation-duration: 10s;
+            animation-delay: 5s;
+        }
+        .laser-ray:nth-child(9) {
+            left: 80%; /* Posición original */
+            animation-duration: 12s;
+            animation-delay: 7s;
         }
 
-        .discord-floating-button:hover {
-            transform: translateY(-3px) scale(1.02); /* Levanta y agranda ligeramente al pasar el ratón */
-            box-shadow: 0 15px 30px rgba(102, 0, 255, 0.5); /* Sombra aún más fuerte al pasar el ratón */
-            background: linear-gradient(90deg, #6600FF, #FF8C00); /* Invierte el gradiente al pasar el ratón */
+        /* Estilos para el borde SVG de carpeta */
+        .svg-folder-border path {
+            fill: none;
+            stroke: #6a00a0; /* Color del borde morado un poco más oscuro */
+            stroke-width: 2;
+            filter: drop-shadow(0 0 1px #6a00a0); /* Resplandor mucho más sutil */
+            stroke-dasharray: 10 0; /* Línea sólida, sin animación */
         }
-
-        .discord-floating-button .fab {
-            font-size: 1.5rem; /* text-2xl para el icono de Discord */
-        }
-
-        .discord-floating-button .online-count {
-            font-size: 1rem; /* text-base */
-            white-space: nowrap; /* Evita el ajuste de línea del texto */
-        }
-
-        /* Nuevos estilos para el pie de página y los colores de fondo de la llamada a la acción */
-        .footer-bg-color {
-            background-color: #15171e; /* Un azul-gris ligeramente más rico y oscuro para el pie de página */
-        }
-
-        .cta-bg-gradient {
-            background: linear-gradient(90deg, #0056B3, #007bff); /* Un gradiente púrpura profundo para CTA */
-            box-shadow: 0 10px 30px rgba(0, 86, 179, 0.5); /* Sombra a juego */
-        }
-
-        /* Estilos para los botones del menú de Minecraft Hosting */
-        .minecraft-hosting-btn {
-            background-color: #1a1c22; /* Fallback background */
-            color: white; /* Default text color, overridden by specific classes */
-            padding: 0.75rem 1.25rem; /* Adjusted padding for better fit in a row */
-            border-radius: 0.75rem; /* rounded-xl */
-            font-weight: 600;
-            display: inline-flex !important; /* IMPORTANT: Ensures buttons are inline-flex items */
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            border: 1px solid #2d3748; /* Added border */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Initial subtle shadow */
-            flex-shrink: 0; /* Prevent buttons from shrinking */
-        }
-
-        .minecraft-hosting-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-        }
-
-        /* Specific styles for each Minecraft button */
-        .minecraft-hosting-btn.java {
-            background-image: linear-gradient(90deg, #FFD700, #FFA500); /* Yellow gradient background */
-            color: #1a1c22; /* Dark text on yellow */
-        }
-        .minecraft-hosting-btn.java:hover {
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6); /* Stronger yellow glow */
-            background-image: linear-gradient(90deg, #FFA500, #FFD700); /* Invert gradient on hover */
-        }
-
-        .minecraft-hosting-btn.bedrock {
-            background-image: linear-gradient(90deg, #A9A9A9, #808080); /* Gray gradient background */
-            color: #1a1c22; /* Dark text on gray */
-        }
-        .minecraft-hosting-btn.bedrock:hover {
-            box-shadow: 0 8px 20px rgba(128, 128, 128, 0.6); /* Stronger gray glow */
-            background-image: linear-gradient(90deg, #808080, #A9A9A9);
-        }
-
-        .minecraft-hosting-btn.modded {
-            background-image: linear-gradient(90deg, #FF0000, #CC0000); /* Red gradient background */
-            color: white; /* White text on red */
-        }
-        .minecraft-hosting-btn.modded:hover {
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6); /* Stronger red glow */
-            background-image: linear-gradient(90deg, #CC0000, #FF0000);
-        }
-
-        .minecraft-hosting-btn.budget {
-            background-image: linear-gradient(90deg, #00FF7F, #00CC66); /* Green gradient background */
-            color: white; /* White text on green */
-        }
-        .minecraft-hosting-btn.budget:hover {
-            box-shadow: 0 8px 20px rgba(0, 255, 127, 0.6); /* Stronger green glow */
-            background-image: linear-gradient(90deg, #00CC66, #00FF7F);
-        }
-
-        /* Mobile Minecraft Submenu styles */
-        .mobile-minecraft-submenu {
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            align-items: center;
-            width: calc(100% - 4rem); /* Slightly narrower than parent link */
-            max-width: 240px; /* Max width for sub-menu */
-            margin-top: 0.5rem; /* Space below parent link */
-            padding: 0.75rem;
-            background-color: #0d0e11; /* Slightly darker background for submenu */
-            border-radius: 0.5rem;
-            box-shadow: inset 0 0 10px rgba(0, 153, 255, 0.4); /* Inner shadow for depth */
-            border: 1px solid #0099FF;
-        }
-        .mobile-minecraft-submenu.is-open {
-            display: flex; /* Show when toggled */
-        }
-        .mobile-minecraft-submenu .minecraft-hosting-btn {
-            width: 100%; /* Full width within its container */
-            margin-bottom: 0.5rem; /* Space between buttons */
-            padding: 0.6rem 1rem; /* Slightly smaller padding */
-            font-size: 0.95rem; /* Slightly smaller font */
-            border-width: 2px; /* Thinner border for sub-buttons */
-        }
-        .mobile-minecraft-submenu .minecraft-hosting-btn:last-child {
-            margin-bottom: 0; /* No margin on last button */
-        }
-
-        /* Top bar section no longer needs its own background properties, it will be transparent */
-        #top-bar-section {
-            background-color: transparent; /* Ensure transparency */
-            border: none; /* Remove any border */
-            box-shadow: none; /* Remove any shadow */
-        }
-
     </style>
 </head>
-<body>
-<!-- Top Bar -->
-<div id="top-bar-section" class="bg-transparent text-gray-400 text-xs py-2 z-50 relative">
-<div class="container mx-auto px-6 md:px-12">
-<!-- First row: Panel links (hidden on mobile, centered on desktop, white text with gradient hover) -->
-<div class="hidden md:flex justify-center space-x-6 mb-2">
-<a class="top-panel-link flex items-center" href="#"><i class="fas fa-gamepad mr-2"></i>Game Panel</a>
-<a class="top-panel-link flex items-center" href="#"><i class="fas fa-user-circle mr-2"></i>Client Area</a>
-<a class="top-panel-link flex items-center" href="#"><i class="fas fa-server mr-2"></i>VPS Portal</a>
-<a class="top-panel-link flex items-center" href="#"><i class="fas fa-cogs mr-2"></i>cPanel</a>
-</div>
-<!-- Second row: Sale banner (always centered and with gradient/animation, in Spanish) -->
-<div class="flex items-center justify-center py-1">
-<span class="sale-gradient-bg">SALE!</span>
-<!-- Adjusted text size for mobile here, with new gradient and animation -->
-<span class="ml-2 mr-2 text-base md:text-xs font-bold" style="background: linear-gradient(90deg, #FF8C00 30%, #6600FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">50% OFF</span>
-<span class="text-white ml-2">Today with our discount codes!</span> <!-- Added ml-2 here -->
-<i class="fas fa-arrow-right text-white ml-2"></i>
-</div>
-</div>
-</div>
-<!-- Header / Main Navigation Bar -->
-<header class="main-header py-4 sticky top-0 w-full z-40">
-<nav class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto px-6 md:px-12">
-<!-- This div will hold logo and mobile button on one row for mobile -->
-<div class="flex justify-between items-center w-full md:w-auto mb-2 md:mb-0">
-<div class="flex items-center">
-<!-- VoltixHost Logo (Image) -->
-<img alt="VoltixHost Logo" class="h-32 w-32 mr-3" src="./images/logo.webp"/>
-</div>
-<!-- Mobile Menu Button -->
-<button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
-<i class="fas fa-bars text-2xl"></i>
-</button>
-</div>
-<!-- Navigation Links for Desktop -->
-<div class="hidden md:flex space-x-4 items-center mt-2 md:mt-0">
-<!-- Minecraft Hosting with Dropdown -->
-<div class="relative dropdown" data-dropdown-type="minecraft">
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" data-target="minecraft-desktop-menu" href="#">
-                        Minecraft Hosting <i class="fas fa-chevron-down ml-1 text-xs"></i>
-</a>
-<div class="minecraft-dropdown-menu dropdown-menu" id="minecraft-desktop-menu"> <!-- Added dropdown-menu class here -->
-<a class="minecraft-hosting-btn java border border-gray-700" href="#">Java Edition</a>
-<a class="minecraft-hosting-btn bedrock border border-gray-700" href="#">Bedrock Edition</a>
-<a class="minecraft-hosting-btn modded border border-gray-700" href="#">Modded Hosting</a>
-<a class="minecraft-hosting-btn budget border border-gray-700" href="#">Budget Hosting</a>
-</div>
-</div>
-<!-- Other links remain simple (no dropdowns) -->
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
-                    Game Hosting
-                </a>
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
-                    Cloud Hosting
-                </a>
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
-                    Resources
-                </a>
-<a class="text-gray-300 font-medium flex items-center text-sm py-1 px-2 whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#">
-                    More
-                </a>
-<!-- "View Plans" Button -->
-<a class="btn-primary py-1 px-4 rounded-lg font-semibold shadow-lg text-sm whitespace-nowrap font-oswald desktop-nav-link border border-gray-700" href="#caracteristicas">
-                    View Plans
-                </a>
-</div>
-</nav>
-</header>
-<!-- Mobile Menu Backdrop -->
-<div class="hidden" id="mobile-menu-backdrop"></div>
-<!-- Mobile Menu -->
-<div class="bg-black py-4 border border-gray-700" id="mobile-menu">
-<!-- Main navigation links (in Spanish, with new styling) -->
-<div class="w-full flex flex-col items-center">
-<a class="mobile-nav-link mobile-dropdown-toggle" data-target="minecraft-submenu" href="#"><span>Minecraft Hosting</span> <i class="fas fa-chevron-down"></i></a>
-<div class="mobile-minecraft-submenu" id="minecraft-submenu">
-<a class="minecraft-hosting-btn java" href="#">Java Edition</a>
-<a class="minecraft-hosting-btn bedrock" href="#">Bedrock Edition</a>
-<a class="minecraft-hosting-btn modded" href="#">Modded Hosting</a>
-<a class="minecraft-hosting-btn budget" href="#">Budget Hosting</a>
-</div>
-</div>
-<a class="mobile-nav-link" href="#"><span>Game Hosting</span> <i class="fas fa-chevron-down"></i></a>
-<a class="mobile-nav-link" href="#"><span>Cloud Hosting</span> <i class="fas fa-chevron-down"></i></a>
-<a class="mobile-nav-link" href="#"><span>Resources</span> <i class="fas fa-chevron-down"></i></a>
-<a class="mobile-nav-link" href="#"><span>More</span> <i class="fas fa-chevron-down"></i></a>
-<div class="mt-4 border-t border-gray-700 pt-4 w-full flex justify-center">
-<!-- Client Area button (in English, now purple-pink gradient, with float animation) -->
-<a class="block btn-mobile-client-area text-center py-2 px-4 rounded-lg font-semibold mt-4" href="#">Client Area</a>
-</div>
-</div>
-<main>
-<!-- Hero Carousel Section -->
-<section class="hero-carousel">
-<!-- Slide 1: Web Hosting -->
-<div class="carousel-slide" data-background="./images/webhosting.jpg">
-<div class="carousel-content">
-<h1 class="font-extrabold text-white leading-tight mb-6">
-                        Fast and <span class="gradient-text">Secure</span> Web Hosting
-                    </h1>
-<p class="text-gray-300 mb-10">
-                        Host your website with the best performance and security.
-                    </p>
-<ul class="carousel-features">
-<li><i class="fas fa-check-circle"></i> <span>99.9% Uptime</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Free SSL</span></li>
-<li><i class="fas fa-check-circle"></i> <span>NVMe SSD</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Intuitive Control Panel</span></li>
-</ul>
-<div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-<a class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300" href="#">
-                            Start Web Hosting
-                        </a>
-<a class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600" href="#">
-                            Contact Us
-                        </a>
-</div>
-</div>
-</div>
-<!-- Slide 2: Minecraft Hosting -->
-<div class="carousel-slide" data-background="./images/minecrafthosting.png">
-<div class="carousel-content">
-<h1 class="font-extrabold text-white leading-tight mb-6">
-                        Powerful and <span class="gradient-text">Reliable</span> Minecraft Hosting
-                    </h1>
-<p class="text-gray-300 mb-10">
-                        Experience ultimate performance with VoltixHost. Optimized servers for your Minecraft adventure.
-                    </p>
-<ul class="carousel-features">
-<li><i class="fas fa-check-circle"></i> <span>Advanced DDoS Protection</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Instant Setup</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Intuitive Control Panel</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Global Locations</span></li>
-<li><i class="fas fa-check-circle"></i> <span>24/7 Support</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Latest Generation Hardware</span></li>
-</ul>
-<div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-<a class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300" href="#caracteristicas">
-                            View Minecraft Plans
-                        </a>
-<a class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600" href="#">
-                            Contact Us
-                        </a>
-</div>
-</div>
-</div>
-<!-- Slide 3: Web Design -->
-<div class="carousel-slide" data-background="./images/webdesign.jpg">
-<div class="carousel-content">
-<h1 class="font-extrabold text-white leading-tight mb-6">
-                        Professional and <span class="gradient-text">Modern</span> Web Design
-                    </h1>
-<p class="text-gray-300 mb-10">
-                        We create impactful and functional websites for your business.
-                    </p>
-<ul class="carousel-features">
-<li><i class="fas fa-check-circle"></i> <span>Responsive Design</span></li>
-<li><i class="fas fa-check-circle"></i> <span>SEO Optimization</span></li>
-<li><i class="fas fa-check-circle"></i> <span>E-commerce Integration</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Post-Launch Support</span></li>
-<li><i class="fas fa-check-circle"></i> <span>Custom Design</span></li>
-</ul>
-<div class="flex flex-col sm:flex-row justify-start space-y-4 sm:space-y-0 sm:space-x-6 mt-10">
-<a class="btn-primary text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:scale-105 transition duration-300" href="#">
-                            Request Web Design
-                        </a>
-<a class="bg-gray-700 text-white py-3 px-8 rounded-lg text-lg font-semibold shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300 border border-gray-600" href="#">
-                            Contact Us
-                        </a>
-</div>
-</div>
-</div>
-<!-- Carousel Dots -->
-<div class="carousel-dots">
-<span class="dot active" data-slide="0"></span>
-<span class="dot" data-slide="1"></span>
-<span class="dot" data-slide="2"></span>
-</div>
-<!-- Fade Overlay at the bottom of the hero section -->
-<div class="hero-fade-overlay"></div>
-</section>
-<!-- Call to Action Section -->
-<section class="py-16 md:py-24 cta-bg-gradient">
-<div class="container mx-auto px-6 md:px-12 text-center">
-<h2 class="text-4xl md:text-5xl font-bold text-white mb-8">
-                    Ready to take your server to the next level?
-                </h2>
-<p class="text-xl text-gray-300 mb-10">
-                    Join VoltixHost today and experience the difference.
-                </p>
-<a class="btn-primary text-white py-4 px-10 rounded-lg text-xl font-semibold shadow-lg hover:scale-105 transition duration-300" href="#">
-                    Get Started Now!
-                </a>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="footer-bg-color py-12 px-6 md:px-12 text-gray-400 text-sm rounded-t-xl border-t border-gray-700">
-<div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-<!-- Brand Info -->
-<div>
-<a class="text-white text-2xl font-extrabold mb-4 block" href="#">
-<!-- Replaced "Voltix Host" text with the logo image -->
-<img alt="VoltixHost Logo" class="h-36 w-36" src="./images/logo.webp"/>
-</a>
-<p class="mb-4">
-                    High-performance and reliable Minecraft hosting.
-                </p>
-<div class="flex space-x-4 text-xl">
-<a class="hover:text-white transition duration-300" href="#"><i class="fab fa-twitter"></i></a>
-<!-- Discord link updated -->
-<a class="hover:text-white transition duration-300" href="https://discord.gg/jhA9DHTHAW"><i class="fab fa-discord"></i></a>
-<a class="hover:text-white transition duration-300" href="#"><i class="fab fa-youtube"></i></a>
-</div>
-</div>
-<!-- Quick Links -->
-<div>
-<h4 class="text-white text-lg font-semibold mb-4">Quick Links</h4>
-<ul>
-<li class="mb-2"><a class="hover:text-white transition duration-300" href="#">Home</a></li>
-<li class="mb-2"><a class="hover:text-white transition duration-300" href="#caracteristicas">Features</a></li>
-<li class="mb-2"><a class="hover:text-white transition duration-300" href="#soporte">Support</a></li>
-</ul>
-</div>
-<!-- Legal -->
-<div>
-<h4 class="text-white text-lg font-semibold mb-4">Legal</h4>
-<ul>
-<li class="mb-2"><a class="hover:text-white transition duration-300" href="#">Terms of Service</a></li>
-<li class="mb-2"><a class="hover:text-white transition duration-300" href="#">Privacy Policy</a></li>
-<li class="mb-2"><a class="hover:text-white transition duration-300" href="#">Refund Policy</a></li>
-</ul>
-</div>
-<!-- Contact Info -->
-<div>
-<h4 class="text-white text-lg font-semibold mb-4">Contact</h4>
-<ul>
-<li class="mb-2">Email: <a class="hover:text-white transition duration-300" href="mailto:soporte@voltixcloud.com">soporte@voltixcloud.com</a></li>
-<!-- Discord contact link updated -->
-<a class="hover:text-white transition duration-300" href="https://discord.gg/jhA9DHTHAW">discord.gg/voltixcloud</a>
-</ul>
-</div>
-</div>
-<div class="border-t border-gray-700 mt-8 pt-8 text-center">
-<p><span>© 2025 VoltixHost. All rights reserved.</span></p>
-</div>
-</footer>
-<!-- Floating Discord Button -->
-<button class="discord-floating-button" id="discord-floating-button">
-<i class="fab fa-discord"></i>
-<span class="online-count" id="discord-online-count"><span>Loading...</span></span>
-</button>
-<script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
-        const mainHeader = document.querySelector('.main-header'); // Get the main header
-        const topBarSection = document.getElementById('top-bar-section'); // Get the top bar section
+<body class="min-h-screen relative text-white">
+    <!-- Contenedor para los rayos láser -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+        <div class="laser-ray"></div>
+    </div>
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('is-open');
-            mobileMenuBackdrop.classList.toggle('is-visible');
-            document.body.classList.toggle('overflow-hidden'); // Prevent scrolling body when menu is open
-        });
+    <!-- Logo alineado a la esquina superior izquierda -->
+    <img src="./images/logo.webp" alt="Logo de la Empresa" class="absolute top-0 left-0 z-30 p-4 h-32 w-32 rounded-full shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/128x128/3a005c/ffffff?text=LOGO';">
 
-        // Close mobile menu when clicking backdrop
-        mobileMenuBackdrop.addEventListener('click', () => {
-            mobileMenu.classList.remove('is-open');
-            mobileMenuBackdrop.classList.remove('is-visible');
-            document.body.classList.remove('overflow-hidden');
-            // Close any open mobile submenus when main menu closes
-            document.querySelectorAll('.mobile-minecraft-submenu.is-open').forEach(submenu => {
-                submenu.classList.remove('is-open');
-            });
-        });
+    <!-- Menú de navegación alineado a la esquina superior derecha -->
+    <nav class="absolute top-0 right-0 z-30 p-4">
+        <ul class="flex flex-col md:flex-row justify-end space-y-2 md:space-y-0 md:space-x-6 text-lg">
+            <li><a href="#inicio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Inicio</a></li>
+            <li><a href="#servicios" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Servicios</a></li>
+            <li><a href="#portafolio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Portafolio</a></li>
+            <li><a href="#contacto" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Contacto</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Contenedor principal para el contenido con el borde SVG de carpeta -->
+    <!-- El padding-8 (p-8) crea el espacio de aproximadamente 1cm alrededor del contenido -->
+    <div class="relative z-10 p-8 mx-auto my-8 max-w-4xl w-full">
+        <!-- SVG para el borde de carpeta, posicionado absolutamente para cubrir el contenedor -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none svg-folder-border" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- Path que dibuja la forma de "carpeta" con cortes angulares en las esquinas -->
+            <path d="M 5 0 L 95 0 L 100 5 L 100 95 L 95 100 L 5 100 L 0 95 L 0 5 Z" />
+        </svg>
 
-        // Handle clicks inside the mobile menu
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', function (event) {
-                // Check if the clicked link is a dropdown toggle
-                if (this.classList.contains('mobile-dropdown-toggle')) {
-                    event.preventDefault(); // Prevent default link behavior (e.g., navigating)
-                    const targetId = this.dataset.target;
-                    const targetSubmenu = document.getElementById(targetId);
+        <!-- Sección de inicio -->
+        <section id="inicio" class="relative z-20 p-8 mt-8 text-center max-w-2xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold text-purple-400 mb-4">¡Bienvenido a Nuestra Página Futurista!</h1>
+            <p class="text-lg text-gray-300 leading-relaxed">
+                Explora un mundo de posibilidades donde la tecnología y la creatividad se unen.
+                Estamos emocionados de mostrarte lo que podemos construir juntos.
+            </p>
+            <button class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-md transition-all duration-300 transform hover:scale-105">
+                Descubre Más
+            </button>
+        </section>
 
-                    if (targetSubmenu) {
-                        // Close other open submenus before opening this one
-                        document.querySelectorAll('.mobile-minecraft-submenu.is-open').forEach(submenu => {
-                            if (submenu.id !== targetId) {
-                                submenu.classList.remove('is-open');
-                            }
-                        });
-                        targetSubmenu.classList.toggle('is-open');
-                    }
-                } else {
-                    // If it's a regular link, close the main menu and any open submenus
-                    mobileMenu.classList.remove('is-open');
-                    mobileMenuBackdrop.classList.remove('is-visible');
-                    document.body.classList.remove('overflow-hidden');
-                    document.querySelectorAll('.mobile-minecraft-submenu.is-open').forEach(submenu => {
-                        submenu.classList.remove('is-open');
-                    });
-                }
-            });
-        });
+    </div>
 
-        // Smooth scrolling for navigation links (main navigation)
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                // Only attempt to scroll if the href is not just "#" (which is used for dropdown toggles)
-                if (href && href !== '#') {
-                    e.preventDefault();
-                    document.querySelector(href).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                } else if (href === '#') {
-                    // If href is just '#', prevent default behavior to avoid scrolling to top
-                    e.preventDefault();
-                }
-            });
-        });
-
-        // Header hide/show on scroll logic
-        let lastScrollTop = 0;
-        window.addEventListener('scroll', () => {
-            let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Only apply hide/show if not at the very top of the page
-            if (currentScrollTop > 0) {
-                if (currentScrollTop > lastScrollTop) {
-                    // Scrolling down
-                    mainHeader.classList.add('header-hidden');
-                } else {
-                    // Scrolling up
-                    mainHeader.classList.remove('header-hidden');
-                }
-            } else {
-                // At the very top, always show header
-                mainHeader.classList.remove('header-hidden');
-            }
-            lastScrollTop = currentScrollTop;
-        });
-
-        // Hero Carousel Logic (Full-width carousel)
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dotsContainer = document.querySelector('.carousel-dots');
-        let currentSlide = 0;
-        let slideInterval;
-
-        function showSlide(index) {
-            // Deactivate all slides and dots
-            slides.forEach(slide => slide.classList.remove('active'));
-            Array.from(dotsContainer.children).forEach(dot => dot.classList.remove('active'));
-
-            // Set background image for the body with an overlay for readability
-            const activeSlide = slides[index];
-            const backgroundImage = activeSlide.getAttribute('data-background');
-            const backgroundWithOverlay = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${backgroundImage}')`;
-            document.body.style.backgroundImage = backgroundWithOverlay;
-
-            // Activate the current slide and dot
-            activeSlide.classList.add('active');
-            dotsContainer.children[index].classList.add('active');
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 8000); // Change slide every 8 seconds
-        }
-
-        function stopAutoSlide() {
-            clearInterval(slideInterval);
-        }
-
-        // Event listeners for dots
-        dotsContainer.addEventListener('click', (event) => {
-            if (event.target.classList.contains('dot')) {
-                const slideIndex = parseInt(event.target.dataset.slide);
-                if (!isNaN(slideIndex)) {
-                    stopAutoSlide(); // Stop auto-slide on manual interaction
-                    currentSlide = slideIndex;
-                    showSlide(currentSlide);
-                    startAutoSlide(); // Restart auto-slide after a brief pause
-                }
-            }
-        });
-
-        // Touch swipe for Hero Carousel
-        let heroTouchStartX = 0;
-        let heroTouchEndX = 0;
-        const heroCarousel = document.querySelector('.hero-carousel');
-
-        heroCarousel.addEventListener('touchstart', (e) => {
-            heroTouchStartX = e.touches[0].clientX;
-            stopAutoSlide(); // Stop auto-slide on touch start
-        });
-
-        heroCarousel.addEventListener('touchmove', (e) => {
-            heroTouchEndX = e.touches[0].clientX;
-        });
-
-        heroCarousel.addEventListener('touchend', () => {
-            const swipeDistance = heroTouchEndX - heroTouchStartX;
-            const minSwipeDistance = 50; // Minimum distance for a recognized swipe
-
-            if (swipeDistance > minSwipeDistance) {
-                // Swipe right (previous slide)
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                showSlide(currentSlide);
-            } else if (swipeDistance < -minSwipeDistance) {
-                // Swipe left (next slide)
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-            }
-            startAutoSlide(); // Restart auto-slide after touch interaction
-        });
-
-
-        // Initialize carousel on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            showSlide(currentSlide);
-            startAutoSlide();
-        });
-
-        // Optional: Pause carousel on hover over the carousel area
-        document.querySelector('.hero-carousel').addEventListener('mouseenter', stopAutoSlide);
-        document.querySelector('.hero-carousel').addEventListener('mouseleave', startAutoSlide);
-
-        // Discord Floating Button Logic
-        const discordFloatingButton = document.getElementById('discord-floating-button');
-        const discordOnlineCount = document.getElementById('discord-online-count');
-
-        // Replace with your Discord Invite Code
-        const DISCORD_INVITE_CODE = 'jhA9DHTHAW'; // <--- CÓDIGO DE INVITACIÓN DE TU SERVIDOR
-        const DISCORD_INVITE_LINK = `https://discord.gg/${DISCORD_INVITE_CODE}`; // Enlace de invitación
-
-        async function fetchDiscordOnlineUsers() {
-            discordOnlineCount.textContent = 'Loading...'; // Hardcode loading text
-
-            try {
-                // Using the invite API with with_counts=true
-                const response = await fetch(`https://discord.com/api/v9/invites/${DISCORD_INVITE_CODE}?with_counts=true`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                if (data && data.approximate_presence_count !== undefined) {
-                    discordOnlineCount.textContent = `${data.approximate_presence_count} online`; // Hardcode "online"
-                } else {
-                    discordOnlineCount.textContent = 'Error';
-                    console.error('Discord invite data not found or invalid:', data);
-                }
-            } catch (error) {
-                discordOnlineCount.textContent = 'Error';
-                console.error('Error fetching Discord invite data:', error);
-            }
-        }
-
-        // Open Discord invite link when button is clicked
-        discordFloatingButton.addEventListener('click', () => {
-            window.open(DISCORD_INVITE_LINK, '_blank');
-        });
-
-        // Fetch on load and every 30 seconds
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchDiscordOnlineUsers();
-            setInterval(fetchDiscordOnlineUsers, 30000); // Refresh every 30 seconds
-        });
-
-        // Initial setup on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchDiscordOnlineUsers();
-            setInterval(fetchDiscordOnlineUsers, 30000);
-            
-            // Desktop Minecraft Dropdown Logic
-            const desktopMinecraftDropdownToggle = document.querySelector('.desktop-nav-link[data-target="minecraft-desktop-menu"]');
-            const desktopMinecraftDropdownMenu = document.getElementById('minecraft-desktop-menu');
-
-            if (desktopMinecraftDropdownToggle && desktopMinecraftDropdownMenu) {
-                desktopMinecraftDropdownToggle.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    event.stopPropagation(); // Crucial: Stop propagation to prevent document click from immediately closing it
-                    desktopMinecraftDropdownMenu.classList.toggle('is-active-dropdown');
-                });
-
-                // Close desktop Minecraft dropdown when clicking anywhere outside it
-                document.addEventListener('click', (event) => {
-                    if (!desktopMinecraftDropdownMenu.contains(event.target) && !desktopMinecraftDropdownToggle.contains(event.target)) {
-                        desktopMinecraftDropdownMenu.classList.remove('is-active-dropdown');
-                    }
-                });
-            }
-        });
-
-        window.addEventListener('resize', () => {
-            // No specific resize logic needed for removed sections or cookie bar
-        });
-    </script>
+    <!-- Este es un cuerpo de página con un fondo negro puro, rayos láser diagonales muy oscuros y un borde SVG de carpeta. -->
+    <!-- El menú de navegación ahora está alineado en la esquina superior derecha y el logo en la esquina superior izquierda. -->
 </body>
 </html>
