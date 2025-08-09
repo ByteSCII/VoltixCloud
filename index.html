@@ -10,16 +10,15 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            /* Estilo del fondo con la imagen */
             background-image: url('./images/fondo.png');
-            background-size: cover; /* Asegura que la imagen cubra todo el fondo */
-            background-position: center; /* Centra la imagen */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
-            background-attachment: fixed; /* Mantiene la imagen fija mientras el contenido se desplaza */
-            color: #e5e7eb; /* Ajusta el color del texto para que sea visible sobre el fondo oscuro */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e5e7eb;
         }
 
-        /* Estilo para la animación de balanceo hacia adelante y atrás más suave */
+        /* Animación para el texto de descuento en el menú */
         @keyframes swing-3d {
             0%, 100% { transform: rotateX(-25deg); }
             50% { transform: rotateX(25deg); }
@@ -27,7 +26,7 @@
         
         .animated-discount {
             animation: swing-3d 6s ease-in-out infinite;
-            transform-origin: top center; /* Hace que el cartel se balancee desde la parte superior */
+            transform-origin: top center;
         }
 
         /* Estilo para el texto con degradado */
@@ -59,7 +58,7 @@
             transition-timing-function: ease-in-out;
             transform-origin: center;
             display: inline-block;
-            overflow: hidden; /* Oculta las letras antes de la animación */
+            overflow: hidden;
         }
 
         /* Animación para el subrayado degradado */
@@ -89,6 +88,16 @@
                 opacity: 1;
             }
         }
+
+        /* Clase de animación de desvanecimiento para el carrusel */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
@@ -114,7 +123,7 @@
 
             <!-- Botón de clientes -->
             <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-4 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2003/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
                 CLIENTES
@@ -122,25 +131,68 @@
         </div>
     </div>
 
-    <!-- Contenido principal de la página -->
-    <main>
-        <!-- Imagen de Minecraft en la sección principal -->
-        <img src="./images/minecraft.png" alt="Imagen de Minecraft" class="w-full h-[34rem] object-cover rounded-xl shadow-2xl">
+    <!-- Contenido principal de la página con carrusel -->
+    <main class="relative">
+        <!-- Contenedor del Carrusel con los elementos de imagen y texto -->
+        <div id="carousel-container" class="w-full h-[34rem] relative overflow-hidden group">
+            
+            <!-- Elemento de imagen para el carrusel -->
+            <img id="carousel-image" src="" alt="Imagen de Minecraft" class="w-full h-full object-cover rounded-xl shadow-2xl absolute inset-0">
+            
+            <!-- Contenedor de texto superpuesto -->
+            <div id="carousel-text" class="absolute inset-0 flex items-center justify-start py-10 pl-20">
+                <div class="text-left max-w-lg">
+                    <h2 id="carousel-title" class="text-4xl md:text-6xl font-bold mb-2"></h2>
+                    <p id="carousel-prices" class="text-lg md:text-xl text-gray-300 mb-6"></p>
+                    <div class="flex space-x-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">VER PLANES</button>
+                        <button class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">COMPRAR</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flechas de navegación del carrusel -->
+            <button id="prev-arrow" class="absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button id="next-arrow" class="absolute top-1/2 right-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+
+            <!-- Puntos de navegación del carrusel -->
+            <div id="carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
+                <!-- Los puntos se generarán aquí con JavaScript -->
+            </div>
+        </div>
     </main>
 
-    <!-- Script para animar las letras de los enlaces de navegación -->
+    <!-- Script para animar los enlaces de navegación y controlar el carrusel -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Referencias a los elementos del carrusel
+            const carouselImage = document.getElementById('carousel-image');
+            const carouselTextContainer = document.getElementById('carousel-text');
+            const carouselTitle = document.getElementById('carousel-title');
+            const carouselPrices = document.getElementById('carousel-prices');
 
-            // Envuelve cada letra en un span para poder animarla individualmente
+            const prevArrow = document.getElementById('prev-arrow');
+            const nextArrow = document.getElementById('next-arrow');
+            const carouselDotsContainer = document.getElementById('carousel-dots');
+
+            // Envuelve cada letra en un span para la animación individual
             navLinks.forEach(link => {
-                const text = link.textContent; // Se elimina .trim() para no eliminar los espacios
+                const text = link.textContent;
                 link.innerHTML = '';
                 text.split('').forEach(char => {
                     const span = document.createElement('span');
                     if (char === ' ') {
-                        span.innerHTML = '&nbsp;'; // Se usa un espacio no rompible para que el espacio se renderice correctamente
+                        span.innerHTML = '&nbsp;';
                     } else {
                         span.textContent = char;
                     }
@@ -149,7 +201,7 @@
                 });
             });
 
-            // Agrega el evento hover para la animación de caída
+            // Añade el evento hover para la animación de caída
             navLinks.forEach(link => {
                 link.addEventListener('mouseenter', function() {
                     const letters = this.querySelectorAll('span');
@@ -161,10 +213,123 @@
                 link.addEventListener('mouseleave', function() {
                     const letters = this.querySelectorAll('span');
                     letters.forEach(letter => {
-                        letter.style.animation = 'none'; // Elimina la animación para que las letras no se caigan al salir el cursor
+                        letter.style.animation = 'none';
                     });
                 });
             });
+
+            // Lógica del carrusel
+            const slides = [
+                {
+                    image: './images/minecraft.png',
+                    title: 'Minecraft Hosting',
+                    price: 'Precios desde <span class="line-through text-red-500">$1.99</span> <span class="font-bold text-xl">$0.90/GB</span>'
+                },
+                {
+                    image: './images/webhosting.png',
+                    title: 'Hosting Web',
+                    price: 'Un plan accequible para tu sitio web, desde <span class="line-through text-red-500">$3.00</span> <span class="font-bold text-xl">$2.00/GB</span>'
+                },
+                {
+                    image: './images/image_8867e1.png',
+                    title: 'Juegos de Supervivencia',
+                    price: 'Disfruta de una experiencia única desde <span class="font-bold text-xl">$2.50/GB</span>'
+                },
+                {
+                    image: './images/image_86a2c7.png',
+                    title: 'Servidores de Mods',
+                    price: 'Personaliza tu juego por solo <span class="font-bold text-xl">$1.20/GB</span>'
+                }
+            ];
+
+            let currentIndex = 0;
+            let intervalId = null;
+
+            // Función para precargar todas las imágenes
+            function preloadImages() {
+                slides.forEach(slide => {
+                    const img = new Image();
+                    img.src = slide.image;
+                });
+            }
+
+            // Función principal para mostrar una diapositiva específica
+            function showSlide(index) {
+                // Previene transiciones si ya estamos en la diapositiva correcta
+                if (index === currentIndex) {
+                    return;
+                }
+
+                const newSlide = slides[index];
+
+                // Desvanecer el contenido actual
+                carouselImage.classList.add('fade-out');
+                carouselTextContainer.classList.add('fade-out');
+
+                // Esperar a que el desvanecimiento termine antes de cambiar el contenido
+                setTimeout(() => {
+                    // Actualizar el contenido después del desvanecimiento
+                    carouselImage.src = newSlide.image;
+                    carouselTitle.innerHTML = newSlide.title;
+                    carouselPrices.innerHTML = newSlide.price;
+
+                    // Volver a hacer visible el contenido con la animación de entrada
+                    carouselImage.classList.remove('fade-out');
+                    carouselTextContainer.classList.remove('fade-out');
+                    
+                    currentIndex = index; // Actualizar el índice
+                    updateDots();
+                }, 500); // Duración de la transición CSS
+            }
+            
+            // Función para avanzar el carrusel
+            function advanceCarousel(direction) {
+                let newIndex = (currentIndex + direction + slides.length) % slides.length;
+                showSlide(newIndex);
+            }
+
+            // Función para actualizar el punto activo
+            function updateDots() {
+                carouselDotsContainer.innerHTML = '';
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('h-2', 'w-2', 'rounded-full', 'bg-white', 'bg-opacity-50', 'cursor-pointer', 'transition-all', 'duration-300');
+                    if (index === currentIndex) {
+                        dot.classList.remove('bg-opacity-50');
+                        dot.classList.add('bg-opacity-100', 'w-6');
+                    }
+                    dot.addEventListener('click', () => {
+                        resetInterval();
+                        showSlide(index);
+                    });
+                    carouselDotsContainer.appendChild(dot);
+                });
+            }
+
+            // Función para resetear el intervalo del carrusel automático
+            function resetInterval() {
+                clearInterval(intervalId);
+                intervalId = setInterval(() => {
+                    advanceCarousel(1);
+                }, 10000);
+            }
+
+            // Listeners para las flechas de navegación
+            prevArrow.addEventListener('click', () => {
+                resetInterval();
+                advanceCarousel(-1);
+            });
+
+            nextArrow.addEventListener('click', () => {
+                resetInterval();
+                advanceCarousel(1);
+            });
+
+            // Configuración inicial e inicio del carrusel
+            preloadImages();
+            showSlide(0);
+            updateDots();
+            resetInterval();
         });
     </script>
 </body>
