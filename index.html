@@ -3,159 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página con Rayos Láser y Contenido Directo</title>
-    <!-- Enlace a Tailwind CSS para estilos -->
+    <title>Mi Hosting de Minecraft</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Establece la fuente Inter para todo el documento */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
         body {
             font-family: 'Inter', sans-serif;
-            /* Fondo ahora negro puro para máxima oscuridad */
-            background-color: #000000; /* Negro absoluto */
-            overflow: hidden; /* Evita barras de desplazamiento si los láseres salen de la vista */
+            /* Estilo del fondo con la imagen */
+            background-image: url('./images/fondo.png');
+            background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed; /* Mantiene la imagen fija mientras el contenido se desplaza */
+            color: #e5e7eb; /* Ajusta el color del texto para que sea visible sobre el fondo oscuro */
         }
 
-        /* Animación para los rayos láser diagonales */
-        @keyframes laser-beam {
+        /* Estilo para la animación de balanceo hacia adelante y atrás más suave */
+        @keyframes swing-3d {
+            0%, 100% { transform: rotateX(-25deg); }
+            50% { transform: rotateX(25deg); }
+        }
+        
+        .animated-discount {
+            animation: swing-3d 6s ease-in-out infinite;
+            transform-origin: top center; /* Hace que el cartel se balancee desde la parte superior */
+        }
+
+        /* Estilo para el texto con degradado */
+        .text-gradient {
+            background-image: linear-gradient(to right, #ff00ff, #ff0000, #0000ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Estilo para el fondo del menú con degradado transparente */
+        .bg-menu-gradient {
+            background: linear-gradient(to right, rgba(255, 0, 255, 0.2), rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Estilo para las sombras más visibles */
+        .shadow-visible {
+            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Estilo para los enlaces de navegación */
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+            transition-property: transform, color;
+            transition-duration: 300ms;
+            transition-timing-function: ease-in-out;
+            transform-origin: center;
+            display: inline-block;
+            overflow: hidden; /* Oculta las letras antes de la animación */
+        }
+
+        /* Animación para el subrayado degradado */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #ff00ff, #ff0000, #0000ff);
+            transition: width 0.3s ease-in-out;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Animación para el efecto de caída de las letras */
+        @keyframes drop {
             0% {
-                transform: translateX(-100vw) translateY(0) rotate(45deg);
+                transform: translateY(-20px);
                 opacity: 0;
-            }
-            10% {
-                opacity: 0.1; /* Opacidad muy reducida para un efecto extremadamente sutil */
-            }
-            90% {
-                opacity: 0.1; /* Opacidad muy reducida para un efecto extremadamente sutil */
             }
             100% {
-                transform: translateX(100vw) translateY(100vh) rotate(45deg);
-                opacity: 0;
+                transform: translateY(0);
+                opacity: 1;
             }
-        }
-
-        /* Estilos base para los rayos láser (muy oscuros) */
-        .laser-ray {
-            position: absolute;
-            background-color: #10001a; /* Morado casi imperceptible para los rayos */
-            box-shadow: 0 0 1px #10001a, 0 0 3px #10001a, 0 0 8px #10001a; /* Resplandor mínimo y muy oscuro */
-            width: 5px; /* Ancho original del rayo */
-            height: 150vh; /* Largo original del rayo */
-            animation: laser-beam linear infinite;
-            pointer-events: none; /* Asegura que los rayos no interfieran con la interacción del usuario */
-        }
-
-        /* Posiciones y duraciones para cada rayo para un efecto más dinámico */
-        .laser-ray:nth-child(1) {
-            left: 10%; /* Posición original */
-            animation-duration: 10s;
-            animation-delay: 0s;
-        }
-        .laser-ray:nth-child(2) {
-            left: 30%; /* Posición original */
-            animation-duration: 12s;
-            animation-delay: 2s;
-        }
-        .laser-ray:nth-child(3) {
-            left: 50%; /* Posición original */
-            animation-duration: 9s;
-            animation-delay: 4s;
-        }
-        .laser-ray:nth-child(4) {
-            left: 70%; /* Posición original */
-            animation-duration: 11s;
-            animation-delay: 6s;
-        }
-        .laser-ray:nth-child(5) {
-            left: 90%; /* Posición original */
-            animation-duration: 13s;
-            animation-delay: 8s;
-        }
-        .laser-ray:nth-child(6) {
-            left: 20%; /* Posición original */
-            animation-duration: 8s;
-            animation-delay: 1s;
-        }
-        .laser-ray:nth-child(7) {
-            left: 40%; /* Posición original */
-            animation-duration: 14s;
-            animation-delay: 3s;
-        }
-        .laser-ray:nth-child(8) {
-            left: 60%; /* Posición original */
-            animation-duration: 10s;
-            animation-delay: 5s;
-        }
-        .laser-ray:nth-child(9) {
-            left: 80%; /* Posición original */
-            animation-duration: 12s;
-            animation-delay: 7s;
-        }
-
-        /* Estilos para el borde SVG de carpeta */
-        .svg-folder-border path {
-            fill: none;
-            stroke: #6a00a0; /* Color del borde morado un poco más oscuro */
-            stroke-width: 2;
-            filter: drop-shadow(0 0 1px #6a00a0); /* Resplandor mucho más sutil */
-            stroke-dasharray: 10 0; /* Línea sólida, sin animación */
         }
     </style>
 </head>
-<body class="min-h-screen relative text-white">
-    <!-- Contenedor para los rayos láser -->
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-        <div class="laser-ray"></div>
-    </div>
+<body class="bg-gray-900 text-gray-100">
 
-    <!-- Contenedor principal para el contenido con el borde SVG de carpeta -->
-    <!-- Este div ahora abarca el logo, el menú y la sección de inicio. -->
-    <!-- El padding-8 (p-8) crea el espacio de aproximadamente 1cm alrededor del contenido. -->
-    <div class="relative z-10 p-8 mx-auto my-8 max-w-4xl w-full">
-        <!-- SVG para el borde de carpeta, posicionado absolutamente para cubrir el contenedor -->
-        <svg class="absolute inset-0 w-full h-full pointer-events-none svg-folder-border" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <!-- Path que dibuja la forma de "carpeta" con cortes angulares en las esquinas -->
-            <path d="M 5 0 L 95 0 L 100 5 L 100 95 L 95 100 L 5 100 L 0 95 L 0 5 Z" />
-        </svg>
+    <!-- Contenedor principal para el menú de navegación y el descuento -->
+    <div class="flex items-center justify-end p-2 space-x-4">
+        <!-- Contenedor para el texto de descuento -->
+        <div class="bg-menu-gradient p-2 rounded-xl shadow-visible animated-discount text-center">
+            <h1 class="text-xl font-extrabold text-gradient">30% OFF</h1>
+            <p class="text-xs text-gray-300">¡Hosting de Minecraft ahora más barato!</p>
+        </div>
+        
+        <!-- Contenedor del menú de navegación y el botón -->
+        <div class="flex items-center space-x-4 bg-menu-gradient p-2 rounded-xl shadow-visible">
+            <!-- Enlaces de navegación -->
+            <ul class="flex space-x-4 text-xs font-medium">
+                <li><a href="#" class="nav-link">SERVICIOS</a></li>
+                <li><a href="#" class="nav-link">CENTRO DE INFORMACIÓN</a></li>
+                <li><a href="#" class="nav-link">CONTACTO</a></li>
+                <li><a href="#" class="nav-link">PARTNERS</a></li>
+                <li><a href="#" class="nav-link">ACERCA DE NOSOTROS</a></li>
+            </ul>
 
-        <!-- Contenedor para el logo y el menú de navegación dentro del borde SVG -->
-        <header class="relative z-20 flex flex-col md:flex-row justify-between items-center p-4">
-            <!-- Logo alineado a la izquierda -->
-            <img src="./images/logo.webp" alt="Logo de la Empresa" class="h-32 w-32 rounded-full shadow-lg mb-4 md:mb-0" onerror="this.onerror=null;this.src='https://placehold.co/128x128/3a005c/ffffff?text=LOGO';">
-
-            <!-- Menú de navegación alineado a la derecha -->
-            <nav>
-                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-lg">
-                    <li><a href="#inicio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Inicio</a></li>
-                    <li><a href="#servicios" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Servicios</a></li>
-                    <li><a href="#portafolio" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Portafolio</a></li>
-                    <li><a href="#contacto" class="block text-center hover:text-purple-400 transition-colors duration-300 py-2 px-4 rounded-md">Contacto</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Sección de inicio -->
-        <section id="inicio" class="relative z-20 p-8 mt-8 text-center max-w-2xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold text-purple-400 mb-4">¡Bienvenido a Nuestra Página Futurista!</h1>
-            <p class="text-lg text-gray-300 leading-relaxed">
-                Explora un mundo de posibilidades donde la tecnología y la creatividad se unen.
-                Estamos emocionados de mostrarte lo que podemos construir juntos.
-            </p>
-            <button class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-md transition-all duration-300 transform hover:scale-105">
-                Descubre Más
+            <!-- Botón de clientes -->
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-4 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
+                <svg xmlns="http://www.w3.org/2003/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                CLIENTES
             </button>
-        </section>
-
+        </div>
     </div>
 
-    <!-- Este es un cuerpo de página con un fondo negro puro, rayos láser diagonales muy oscuros y un borde SVG de carpeta. -->
-    <!-- El "cuadro" ahora cubre el logo, el menú de navegación y la sección de inicio. -->
+    <!-- Contenido principal de la página -->
+    <main>
+        <!-- Imagen de Minecraft en la sección principal -->
+        <img src="./images/minecraft.png" alt="Imagen de Minecraft" class="w-full h-[34rem] object-cover rounded-xl shadow-2xl">
+    </main>
+
+    <!-- Script para animar las letras de los enlaces de navegación -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Envuelve cada letra en un span para poder animarla individualmente
+            navLinks.forEach(link => {
+                const text = link.textContent; // Se elimina .trim() para no eliminar los espacios
+                link.innerHTML = '';
+                text.split('').forEach(char => {
+                    const span = document.createElement('span');
+                    if (char === ' ') {
+                        span.innerHTML = '&nbsp;'; // Se usa un espacio no rompible para que el espacio se renderice correctamente
+                    } else {
+                        span.textContent = char;
+                    }
+                    span.style.display = 'inline-block';
+                    link.appendChild(span);
+                });
+            });
+
+            // Agrega el evento hover para la animación de caída
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    const letters = this.querySelectorAll('span');
+                    letters.forEach((letter, index) => {
+                        letter.style.animation = `drop 0.5s ease-out forwards ${index * 0.05}s`;
+                    });
+                });
+
+                link.addEventListener('mouseleave', function() {
+                    const letters = this.querySelectorAll('span');
+                    letters.forEach(letter => {
+                        letter.style.animation = 'none'; // Elimina la animación para que las letras no se caigan al salir el cursor
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
