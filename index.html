@@ -3,333 +3,1665 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Hosting de Minecraft</title>
+    <title>Byte Desarrolladora Digital</title>
+
+    <link rel="icon" type="image/png" href="./images/isotipo.png">
+    <meta name="description" content="Byte - Métodos de pago seguros, atención al cliente y soluciones digitales confiables.">
+    <meta name="keywords" content="Byte, pagos seguros, tecnología, atención al cliente, soluciones digitales, Venezuela">
+    <meta name="author" content="Byte">
+    <meta property="og:title" content="Byte - Tecnología y confianza">
+    <meta property="og:description" content="Nuestra prioridad es la satisfacción del cliente. Conoce nuestros métodos de pago seguros y accesibles.">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- OPTIMIZACIÓN: Se difiere la carga de este script para que no bloquee el renderizado de la página -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js" defer></script>
+    <script>
+        // Custom Tailwind CSS Configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                        navigation: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'byte-dark-bg': '#0A0A1A', // Main dark background
+                        'byte-accent-cyan': '#00FFFF', // Electric cyan for accents
+                        'byte-light-bg': '#F8FAFC', // Light background (if used)
+                        'byte-text-dark': '#374151', // Dark text (if used)
+                        'byte-text-light': '#F9FAFB', // Light text
+                        'byte-secondary-dark': '#1A202C', // Secondary dark background (for dropdowns)
+                        'whatsapp-green': '#25D366', // Official WhatsApp color
+                        'whatsapp-dark-green': '#128C7E', // Darker tone for WhatsApp hover
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- MANTENIDO: Se conserva el enlace a Font Awesome según lo solicitado -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- OPTIMIZACIÓN: Se añade &display=swap para evitar el bloqueo de renderizado de las fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
+        /* Box-Sizing universal for consistent box model */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Base styles for HTML and Body */
+        html {
+            height: 100%; /* Ensures HTML has full height */
+            width: 100%; /* Ensures HTML has full width */
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background-image: url('./images/fondo.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #e5e7eb;
+            min-height: 100vh; /* Ensures body takes at least full viewport height, allowing scrolling */
+            width: 100%; /* Ensures body takes full width */
+            overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+            background-color: #0A0A1A; /* Main dark background color */
+            font-family: 'Inter', sans-serif; /* Main font */
+            color: #F9FAFB; /* Main text color */
+            margin: 0;
+            padding: 0;
+            /* Disable text selection for an app-like experience */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        /* Animación para el texto de descuento en el menú */
-        @keyframes swing-3d {
-            0%, 100% { transform: rotateX(-25deg); }
-            50% { transform: rotateX(25deg); }
-        }
-        
-        .animated-discount {
-            animation: swing-3d 6s ease-in-out infinite;
-            transform-origin: top center;
+        /* Styles for headings (h1-h6) */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif; /* Font for headings */
+            color: #00FFFF; /* Electric cyan for accents */
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Shadow for a glow effect */
         }
 
-        /* Estilo para el texto con degradado */
-        .text-gradient {
-            background-image: linear-gradient(to right, #ff00ff, #ff0000, #0000ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        /* Text stroke style */
+        .text-stroke-cyan {
+            -webkit-text-stroke: 1.5px #00FFFF; /* Cyan stroke for WebKit browsers */
+            text-stroke: 1.5px #00FFFF; /* Standard cyan stroke */
+            color: #FFFFFF; /* Text fill color */
+            text-shadow: none; /* Ensures no text shadows interfere */
         }
 
-        /* Estilo para el fondo del menú con degradado transparente */
-        .bg-menu-gradient {
-            background: linear-gradient(to right, rgba(255, 0, 255, 0.2), rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        /* Fall-in animation for AOS (definition kept, but won't be used if AOS.init is removed) */
+        @keyframes fall-in {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
-        /* Estilo para las sombras más visibles */
-        .shadow-visible {
-            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05);
+        /* Class applied by AOS.js for animating elements (definition kept, but won't be used if AOS.init is removed) */
+        .aos-animate {
+            animation-name: fall-in;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
-        /* Estilo para los enlaces de navegación */
-        .nav-link {
+        /* Styles for navigation menu text with cyan stroke */
+        /* Montserrat font applied directly here to ensure display */
+        .nav-menu-text-stroke-cyan {
+            color: #E0E0E0; /* Base silver color for text */
+            -webkit-text-stroke-width: 0.7px; /* Thinner cyan stroke for smaller text */
+            -webkit-text-stroke-color: #A0A0A0; /* Darker gray stroke for silver effect */
+            text-shadow: 0 0 5px rgba(224, 224, 224, 0.3), 0 0 10px rgba(160, 160, 160, 0.2); /* Shadow for depth */
+            transition: color 0.3s ease-in-out, -webkit-text-stroke-color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+            font-family: 'Montserrat', sans-serif; /* DIRECTLY APPLIED HERE */
+        }
+
+        /* Glow and lift effect on menu links on hover */
+        .menu-link-hover-effect { /* New class for hover effects */
             position: relative;
-            text-decoration: none;
-            transition-property: transform, color;
-            transition-duration: 300ms;
-            transition-timing-function: ease-in-out;
-            transform-origin: center;
-            display: inline-block;
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .menu-link-hover-effect::before {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Line position below text */
+            left: 0; /* Starts from text beginning */
+            width: 0; /* Line starts with zero width */
+            height: 3px; /* Line thickness */
+            background-color: #00FFFF; /* Cyan color */
+            border-radius: 2px;
+            transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transition for width and opacity */
+            opacity: 0; /* Initially invisible */
+        }
+        .menu-link-hover-effect:hover::before {
+            width: 100%; /* Line expands to 100% of parent width */
+            opacity: 1; /* Becomes visible */
+            background-color: #00FFFF; /* Ensures underline is cyan on hover */
+        }
+        .menu-link-hover-effect:hover .nav-menu-text-stroke-cyan {
+            color: #00FFFF; /* Electric cyan on hover */
+            -webkit-text-stroke-color: #00BFFF; /* Darker cyan for stroke on hover */
+            text-shadow: 0 0 8px #00FFFF, 0 0 15px rgba(0, 255, 255, 0.6); /* Intense glow on hover */
+        }
+        .menu-link-hover-effect:hover {
+            transform: translateY(-5px); /* Lifts the link slightly more for a noticeable "jump" */
+        }
+
+        /* Subtle bounce animation for arrow icon */
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        /* Class to activate arrow rotation and bounce */
+        .js-arrow-icon.arrow-active, .js-arrow-icon-mobile.arrow-active {
+            transform: rotate(180deg);
+            animation: bounce-subtle 0.5s ease-in-out infinite alternate;
+        }
+
+        /* Service card styles */
+        .service-card {
+            background: linear-gradient(145deg, #1A202C, #0A0A1A); /* Subtle gradient background */
+            border-radius: 1rem; /* More rounded corners */
+            padding: 2rem; /* Reduced padding */
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.2); /* Shadow with accent color */
+            transition: all 0.3s ease-in-out; /* Smooth transition for all changes */
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle border */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.03); /* Lift and slight increase in size on hover */
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.4); /* More pronounced shadow on hover */
+            border-color: #00FFFF; /* More visible border on hover */
+        }
+
+        .service-card .icon {
+            font-size: 3.5rem; /* Reduced icon size */
+            margin-bottom: 1rem; /* Reduced margin */
+            /* Removed: color: #00FFFF; */ /* Removed cyan color for service icons */
+            /* Removed: text-shadow: 0 0 15px rgba(0, 255, 255, 0.7); */ /* Removed glow for service icons */
+            color: #E0E0E0; /* Light gray color for service icons (black and white) */
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out; /* Transition for icon hover */
+        }
+        .service-card:hover .icon {
+            transform: rotate(10deg) scale(1.1); /* Rotation and scale effect on hover */
+            color: #FFFFFF; /* Pure white on hover for stronger contrast */
+        }
+
+        .service-card h3 {
+            color: #F9FAFB; /* Lighter title text */
+            font-size: 1.5rem; /* Reduced title size */
+            margin-bottom: 0.75rem; /* Reduced margin */
+            font-weight: 700; /* Bolder */
+        }
+
+        .service-card p {
+            color: #CBD5E0; /* Softer paragraph text */
+            font-size: 0.95rem; /* Reduced paragraph size */
+            line-height: 1.6;
+        }
+
+        /* Specific styles for service cards on small screens (mobiles) */
+        @media (max-width: 768px) { /* For screens up to 768px (md breakpoint) */
+            .service-card {
+                padding: 1.2rem; /* Reduce padding to make cards more compact */
+            }
+            .service-card .icon {
+                font-size: 2.8rem; /* Reduce icon size */
+                margin-bottom: 0.8rem;
+            }
+            .service-card h3 {
+                font-size: 1.3rem; /* Reduce title size */
+                margin-bottom: 0.6rem;
+            }
+            .service-card p {
+                font-size: 0.85rem; /* Reduce paragraph size */
+            }
+        }
+
+
+        /* Specific styles for contact section */
+        .contact-section {
+            background: linear-gradient(180deg, #1A202C, #0A0A1A); /* Background gradient */
+            padding: 4rem 0; /* Reduced padding */
+            position: relative;
             overflow: hidden;
         }
 
-        /* Animación para el subrayado degradado */
-        .nav-link::after {
+        .contact-section::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(to right, #ff00ff, #ff0000, #0000ff);
-            transition: width 0.3s ease-in-out;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate-gradient 20s linear infinite; /* Rotation animation for background */
+            z-index: 0;
         }
 
-        /* Animación para el efecto de caída de las letras */
-        @keyframes drop {
+        @keyframes rotate-gradient {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 26, 0.85); /* Semi-transparent background for content */
+            border-radius: 1.5rem;
+            padding: 2.5rem; /* Reduced padding */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px); /* Blur effect */
+        }
+
+        /* Padding adjustment for contact cards - NOW HANDLED IN HTML WITH TAILWIND */
+        .contact-form-card,
+        .contact-info-card {
+            background: #1A202C; /* Dark background for inner cards */
+            /* padding will be moved to HTML */
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.15);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .contact-form-card:hover, .contact-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .contact-form-card input,
+        .contact-form-card textarea {
+            background-color: #0A0A1A; /* Use primary background color */
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan border */
+            color: #F9FAFB; /* Light text color */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .contact-form-card input::placeholder,
+        .contact-form-card textarea::placeholder {
+            color: #b0b0b0; /* Placeholder color */
+        }
+        .contact-form-card input:focus,
+        .contact-form-card textarea:focus {
+            border-color: #00FFFF; /* Cyan on focus */
+            box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.5);
+        }
+        .social-icon-link {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+            color: #F9FAFB; /* Default icon color */
+        }
+        .social-icon-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: #00FFFF; /* Cyan on hover */
+        }
+        .map-container {
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-top: 2rem; /* Reduced margin */
+            width: 100%;
+            /* Map height - NOW CONTROLLED BY TAILWIND IN HTML */
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Disabled link style */
+        .disabled-link {
+            opacity: 0.6; /* Reduced opacity to indicate disabled */
+            cursor: not-allowed; /* "Not allowed" cursor */
+        }
+
+        /* Desktop dropdown menu styles */
+        .js-dropdown-menu {
+            position: absolute;
+            top: 100%; /* Just below parent button */
+            left: 50%;
+            transform: translateX(-50%);
+            /* min-width: 180px; Adjusted via Tailwind classes */
+            background-color: #1A202C; /* Secondary dark color */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            overflow: hidden; /* For rounded corners to work well with elements */
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan border */
+        }
+
+        /* Subcategory hover in aqua green for desktop */
+        .js-dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #F9FAFB; /* Light text color */
+            text-align: center; /* Center text in dropdown */
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .js-dropdown-menu a:hover {
+            background-color: #00FFFF; /* Electric cyan for background */
+            color: #0A0A1A; /* Dark text on hover */
+        }
+
+        /* Floating WhatsApp button (Global) */
+        .whatsapp-float-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            /* Z-index to always be on top of everything, including development banner */
+            z-index: 100000001;
+            display: flex;
+            align-items: center;
+            transition: bottom 0.3s ease-out; /* Transition for movement */
+        }
+
+        .whatsapp-float-button {
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+            transform-origin: center;
+        }
+
+        .whatsapp-float-button:hover {
+            background-color: #128C7E; /* Darker tone on hover */
+            transform: scale(1.05); /* Slight increase in scale on hover */
+            animation: none !important; /* Stop all animations on hover */
+        }
+
+        .whatsapp-float-button svg {
+            fill: white; /* Changed fill to white */
+            stroke: white; /* Added stroke for thickness */
+            stroke-width: 2; /* Increased stroke width for thickness */
+            width: 60%; /* Adjust icon size inside button */
+            height: 60%; /* Adjust icon size inside button */
+        }
+
+        /* Tooltip for WhatsApp button - Message bubble style */
+        .whatsapp-tooltip {
+            background-color: #FFFFFF; /* White background */
+            color: #0A0A1A; /* Dark text */
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem; /* More rounded corners for bubble look */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-right: 15px; /* Space between tooltip and button */
+            opacity: 0; /* Initially hidden */
+            visibility: hidden; /* Initially hidden */
+            transform: translateX(20px); /* Starts slightly to the right */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s ease-out;
+            white-space: nowrap; /* Prevents text wrapping */
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle light border */
+            position: relative; /* Necessary for pseudo-element positioning */
+        }
+
+        .whatsapp-tooltip.show-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0); /* Slides into view */
+        }
+
+        /* Tail of the dialogue bubble */
+        .whatsapp-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -10px; /* Position outside the bubble */
+            top: 50%; /* Vertically centered with the bubble */
+            transform: translateY(-50%); /* Adjustment for vertical centering */
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid #FFFFFF; /* White border to match bubble background */
+        }
+
+        /* Shake animation for WhatsApp button */
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        /* Pulse glow animation for WhatsApp button */
+        @keyframes pulse-glow {
             0% {
-                transform: translateY(-20px);
-                opacity: 0;
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
             }
             100% {
-                transform: translateY(0);
-                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
             }
         }
 
-        /* Clase de animación de desvanecimiento para el carrusel */
-        .fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        /* Mobile dropdown menu styles */
+        .js-dropdown-menu-mobile {
+            background-color: #1A202C; /* Secondary dark color */
+            border-radius: 0.5rem;
+            margin-top: 0.5rem; /* Space between parent link and submenu */
+            padding: 0.5rem 0; /* Padding inside dropdown */
+            position: relative; /* Necessary for absolute centering */
+            left: 50%; /* Horizontal centering */
+            transform: translateX(-50%); /* Horizontal centering */
+            width: 90%; /* Adjust width to be more adaptable */
+            max-width: 200px; /* Max width to prevent it from being too large */
         }
-        .fade-in {
+
+        /* Subcategory hover in aqua green for mobile */
+        .js-dropdown-menu-mobile a {
+            padding: 0.75rem 1.5rem; /* Indent sub-elements */
+            text-align: center; /* CENTERING SUBCATEGORIES ON MOBILE */
+            border-radius: 0; /* Remove rounded borders for individual elements */
+        }
+
+        .js-dropdown-menu-mobile a:hover {
+            background-color: #00FFFF; /* Electric cyan for background */
+            color: #0A0A1A; /* Dark text on hover */
+        }
+
+        /* New style for active mobile menu links (underline and text color) */
+        .mobile-menu-link-active::before {
+            width: 100% !important; /* Force width to 100% */
+            opacity: 1 !important; /* Force visibility */
+            background-color: #00FFFF !important; /* Ensure cyan color */
+        }
+
+        .mobile-menu-link-active {
+            transform: translateY(-5px) !important; /* Lift the link */
+        }
+
+        /* --- Styles for size reduction on PC and large screens --- */
+        @media (min-width: 1024px) { /* Adjust this breakpoint as needed (lg in Tailwind) */
+            .header-nav-item {
+                font-size: 0.95rem; /* Smaller font for navigation links */
+            }
+
+            .main-cta-button {
+                padding: 0.6rem 1.5rem; /* Slightly smaller button padding */
+                font-size: 0.9rem; /* Smaller font for CTA button */
+            }
+
+            .hero-section-padding {
+                padding-top: 6rem; /* Adjust top padding for hero section */
+                padding-bottom: 6rem; /* Adjust bottom padding for hero section */
+            }
+
+            .hero-heading {
+                font-size: 3.5rem; /* Smaller heading for hero section */
+            }
+
+            .hero-subheading {
+                font-size: 1.1rem; /* Smaller subheading for hero section */
+            }
+
+            .section-heading {
+                font-size: 2.5rem; /* Smaller general section headings */
+            }
+
+            .service-card {
+                padding: 1.5rem; /* Smaller padding for service cards */
+            }
+
+            .service-card .icon {
+                font-size: 3rem; /* Smaller icon size in service cards */
+            }
+
+            .service-card h3 {
+                font-size: 1.3rem; /* Smaller title in service cards */
+            }
+
+            .service-card p {
+                font-size: 0.85rem; /* Smaller paragraph text in service cards */
+            }
+
+            .contact-section {
+                padding: 3rem 0; /* Smaller padding for contact section */
+            }
+
+            .contact-content {
+                padding: 2rem; /* Smaller padding for contact content card */
+            }
+
+            .contact-form-card,
+            .contact-info-card {
+                padding: 1.5rem; /* Smaller padding for inner contact cards */
+            }
+
+            .contact-form-card input,
+            .contact-form-card textarea {
+                font-size: 0.8rem; /* Smaller font for form fields */
+            }
+
+            .social-icon-link svg {
+                width: 24px; /* Smaller social icons */
+                height: 24px;
+            }
+
+            .whatsapp-float-button {
+                width: 50px; /* Smaller WhatsApp button */
+                height: 50px;
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #1A202C; /* Secondary dark background */
+            color: #F9FAFB; /* Light text */
+            padding: 2rem 0; /* Padding for footer */
+            border-top: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan top border */
+        }
+
+        .footer a {
+            color: #00FFFF; /* Cyan for links */
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #00BFFF; /* Darker cyan on hover */
+        }
+
+        .footer-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem; /* Larger font for headings */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #00FFFF; /* Cyan color for headings */
+        }
+
+        .footer-link-item {
+            margin-bottom: 0.5rem; /* Space between list items */
+        }
+
+        .footer-social-icon {
+            font-size: 1.75rem; /* Size of social icons */
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-social-icon:hover {
+            color: #00FFFF; /* Cyan on hover */
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        /* Animation for the prices icon image */
+        @keyframes rotate-3d {
+            /* Modified to rotate only on Y-axis */
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .price-icon-animated {
+            animation: rotate-3d 12s linear infinite; /* 3D rotation animation, slower */
+            transform-style: preserve-3d; /* Needed for 3D rotation to work */
+        }
+
+
+        /* Spin animation for header text */
+        @keyframes text-flip-out {
+            0% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+            50% {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotateY(180deg);
+            }
+        }
+
+        @keyframes text-flip-in {
+            0% {
+                opacity: 0;
+                transform: rotateY(-90deg);
+            }
+            50% {
+                opacity: 0;
+                transform: rotateY(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+        }
+
+        .text-flip-out {
+            animation: text-flip-out 0.8s ease-in-out forwards;
+        }
+
+        .text-flip-in {
+            animation: text-flip-in 0.8s ease-in-out forwards;
+        }
+
+        /* Styles to ensure h1 maintains its height and centering */
+        #hero-heading-text {
+            height: 8rem; /* Fixed height to accommodate longer text on multiple lines */
+            display: flex; /* Enable flexbox */
+            align-items: center; /* Vertically center content */
+            justify-content: center; /* Horizontally center content */
+            perspective: 1000px; /* Necessary for 3D flip animation */
+        }
+
+        /* Adjustments for smaller screens if text overflows */
+        @media (max-width: 768px) {
+            #hero-heading-text {
+                height: 7rem; /* Fixed height for mobile screens */
+            }
+        }
+
+        /* Styles to disable text selection and pointer events on images */
+        img {
+            pointer-events: none;
+        }
+        p, h1, h2, h3, h4, h5, h6, span, div:not(.map-container):not(.payment-card) {
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Styles for payment methods carousel */
+        @keyframes scroll-carousel {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        :root {
+            --speed: 60s; /* Initial carousel speed in seconds */
+        }
+
+        .animate-scroll-carousel {
+            animation: scroll-carousel var(--speed) linear infinite;
+        }
+
+        .payment-card {
+            background-color: #1A202C;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            border-radius: 1.5rem;
+            width: 160px;
+            height: 160px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .payment-card:hover {
+            transform: scale(1.07);
+            box-shadow: 0 15px 45px rgba(0, 255, 255, 0.3);
+            border-color: #00FFFF;
+        }
+
+        .payment-card span {
+            margin-top: 0.75rem;
+            font-size: 0.95rem;
+            color: #F9FAFB;
+        }
+
+        @media (max-width: 768px) {
+            .payment-card {
+                width: 120px;
+                height: 120px;
+                padding: 0.8rem;
+            }
+            .payment-card span {
+                font-size: 0.75rem;
+            }
+        }
+
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        /* Styles for navigation arrows */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 255, 255, 0.15); /* Semi-transparent cyan */
+            color: white;
+            border-radius: 50%; /* Circular */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0; /* Hidden by default */
+            pointer-events: none; /* Non-interactive when hidden */
+            transition: opacity 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle border */
+            z-index: 10; /* Ensures arrows are above carousel elements */
+        }
+
+        .arrow:hover {
+            background-color: rgba(0, 255, 255, 0.3); /* More opaque on hover */
+            transform: translateY(-50%) scale(1.1); /* Slight increase in scale on hover */
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        /* Show arrows on hover over carousel container (desktop only) */
+        .carousel-wrapper:hover .arrow {
             opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+            pointer-events: auto;
+        }
+
+        /* Hide arrows on mobile */
+        @media (max-width: 768px) {
+            .arrow {
+                display: none;
+            }
+        }
+
+        /* Styles for carousel animations */
+        @keyframes slide-carousel {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .animate-slide-carousel {
+            animation: slide-carousel 30s linear infinite;
+        }
+        .hover\:pause-animation:hover {
+            animation-play-state: paused;
+        }
+        @keyframes bounce-custom {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .hover\:animate-bounce-custom:hover {
+            animation: bounce-custom 0.6s ease-in-out;
         }
     </style>
+
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body>
 
-    <!-- Contenedor principal para el menú de navegación y el descuento -->
-    <div class="flex items-center justify-end p-2 space-x-4">
-        <!-- Contenedor para el texto de descuento -->
-        <div class="bg-menu-gradient p-2 rounded-xl shadow-visible animated-discount text-center">
-            <h1 class="text-xl font-extrabold text-gradient">30% OFF</h1>
-            <p class="text-xs text-gray-300">¡Hosting de Minecraft ahora más barato!</p>
-        </div>
-        
-        <!-- Contenedor del menú de navegación y el botón -->
-        <div class="flex items-center space-x-4 bg-menu-gradient p-2 rounded-xl shadow-visible">
-            <!-- Enlaces de navegación -->
-            <ul class="flex space-x-4 text-xs font-medium">
-                <li><a href="#" class="nav-link">SERVICIOS</a></li>
-                <li><a href="#" class="nav-link">CENTRO DE INFORMACIÓN</a></li>
-                <li><a href="#" class="nav-link">CONTACTO</a></li>
-                <li><a href="#" class="nav-link">PARTNERS</a></li>
-                <li><a href="#" class="nav-link">ACERCA DE NOSOTROS</a></li>
-            </ul>
+    <header class="bg-byte-dark-bg text-byte-text-light py-2 shadow-lg sticky top-0 z-50 border-b border-byte-accent-cyan">
+        <div class="w-full px-4 md:px-8 flex justify-between items-center gap-8">
+            <div class="flex items-center justify-start ml-0">
+                <!-- MODIFICACIÓN: Se cambia el formato de la imagen a .webp -->
+                <img src="./images/logo.webp" alt="Logo de Byte" class="h-16 w-auto object-contain">
+            </div>
 
-            <!-- Botón de clientes -->
-            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-4 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            <nav class="hidden sm:flex justify-end flex-grow">
+                <ul class="flex space-x-6 items-center">
+                    <li class="relative group">
+                        <a href="#servicios" class="header-nav-item text-base font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-hover-effect js-dropdown-toggle" data-dropdown-id="dropdown-servicios">
+                            <span class="nav-menu-text-stroke-cyan">Servicios</span>
+                            <span class="ml-1 transform transition-transform duration-300 js-arrow-icon">
+                                <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </span>
+                        </a>
+                        <div id="dropdown-servicios" class="js-dropdown-menu hidden absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-byte-secondary-dark rounded-md shadow-lg py-1 z-20">
+                            <a href="diseñoweb.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Desarrollo web</a>
+                            <a href="tiendasvirtuales.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Diseño de e-commerce</a>
+                            <a href="branding.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Branding</a>
+                            <a href="diseñografico.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Diseño gráfico</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="portafolio.html" class="header-nav-item text-base font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-hover-effect">
+                            <span class="nav-menu-text-stroke-cyan">Portafolio</span>
+                        </a>
+                    </li>
+                    <li class="relative group">
+                        <a href="#proceso" class="header-nav-item text-base font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-hover-effect js-dropdown-toggle" data-dropdown-id="dropdown-quienes-somos">
+                            <span class="nav-menu-text-stroke-cyan">Quiénes Somos</span>
+                            <span class="ml-1 transform transition-transform duration-300 js-arrow-icon">
+                                <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </span>
+                        </a>
+                        <div id="dropdown-quienes-somos" class="js-dropdown-menu hidden absolute left-1/2 -translate-x-1/2 mt-2 w-40 bg-byte-secondary-dark rounded-md shadow-lg py-1 z-20">
+                            <a href="misionyvision.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Nuestra Misión y Visión</a>
+                            <a href="valoresyobjetivos.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Nuestros Valores y Objetivos</a>
+                        </div>
+                    </li>
+                    <!-- Botón de Eventos oculto para PC -->
+                    <li class="hidden">
+                        <a href="eventos.html" class="header-nav-item text-base font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-hover-effect">
+                            <span class="nav-menu-text-stroke-cyan">Eventos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="foro.html" class="header-nav-item text-base font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 menu-link-hover-effect">
+                            <span class="nav-menu-text-stroke-cyan">Escribe tu reseña</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <a href="#contacto" class="hidden sm:inline-block bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
+                                         shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-110 text-sm main-cta-button">
+                ¡Empecemos tu proyecto!
+            </a>
+
+            <button id="mobile-menu-button" class="sm:hidden p-2 rounded-md text-byte-accent-cyan hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-byte-accent-cyan ml-auto">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
-                CLIENTES
             </button>
         </div>
-    </div>
+    </header>
 
-    <!-- Contenido principal de la página con carrusel -->
-    <main class="relative">
-        <!-- Contenedor del Carrusel con los elementos de imagen y texto -->
-        <div id="carousel-container" class="w-full h-[34rem] relative overflow-hidden group">
-            
-            <!-- Elemento de imagen para el carrusel -->
-            <img id="carousel-image" src="" alt="Imagen de Minecraft" class="w-full h-full object-cover rounded-xl shadow-2xl absolute inset-0">
-            
-            <!-- Contenedor de texto superpuesto -->
-            <div id="carousel-text" class="absolute inset-0 flex items-center justify-start py-10 pl-20">
-                <div class="text-left max-w-lg">
-                    <h2 id="carousel-title" class="text-4xl md:text-6xl font-bold mb-2"></h2>
-                    <p id="carousel-prices" class="text-lg md:text-xl text-gray-300 mb-6"></p>
-                    <div class="flex space-x-4">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">VER PLANES</button>
-                        <button class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">COMPRAR</button>
+    <nav id="mobile-menu" class="sm:hidden bg-byte-dark-bg py-4 px-4 hidden fixed top-20 w-full z-40 max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <ul class="flex flex-col space-y-4 text-center">
+            <li>
+                <a href="#servicios" class="block text-lg font-semibold transition duration-300 ease-in-out py-2 cursor-pointer menu-link-hover-effect js-dropdown-toggle-mobile" data-dropdown-id-mobile="dropdown-servicios-mobile">
+                    <span class="nav-menu-text-stroke-cyan">Servicios</span>
+                    <span class="ml-1 transform transition-transform duration-300 js-arrow-icon-mobile">
+                        <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </span>
+                </a>
+                <div id="dropdown-servicios-mobile" class="js-dropdown-menu-mobile hidden bg-byte-secondary-dark rounded-md shadow-lg mt-2 py-1">
+                    <a href="diseñoweb.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Desarrollo web</a>
+                    <a href="tiendasvirtuales.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Diseño de e-commerce</a>
+                    <a href="branding.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Branding</a>
+                    <a href="diseñografico.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Diseño gráfico</a>
+                </div>
+            </li>
+            <li>
+                <a href="portafolio.html" class="block text-lg font-semibold transition duration-300 ease-in-out py-2 cursor-pointer menu-link-hover-effect">
+                    <span class="nav-menu-text-stroke-cyan">Portafolio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#proceso" class="block text-lg font-semibold transition duration-300 ease-in-out py-2 cursor-pointer menu-link-hover-effect js-dropdown-toggle-mobile" data-dropdown-id-mobile="dropdown-quienes-somos-mobile">
+                    <span class="nav-menu-text-stroke-cyan">Quiénes Somos</span>
+                    <span class="ml-1 transform transition-transform duration-300 js-arrow-icon-mobile">
+                        <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </span>
+                </a>
+                <div id="dropdown-quienes-somos-mobile" class="js-dropdown-menu-mobile hidden bg-byte-secondary-dark rounded-md shadow-lg mt-2 py-1">
+                    <a href="misionyvision.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Nuestra Misión y Visión</a>
+                    <a href="valoresyobjetivos.html" class="block px-4 py-2 text-sm text-byte-text-light hover:bg-byte-accent-cyan hover:text-byte-dark-bg rounded-md transition duration-300 transform hover:scale-105">Nuestros Valores y Objetivos</a>
+                </div>
+            </li>
+            <!-- Botón de Eventos oculto para móvil -->
+            <li class="hidden">
+                <a href="eventos.html" class="block text-lg font-semibold transition duration-300 ease-in-out py-2 cursor-pointer menu-link-hover-effect">
+                    <span class="nav-menu-text-stroke-cyan">Eventos</span>
+                </a>
+            </li>
+            <li>
+                <a href="foro.html" class="block text-lg font-semibold transition duration-300 ease-in-out py-2 cursor-pointer menu-link-hover-effect">
+                    <span class="nav-menu-text-stroke-cyan">Escribe tu reseña</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contacto" class="block bg-yellow-500 text-black font-bold py-2 px-4 rounded-full
+                                             shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-110 text-center mt-4 text-sm main-cta-button">
+                    ¡Empecemos tu proyecto!
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="flex-grow">
+        <section id="inicio" class="relative bg-byte-dark-bg text-white py-24 md:py-48 overflow-hidden flex items-center justify-center hero-section-padding">
+            <video autoplay loop muted playsinline preload="auto"
+                           class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 brightness-75">
+                <!--
+                    Important attributes for background video autoplay:
+                    - autoplay: Starts video playback automatically.
+                    - loop: Loops the video continuously.
+                    - muted: Mutes the video. Crucial for autoplay to work in most browsers, as many block auto-play with sound.
+                    - playsinline: Allows video to play inline on iOS, instead of going full-screen automatically.
+                    - preload="auto": Suggests to the browser to load the entire video as soon as possible.
+                -->
+                <!-- MODIFICACIÓN: Se cambia el formato del video a .webm para mejor compresión -->
+                <source src="./images/fondo.webm" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+            <div class="container mx-auto px-4 relative z-10 text-center">
+                <h1 id="hero-heading-text" class="text-3xl md:text-6xl lg:text-5xl font-extrabold leading-tight mb-4 text-white drop-shadow-lg text-stroke-cyan hero-heading">
+                    Nosotros convertimos sueños en realidades digitales
+                </h1>
+                <p class="text-base md:text-xl lg:text-lg mb-8 max-w-3xl mx-auto text-byte-text-light opacity-90 hero-subheading">
+                    Transformamos tus ideas en experiencias digitales cautivadoras y funcionales.
+                </p>
+                <a href="#contacto" class="inline-block bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                             shadow-xl hover:bg-yellow-600 transition duration-300 transform hover:scale-110 text-sm main-cta-button">
+                    ¡Hablemos de tu proyecto!
+                </a>
+            </div>
+        </section>
+
+        <section id="servicios" class="py-12 lg:py-10 bg-byte-dark-bg text-byte-text-light">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl md:text-4xl lg:text-3xl font-extrabold text-center mb-10 section-heading text-stroke-cyan">Nuestros Servicios Innovadores</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-4 w-full">
+                    <!-- MANTENIDO: Se conservan los iconos de Font Awesome -->
+                    <a href="diseñoweb.html" class="service-card">
+                        <div class="icon text-3xl lg:text-2xl"><i class="fa-solid fa-desktop"></i></div>
+                        <h3 class="text-lg lg:text-base font-bold mb-2">Desarrollo web</h3>
+                        <p class="text-xs lg:text-sm">Creamos sitios web únicos y visualmente impresionantes, diseñados a medida para reflejar la identidad de tu marca y cautivar a tu audiencia desde el primer clic.</p>
+                    </a>
+                    <a href="tiendasvirtuales.html" class="service-card">
+                        <div class="icon text-3xl lg:text-2xl"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <h3 class="text-lg lg:text-base font-bold mb-2">Diseño de e-commerce</h3>
+                        <p class="text-xs lg:text-sm">Construimos tiendas online robustas, seguras y optimizadas para la conversión, transformando visitantes en clientes leales y maximizando tus ventas.</p>
+                    </a>
+                    <a href="branding.html" class="service-card">
+                        <div class="icon text-3xl lg:text-2xl"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h3 class="text-lg lg:text-base font-bold mb-2">Branding</h3>
+                        <p class="text-xs lg:text-sm">Creamos una identidad de marca sólida y memorable que resuena con tu audiencia y te distingue de la competencia.</p>
+                    </a>
+                    <a href="diseñografico.html" class="service-card">
+                        <div class="icon text-3xl lg:text-2xl"><i class="fa-solid fa-palette"></i></div>
+                        <h3 class="text-lg lg:text-base font-bold mb-2">Diseño gráfico</h3>
+                        <p class="text-xs lg:text-sm">Creamos diseños visuales impactantes que comunican tu mensaje de manera efectiva y refuerzan la identidad de tu marca.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="precios" class="py-12 lg:py-10 bg-byte-dark-bg text-byte-text-light">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-2xl md:text-4xl lg:text-3xl font-extrabold mb-8 section-heading text-stroke-cyan">Tenemos los Mejores Precios del Mercado</h2>
+                <div class="flex flex-col lg:flex-row items-center justify-center gap-8">
+                    <div class="lg:w-1/2 flex justify-center items-center">
+                        <!-- MODIFICACIÓN: Se cambia el formato de la imagen a .webp y se añade carga diferida -->
+                        <img src="./images/precios.webp" alt="Icono de Mejores Precios" class="w-48 h-48 object-contain rounded-lg shadow-lg bg-byte-secondary-dark price-icon-animated" loading="lazy">
+                    </div>
+                    <div class="lg:w-1/2 text-center lg:text-left">
+                        <p class="text-lg lg:text-base text-byte-text-light leading-relaxed mb-4">
+                            En Byte, creemos firmemente que la calidad y la accesibilidad deben ir de la mano. Por eso, nos esforzamos por ofrecerte las soluciones digitales más innovadoras y efectivas a los precios más competitivos del mercado. Nuestro compromiso es brindarte un valor excepcional, asegurando que cada inversión en tu proyecto digital se traduzca en resultados tangibles y duraderos.
+                        </p>
+                        <p class="text-base lg:text-sm text-byte-text-light opacity-80">
+                            Analizamos constantemente el mercado para ajustar nuestras tarifas y garantizar que obtengas el máximo retorno por tu dinero. Con Byte, no solo adquieres un servicio, sino una asociación estratégica que impulsa tu crecimiento digital sin comprometer tu presupuesto. ¡Descubre cómo podemos hacer realidad tus ideas con la mejor relación calidad-precio!
+                        </p>
                     </div>
                 </div>
             </div>
+        </section>
+        <section id="metodos-pago" class="py-16 text-center bg-byte-dark-bg text-byte-text-light">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-extrabold text-cyan-400 mb-4">Múltiples Métodos de Pago</h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    Nuestra prioridad es la satisfacción de nuestros clientes. Por eso ofrecemos métodos de pago seguros, rápidos y variados para tu comodidad.
+                </p>
+                <div class="carousel-wrapper overflow-hidden relative">
+                    <button id="carousel-arrow-left" class="arrow arrow-left">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                    </button>
 
-            <!-- Flechas de navegación del carrusel -->
-            <button id="prev-arrow" class="absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button id="next-arrow" class="absolute top-1/2 right-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
+                    <div id="carousel" class="flex whitespace-nowrap animate-scroll-carousel gap-6" style="width: max-content;">
+                        <!-- MANTENIDO: Se conservan los logos externos de métodos de pago -->
+                        <!-- OPTIMIZACIÓN: Se añade carga diferida (lazy loading) a las imágenes del carrusel -->
+                        <div class="payment-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Visa</span>
+                        </div>
 
-            <!-- Puntos de navegación del carrusel -->
-            <div id="carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
-                <!-- Los puntos se generarán aquí con JavaScript -->
+                        <div class="payment-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Mastercard</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>PayPal</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://img.icons8.com/dusk/64/000000/smartphone-tablet.png" alt="Pago Móvil" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Pago Móvil</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://img.icons8.com/color/48/000000/bank-building.png" alt="Transferencia" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Transferencia</span>
+                        </div>
+                        <div class="payment-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Visa</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Mastercard</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>PayPal</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://img.icons8.com/dusk/64/000000/smartphone-tablet.png" alt="Pago Móvil" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Pago Móvil</span>
+                        </div>
+
+                        <div class="payment-card">
+                            <img src="https://img.icons8.com/color/48/000000/bank-building.png" alt="Transferencia" class="w-14 h-14 object-contain" loading="lazy">
+                            <span>Transferencia</span>
+                        </div>
+                    </div>
+
+                    <button id="carousel-arrow-right" class="arrow arrow-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section id="contacto" class="contact-section text-byte-text-light pt-10 pb-14 lg:pt-8 lg:pb-12">
+            <div class="container mx-auto px-4 relative z-10 max-w-screen-lg lg:px-0">
+                <h2 class="text-2xl md:text-4xl lg:text-3xl font-extrabold text-center mb-10 section-heading text-stroke-cyan">Conéctate con Byte</h2>
+                <div class="contact-content grid grid-cols-1 lg:grid-cols-2 gap-6 items-start p-4 lg:p-6">
+                    <div class="contact-form-card p-4 lg:p-5 flex flex-col items-center justify-center text-center">
+                        <h3 class="text-xl lg:text-lg font-bold text-center text-byte-accent-cyan mb-5 text-stroke-cyan">Encuéntranos en Redes</h3>
+                        <p class="text-byte-text-light mb-6 text-sm lg:text-base">
+                            Conéctate con nosotros a través de nuestras redes sociales para estar al día con nuestras novedades y proyectos.
+                        </p>
+                        <div class="flex space-x-6">
+                            <a href="https://wa.me/584125646508" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social-icon-link text-whatsapp-green hover:text-whatsapp-dark-green text-4xl lg:text-5xl transition-all duration-300 transform hover:scale-110">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="https://www.instagram.com/byteweb_design?igsh=ZTI4NDE2eWptZThu" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon-link text-pink-500 hover:text-pink-600 text-4xl lg:text-5xl transition-all duration-300 transform hover:scale-110">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-card p-4 lg:p-5">
+                        <h3 class="text-xl lg:text-lg font-bold text-center mb-5 text-stroke-cyan">Información de Contacto</h3>
+                        <div class="space-y-3 text-center text-sm lg:text-xs mb-6">
+                            <p class="flex items-center justify-center lg:justify-start text-byte-text-light"><span class="text-byte-accent-cyan mr-2">📍</span> Venezuela, Caracas, Plaza Sucre, Calle Bolivia</p>
+                            <p class="flex items-center justify-center lg:justify-start text-byte-accent-cyan"><span class="text-byte-accent-cyan mr-2">✉️</span> Bytewebdesign1@gmail.com</p>
+                            <p class="flex items-center justify-center lg:justify-start text-byte-accent-cyan">📞 +584125646508</p>
+                        </div>
+
+                        <div class="mt-8">
+                            <h3 class="text-xl lg:text-lg font-bold text-center mb-4 text-stroke-cyan">Nuestra Ubicación</h3>
+                            <div class="map-container relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg border border-byte-accent-cyan/30">
+                                <!-- OPTIMIZACIÓN: Se añade carga diferida (lazy loading) al mapa -->
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6183086.239168103!2d-73.56833749999998!3d40.82609490000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a5fe7c3070e99%3A0x67a622cd70e4ef2e!2sInstituto%20Gerencial%20de%20Talentos%20-%20Catia(IGT)!5e0!3m2!1ses!2sus!4v1748801811392!5m2!1ses!2sus"
+                                    width="100%"
+                                    height="100%"
+                                    style="border:0;"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="Ubicación de Byte en Google Maps">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Script para animar los enlaces de navegación y controlar el carrusel -->
+    <footer class="footer bg-byte-secondary-dark text-byte-text-light py-8">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div class="md:col-span-3 flex justify-center space-x-4 mt-3">
+                <!-- Instagram Icon -->
+                <a href="https://www.instagram.com/byteweb_design?igsh=ZTI4NDE2eWptZThu" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <i class="fab fa-instagram footer-social-icon text-byte-text-light"></i>
+                </a>
+                <!-- WhatsApp Icon -->
+                <a href="https://wa.me/584125646508" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp footer-social-icon text-byte-text-light"></i>
+                </a>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 text-center text-xs text-gray-400 mt-8 border-t border-gray-700 pt-4">
+            <p class="mb-2">
+                Al navegar en la página de Byte, aceptas nuestros
+                <a href="#" class="text-byte-accent-cyan hover:underline">Términos de Servicio</a> y
+                <a href="#" class="text-byte-accent-cyan hover:underline">Condiciones</a>.
+            </p>
+            <p>© 2025 Byte. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="whatsapp-float-container z-[100000001]">
+        <div id="whatsapp-tooltip" class="whatsapp-tooltip">
+            ¡Hola! ¿Necesitas ayuda?
+        </div>
+        <a href="https://wa.me/584125646508" target="_blank" rel="noopener noreferrer" class="whatsapp-float-button" id="whatsapp-float-button" aria-label="Chatear por WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 29.079097 3.1186875 32.88588 4.984375 36.208984 L 2.0371094 46.730469 A 1.0001 1.0001 0 0 0 3.2402344 47.970703 L 14.210938 45.251953 C 17.434629 46.972929 21.092591 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 21.278025 46 17.792121 45.029635 14.761719 43.333984 A 1.0001 1.0001 0 0 0 14.033203 43.236328 L 4.4257812 45.617188 L 7.0019531 36.425781 A 1.0001 1.0001 0 0 0 6.9023438 35.646484 C 5.0606869 32.523592 4 28.890107 4 25 C 4 13.390466 13.390466 4 25 4 z M 16.642578 13 C 16.001539 13 15.086045 13.23849 14.333984 14.048828 C 13.882268 14.535548 12 16.369511 12 19.59375 C 12 22.955271 14.331391 25.855848 14.613281 26.228516 L 14.615234 26.228516 L 14.615234 26.230469 C 14.588494 26.195329 14.973031 26.752191 15.486328 27.419922 C 15.999626 28.087653 16.717405 28.96464 17.619141 29.914062 C 19.422612 31.812909 21.958282 34.007419 25.105469 35.349609 C 26.554789 35.966779 27.698179 36.339417 28.564453 36.611328 C 30.169845 37.115426 31.632073 37.038799 32.730469 36.876953 C 33.55263 36.755876 34.456878 36.361114 35.351562 35.794922 C 36.246248 35.22873 37.12309 34.524722 37.509766 33.455078 C 37.786772 32.688244 37.927591 31.979598 37.978516 31.396484 C 38.003976 31.104927 38.007211 30.847602 37.988281 30.609375 C 37.969311 30.371148 37.989581 30.188664 37.767578 29.824219 C 37.302009 29.059804 36.774753 29.039853 36.224609 28.767578 C 35.918939 28.616297 35.048661 28.191329 34.175781 27.775391 C 33.303883 27.35992 32.54892 26.991953 32.083984 26.826172 C 31.790239 26.720488 31.431556 26.568352 30.914062 26.626953 C 30.396569 26.685553 29.88546 27.058933 29.587891 27.5 C 29.305837 27.918069 28.170387 29.258349 27.824219 29.652344 C 27.819619 29.649544 27.849659 29.663383 27.712891 29.595703 C 27.284761 29.383815 26.761157 29.203652 25.986328 28.794922 C 25.2115 28.386192 24.242255 27.782635 23.181641 26.847656 L 23.181641 26.845703 C 21.603029 25.455949 20.497272 23.711106 20.148438 23.125 C 20.171937 23.09704 20.145643 23.130901 20.195312 23.082031 L 20.197266 23.080078 C 20.553781 22.728924 20.869739 22.309521 21.136719 22.001953 C 21.515257 21.565866 21.682310 21.181437 21.863281 20.822266 C 22.223954 20.10644 22.023130 19.318742 21.814453 18.904297 L 21.814453 18.902344 C 21.828863 18.931014 21.701572 18.650157 21.564453 18.326172 C 21.426943 18.001263 21.251663 17.580039 21.064453 17.130859 C 20.690033 16.232501 20.272027 15.224912 20.023438 14.634766 L 20.023438 14.632812 C 19.730591 13.937684 19.334395 13.436908 18.816406 13.195312 C 18.298417 12.953717 17.840778 13.022402 17.822266 13.021484 L 17.820312 13.021484 C 17.450668 13.004432 17.045038 13 16.642578 13 z M 16.642578 15 C 17.028118 15 17.408214 15.004701 17.726562 15.019531 C 18.054056 15.035851 18.033687 15.037192 17.970703 15.007812 C 17.906713 14.977972 17.993533 14.968282 18.179688 15.410156 C 18.423098 15.98801 18.84317 16.999249 19.21875 17.900391 C 19.406540 18.350961 19.582292 18.773816 19.722656 19.105469 C 19.863021 19.437122 19.939077 19.622295 20.027344 19.798828 L 20.027344 19.800781 L 20.029297 19.802734 C 20.115837 19.973483 20.108185 19.864164 20.078125 19.923828 C 19.867096 20.342656 19.838461 20.445493 19.625 20.691406 C 19.299980 21.065838 18.968453 21.483404 18.792969 21.65625 C 18.639439 21.80707 18.362420 22.042032 18.189453 22.501953 C 18.016221 22.962578 18.097073 23.59457 18.375 24.066406 C 18.745032 24.6946 19.964406 26.679307 21.859375 28.347656 C 23.052760 29.399678 24.164563 30.095933 25.052734 30.564453 C 25.940906 31.032973 26.664301 31.306607 26.826172 31.386719 C 27.210549 31.576953 27.630655 31.72467 28.119141 31.666016 C 28.607627 31.607366 29.028780 31.310979 29.296875 31.007812 L 29.298828 31.005859 C 29.655629 30.601347 30.715848 29.390728 31.224609 28.644531 C 31.246169 28.652131 31.239109 28.646231 31.408203 28.707031 L 31.408203 28.708984 L 31.410156 28.708984 C 31.487356 28.736474 32.454286 29.169267 33.316406 29.580078 C 34.178526 29.990889 35.053561 30.417875 35.337891 30.558594 C 35.748225 30.761674 35.942113 30.893881 35.992188 30.894531 C 35.995572 30.982516 35.998992 31.07786 35.986328 31.222656 C 35.951258 31.624292 35.843900 32.180225 35.628906 32.775391 C 35.523582 33.066746 34.975018 33.667661 34.283203 34.105469 C 33.591388 34.543277 32.749338 34.852514 32.4375 34.898438 C 31.499896 35.036591 30.386672 35.087027 29.164062 34.703125 C 28.316336 34.437036 27.259305 34.092596 25.890625 33.509766 C 23.114812 32.325956 20.755591 30.311513 19.070312 28.537109 C 18.227674 27.649908 17.552562 26.824019 17.072266 26.199219 C 16.592866 25.575584 16.383528 25.251054 16.208984 25.021484 L 16.207031 25.019531 C 15.897202 24.609805 14 21.970851 14 19.59375 C 14 17.077989 15.168497 16.091436 15.800781 15.410156 C 16.132721 15.052495 16.495617 15 16.642578 15 z"/>
+            </svg>
+        </a>
+    </div>
+
+    <div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-[10000] bg-byte-secondary-dark text-byte-text-light p-4 shadow-lg rounded-t-lg text-center transition-all duration-300 ease-out">
+        <p class="mb-2 text-sm md:text-base">
+            Esta página web utiliza cookies para mejorar tu experiencia y entender qué le interesa a nuestros clientes.
+            Al continuar navegando, aceptas nuestros
+            <a href="#" class="text-byte-accent-cyan hover:underline">Términos de Servicio</a> y
+            <a href="#" class="text-byte-accent-cyan hover:underline">Condiciones</a>.
+        </p>
+        <button id="accept-cookies-button" class="bg-yellow-500 text-black font-bold py-2 px-6 rounded-full
+                                                     shadow-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 text-sm">
+            Aceptar
+        </button>
+        <p class="mt-2 text-xs text-gray-400">© 2025 Byte. Todos los derechos reservados.</p>
+    </div>
+
+    <script type="text/javascript">
+        // Chatbot integration
+        (function() {
+            // Create and append the chat-bot element
+            var chatBotEl = document.createElement('chat-bot');
+            chatBotEl.setAttribute('platform_id', '218acb1c-a252-488a-8fdb-ef64cefc2b31');
+            chatBotEl.setAttribute('user_id', 'adb83f2d-c425-41cd-83d8-2429c0d8d757');
+            chatBotEl.setAttribute('chatbot_id', '4fe04c04-bf4e-4d2f-8cbf-852439e9b05a');
+
+            var chatbotLink = document.createElement('a');
+            chatbotLink.href = 'https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral';
+            chatbotLink.innerHTML = 'chatsimple';
+            chatBotEl.appendChild(chatbotLink);
+
+            document.body.appendChild(chatBotEl);
+
+            // Dynamically load the external script
+            var cs = document.createElement('script');
+            cs.src = 'https://chatsimple-widget.s3.us-east-2.amazonaws.com/chat-bot-loader.js';
+            cs.defer = true; // OPTIMIZACIÓN: Se difiere la carga del script del chatbot
+            document.body.appendChild(cs);
+        })();
+    </script>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            // Referencias a los elementos del carrusel
-            const carouselImage = document.getElementById('carousel-image');
-            const carouselTextContainer = document.getElementById('carousel-text');
-            const carouselTitle = document.getElementById('carousel-title');
-            const carouselPrices = document.getElementById('carousel-prices');
+        // Global variables for WhatsApp elements
+        const whatsappButton = document.getElementById('whatsapp-float-button');
+        const whatsappTooltip = document.getElementById('whatsapp-tooltip');
+        const whatsappFloatContainer = document.querySelector('.whatsapp-float-container');
+        let initialTooltipTimeout;
+        let animationInterval;
+        let whatsappTooltipEnabled = true; // Flag to control tooltip visibility and animations
 
-            const prevArrow = document.getElementById('prev-arrow');
-            const nextArrow = document.getElementById('next-arrow');
-            const carouselDotsContainer = document.getElementById('carousel-dots');
+        // Global variables for cookie banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptCookiesButton = document.getElementById('accept-cookies-button');
 
-            // Envuelve cada letra en un span para la animación individual
-            navLinks.forEach(link => {
-                const text = link.textContent;
-                link.innerHTML = '';
-                text.split('').forEach(char => {
-                    const span = document.createElement('span');
-                    if (char === ' ') {
-                        span.innerHTML = '&nbsp;';
-                    } else {
-                        span.textContent = char;
+        // Variables for carousel speed control
+        const carousel = document.getElementById('carousel');
+        const leftArrow = document.getElementById('carousel-arrow-left');
+        const rightArrow = document.getElementById('carousel-arrow-right');
+        let currentSpeed = 60; // Initial speed in seconds (higher = slower)
+        const minSpeed = 10; // Minimum speed (faster)
+        const maxSpeed = 120; // Maximum speed (slower)
+        const speedStep = 10; // Speed increment/decrement
+
+        // Variables for touch control
+        let touchStartX = 0;
+        let touchTimeout; // To reset speed after a touch
+
+        // Function to update carousel speed (modifies CSS variable)
+        function updateCarouselSpeed() {
+            document.documentElement.style.setProperty('--speed', `${currentSpeed}s`);
+        }
+
+        // Function to show WhatsApp tooltip
+        function showTooltip(autoHide = false) {
+            if (whatsappTooltipEnabled) { // Only show if globally enabled
+                whatsappTooltip.classList.add('show-tooltip');
+                if (autoHide) {
+                    // Clear any existing auto-hide timeout to avoid conflicts
+                    if (initialTooltipTimeout) {
+                        clearTimeout(initialTooltipTimeout);
                     }
-                    span.style.display = 'inline-block';
-                    link.appendChild(span);
-                });
-            });
-
-            // Añade el evento hover para la animación de caída
-            navLinks.forEach(link => {
-                link.addEventListener('mouseenter', function() {
-                    const letters = this.querySelectorAll('span');
-                    letters.forEach((letter, index) => {
-                        letter.style.animation = `drop 0.5s ease-out forwards ${index * 0.05}s`;
-                    });
-                });
-
-                link.addEventListener('mouseleave', function() {
-                    const letters = this.querySelectorAll('span');
-                    letters.forEach(letter => {
-                        letter.style.animation = 'none';
-                    });
-                });
-            });
-
-            // Lógica del carrusel
-            const slides = [
-                {
-                    image: './images/minecraft.png',
-                    title: 'Minecraft Hosting',
-                    price: 'Precios desde <span class="line-through text-red-500">$1.99</span> <span class="font-bold text-xl">$0.90/GB</span>'
-                },
-                {
-                    image: './images/webhosting.png',
-                    title: 'Hosting Web',
-                    price: 'Un plan accequible para tu sitio web, desde <span class="line-through text-red-500">$3.00</span> <span class="font-bold text-xl">$2.00/GB</span>'
-                },
-                {
-                    image: './images/image_8867e1.png',
-                    title: 'Juegos de Supervivencia',
-                    price: 'Disfruta de una experiencia única desde <span class="font-bold text-xl">$2.50/GB</span>'
-                },
-                {
-                    image: './images/image_86a2c7.png',
-                    title: 'Servidores de Mods',
-                    price: 'Personaliza tu juego por solo <span class="font-bold text-xl">$1.20/GB</span>'
+                    initialTooltipTimeout = setTimeout(() => {
+                        hideTooltip();
+                    }, 8000); // Auto-hide after 8 seconds
                 }
-            ];
-
-            let currentIndex = 0;
-            let intervalId = null;
-
-            // Función para precargar todas las imágenes
-            function preloadImages() {
-                slides.forEach(slide => {
-                    const img = new Image();
-                    img.src = slide.image;
-                });
             }
+        }
 
-            // Función principal para mostrar una diapositiva específica
-            function showSlide(index) {
-                // Previene transiciones si ya estamos en la diapositiva correcta
-                if (index === currentIndex) {
-                    return;
-                }
+        // Function to hide WhatsApp tooltip
+        function hideTooltip() {
+            whatsappTooltip.classList.remove('show-tooltip');
+        }
 
-                const newSlide = slides[index];
+        // Function to start WhatsApp animation sequence
+        function startWhatsappAnimations() {
+            // Clear any existing animation to restart
+            whatsappButton.style.animation = 'none';
+            void whatsappButton.offsetWidth; // Force reflow
+            whatsappButton.style.animation = ''; // Reset animation property
 
-                // Desvanecer el contenido actual
-                carouselImage.classList.add('fade-out');
-                carouselTextContainer.classList.add('fade-out');
+            whatsappButton.style.animation = 'pulse-glow 2s forwards';
 
-                // Esperar a que el desvanecimiento termine antes de cambiar el contenido
+            setTimeout(() => {
+                whatsappButton.style.animation = 'shake 1s forwards';
+            }, 2000);
+        }
+
+        // Function to manage WhatsApp animation cycle
+        function setupAnimationCycle() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+            if (whatsappTooltipEnabled) { // Only start animations if globally enabled
+                startWhatsappAnimations();
+                animationInterval = setInterval(() => {
+                    startWhatsappAnimations();
+                }, 8000);
+            } else {
+                // If animations are disabled, ensure no animation is running
+                whatsappButton.style.animation = 'none';
+            }
+        }
+
+        // Function to update WhatsApp button position based on cookie banner visibility
+        function updateWhatsappPosition() {
+            const isCookieBannerVisible = !cookieBanner.classList.contains('hidden');
+
+            if (isCookieBannerVisible) {
+                // If cookie banner is visible, raise based on cookie banner height
+                // Small delay to ensure cookie banner height renders before calculation
                 setTimeout(() => {
-                    // Actualizar el contenido después del desvanecimiento
-                    carouselImage.src = newSlide.image;
-                    carouselTitle.innerHTML = newSlide.title;
-                    carouselPrices.innerHTML = newSlide.price;
-
-                    // Volver a hacer visible el contenido con la animación de entrada
-                    carouselImage.classList.remove('fade-out');
-                    carouselTextContainer.classList.remove('fade-out');
-                    
-                    currentIndex = index; // Actualizar el índice
-                    updateDots();
-                }, 500); // Duración de la transición CSS
+                    const cookieBannerHeight = cookieBanner.offsetHeight;
+                    whatsappFloatContainer.style.bottom = `${cookieBannerHeight + 20}px`;
+                }, 50);
+            } else {
+                // If no cookie banner is visible, restore default WhatsApp position
+                whatsappFloatContainer.style.bottom = '20px';
             }
-            
-            // Función para avanzar el carrusel
-            function advanceCarousel(direction) {
-                let newIndex = (currentIndex + direction + slides.length) % slides.length;
-                showSlide(newIndex);
+        }
+
+        // Event listeners for WhatsApp button (outside banners)
+        if (whatsappButton && whatsappTooltip) {
+            whatsappButton.addEventListener('mouseenter', () => {
+                // On hover, stop automatic animation cycle
+                clearInterval(animationInterval);
+                whatsappButton.style.animation = 'none'; // Clear any ongoing animation
+                showTooltip(); // Show tooltip on hover (no auto-hide on hover)
+            });
+
+            whatsappButton.addEventListener('mouseleave', () => {
+                // After hover, restart automatic animation cycle
+                hideTooltip();
+                if (whatsappTooltipEnabled) { // Only restart animations if enabled for auto cycle
+                    setupAnimationCycle();
+                }
+            });
+        }
+
+        // Main page load logic for banners
+        window.addEventListener('load', () => {
+            const cookieConsentAccepted = localStorage.getItem('cookieConsentAccepted');
+
+            // Initialize carousel speed on load
+            updateCarouselSpeed();
+
+            // If cookies have NOT been accepted
+            if (!cookieConsentAccepted) {
+                cookieBanner.classList.remove('hidden'); // Show cookie banner
+                updateWhatsappPosition(); // Adjust WhatsApp position for cookie banner
+
+                whatsappTooltipEnabled = false; // Disable tooltip and automatic animations
+                hideTooltip(); // Ensure tooltip is hidden on load
+                clearInterval(animationInterval); // Stop any default animations
+
+                // On clicking 'Accept' on cookie banner
+                acceptCookiesButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsentAccepted', 'true');
+                    cookieBanner.classList.add('hidden'); // Hide cookie banner
+                    updateWhatsappPosition(); // Re-adjust WhatsApp position (will go to 20px by default)
+
+                    whatsappTooltipEnabled = true; // Enable tooltip and automatic animations
+                    // Show tooltip and start animations after a brief delay on accepting cookies
+                    initialTooltipTimeout = setTimeout(() => {
+                        showTooltip(true); // Show and auto-hide
+                        setupAnimationCycle();
+                    }, 1000);
+                });
+            } else { // If cookie consent HAS been given
+                cookieBanner.classList.add('hidden'); // Ensure cookie banner is hidden
+                updateWhatsappPosition(); // Adjust WhatsApp position (will be 20px)
+
+                whatsappTooltipEnabled = true; // Enable tooltip and automatic animations
+                // Show tooltip and start animations after a brief delay on page load
+                initialTooltipTimeout = setTimeout(() => {
+                    showTooltip(true); // Show and auto-hide
+                    setupAnimationCycle();
+                }, 1000);
             }
 
-            // Función para actualizar el punto activo
-            function updateDots() {
-                carouselDotsContainer.innerHTML = '';
-                slides.forEach((_, index) => {
-                    const dot = document.createElement('div');
-                    dot.classList.add('h-2', 'w-2', 'rounded-full', 'bg-white', 'bg-opacity-50', 'cursor-pointer', 'transition-all', 'duration-300');
-                    if (index === currentIndex) {
-                        dot.classList.remove('bg-opacity-50');
-                        dot.classList.add('bg-opacity-100', 'w-6');
-                    }
-                    dot.addEventListener('click', () => {
-                        resetInterval();
-                        showSlide(index);
-                    });
-                    carouselDotsContainer.appendChild(dot);
+            // Logic for carousel speed control with arrows (desktop)
+            if (leftArrow && rightArrow) {
+                leftArrow.addEventListener('click', () => {
+                    currentSpeed = Math.min(maxSpeed, currentSpeed + speedStep);
+                    updateCarouselSpeed();
+                });
+
+                rightArrow.addEventListener('click', () => {
+                    currentSpeed = Math.max(minSpeed, currentSpeed - speedStep);
+                    updateCarouselSpeed();
                 });
             }
 
-            // Función para resetear el intervalo del carrusel automático
-            function resetInterval() {
-                clearInterval(intervalId);
-                intervalId = setInterval(() => {
-                    advanceCarousel(1);
-                }, 10000);
+            // Logic for carousel speed control with swipe (mobile)
+            if (carousel) {
+                carousel.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                    // Clear any speed reset timeout
+                    if (touchTimeout) {
+                        clearTimeout(touchTimeout);
+                    }
+                });
+
+                carousel.addEventListener('touchmove', (e) => {
+                    const touchCurrentX = e.touches[0].clientX;
+                    const deltaX = touchStartX - touchCurrentX; // Swiping left is positive, right is negative
+
+                    if (Math.abs(deltaX) > 5) { // Only adjust if there's significant movement
+                        if (deltaX > 0) { // Swiping left (faster)
+                            currentSpeed = Math.max(minSpeed, currentSpeed - speedStep);
+                        } else if (deltaX < 0) { // Swiping right (slower)
+                            currentSpeed = Math.min(maxSpeed, currentSpeed + speedStep);
+                        }
+                        updateCarouselSpeed();
+                        touchStartX = touchCurrentX; // Update touchStartX for continuous movements
+                    }
+                });
+
+                carousel.addEventListener('touchend', () => {
+                    // Reset speed to initial after a brief delay
+                    touchTimeout = setTimeout(() => {
+                        currentSpeed = 60; // Reset to initial speed
+                        updateCarouselSpeed();
+                    }, 500); // 0.5 seconds delay
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // AOS initialization (commented out to disable part-by-part loading)
+        /*
+        AOS.init({
+            once: true, // Animations only run once when scrolling down
+            mirror: false, // Do not animate when scrolling up
+            offset: 100, // Offset (in px) from the original trigger point
+            duration: 800, // Animation duration (in ms)
+            easing: 'ease-out-cubic', // Timing function for animation
+        });
+        */
+    </script>
+
+    <script>
+        // Logic for desktop dropdown menus
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.js-dropdown-toggle').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevents default link navigation action
+                    const dropdownId = this.dataset.dropdownId; // Gets associated dropdown menu ID
+                    const dropdownMenu = document.getElementById(dropdownId);
+                    const arrowIcon = this.querySelector('.js-arrow-icon');
+
+                    // Close other open desktop dropdown menus
+                    document.querySelectorAll('.js-dropdown-menu').forEach(menu => {
+                        if (menu !== dropdownMenu && !menu.classList.contains('hidden')) {
+                            menu.classList.add('hidden');
+                            const otherButton = document.querySelector(`[data-dropdown-id="${menu.id}"]`);
+                            if (otherButton) {
+                                // Remove bounce animation and rotation when closing other menus
+                                otherButton.querySelector('.js-arrow-icon').classList.remove('arrow-active');
+                            }
+                        }
+                    });
+
+                    // Toggle visibility of current menu and apply/remove rotation and bounce animation
+                    dropdownMenu.classList.toggle('hidden');
+                    if (!dropdownMenu.classList.contains('hidden')) {
+                        arrowIcon.classList.add('arrow-active');
+                    } else {
+                        arrowIcon.classList.remove('arrow-active');
+                    }
+                });
+            });
+
+            // Close all desktop dropdown menus when clicking outside them
+            document.addEventListener('click', function(event) {
+                // If click was not inside a dropdown button or a dropdown menu
+                if (!event.target.closest('.js-dropdown-toggle') && !event.target.closest('.js-dropdown-menu')) {
+                    document.querySelectorAll('.js-dropdown-menu').forEach(menu => {
+                        menu.classList.add('hidden'); // Hide the menu
+                        const button = document.querySelector(`[data-dropdown-id="${menu.id}"]`);
+                        if (button) {
+                            // Restore arrow orientation and remove animation when closing
+                            button.querySelector('.js-arrow-icon').classList.remove('arrow-active');
+                        }
+                    });
+                }
+            });
+
+            // Logic for mobile menu and its dropdowns
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Definition of styles for mobile menu text (silver and cyan)
+            const mobileMenuSilverStyles = {
+                color: '#E0E0E0',
+                webkitTextStrokeColor: '#A0A0A0',
+                textShadow: '0 0 5px rgba(224, 224, 224, 0.3), 0 0 10px rgba(160, 160, 160, 0.2)'
+            };
+
+            const mobileMenuCyanStyles = {
+                color: '#00FFFF',
+                webkitTextStrokeColor: '#00BFFF',
+                textShadow: '0 0 8px #00FFFF, 0 0 15px rgba(0, 255, 255, 0.6)'
+            };
+
+            // Initialize Tone.js Synth
+            let synth = null; // Initialize to null
+
+            // Function to apply styles to mobile menu text
+            function applyMobileMenuTextStyles(element, styles) {
+                element.style.color = styles.color;
+                element.style.webkitTextStrokeColor = styles.webkitTextStrokeColor;
+                element.style.textShadow = styles.textShadow;
             }
 
-            // Listeners para las flechas de navegación
-            prevArrow.addEventListener('click', () => {
-                resetInterval();
-                advanceCarousel(-1);
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', async () => { // Make function asynchronous
+                    mobileMenu.classList.toggle('hidden'); // Toggle mobile menu visibility
+                    const icon = mobileMenuButton.querySelector('svg path');
+                    // Change hamburger icon to 'X' and vice versa
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger icon
+                        mobileMenu.querySelectorAll('ul > li > a.js-dropdown-toggle-mobile > span.nav-menu-text-stroke-cyan').forEach(span => {
+                            applyMobileMenuTextStyles(span, mobileMenuSilverStyles);
+                        });
+                        // Also remove mobile-menu-link-active and arrow-active from all mobile menu toggles
+                        mobileMenu.querySelectorAll('.js-dropdown-toggle-mobile').forEach(button => {
+                            button.classList.remove('mobile-menu-link-active');
+                            button.querySelector('.js-arrow-icon-mobile').classList.remove('arrow-active');
+                            // Also hide any open submenus
+                            const dropdownId = button.dataset.dropdownIdMobile;
+                            const dropdownMenu = document.getElementById(dropdownId);
+                            if (dropdownMenu && !dropdownMenu.classList.contains('hidden')) {
+                                dropdownMenu.classList.add('hidden');
+                            }
+                        });
+                    } else {
+                        icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // 'X' icon
+
+                        // Ensure Tone.js audio context starts/plays with user interaction
+                        if (Tone.context.state !== 'running') {
+                            try {
+                                await Tone.start(); // Start audio context
+                                console.log('Audio context started successfully.');
+                            } catch (e) {
+                                console.error('Error starting audio context:', e);
+                            }
+                        }
+
+                        // Initialize synthesizer only once, after audio context is running
+                        if (!synth) {
+                            try {
+                                synth = new Tone.Synth().toDestination();
+                            } catch (e) {
+                                console.error("Error initializing Tone.js Synth:", e);
+                            }
+                        }
+
+                        // Play sound if synthesizer is available
+                        if (synth) {
+                            synth.triggerAttackRelease("C4", "8n"); // Play a C4 for an eighth note
+                        }
+                    }
+                });
+
+                document.addEventListener('click', function(event) {
+                    const isClickInsideMobileMenu = mobileMenu.contains(event.target);
+                    const isClickOnMobileMenuButton = mobileMenuButton.contains(event.target);
+
+                    if (!isClickInsideMobileMenu && !isClickOnMobileMenuButton && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden'); // Hide the menu
+                        mobileMenuButton.querySelector('svg path').setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Restore icon
+                        mobileMenu.querySelectorAll('ul > li > a.js-dropdown-toggle-mobile > span.nav-menu-text-stroke-cyan').forEach(span => {
+                            applyMobileMenuTextStyles(span, mobileMenuSilverStyles);
+                        });
+                        // Also remove mobile-menu-link-active and arrow-active from all mobile menu toggles
+                        mobileMenu.querySelectorAll('.js-dropdown-toggle-mobile').forEach(button => {
+                            button.classList.remove('mobile-menu-link-active');
+                            button.querySelector('.js-arrow-icon-mobile').classList.remove('arrow-active');
+                            // Also hide any open submenus
+                            const dropdownId = button.dataset.dropdownIdMobile;
+                            const dropdownMenu = document.getElementById(dropdownId);
+                            if (dropdownMenu && !dropdownMenu.classList.contains('hidden')) {
+                                dropdownMenu.classList.add('hidden');
+                            }
+                        });
+                    }
+                });
+
+                // Logic for mobile dropdown menus (similar to desktop but with mobile-specific classes)
+                document.querySelectorAll('.js-dropdown-toggle-mobile').forEach(button => {
+                    button.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        event.stopPropagation(); // Important to prevent click from propagating to document and closing main menu
+                        const dropdownId = this.dataset.dropdownIdMobile;
+                        const dropdownMenu = document.getElementById(dropdownId);
+                        const arrowIcon = this.querySelector('.js-arrow-icon-mobile');
+                        const categoryTextSpan = this.querySelector('.nav-menu-text-stroke-cyan'); // The span with the category text
+
+                        // Close other open mobile submenus and reset their text styles
+                        document.querySelectorAll('.js-dropdown-menu-mobile').forEach(menu => {
+                            if (menu !== dropdownMenu && !menu.classList.contains('hidden')) {
+                                menu.classList.add('hidden');
+                                const otherButton = document.querySelector(`[data-dropdown-id-mobile="${menu.id}"]`);
+                                if (otherButton) {
+                                    // Remove bounce animation and rotation when closing other menus
+                                    otherButton.querySelector('.js-arrow-icon-mobile').classList.remove('arrow-active');
+                                    // Remove active class from other link
+                                    otherButton.classList.remove('mobile-menu-link-active');
+                                    const otherCategoryTextSpan = otherButton.querySelector('.nav-menu-text-stroke-cyan');
+                                    if (otherCategoryTextSpan) {
+                                        applyMobileMenuTextStyles(otherCategoryTextSpan, mobileMenuSilverStyles);
+                                    }
+                                }
+                            }
+                        });
+
+                        dropdownMenu.classList.toggle('hidden');
+                        if (!dropdownMenu.classList.contains('hidden')) {
+                            arrowIcon.classList.add('arrow-active');
+                            // Add active class to current link
+                            this.classList.add('mobile-menu-link-active');
+                            // If menu is opening, apply cyan styles
+                            applyMobileMenuTextStyles(categoryTextSpan, mobileMenuCyanStyles);
+                        } else {
+                            arrowIcon.classList.remove('arrow-active');
+                            // Remove active class from current link
+                            this.classList.remove('mobile-menu-link-active');
+                            // If menu is closing, apply silver styles
+                            applyMobileMenuTextStyles(categoryTextSpan, mobileMenuSilverStyles);
+                        }
+                    });
+                });
+            }
+
+            // Logic to disable links with the 'disabled-link' class
+            document.querySelectorAll('a.disabled-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevents default link action
+                    event.stopPropagation(); // Prevents event propagation so parent menu doesn't close
+                });
             });
 
-            nextArrow.addEventListener('click', () => {
-                resetInterval();
-                advanceCarousel(1);
-            });
+            // Logic for dynamic text in hero section
+            const heroHeadingElement = document.getElementById('hero-heading-text');
+            const heroHeadings = [
+                "Nosotros convertimos sueños en realidades digitales",
+                "¿Qué esperas para convertir tus sueños en realidad?"
+            ];
+            let currentHeadingIndex = 0;
 
-            // Configuración inicial e inicio del carrusel
-            preloadImages();
-            showSlide(0);
-            updateDots();
-            resetInterval();
+            function updateHeroHeading() {
+                // Apply exit animation
+                heroHeadingElement.classList.remove('text-flip-in');
+                heroHeadingElement.classList.add('text-flip-out');
+
+                // After half of the exit animation, change text
+                setTimeout(() => {
+                    currentHeadingIndex = (currentHeadingIndex + 1) % heroHeadings.length;
+                    heroHeadingElement.textContent = heroHeadings[currentHeadingIndex];
+
+                    // Remove exit animation and apply entrance animation
+                    // Force a "reflow" to restart animation
+                    void heroHeadingElement.offsetWidth;
+                    heroHeadingElement.classList.remove('text-flip-out');
+                    heroHeadingElement.classList.add('text-flip-in');
+                }, 400); // Half of text-flip-out duration (0.8s / 2 = 0.4s)
+            }
+
+            // Start text change every 9 seconds
+            setInterval(updateHeroHeading, 9000); // Change text every 9 seconds
         });
     </script>
 </body>
