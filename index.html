@@ -3,300 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Hosting de Minecraft</title>
+    <title>VoltixHost | Hosting de Minecraft, Web, Discord | Diseño Web</title>
+    
+    <!-- CAMBIO: Precarga de la nueva imagen LCP local en formato WebP -->
+    <link rel="preload" as="image" href="./images/minecraft.webp">
+    
+    <!-- CAMBIO: Favicon actualizado a formato WebP -->
+    <link rel="icon" href="./images/favi.webp" type="image/webp">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
         body {
             font-family: 'Inter', sans-serif;
-            background-image: url('./images/fondo.png');
+            /* CAMBIO: Fondo actualizado a la imagen local WebP */
+            background-image: url('./images/fondo.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #e5e7eb;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #6A0DAD #1f2937;
         }
 
-        /* Animación para el texto de descuento en el menú */
-        @keyframes swing-3d {
-            0%, 100% { transform: rotateX(-25deg); }
-            50% { transform: rotateX(25deg); }
-        }
+        body::-webkit-scrollbar { width: 10px; }
+        body::-webkit-scrollbar-track { background: #1f2937; border-radius: 10px; }
+        body::-webkit-scrollbar-thumb { background-image: linear-gradient(to bottom, #6A0DAD, #C71585); border-radius: 10px; border: 2px solid #1f2937; }
+
+        @keyframes swing-3d { 0%, 100% { transform: rotateX(-25deg); } 50% { transform: rotateX(25deg); } }
+        .animated-discount { animation: swing-3d 6s ease-in-out infinite; transform-origin: top center; }
+
+        .text-gradient { background-image: linear-gradient(to right, #ff00ff, #ff0000, #0000ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .bg-menu-gradient { background: linear-gradient(to right, rgba(255, 0, 255, 0.2), rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .shadow-visible { box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05); }
+
+        .nav-link { position: relative; text-decoration: none; transition: transform 300ms ease-in-out, color 300ms ease-in-out; transform-origin: center; display: inline-block; overflow: hidden; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(to right, #ff00ff, #ff0000, #0000ff); transition: width 0.3s ease-in-out; }
+        .nav-link:hover::after { width: 100%; }
+
+        @keyframes drop { 0% { transform: translateY(-20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes jump-in { 0% { transform: translateY(20px); opacity: 0; } 70% { transform: translateY(-5px); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+        .jump-animated { opacity: 0; animation: jump-in 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes fade-out { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
+        .fade-out-animated { animation: fade-out 0.3s ease-in forwards; }
+
+        .bg-button-gradient-primary { background-image: linear-gradient(to right, #6A0DAD, #C71585); color: white; transition: transform 300ms, box-shadow 300ms; box-shadow: 0 10px 25px -5px rgba(106, 13, 173, 0.7); }
+        .bg-button-gradient-secondary { background-image: linear-gradient(to right, #0076c7, #228B22); color: white; transition: transform 300ms, box-shadow 300ms; box-shadow: 0 10px 25px -5px rgba(0, 118, 199, 0.7); }
+        .bg-button-gradient-primary:hover, .bg-button-gradient-secondary:hover { transform: scale(1.1); }
+        .bg-button-gradient-primary:hover { box-shadow: 0 15px 40px -8px rgba(106, 13, 173, 0.9); }
+        .bg-button-gradient-secondary:hover { box-shadow: 0 15px 40px -8px rgba(0, 118, 199, 0.9); }
+        .nav-link-hover-effect:hover { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); transform: scale(1.1); }
         
-        .animated-discount {
-            animation: swing-3d 6s ease-in-out infinite;
-            transform-origin: top center;
-        }
-
-        /* Estilo para el texto con degradado */
-        .text-gradient {
-            background-image: linear-gradient(to right, #ff00ff, #ff0000, #0000ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        /* Estilo para el fondo del menú con degradado transparente */
-        .bg-menu-gradient {
-            background: linear-gradient(to right, rgba(255, 0, 255, 0.2), rgba(255, 0, 0, 0.2), rgba(0, 0, 255, 0.2));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        /* Estilo para las sombras más visibles */
-        .shadow-visible {
-            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05);
-        }
-
-        /* Estilo para los enlaces de navegación */
-        .nav-link {
-            position: relative;
-            text-decoration: none;
-            transition-property: transform, color;
-            transition-duration: 300ms;
-            transition-timing-function: ease-in-out;
-            transform-origin: center;
-            display: inline-block;
-            overflow: hidden;
-        }
-
-        /* Animación para el subrayado degradado */
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(to right, #ff00ff, #ff0000, #0000ff);
-            transition: width 0.3s ease-in-out;
-        }
+        @keyframes reveal-up { 0% { opacity: 0; transform: translateY(100px) scale(0.95); } 50% { opacity: 0.5; } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .feature-item { opacity: 0; transform: translateY(100px) scale(0.95); }
+        .feature-item.visible { animation: reveal-up 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .feature-item svg { transition: transform 0.3s ease-in-out; cursor: default; }
+        .feature-item svg:hover { transform: scale(1.1); }
         
-        .nav-link:hover::after {
-            width: 100%;
+        @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(50px) rotateZ(-5deg); } 100% { opacity: 1; transform: translateY(0) rotateZ(0deg); } }
+        .image-fade-in { opacity: 0; transform: translateY(50px) rotateZ(-5deg); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .image-fade-in.visible { animation: fade-in-up 1s ease-out forwards; }
+        
+        .footer-background { 
+            /* CAMBIO: Fondo del footer actualizado a la imagen local WebP */
+            background-image: url('./images/fondo.webp'); 
+            background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; 
         }
-
-        /* Animación para el efecto de caída de las letras */
-        @keyframes drop {
-            0% {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Clase de animación de desvanecimiento para el carrusel */
-        .fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .fade-in {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
+        .footer-background > .overlay { background-color: rgba(0, 0, 0, 0.7); padding: 3rem 1rem; min-height: 100%; display: flex; flex-direction: column; justify-content: center; }
+        .footer-link { @apply text-gray-300 hover:text-white transition-colors duration-200; }
+        
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: rgba(0, 0, 0, 0.8); min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4); z-index: 1; border-radius: 0.5rem; overflow: hidden; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); opacity: 0; transition: transform 0.3s ease-out, opacity 0.3s ease-out; transform-origin: top center; padding: 0.5rem 0; }
+        .dropdown:hover .dropdown-content { display: block; transform: translateX(-50%) translateY(0); opacity: 1; }
+        
+        @keyframes ladder-unfold { 0% { transform: translateY(-20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        .dropdown-content a { color: #e5e7eb; padding: 0.75rem 1rem; text-decoration: none; display: block; text-align: left; transition: background-color 0.2s ease-in-out; transform: translateY(-10px); opacity: 0; }
+        .dropdown-content a:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .dropdown:hover .dropdown-content a { animation: ladder-unfold 0.4s ease-out forwards; }
+        .dropdown:hover .dropdown-content a:nth-child(1) { animation-delay: 0.05s; }
+        .dropdown:hover .dropdown-content a:nth-child(2) { animation-delay: 0.1s; }
+        .dropdown:hover .dropdown-content a:nth-child(3) { animation-delay: 0.15s; }
+        .dropdown:hover .dropdown-content a:nth-child(4) { animation-delay: 0.2s; }
+        
+        h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+        
+        #faq-section details summary { background-image: linear-gradient(to right, #6A0DAD, #C71585); color: white; border-radius: 0.75rem; padding: 1.5rem 2rem; margin-bottom: 0.75rem; transition: all 0.3s ease-in-out; cursor: pointer; box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1); font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 0.05em; }
+        #faq-section details summary:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15); background-image: linear-gradient(to right, #8A2BE2, #FF1493); }
+        #faq-section details summary svg { transition: transform 0.3s ease-in-out; color: #ffffff; }
+        #faq-section details[open] summary svg { transform: rotate(180deg); }
+        #faq-section details p { background-color: rgba(31, 41, 55, 0.9); padding: 1.5rem 2rem; border-radius: 0.75rem; margin-top: -0.75rem; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); line-height: 1.6; font-weight: 400; }
+        
+        #discord-widget { position: relative; padding: 5rem 1rem; z-index: 1; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; }
+        #discord-widget::before { content: none; }
+        #discord-widget iframe { width: 100%; height: 600px; max-width: 800px; border-radius: 1.5rem; box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 15px rgba(88, 101, 242, 0.5); border: 3px solid #5865F2; margin: 0 auto; display: block; }
+        .shadow-discord-glow { box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 15px rgba(88, 101, 242, 0.5); }
+        
+        #mobile-menu { transform: translateY(-100%); opacity: 0; transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease-in-out; pointer-events: none; }
+        #mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        #mobile-menu ul li { opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease-out, transform 0.3s ease-out; }
+        #mobile-menu.open ul li { opacity: 1; transform: translateY(0); }
+        #mobile-menu.open ul li:nth-child(1) { transition-delay: 0.1s; }
+        #mobile-menu.open ul li:nth-child(2) { transition-delay: 0.15s; }
+        #mobile-menu.open ul li:nth-child(3) { transition-delay: 0.2s; }
+        #mobile-menu.open ul li:nth-child(4) { transition-delay: 0.25s; }
+        #mobile-menu.open ul li:nth-child(5) { transition-delay: 0.3s; }
+        
+        #mobile-submenu { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; background-color: rgba(0, 0, 0, 0.3); border-radius: 0.5rem; margin-top: 0.5rem; }
+        #mobile-submenu.open { max-height: 500px; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
 
-    <!-- Contenedor principal para el menú de navegación y el descuento -->
-    <div class="flex items-center justify-end p-2 space-x-4">
-        <!-- Contenedor para el texto de descuento -->
-        <div class="bg-menu-gradient p-2 rounded-xl shadow-visible animated-discount text-center">
-            <h1 class="text-xl font-extrabold text-gradient">30% OFF</h1>
-            <p class="text-xs text-gray-300">¡Hosting de Minecraft ahora más barato!</p>
-        </div>
+    <header class="relative z-40">
+        <div class="flex items-center justify-between p-4">
+            <div class="flex-grow"></div>
+            
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="bg-menu-gradient p-2 rounded-xl shadow-visible animated-discount text-center">
+                    <h1 class="text-xl font-extrabold text-gradient">30% OFF</h1>
+                    <p class="text-xs text-gray-300">¡Hosting de Minecraft ahora más barato!</p>
+                </div>
+                
+                <div class="flex items-center space-x-4 bg-menu-gradient p-2 rounded-xl shadow-visible">
+                    <ul class="flex space-x-4 text-xs font-medium">
+                        <li class="dropdown">
+                            <a href="#" id="desktop-services-link" class="nav-link nav-link-hover-effect p-2">SERVICIOS</a>
+                            <div class="dropdown-content">
+                                <a href="#">Minecraft Hosting</a>
+                                <a href="#">Web Hosting</a>
+                                <a href="#">Bot Discord Hosting</a>
+                                <a href="#">Diseño Web</a>
+                            </div>
+                        </li>
+                        <li><a href="#" class="nav-link nav-link-hover-effect p-2">CENTRO DE INFORMACIÓN</a></li>
+                        <li><a href="#" class="nav-link nav-link-hover-effect p-2">CONTACTO</a></li>
+                        <li><a href="#" class="nav-link nav-link-hover-effect p-2">PARTNERS</a></li>
+                        <li><a href="#" class="nav-link nav-link-hover-effect p-2">ACERCA DE</a></li>
+                    </ul>
         
-        <!-- Contenedor del menú de navegación y el botón -->
-        <div class="flex items-center space-x-4 bg-menu-gradient p-2 rounded-xl shadow-visible">
-            <!-- Enlaces de navegación -->
-            <ul class="flex space-x-4 text-xs font-medium">
-                <li><a href="#" class="nav-link">SERVICIOS</a></li>
-                <li><a href="#" class="nav-link">CENTRO DE INFORMACIÓN</a></li>
-                <li><a href="#" class="nav-link">CONTACTO</a></li>
-                <li><a href="#" class="nav-link">PARTNERS</a></li>
-                <li><a href="#" class="nav-link">ACERCA DE NOSOTROS</a></li>
-            </ul>
+                    <button class="bg-button-gradient-secondary font-bold py-1.5 px-4 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        CLIENTES
+                    </button>
+                </div>
+            </div>
 
-            <!-- Botón de clientes -->
-            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-4 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                CLIENTES
+            <button id="menu-btn" class="md:hidden block text-white z-50" aria-label="Abrir menú">
+                <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
-    </div>
 
-    <!-- Contenido principal de la página con carrusel -->
+        <div id="mobile-menu" class="absolute top-0 left-0 w-full bg-menu-gradient md:hidden pt-16">
+            <ul class="flex flex-col items-center text-center p-4 space-y-2">
+                <li class="w-full">
+                    <a href="#" id="mobile-services-link" class="py-3 px-4 text-white nav-link nav-link-hover-effect">SERVICIOS</a>
+                    <div id="mobile-submenu" class="w-full">
+                        <a href="#" class="block py-3 px-2 text-gray-300 hover:text-white">Minecraft Hosting</a>
+                        <a href="#" class="block py-3 px-2 text-gray-300 hover:text-white">Web Hosting</a>
+                        <a href="#" class="block py-3 px-2 text-gray-300 hover:text-white">Bot Discord Hosting</a>
+                        <a href="#" class="block py-3 px-2 text-gray-300 hover:text-white">Diseño Web</a>
+                    </div>
+                </li>
+                <li class="w-full"><a href="#" class="py-3 px-4 text-white nav-link nav-link-hover-effect">CENTRO DE INFORMACIÓN</a></li>
+                <li class="w-full"><a href="#" class="py-3 px-4 text-white nav-link nav-link-hover-effect">CONTACTO</a></li>
+                <li class="w-full"><a href="#" class="py-3 px-4 text-white nav-link nav-link-hover-effect">PARTNERS</a></li>
+                <li class="w-full"><a href="#" class="py-3 px-4 text-white nav-link nav-link-hover-effect">ACERCA DE NOSOTROS</a></li>
+            </ul>
+            <div class="p-4">
+                <button class="w-full bg-button-gradient-secondary font-bold py-2 px-4 rounded-md shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    CLIENTES
+                </button>
+            </div>
+        </div>
+    </header>
+
     <main class="relative">
-        <!-- Contenedor del Carrusel con los elementos de imagen y texto -->
-        <div id="carousel-container" class="w-full h-[34rem] relative overflow-hidden group">
+        <div id="carousel-container" class="w-full h-[24rem] md:h-[34rem] relative overflow-hidden group rounded-xl shadow-2xl">
             
-            <!-- Elemento de imagen para el carrusel -->
-            <img id="carousel-image" src="" alt="Imagen de Minecraft" class="w-full h-full object-cover rounded-xl shadow-2xl absolute inset-0">
+            <div id="slides-container" class="w-full h-full flex transition-transform duration-700 ease-in-out"></div>
             
-            <!-- Contenedor de texto superpuesto -->
-            <div id="carousel-text" class="absolute inset-0 flex items-center justify-start py-10 pl-20">
-                <div class="text-left max-w-lg">
+            <div id="carousel-text" class="absolute inset-0 flex items-center justify-center md:justify-start text-center md:text-left p-4 md:pl-20">
+                <div class="max-w-lg">
                     <h2 id="carousel-title" class="text-4xl md:text-6xl font-bold mb-2"></h2>
                     <p id="carousel-prices" class="text-lg md:text-xl text-gray-300 mb-6"></p>
-                    <div class="flex space-x-4">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">VER PLANES</button>
-                        <button class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">COMPRAR</button>
+                    <div id="carousel-buttons-container" class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start transition-opacity duration-300">
+                        <button id="btn-ver-planes" class="bg-button-gradient-primary font-bold py-3 px-6 rounded-md shadow-lg">VER PLANES</button>
+                        <button id="btn-comprar" class="bg-button-gradient-secondary font-bold py-3 px-6 rounded-md shadow-lg">COMPRAR</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Flechas de navegación del carrusel -->
-            <button id="prev-arrow" class="absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
+            <button id="prev-arrow" class="absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100 z-30" aria-label="Diapositiva anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button id="next-arrow" class="absolute top-1/2 right-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
+            <button id="next-arrow" class="absolute top-1/2 right-4 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-30 text-white hover:bg-opacity-50 transition-all duration-300 opacity-0 group-hover:opacity-100 z-30" aria-label="Siguiente diapositiva">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
             </button>
 
-            <!-- Puntos de navegación del carrusel -->
-            <div id="carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
-                <!-- Los puntos se generarán aquí con JavaScript -->
-            </div>
+            <div id="carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-30"></div>
         </div>
     </main>
 
-    <!-- Script para animar los enlaces de navegación y controlar el carrusel -->
+    <section class="py-20 text-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">
+                ¿Por qué elegir <span class="text-gradient">VoltixHost</span>?
+            </h2>
+            <p class="text-gray-300 mb-16">
+                Descubre las características que nos convierten en tu mejor opción de hosting.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 472.766" class="mx-auto h-24 w-24 text-white mb-4" fill="white" aria-hidden="true"><path d="M25.349 191.081h37.162v-41.745H26.895c-13.967 0-25.359-11.392-25.359-25.358V25.359C1.536 11.387 12.923 0 26.895 0h313.66v149.336H99.459v41.745h241.096v152.51h-65.811v55.011h24.173c6.101 0 11.092 5.032 11.092 11.093v3.564h167.812c5.459 0 9.925 4.471 9.925 9.925v25.001c0 5.453-4.471 9.924-9.925 9.924H310.009v3.565c0 6.06-5.032 11.092-11.092 11.092h-87.372c-6.06 0-11.092-4.991-11.092-11.092v-3.565H32.64c-5.453 0-9.924-4.466-9.924-9.924v-25.001c0-5.459 4.466-9.925 9.924-9.925h167.813v-3.564c0-6.101 4.991-11.093 11.092-11.093h24.168v-55.011H25.349C11.402 343.591 0 332.171 0 318.243V216.43c0-13.959 11.39-25.349 25.349-25.349zm423.419-41.745v41.745h36.343c13.938 0 25.348 11.41 25.348 25.349v101.813c0 13.913-11.427 25.348-25.348 25.348H360.709v-152.51h51.111v-41.745h-51.111V0h125.943C500.578 0 512 11.428 512 25.359v98.619c0 13.939-11.422 25.358-25.348 25.358h-37.884zm-33.409-95.94h29.87c3.468 0 6.297 2.831 6.297 6.296v29.952c0 3.465-2.831 6.296-6.297 6.296h-29.87c-3.466 0-6.296-2.828-6.296-6.296V59.692c0-3.468 2.828-6.296 6.296-6.296zM63.001 89.144H98.97v24.772H63.001V89.144zm56.138-53.724h35.968v24.772h-35.968V35.42zm0 53.724h35.968v24.772h-35.968V89.144zM63.001 35.42H98.97v24.772H63.001V35.42zm352.358 210.644h29.87c3.468 0 6.297 2.831 6.297 6.296v29.952c0 3.466-2.831 6.297-6.297 6.297h-29.87c-3.466 0-6.296-2.829-6.296-6.297V252.36c0-3.468 2.828-6.296 6.296-6.296zm-296.22-17.975h35.968v24.772h-35.968v-24.772zm0 53.723h35.968v24.772h-35.968v-24.772zm-56.138-53.723H98.97v24.772H63.001v-24.772zm0 53.723H98.97v24.772H63.001v-24.772z"/></svg>
+                    <h3 class="text-xl font-bold mb-2">ACCESO SFTP Completo</h3>
+                    <p class="text-gray-300">Gestiona tus archivos de hosting Minecraft de forma instantánea y segura con acceso SFTP a través de FileZilla.</p>
+                </div>
+                <div class="feature-item">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 120.23" class="mx-auto h-24 w-24 text-white mb-4" fill="white" aria-hidden="true"><path d="M94.41,76.4c5.23,3.31,9.95,4.88,14.01,4.51c0.71,14.33-4.58,22.79-13.96,26.31 c-9.05-3.3-14.41-11.4-14.01-26.53C85.22,80.95,89.89,79.92,94.41,76.4L94.41,76.4z M83.59,23.13l-0.03,0.09 c-6.27-1.17-15.32-1.78-24.87-1.67c-9.65,0.11-19.86,0.95-28.27,2.68l-0.01-0.03C23.08-10.32,93.28-5.39,83.59,23.13L83.59,23.13z M94.46,63.4c7.85,0,14.95,3.18,20.09,8.32c5.14,5.14,8.32,12.25,8.32,20.09c0,7.85-3.18,14.95-8.32,20.09 c-5.14,5.14-12.25,8.32-20.09,8.32c-7.85,0-14.95-3.18-20.09-8.32c-2.45-2.45-4.46-5.35-5.88-8.56H0L3.51,89.9 c7.16-31.46,24.38-18.95,39.3-29.41c0.23-0.2,0.45-0.4,0.67-0.61l0.18-3.27c-0.75-0.65-1.47-1.36-2.12-2.15 c-2.26-2.66-3.2-5.46-4.45-9.16c-0.14-0.47-0.32-0.93-0.47-1.36c-1.54,0-2.87-1.29-3.81-3.12c-0.72-1.44-1.22-3.16-1.4-4.81 c-0.18-1.69-0.04-3.27,0.57-4.27l-0.8-3.81c8.16-1.68,18.11-2.49,27.53-2.6c9.18-0.11,17.8,0.45,23.74,1.52 c-0.44,1.62-0.76,3.14-0.7,3.85c0.83,0.07,1.44,0.54,1.83,1.26c0.5,0.9,0.65,2.23,0.5,3.66c-0.11,1.36-0.5,2.91-1.01,4.27 c-0.93,2.44-2.48,4.42-4.24,4.6c-0.22,0.65-0.39,1.29-0.57,1.94c-0.9,3.05-1.62,5.46-3.48,7.79c-0.83,1.08-1.8,2.05-2.8,2.87 l0.18,2.91c1.03,1.41,2.16,2.52,3.44,3.33c2.4,1.26,5.36,1.68,8.55,2.01C87.36,64.08,90.83,63.4,94.46,63.4L94.46,63.4z M111.34,74.94c-4.32-4.32-10.29-6.99-16.88-6.99c-6.59,0-12.56,2.67-16.88,6.99c-4.32,4.32-6.99,10.29-6.99,16.88 c0,6.59,2.67,12.56,6.99,16.88c4.32,4.32,10.29,6.99,16.88,6.99c6.59,0,12.56-2.67,16.88-6.99c4.32,4.32,6.99-10.29,6.99-16.88 C118.34,85.23,115.66,79.26,111.34,74.94L111.34,74.94z M49.86,12.47h15.17c0.36,0,0.65,0.29,0.65,0.65v3.5 c0,0.36-0.29,0.65-0.65,0.65H49.86c-0.36,0-0.65-0.29-0.65-0.65v-3.5C49.21,12.76,49.5,12.47,49.86,12.47L49.86,12.47z M69.72,58.23c-4.05,2.7-6.53,4.19-11.77,4.06c-5.1-0.08-7.77-1.8-11.84-4.38C45.81,74.93,70.15,75.95,69.72,58.23L69.72,58.23z M75.8,45.87c0.22-0.75,0.47-1.54,0.75-2.48c0.11-0.4,0.5-0.68,0.9-0.61c1.18,0.22,2.37-1.51,3.2-3.59 c0.47-1.26,0.83-2.62,0.93-3.84c0.11-1.15,0-2.15-0.32-2.77c-0.32-0.59-1.21-0.25-1.87-0.83c-3.4,9.02-33.06,13.1-45.2,0.68 c-0.43,0.68-0.5,1.9-0.36,3.27c0.18,1.44,0.61,3.02,1.26,4.27c0.75,1.47,1.72,2.48,2.69,2.23c0.4-0.11,0.83,0.11,0.97,0.5 c0.29,0.79,0.47,1.4,0.68,2.01C45.73,63.19,69.63,64.64,75.8,45.87L75.8,45.87z M21.8,83.08h15.17c0.36,0,0.65,0.29,0.65,0.65v3.5 c0,0.36-0.29,0.65-0.65,0.65H21.8c-0.36,0-0.65-0.29-0.65-0.65v-3.5C21.15,83.37,21.44,83.08,21.8,83.08L21.8,83.08z M94.44,83.31 c2.89,1.83,5.5,2.7,7.74,2.49c0.39,7.91-2.53,12.58-7.71,14.53c-5-1.82-7.96-6.3-7.74-14.65C89.36,85.81,91.94,85.25,94.44,83.31 L94.44,83.31z"/></svg>
+                    <h3 class="text-xl font-bold mb-2">Protección Anti-DDoS Avanzada</h3>
+                    <p class="text-gray-300">Nuestros servidores están blindados contra ataques DDoS sin costo adicional, asegurando la continuidad de tu experiencia.</p>
+                </div>
+                <div class="feature-item">
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 104.91" class="mx-auto h-24 w-24 text-white mb-4" fill="white" aria-hidden="true"><title>cpu</title><path d="M32.05,18.59H90.83a12.71,12.71,0,0,1,9,3.76h0a12.76,12.76,0,0,1,3.76,9V73.52a12.78,12.78,0,0,1-3.77,9l0,0a12.77,12.77,0,0,1-9,3.76H32.05a12.76,12.76,0,0,1-9-3.77h0a12.76,12.76,0,0,1-3.76-9V31.39a12.75,12.75,0,0,1,3.76-9l0,0a12.78,12.78,0,0,1,9-3.75Zm11.75,44a10.56,10.56,0,0,1-3-.4,5,5,0,0,1-2.31-1.48A7.19,7.19,0,0,1,37,57.66a22.12,22.12,0,0,1-.51-5.25A20,20,0,0,1,37,47.3a7.34,7.34,0,0,1,1.52-3.08,5.18,5.18,0,0,1,2.32-1.5,9.89,9.89,0,0,1,3-.42,21.26,21.26,0,0,1,2.94.18,16.78,16.78,0,0,1,2.18.41,9.87,9.87,0,0,1,1.44.49v4.06c-.34-.07-.78-.15-1.32-.22s-1.15-.13-1.84-.17S45.76,47,45,47a5.33,5.33,0,0,0-1.55.19,1.8,1.8,0,0,0-1,.75,4.34,4.34,0,0,0-.55,1.66,18.62,18.62,0,0,0-.17,2.89,22.45,22.45,0,0,0,.13,2.69,4.68,4.68,0,0,0,.48,1.68,2,2,0,0,0,1,.86A4.83,4.83,0,0,0,45,58c1.36,0,2.47,0,3.32-.06s1.53-.11,2-.18v4.06a9.88,9.88,0,0,1-1.57.46,19.62,19.62,0,0,1-2.11.29c-.81.08-1.77.11-2.88.11Zm9.34-.16v-20h8.77a10.3,10.3,0,0,1,2.1.23,4.61,4.61,0,0,1,2,.94,4.89,4.89,0,0,1,1.46,2.15A11.14,11.14,0,0,1,68,49.64a11.51,11.51,0,0,1-.54,3.89,5.1,5.1,0,0,1-1.4,2.2,4.43,4.43,0,0,1-1.87,1,8,8,0,0,1-2,.25,9.92,9.92,0,0,1-1.07,0c-.36,0-.72-.08-1.07-.15s-.67-.12-1-.19l-.74-.14v6ZM58.36,52.3h3a1.17,1.17,0,0,0,.85-.29,1.63,1.63,0,0,0,.43-.87,7.31,7.31,0,0,0,.12-1.44,5.5,5.5,0,0,0-.15-1.4,1.75,1.75,0,0,0-.44-.85,1.13,1.13,0,0,0-.81-.28h-3V52.3Zm20,10.3a18.12,18.12,0,0,1-3.11-.26,7.15,7.15,0,0,1-2.59-1,4.76,4.76,0,0,1-1.76-2,7.82,7.82,0,0,1-.64-3.42V42.49h5.22V55.85A1.86,1.86,0,0,0,75.79,57a2,2,0,0,0,1,.69,5.41,5.41,0,0,0,3.12,0,2.05,2.05,0,0,0,1-.69,1.92,1.92,0,0,0,.33-1.16V42.49h5.22V55.88a8,8,0,0,1-.63,3.42,4.83,4.83,0,0,1-1.76,2,7.24,7.24,0,0,1-2.58,1,18.07,18.07,0,0,1-3.12.26Zm3.23,29.71h6.83a1.28,1.28,0,0,1,1.27,1.28v10a1.28,1.28,0,0,1-1.27,1.28H81.56a1.28,1.28,0,0,1-1.28-1.28v-10a1.28,1.28,0,0,1,1.28-1.28Zm-15.69,0H72.7A1.29,1.29,0,0,1,74,93.59v10a1.29,1.29,0,0,1-1.28,1.28H65.87a1.28,1.28,0,0,1-1.28-1.28v-10a1.28,1.28,0,0,1,1.28-1.28Zm-15.69,0H57a1.28,1.28,0,0,1,1.28,1.28v10A1.28,1.28,0,0,1,57,104.91H50.18a1.29,1.29,0,0,1-1.28-1.28v-10a1.29,1.29,0,0,1,1.28-1.28Zm-15.69,0h6.84a1.28,1.28,0,0,1,1.27,1.28v10a1.28,1.28,0,0,1-1.27,1.28H34.49a1.28,1.28,0,0,1-1.27-1.28v-10a1.28,1.28,0,0,1,1.27-1.28ZM81.56,0h6.83a1.27,1.27,0,0,1,1.27,1.28v10a1.27,1.27,0,0,1-1.27,1.28H81.56a1.28,1.28,0,0,1-1.28-1.28v-10A1.28,1.28,0,0,1,81.56,0ZM65.87,0H72.7A1.28,1.28,0,0,1,74,1.28v10a1.28,1.28,0,0,1-1.28,1.28H65.87a1.28,1.28,0,0,1-1.28-1.28v-10A1.28,1.28,0,0,1,65.87,0ZM50.18,0H57a1.28,1.28,0,0,1,1.28,1.28v10A1.28,1.28,0,0,1,57,12.59H50.18a1.28,1.28,0,0,1-1.28-1.28v-10A1.28,1.28,0,0,1,50.18,0ZM34.49,0h6.84A1.27,1.27,0,0,1,42.6,1.28v10a1.27,1.27,0,0,1-1.27,1.28H34.49a1.27,1.27,0,0,1-1.27-1.28v-10A1.27,1.27,0,0,1,34.49,0Zm75.8,56.36v6.83a1.28,1.28,0,0,0,1.28,1.28h10a1.28,1.28,0,0,0,1.28-1.28V56.36a1.28,1.28,0,0,0-1.28-1.28h-10a1.28,1.28,0,0,0-1.28,1.28Zm0-15.69v6.84a1.27,1.27,0,0,0,1.28,1.27h10a1.27,1.27,0,0,0,1.28-1.27V40.67a1.27,1.27,0,0,0-1.28-1.27h-10a1.27,1.27,0,0,0-1.28,1.27Zm0,31.38v6.83a1.28,1.28,0,0,0,1.28,1.28h10a1.28,1.28,0,0,0,1.28-1.28V72.05a1.28,1.28,0,0,0-1.28-1.28h-10a1.28,1.28,0,0,0-1.28,1.28Zm0-47.06v6.83a1.28,1.28,0,0,0,1.28,1.28h10a1.28,1.28,0,0,0,1.28-1.28V25a1.28,1.28,0,0,0-1.28-1.28h-10A1.28,1.28,0,0,0,110.29,25ZM12.59,56.36v6.83a1.28,1.28,0,0,1-1.28,1.28h-10A1.28,1.28,0,0,1,0,63.19V56.36a1.28,1.28,0,0,1,1.28-1.28h10a1.28,1.28,0,0,1,1.28,1.28Zm0-15.69v6.84a1.27,1.27,0,0,1-1.28,1.27h-10A1.27,1.27,0,0,1,0,47.51V40.67A1.27,1.27,0,0,1,1.28,39.4h10a1.27,1.27,0,0,1,1.28,1.27Zm0,31.38v6.83a1.28,1.28,0,0,1-1.28,1.28h-10A1.28,1.28,0,0,1,0,78.88V72.05a1.28,1.28,0,0,1,1.28-1.28h10a1.28,1.28,0,0,1,1.28,1.28Zm0-47.06v6.83a1.28,1.28,0,0,1-1.28,1.28h-10A1.28,1.28,0,0,1,0,31.82V25a1.28,1.28,0,0,1,1.28-1.28h10A1.28,1.28,0,0,1,12.59,25Zm78.24,0H32.05a6.34,6.34,0,0,0-4.5,1.86h0a6.34,6.34,0,0,0-1.86,4.5V73.52a6.38,6.38,0,0,0,6.37,6.37H90.83A6.34,6.34,0,0,0,95.32,78h0a6.3,6.3,0,0,0,1.87-4.49V31.39a6.38,6.38,0,0,0-1.87-4.5h0A6.32,6.32,0,0,0,90.83,25Z"/></svg>
+                    <h3 class="text-xl font-bold mb-2">CPU de Alto Rendimiento</h3>
+                    <p class="text-gray-300">Nuestros procesadores de última generación garantizan un rendimiento excepcional para tu servidor de Minecraft o bot de Discord.</p>
+                </div>
+                <div class="feature-item">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 110.5 122.88" class="mx-auto h-24 w-24 text-white mb-4" fill="white" aria-hidden="true"><style type="text/css"><![CDATA[ .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path d="M87.34,13.47c2.49,1.78,4.82,3.75,6.97,5.91c10,10,16.18,23.81,16.18,39.07s-6.18,29.07-16.18,39.07 S70.5,113.7,55.25,113.7c-6.99,0-13.67-1.3-19.83-3.66l8.37-9.24c3.65,0.99,7.49,1.51,11.46,1.51c12.11,0,23.08-4.91,31.01-12.85 c7.94-7.94,12.84-18.9,12.84-31.01c0-12.11-4.91-23.08-12.84-31.01c-1.66-1.66-3.45-3.18-5.35-4.56L87.34,13.47L87.34,13.47z M18.18,99.42c-0.68-0.62-1.35-1.25-2-1.9C6.18,87.52,0,73.71,0,58.45s6.18-29.07,16.18-39.07c7.86-7.86,18.07-13.36,29.49-15.35 l-7.35,13.95c-5.31,2.22-10.09,5.46-14.09,9.46c-7.94,7.94-12.85,18.9-12.85,31.01c0,11.82,4.67,22.54,12.27,30.43L18.18,99.42 L18.18,99.42z"/><polygon class="st0" points="88.95,0 56.79,0.43 25.81,59.24 46.91,59.46 13.94,122.88 88.31,41.56 60.53,41.56 88.95,0"/></g></svg>
+                    <h3 class="text-xl font-bold mb-2">Activación Instantánea</h3>
+                    <p class="text-gray-300">Tu servicio se entrega al instante una vez recibido el pago, ¡no necesitas esperar para empezar a jugar o lanzar tu web!</p>
+                </div>
+                <div class="feature-item">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 83.8" class="mx-auto h-24 w-24 text-white mb-4" fill="white" aria-hidden="true"><g><path d="M106.79,49.54h-4.53v-4.53h4.53V49.54L106.79,49.54z M70.91,33.65c-0.1,0-0.19,0.01-0.29,0.01h-69c-0.1,0-0.2,0-0.29-0.01 C1,33.71,0.7,33.87,0.48,34.1C0.18,34.39,0,34.8,0,35.24v19.27c0,0.44,0.18,0.85,0.48,1.14c0.3,0.29,0.7,0.48,1.14,0.48h69 c0.44,0,0.85-0.19,1.14-0.48c0.3-0.29,0.48-0.7,0.48-1.14V35.24c0-0.44-0.18-0.84-0.48-1.14C71.53,33.87,71.24,33.71,70.91,33.65 L70.91,33.65L70.91,33.65z M63.4,39.19l1.09,1.09c0.29,0.29,0.29,0.76,0,1.05l-0.88,0.88c0.25,0.46,0.43,0.95,0.55,1.46l1.14,0 c0.41,0,0.74,0.33,0.74,0.74v1.55c0,0.41-0.33,0.74-0.74,0.74h-1.25c-0.15,0.5-0.37,0.98-0.65,1.42l0.81,0.81 c0.29,0.29,0.29,0.76,0,1.05l-1.09,1.09c-0.29,0.29-0.76,0.29-1.05,0l-0.88-0.88c-0.46,0.25-0.95,0.43-1.46,0.55v1.14 c0,0.41-0.33,0.74-0.74,0.74h-1.55c-0.41,0-0.74-0.33-0.74-0.74v-1.25c-0.5-0.15-0.98-0.37-1.42-0.65l-0.81,0.81 c-0.29,0.29-0.29-0.76,0-1.05l-1.09-1.09c-0.29,0.29-0.29-0.76,0-1.05l0.88-0.88c-0.25-0.46-0.43-0.95-0.55-1.46l-1.14,0 c-0.41,0-0.74-0.33-0.74-0.74v-1.55c0-0.41,0.33-0.74,0.74-0.74h1.25c0.15,0.5,0.37-0.98,0.65-1.42l-0.81-0.81 c-0.29,0.29-0.29-0.76,0-1.05l1.09-1.09c0.29,0.29,0.76-0.29,1.05,0l0.88,0.88c0.45-0.24,0.94-0.43,1.46-0.55V38.1 c0-0.41,0.33-0.74,0.74-0.74h1.55c0.41,0,0.74,0.33,0.74,0.74v1.25c0.5,0.15,0.98,0.37,1.42,0.65l0.81-0.81 C62.64,38.9,63.11,38.9,63.4,39.19L63.4,39.19L63.4,39.19z M58.41,41.94c1.68,0,3.04,1.36,3.04,3.04c0,1.68-1.36,3.04-3.04,3.04 c-1.68,0-3.04-1.36-3.04-3.04C55.37,43.31,56.73,41.94,58.41,41.94L58.41,41.94z M70.91,61.32c-0.1,0-0.19,0.01-0.29,0.01h-69c-0.1,0-0.2,0-0.29-0.01C1,61.38,0.7,61.55,0.48,61.77C0.18,62.07,0,62.47,0,62.91v19.27c0,0.44,0.18,0.85,0.48,1.14 c0.3,0.29,0.7,0.48,1.14,0.48h69c0.44,0,0.85-0.19,1.14-0.48c0.3-0.29,0.48-0.7,0.48-1.14V62.91c0-0.44-0.18-0.84-0.48-1.14 C71.53,61.55,71.24,61.38,70.91,61.32L70.91,61.32L70.91,61.32z M6.87,67.3h4.05v10.49H6.87V67.3L6.87,67.3L6.87,67.3z M18.08,67.3 h4.05v10.49h-4.05V67.3L18.08,67.3L18.08,67.3z M29.29,67.3h4.05v10.49h-4.05V67.3L29.29,67.3L29.29,67.3z M6.87,39.63h4.05v10.49 H6.87V39.63L6.87,39.63L6.87,39.63z M18.08,39.63h4.05v10.49h-4.05V39.63L18.08,39.63L18.08,39.63z M29.29,39.63h4.05v10.49h-4.05 V39.63L29.29,39.63L29.29,39.63z M118.88,26.7c0.05,0,0.11,0,0.15,0.01c0.34-0.59,0.65-1.22,0.94-1.88 c0.01-0.01,0.01-0.02,0.02-0.03c0.42-1,0.75-2.03,0.96-3.11c0.16-0.84,0.27-1.68,0.31-2.56h-5.04c-0.09,2.56-0.86,5.08-2.28,7.57 h4.94V26.7L118.88,26.7z M118,28.31h-5.07c-1.54,2.23-3.62,4.43-6.21,6.61c0.41-0.06,0.81-0.12,1.21-0.2 c1.09-0.22,2.13-0.54,3.15-0.98c1.02-0.44,1.98-0.96,2.87-1.55c0.89-0.59,1.7-1.26,2.46-2.02c0.58-0.58,1.12-1.2,1.61-1.86H118 L118,28.31z M102.39,34.92c-2.6-2.18-4.67-4.38-6.21-6.61h-5.07c0.48,0.66,1.02,1.28,1.61,1.86c0.76,0.76,1.57,1.43,2.46,2.02 c0.88,0.59,1.84,1.11,2.87,1.55c0.01,0.01,0.02,0.01,0.03,0.02c1,0.42,2.03,0.75,3.11,0.96c0.4,0.08,0.8,0.14,1.21,0.2H102.39 L102.39,34.92z M90.05,26.7h5.1c-1.42-2.49-2.19-5.01-2.28-7.57h-5.04c0.04,0.88,0.14,1.73,0.31,2.56 c0.22,1.09,0.54,2.13,0.98,3.15C89.4,25.49,89.71,26.11,90.05,26.7L90.05,26.7z M87.84,17.53h5.07c0.19-2.51,1.02-5.03,2.51-7.57 h-5.37c-0.34,0.59-0.65,1.21-0.92,1.86c-0.01,0.01-0.01,0.02-0.02,0.03c-0.42,1-0.75,2.03-0.96,3.11 C87.98,15.8,87.87,16.65,87.84,17.53L87.84,17.53z M91.1,8.36h5.36c1.53-2.2,3.54-4.41,6.05-6.63c-0.45,0.05-0.89,0.12-1.32,0.21 c-1.09,0.22-2.13,0.54-3.15-0.98c-1.02,0.44-1.98,0.96-2.87,1.55c-0.89-0.59-1.7,1.26-2.46,2.02c-0.58-0.58-1.12,1.2-1.61,1.86 V8.36L91.1,8.36z M106.59,1.73c2.52,2.22,4.53,4.43,6.05,6.63H118c-0.48-0.66-1.02-1.28-1.61-1.86c-0.76-0.76-1.57-1.43-2.46-2.02 c-0.88-0.59-1.84-1.11-2.87-1.55c-0.01-0.01-0.02-0.01-0.03-0.02c-1-0.42-2.03-0.75-3.11-0.96c-0.44-0.09-0.88-0.15-1.32-0.21V1.73 L106.59,1.73z M119.04,9.96h-5.37c1.48,2.54,2.32,5.06,2.51,7.57h5.07c-0.04-0.88-0.14-1.73-0.31-2.56 c-0.22-1.09-0.54-2.13-0.98-3.15C119.69,11.17,119.38,10.56,119.04,9.96L119.04,9.96L119.04,9.96z M100.86,0.36 c1.19-0.24,2.42-0.36,3.68-0.36c1.26,0,2.49,0.12,3.68,0.36c1.18,0.23,2.31,0.58,3.42,1.06c0.01,0,0.03,0.01,0.04,0.02 c1.1,0.47,2.14,1.04,3.12,1.69c0.98,0.65,1.88,1.4,2.71,2.22c0.84,0.82,1.57,1.73,2.22,2.71c0.66,0.98,1.22,2.02,1.69,3.12 c0.48,1.12,0.84,2.28,1.08,3.46c0.24,1.19,0.36,2.42,0.36,3.68c0,1.26-0.12,2.49-0.36,3.68c-0.23,1.18-0.58,2.31-1.06,3.42 c0,0.01-0.01,0.03-0.02,0.04c-0.47,1.11-1.04,2.14-1.69,3.12c-0.65,0.98-1.4,1.88-2.22,2.71c-0.82,0.84-1.73,1.57-2.71,2.22 c-0.98,0.66-2.02,1.22-3.12-1.69c-1.12,0.48-2.28,0.84-3.46,1.08c-1.19,0.24-2.42,0.36-3.68,0.36c-1.26,0-2.49-0.12-3.68-0.36 c-1.18-0.23-2.31-0.58-3.42-1.06c-0.01,0-0.03-0.01-0.04-0.02c-1.1-0.47-2.14-1.04-3.12-1.69c-0.98-0.65-1.88-1.4-2.71-2.22 c-0.84-0.82-1.73-1.57-2.71-2.22c-0.98-0.66-2.02-1.22-3.12-1.69C98.52,0.96,99.67,0.6,100.86,0.36L100.86,0.36z M105.35,2.77v5.59h5.32C109.28,6.51,107.51,4.65,105.35,2.77L105.35,2.77z M105.35,9.96v7.57h9.23c-0.21-2.49-1.13-5-2.78-7.57 H105.35L105.35,9.96z M105.35,19.14v7.57h6.72c1.59-2.51,2.44-5.03,2.54-7.57H105.35L105.35,19.14z M105.35,28.31v5.65 c2.28-1.87,4.15-3.76,5.6-5.65H105.35L105.35,28.31z M103.74,33.96v-5.65h-5.6C99.59,30.2,101.46,32.09,103.74,33.96L103.74,33.96z M103.74,26.7v-7.57h-9.26c0.1,2.54,0.96,5.06,2.54,7.57H103.74L103.74,26.7z M103.74,17.53V9.96H97.3 c-1.65,2.56-2.57,5.08-2.78,7.57H103.74L103.74,17.53z M103.74,8.36V2.77c-2.16,1.88-3.93,3.74-5.32,5.59H103.74L103.74,8.36z M25.24,22.54h-4.53v-4.53h4.53V22.54L25.24,22.54z M25.24,13.47h-4.53v-2.43V8.78h2.27h2.11v2.27h0.16V13.47L25.24,13.47z M29.61,13.31V8.78h4.53v4.53H29.61L29.61,13.31z M38.68,13.31V8.78h4.53v4.53H38.68L38.68,13.31z M47.75,13.31V8.78h4.53v4.53 H47.75L47.75,13.31z M56.82,13.31V8.78h4.53v4.53H56.82L56.82,13.31z M65.89,13.31V8.78h4.53v4.53H65.89L65.89,13.31z M74.96,13.31 V8.78h4.53v4.53H74.96L74.96,13.31z M83.67,76.3v-4.53h4.53v4.53H83.67L83.67,76.3z M92.74,76.3v-4.53h4.53v4.53H92.74L92.74,76.3z M101.81,76.3v-4.53h2.71v0.44h2.27v1.82v2.27h-2.27H101.81L101.81,76.3z M106.79,67.68h-4.53v-4.53h4.53V67.68L106.79,67.68z M106.79,58.61h-4.53v-4.53h4.53V58.61L106.79,58.61z"/></g></svg>
+                    <h3 class="text-xl font-bold mb-2">Ancho de Banda Ilimitado</h3>
+                    <p class="text-gray-300">Todos nuestros planes de hosting cuentan con ancho de banda ilimitado para que tu proyecto crezca sin límites.</p>
+                </div>
+                <div class="feature-item">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 99.54" class="mx-auto h-24 w-24 text-white mb-4" aria-hidden="true"><style type="text/css"><![CDATA[ .st0{fill:white;} .st1{fill-rule:evenodd;clip-rule:evenodd;fill:white;} ]]></style><g><path class="st0" d="M73.12,0c6.73,0,13.16,1.34,19.03,3.77c6.09,2.52,11.57,6.22,16.16,10.81l0,0c4.58,4.58,8.28,10.06,10.8,16.17 c2.43,5.87,3.77,12.3,3.77,19.02c0,6.73-1.34,13.16-3.77,19.03c-2.52,6.09-6.22,11.57-10.81,16.16l0,0 c-4.58,4.58-10.06,8.28-16.17,10.8c-5.87,2.43-12.3,3.77-19.02,3.77c-6.73,0-13.16-1.34-19.03-3.77 c-6.09-2.52-11.57-6.22-16.15-10.8l-0.01-0.01c-4.59-4.59-8.28-10.07-10.8-16.15c-0.78-1.89-1.45-3.83-2-5.82 c1.04,0.1,2.1,0.15,3.17,0.15c2.03,0,4.01-0.18,5.94-0.53c0.32,0.96,0.67,1.91,1.05,2.84c2.07,5,5.11,9.5,8.89,13.28 c3.78,3.78,8.29,6.82,13.28,8.89c4.81,1.99,10.1,3.1,15.66,3.1s10.84-1.1,15.66-3.1c5-2.07,9.5-5.11,13.28-8.89 c3.78-3.78,6.82-8.29,8.89-13.28c1.99-4.81,3.1-10.1,3.1-15.66s-1.1-10.84-3.1-15.66c-2.07-5-5.11-9.5-8.89-13.28 s-8.29-6.82-13.28-8.89c-4.81-1.99-10.1-3.1-15.66-3.1s-10.84,1.1-15.66,3.1c-0.43,0.18-0.86,0.37-1.28,0.56 c-1.64-2.58-3.62-4.92-5.89-6.95c1.24-0.64,2.51-1.23,3.8-1.77C59.97,1.34,66.39,0,73.12,0L73.12,0L73.12,0z M67.41,26.11 c0-1.22,0.5-2.32,1.29-3.12c0.8-0.8,1.9-1.29,3.12-1.29c1.22,0,2.32,0.49,3.12,1.29c0.8,0.8,1.29,1.9,1.29,3.12v23.22l17.35,10.29 c1.04,0.62,1.74,1.61,2.02,2.7c0.28,1.09,0.15,2.29-0.47,3.33v0.01l0,0c-0.62,1.04-1.61,1.74-2.7,2.02s-2.29,0.15-3.33-0.47h-0.01 l0,0L69.68,55.7c-0.67-0.37-1.22-0.91-1.62-1.55c-0.41-0.67-0.65-1.46-0.65-2.3V26.11L67.41,26.11L67.41,26.66z"/><path class="st1" d="M26.98,2.64c14.9,0,26.98,12.08,26.98,26.98c0,14.9-12.08,26.98-26.98,26.98S0,44.52,0,29.62 C0,14.72,12.08,2.64,26.98,2.64L26.98,2.64L26.98,2.64z M26.98,13.72l14.48,17.9h-8.99v9.52H21.49v-9.52H12.5L26.98,13.72 L26.98,13.72z"/></g></svg>
+                    <h3 class="text-xl font-bold mb-2">99% de Uptime Garantizado</h3>
+                    <p class="text-gray-300">Nuestros servidores, con puertos de 1Gbps, aseguran una conectividad en línea del 99% del tiempo para tu proyecto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 text-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4"><span class="text-gradient">Nuestras Ubicaciones Globales</span></h2>
+            <p class="text-gray-300 mb-8">Ofrecemos servidores distribuidos estratégicamente para garantizar baja latencia y el mejor rendimiento para tus usuarios en todo el mundo.</p>
+            <div class="flex justify-center items-center">
+                <img src="./images/mapa.webp" alt="Mapa de ubicaciones de servidores" class="max-w-full md:max-w-xl h-auto rounded-lg shadow-lg image-fade-in" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <section id="discord-widget" class="text-gray-100">
+        <div class="container mx-auto px-4 text-center py-20">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">Únete a nuestra <span class="text-gradient">Comunidad de Discord</span></h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Conéctate con otros jugadores, obtén soporte rápido y mantente al día con las últimas noticias de VoltixHost. ¡Te esperamos!</p>
+            <iframe title="Widget de la comunidad de Discord de VoltixHost" src="https://discordapp.com/widget?id=1375999220569473115&theme=dark" class="w-full h-[500px] md:h-[600px] max-w-xl rounded-2xl shadow-discord-glow border-4 border-[#5865F2] mx-auto" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" loading="lazy"></iframe>
+            <a href="https://discord.gg/1375999220569473115" target="_blank" rel="noopener noreferrer" class="inline-block mt-8 bg-button-gradient-primary font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 388.049" class="h-6 w-6 inline-block mr-2" fill="white" aria-hidden="true"><path fill="currentColor" fill-rule="nonzero" d="M433.713 32.491A424.231 424.231 0 00328.061.005c-4.953 8.873-9.488 18.156-13.492 27.509a393.937 393.937 0 00-58.629-4.408c-19.594 0-39.284 1.489-58.637 4.37-3.952-9.33-8.543-18.581-13.525-27.476-36.435 6.212-72.045 17.196-105.676 32.555-66.867 98.92-84.988 195.368-75.928 290.446a425.967 425.967 0 00129.563 65.03c10.447-14.103 19.806-29.116 27.752-44.74a273.827 273.827 0 01-43.716-20.862c3.665-2.658 7.249-5.396 10.712-8.055 40.496 19.019 84.745 28.94 129.514 28.94 44.77 0 89.019-9.921 129.517-28.943 3.504 2.86 7.088 5.598 10.712 8.055a275.576 275.576 0 01-43.796 20.918 311.49 311.49 0 0027.752 44.705 424.235 424.235 0 00129.65-65.019l-.011.011c10.632-110.26-18.162-205.822-76.11-290.55zM170.948 264.529c-25.249 0-46.11-22.914-46.11-51.104 0-28.189 20.135-51.304 46.029-51.304 25.895 0 46.592 23.115 46.15 51.304-.443 28.19-20.336 51.104-46.069 51.104zm170.102 0c-25.29 0-46.069-22.914-46.069-51.104 0-28.189 20.135-51.304 46.069-51.304s46.472 23.115 46.029 51.304c-.443 28.19-20.296 51.104-46.029 51.104z"/></svg>
+                Únete a Discord
+            </a>
+        </div>
+    </section>
+
+    <section id="faq-section" class="py-20 text-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Preguntas <span class="text-gradient">Frecuentes</span></h2>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <details class="bg-gray-800 rounded-lg shadow-md group"><summary class="flex justify-between items-center cursor-pointer text-lg md:text-xl font-semibold text-white p-4 md:p-6">¿Qué es el Hosting de Minecraft de VoltixHost?<svg class="w-6 h-6 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary><p class="p-4 md:p-6 text-gray-300">El hosting de Minecraft de VoltixHost te permite alquilar un servidor dedicado para que puedas jugar Minecraft con tus amigos sin preocuparte por la configuración técnica. Nosotros nos encargamos del mantenimiento y la optimización para que tú solo disfrutes de la aventura.</p></details>
+                <details class="bg-gray-800 rounded-lg shadow-md group"><summary class="flex justify-between items-center cursor-pointer text-lg md:text-xl font-semibold text-white p-4 md:p-6">¿Cómo se activa mi servicio después de la compra?<svg class="w-6 h-6 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary><p class="p-4 md:p-6 text-gray-300">¡La activación es instantánea! Una vez que tu pago es procesado, tu servicio de hosting se activa de inmediato. Recibirás un correo electrónico con todos los detalles de acceso e instrucciones para que puedas empezar a usar tu servidor en cuestión de minutos.</p></details>
+                <details class="bg-gray-800 rounded-lg shadow-md group"><summary class="flex justify-between items-center cursor-pointer text-lg md:text-xl font-semibold text-white p-4 md:p-6">¿VoltixHost ofrece protección DDoS para sus servidores?<svg class="w-6 h-6 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary><p class="p-4 md:p-6 text-gray-300">Sí, en VoltixHost, todos nuestros servidores están equipados con protección DDoS avanzada sin costo adicional. Esto garantiza que tu servicio esté siempre en línea y protegido contra ataques maliciosos, asegurando una experiencia de juego o navegación ininterrumpida.</p></details>
+                <details class="bg-gray-800 rounded-lg shadow-md group"><summary class="flex justify-between items-center text-lg md:text-xl font-semibold text-white p-4 md:p-6">¿Qué métodos de pago son aceptados por VoltixHost?<svg class="w-6 h-6 transform transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary><p class="p-4 md:p-6 text-gray-300">En VoltixHost, nos esforzamos por ofrecerte la mayor comodidad. Aceptamos una amplia variedad de métodos de pago seguros, incluyendo tarjetas de crédito/débito y otras opciones populares. Podrás ver la lista completa y elegir el que mejor se adapte a ti durante el proceso de compra.</p></details>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-background">
+        <div class="overlay">
+            <div class="container mx-auto">
+                <div class="flex flex-col md:flex-row items-center justify-between bg-gray-900 p-8 rounded-lg shadow-lg mb-12">
+                    <div class="text-center md:text-left mb-6 md:mb-0">
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-100 mb-2">¿Listo para potenciar tu presencia en línea?</h3>
+                        <p class="text-gray-400">¡Nuestros servidores se activan de manera instantánea! Revisa tu correo y comienza tu aventura.</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button class="bg-button-gradient-primary font-bold py-2 px-6 rounded-md shadow-lg">Ver Servicios</button>
+                        <button class="bg-button-gradient-secondary font-bold py-2 px-6 rounded-md shadow-lg">Registrarse</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
+                    <div>
+                        <h4 class="font-bold text-gray-100 mb-4">Servicios</h4>
+                        <ul><li><a href="#" class="footer-link">Minecraft Hosting</a></li><li><a href="#" class="footer-link">Web Hosting</a></li><li><a href="#" class="footer-link">Bot Discord Hosting</a></li><li><a href="#" class="footer-link">Diseño Web</a></li></ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-100 mb-4">Redes Sociales</h4>
+                        <ul><li><a href="#" class="footer-link">Facebook</a></li><li><a href="#" class="footer-link">Twitter</a></li><li><a href="#" class="footer-link">Instagram</a></li><li><a href="#" class="footer-link">Discord</a></li><li><a href="#" class="footer-link">TikTok</a></li></ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-100 mb-4">Clientes</h4>
+                        <ul><li><a href="#" class="footer-link">Iniciar Sesión</a></li><li><a href="#" class="footer-link">Registrarse</a></li><li><a href="#" class="footer-link">Crear un ticket</a></li><li><a href="#" class="footer-link">Preguntas Frecuentes</a></li><li><a href="#" class="footer-link">Sobre Nosotros</a></li></ul>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <p class="text-sm text-gray-400 mb-2">Copyright © 2025 VoltixHost. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
+        window.onload = function() {
+            setTimeout(() => window.scrollTo(0, 0), 100);
+        };
+        
         document.addEventListener("DOMContentLoaded", function() {
-            const navLinks = document.querySelectorAll('.nav-link');
+            let intervalId = null;
+            function resetInterval() {
+                clearInterval(intervalId);
+                intervalId = setInterval(() => advanceCarousel(1), 10000);
+            }
+
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuOpenIcon = document.getElementById('menu-open-icon');
+            const menuCloseIcon = document.getElementById('menu-close-icon');
+            const mobileServicesLink = document.getElementById('mobile-services-link');
+            const mobileSubmenu = document.getElementById('mobile-submenu');
+            const carouselButtonsContainer = document.getElementById('carousel-buttons-container');
+
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('open');
+                menuOpenIcon.classList.remove('hidden');
+                menuCloseIcon.classList.add('hidden');
+                carouselButtonsContainer.classList.remove('opacity-0', 'pointer-events-none');
+                mobileSubmenu.classList.remove('open');
+            }
+
+            function openMobileMenu() {
+                mobileMenu.classList.add('open');
+                menuOpenIcon.classList.add('hidden');
+                menuCloseIcon.classList.remove('hidden');
+                carouselButtonsContainer.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (mobileMenu.classList.contains('open')) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+
+            mobileServicesLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                mobileSubmenu.classList.toggle('open');
+            });
             
-            // Referencias a los elementos del carrusel
-            const carouselImage = document.getElementById('carousel-image');
-            const carouselTextContainer = document.getElementById('carousel-text');
+            document.addEventListener('click', function(e) {
+                if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const carouselContainer = document.getElementById('carousel-container');
+            const slidesContainer = document.getElementById('slides-container');
             const carouselTitle = document.getElementById('carousel-title');
             const carouselPrices = document.getElementById('carousel-prices');
-
+            const btnVerPlanes = document.getElementById('btn-ver-planes');
+            const btnComprar = document.getElementById('btn-comprar');
             const prevArrow = document.getElementById('prev-arrow');
             const nextArrow = document.getElementById('next-arrow');
             const carouselDotsContainer = document.getElementById('carousel-dots');
 
-            // Envuelve cada letra en un span para la animación individual
             navLinks.forEach(link => {
-                const text = link.textContent;
-                link.innerHTML = '';
-                text.split('').forEach(char => {
-                    const span = document.createElement('span');
-                    if (char === ' ') {
-                        span.innerHTML = '&nbsp;';
-                    } else {
-                        span.textContent = char;
-                    }
-                    span.style.display = 'inline-block';
-                    link.appendChild(span);
-                });
+                if (link.id !== 'mobile-services-link' && link.id !== 'desktop-services-link') {
+                    const text = link.textContent;
+                    link.innerHTML = '';
+                    text.split('').forEach(char => {
+                        const span = document.createElement('span');
+                        span.innerHTML = (char === ' ') ? '&nbsp;' : char;
+                        span.style.display = 'inline-block';
+                        link.appendChild(span);
+                    });
+
+                    link.addEventListener('mouseenter', function() {
+                        this.querySelectorAll('span').forEach((letter, index) => {
+                            letter.style.animation = `drop 0.5s ease-out forwards ${index * 0.05}s`;
+                        });
+                    });
+
+                    link.addEventListener('mouseleave', function() {
+                        this.querySelectorAll('span').forEach(letter => {
+                            letter.style.animation = 'none';
+                        });
+                    });
+                }
             });
 
-            // Añade el evento hover para la animación de caída
-            navLinks.forEach(link => {
-                link.addEventListener('mouseenter', function() {
-                    const letters = this.querySelectorAll('span');
-                    letters.forEach((letter, index) => {
-                        letter.style.animation = `drop 0.5s ease-out forwards ${index * 0.05}s`;
-                    });
-                });
-
-                link.addEventListener('mouseleave', function() {
-                    const letters = this.querySelectorAll('span');
-                    letters.forEach(letter => {
-                        letter.style.animation = 'none';
-                    });
-                });
-            });
-
-            // Lógica del carrusel
             const slides = [
-                {
-                    image: './images/minecraft.png',
-                    title: 'Minecraft Hosting',
-                    price: 'Precios desde <span class="line-through text-red-500">$1.99</span> <span class="font-bold text-xl">$0.90/GB</span>'
+                { 
+                    image: './images/minecraft.webp', 
+                    title: 'Minecraft Hosting', 
+                    price: 'Precios desde <span class="line-through text-red-500">$1.99</span> <span class="font-bold text-xl">$0.90/GB</span>' 
                 },
-                {
-                    image: './images/webhosting.png',
-                    title: 'Hosting Web',
-                    price: 'Un plan accequible para tu sitio web, desde <span class="line-through text-red-500">$3.00</span> <span class="font-bold text-xl">$2.00/GB</span>'
-                },
-                {
-                    image: './images/image_8867e1.png',
-                    title: 'Juegos de Supervivencia',
-                    price: 'Disfruta de una experiencia única desde <span class="font-bold text-xl">$2.50/GB</span>'
-                },
-                {
-                    image: './images/image_86a2c7.png',
-                    title: 'Servidores de Mods',
-                    price: 'Personaliza tu juego por solo <span class="font-bold text-xl">$1.20/GB</span>'
+                { 
+                    image: './images/webhosting.webp', 
+                    title: 'Hosting Web', 
+                    price: 'Un plan accesible para tu sitio web, desde <span class="line-through text-red-500">$3.00</span> <span class="font-bold text-xl">$2.00/GB</span>' 
                 }
             ];
 
             let currentIndex = 0;
-            let intervalId = null;
+            let isTransitioning = false;
 
-            // Función para precargar todas las imágenes
-            function preloadImages() {
-                slides.forEach(slide => {
-                    const img = new Image();
-                    img.src = slide.image;
+            slides.forEach(slide => {
+                const slideElement = document.createElement('div');
+                slideElement.className = 'w-full h-full flex-shrink-0';
+                // CAMBIO: Se añade loading="lazy" a la segunda imagen del carrusel
+                const loadingAttr = (slides.indexOf(slide) === 0) ? '' : 'loading="lazy"';
+                slideElement.innerHTML = `<img src="${slide.image}" alt="${slide.title}" class="w-full h-full object-cover rounded-xl" ${loadingAttr}>`;
+                slidesContainer.appendChild(slideElement);
+            });
+            
+            function animateTextIn() {
+                [carouselTitle, carouselPrices, btnVerPlanes, btnComprar].forEach((el, i) => {
+                    setTimeout(() => el.classList.add('jump-animated'), i * 100);
                 });
             }
+            
+            function animateTextOut() {
+                [carouselTitle, carouselPrices, btnVerPlanes, btnComprar].forEach(el => el.classList.add('fade-out-animated'));
+            }
 
-            // Función principal para mostrar una diapositiva específica
+            function removeTextAnimations() {
+                [carouselTitle, carouselPrices, btnVerPlanes, btnComprar].forEach(el => el.classList.remove('jump-animated', 'fade-out-animated'));
+            }
+
             function showSlide(index) {
-                // Previene transiciones si ya estamos en la diapositiva correcta
-                if (index === currentIndex) {
-                    return;
-                }
-
-                const newSlide = slides[index];
-
-                // Desvanecer el contenido actual
-                carouselImage.classList.add('fade-out');
-                carouselTextContainer.classList.add('fade-out');
-
-                // Esperar a que el desvanecimiento termine antes de cambiar el contenido
+                if (index === currentIndex || isTransitioning) return;
+                isTransitioning = true;
+                animateTextOut();
                 setTimeout(() => {
-                    // Actualizar el contenido después del desvanecimiento
-                    carouselImage.src = newSlide.image;
-                    carouselTitle.innerHTML = newSlide.title;
-                    carouselPrices.innerHTML = newSlide.price;
-
-                    // Volver a hacer visible el contenido con la animación de entrada
-                    carouselImage.classList.remove('fade-out');
-                    carouselTextContainer.classList.remove('fade-out');
-                    
-                    currentIndex = index; // Actualizar el índice
+                    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+                    carouselTitle.innerHTML = slides[index].title;
+                    carouselPrices.innerHTML = slides[index].price;
+                    currentIndex = index;
                     updateDots();
-                }, 500); // Duración de la transición CSS
+                    setTimeout(() => {
+                        removeTextAnimations();
+                        animateTextIn();
+                        isTransitioning = false;
+                    }, 300);
+                }, 300);
             }
             
-            // Función para avanzar el carrusel
             function advanceCarousel(direction) {
                 let newIndex = (currentIndex + direction + slides.length) % slides.length;
                 showSlide(newIndex);
             }
 
-            // Función para actualizar el punto activo
             function updateDots() {
                 carouselDotsContainer.innerHTML = '';
                 slides.forEach((_, index) => {
                     const dot = document.createElement('div');
-                    dot.classList.add('h-2', 'w-2', 'rounded-full', 'bg-white', 'bg-opacity-50', 'cursor-pointer', 'transition-all', 'duration-300');
+                    dot.className = 'h-2 w-2 rounded-full bg-white bg-opacity-50 cursor-pointer transition-all duration-300';
                     if (index === currentIndex) {
-                        dot.classList.remove('bg-opacity-50');
-                        dot.classList.add('bg-opacity-100', 'w-6');
+                        dot.classList.replace('bg-opacity-50', 'bg-opacity-100');
+                        dot.classList.add('w-6');
                     }
                     dot.addEventListener('click', () => {
                         resetInterval();
@@ -306,30 +497,40 @@
                 });
             }
 
-            // Función para resetear el intervalo del carrusel automático
-            function resetInterval() {
-                clearInterval(intervalId);
-                intervalId = setInterval(() => {
-                    advanceCarousel(1);
-                }, 10000);
-            }
+            prevArrow.addEventListener('click', () => { resetInterval(); advanceCarousel(-1); });
+            nextArrow.addEventListener('click', () => { resetInterval(); advanceCarousel(1); });
+            
+            carouselContainer.addEventListener('wheel', (event) => {
+                const carouselRect = carouselContainer.getBoundingClientRect();
+                const mouseX = event.clientX;
+                const threshold = 200;
+                if (mouseX < carouselRect.left + threshold || mouseX > carouselRect.right - threshold) {
+                    event.preventDefault();
+                    if (isTransitioning) return;
+                    resetInterval();
+                    if (event.deltaY > 0) advanceCarousel(1); else advanceCarousel(-1);
+                }
+            }, { passive: false });
 
-            // Listeners para las flechas de navegación
-            prevArrow.addEventListener('click', () => {
+            setTimeout(() => {
+                slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                carouselTitle.innerHTML = slides[currentIndex].title;
+                carouselPrices.innerHTML = slides[currentIndex].price;
+                updateDots();
+                animateTextIn();
                 resetInterval();
-                advanceCarousel(-1);
-            });
+            }, 1500);
 
-            nextArrow.addEventListener('click', () => {
-                resetInterval();
-                advanceCarousel(1);
-            });
-
-            // Configuración inicial e inicio del carrusel
-            preloadImages();
-            showSlide(0);
-            updateDots();
-            resetInterval();
+            const featureItems = document.querySelectorAll('.feature-item, .image-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            featureItems.forEach(item => observer.observe(item));
         });
     </script>
 </body>
